@@ -10,5 +10,6 @@ services:
     volumes:
       - .:/rankmatrix
       - /rankmatrix/node_modules
+    command: pnpm run dev
     env_file:
       - .env
