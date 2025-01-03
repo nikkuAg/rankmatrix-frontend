@@ -1,0 +1,14 @@
+version: "3.8"
+
+services:
+  rankmatrix-frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/rankmatrix
+      - /rankmatrix/node_modules
+    env_file:
+      - .env
