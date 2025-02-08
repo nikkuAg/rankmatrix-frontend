@@ -1,5 +1,3 @@
-'use client';
-
 // Light Theme
 const lightTheme = {
   primary: {
@@ -38,12 +36,13 @@ const lightTheme = {
     20: '#D8DBDC',
     10: '#ECEDEE',
   },
-  textBlack: '#384248',
-  textWhite: '#ECEDEE',
-  error: '#F95656',
-  success: '#4BCF6F',
-  warning: '#FFCE42',
+  textSecondary: '#002033',
+  textPrimary: '#002942',
+  error: { main: '#F95656' },
+  success: { main: '#4BCF6F' },
+  warning: { main: '#FFCE42' },
   font: 'var(--font-poppins)',
+  background: { default: '#F8FAFF' },
 };
 
 // Dark Theme
@@ -84,12 +83,13 @@ const darkTheme = {
     20: '#656D73',
     10: '#515B61',
   },
-  textBlack: '#384248',
-  textWhite: '#ECEDEE',
-  error: '#F95656',
-  success: '#4BCF6F',
-  warning: '#FFCE42',
+  textPrimary: '#ECEDEE',
+  textSecondary: '#F2F2F3',
+  error: { main: '#F95656' },
+  success: { main: '#4BCF6F' },
+  warning: { main: '#FFCE42' },
   font: 'var(--font-poppins)',
+  background: { default: '#00060E' },
 };
 
 export const themes = {

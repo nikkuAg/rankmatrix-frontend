@@ -1,5 +1,7 @@
+import { Box, Container } from '@mui/material';
 import { Poppins } from 'next/font/google';
 
+import { RankMatrixLayout } from '../components/RankMatrixLayout';
 import { ThemeProviderWrapper } from '../theme/ThemeContext';
 import StoreProvider from '../store/provider';
 
@@ -22,7 +24,9 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={`${poppins.variable}`}>
         <StoreProvider>
-          <ThemeProviderWrapper>{children}</ThemeProviderWrapper>
+          <ThemeProviderWrapper>
+            <RankMatrixLayout>{children}</RankMatrixLayout>
+          </ThemeProviderWrapper>
         </StoreProvider>
       </body>
     </html>
