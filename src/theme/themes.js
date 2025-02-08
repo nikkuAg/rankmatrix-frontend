@@ -1,0 +1,98 @@
+'use client';
+
+// Light Theme
+const lightTheme = {
+  primary: {
+    100: '#6096FC',
+    90: '#70A0FC',
+    80: '#80ABFD',
+    70: '#90B6FD',
+    60: '#A0C0FD',
+    50: '#AFCAFD',
+    40: '#BFD5FE',
+    30: '#CFE0FE',
+    20: '#DFEAFE',
+    10: '#EFF5FF',
+  },
+  secondary: {
+    100: '#002033',
+    90: '#1A3647',
+    80: '#334D5C',
+    70: '#4D6370',
+    60: '#667985',
+    50: '#808F99',
+    40: '#99A6AD',
+    30: '#B3BCC2',
+    20: '#CCD2D6',
+    10: '#E6E9EB',
+  },
+  tertiary: {
+    100: '#3E4950',
+    90: '#515B61',
+    80: '#656D73',
+    70: '#788085',
+    60: '#8B9296',
+    50: '#9EA4A7',
+    40: '#B2B6B9',
+    30: '#C5C8CB',
+    20: '#D8DBDC',
+    10: '#ECEDEE',
+  },
+  textBlack: '#384248',
+  textWhite: '#ECEDEE',
+  error: '#F95656',
+  success: '#4BCF6F',
+  warning: '#FFCE42',
+  font: 'var(--font-poppins)',
+};
+
+// Dark Theme
+const darkTheme = {
+  primary: {
+    100: '#006FEF',
+    90: '#1A7EF0',
+    80: '#338CF2',
+    70: '#4D9BF4',
+    60: '#66A9F5',
+    50: '#80B7F7',
+    40: '#99C6F8',
+    30: '#B3D4FA',
+    20: '#CCE2FC',
+    10: '#E6F1FD',
+  },
+  secondary: {
+    100: '#EDEFF1',
+    90: '#E6E9EB',
+    80: '#CCD2D6',
+    70: '#B3BCC2',
+    60: '#99A6AD',
+    50: '#808F99',
+    40: '#667985',
+    30: '#4D6370',
+    20: '#334D5C',
+    10: '#1A3647',
+  },
+  tertiary: {
+    100: '#F2F2F3',
+    90: '#ECEDEE',
+    80: '#D8DBDC',
+    70: '#C5C8CB',
+    60: '#B2B6B9',
+    50: '#9EA4A7',
+    40: '#8B9296',
+    30: '#788085',
+    20: '#656D73',
+    10: '#515B61',
+  },
+  textBlack: '#384248',
+  textWhite: '#ECEDEE',
+  error: '#F95656',
+  success: '#4BCF6F',
+  warning: '#FFCE42',
+  font: 'var(--font-poppins)',
+};
+
+export const themes = {
+  light: lightTheme,
+  dark: darkTheme,
+};

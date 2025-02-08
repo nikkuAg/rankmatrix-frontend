@@ -1,17 +1,14 @@
-import './globals.css';
+import { Poppins } from 'next/font/google';
 
-import { Provider as ChakraProvider } from '@/components/ui/provider';
-import { Geist, Geist_Mono } from 'next/font/google';
-import StoreProvider from '@/store/provider';
+import { ThemeProviderWrapper } from '../theme/ThemeContext';
+import StoreProvider from '../store/provider';
 
-const geistSans = Geist({
-  variable: '--font-geist-sans',
+const poppins = Poppins({
+  variable: '--font-poppins',
+  weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
+  style: ['normal', 'italic'],
   subsets: ['latin'],
-});
-
-const geistMono = Geist_Mono({
-  variable: '--font-geist-mono',
-  subsets: ['latin'],
+  display: 'swap',
 });
 
 export const metadata = {
@@ -23,9 +20,9 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
+      <body className={`${poppins.variable}`}>
         <StoreProvider>
-          <ChakraProvider>{children}</ChakraProvider>
+          <ThemeProviderWrapper>{children}</ThemeProviderWrapper>
         </StoreProvider>
       </body>
     </html>

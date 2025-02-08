@@ -2,9 +2,7 @@ import { withSentryConfig } from '@sentry/nextjs';
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  experimental: {
-    optimizePackageImports: ['@chakra-ui/react'],
-  },
+  experimental: {},
 };
 
 export default withSentryConfig(nextConfig, {
