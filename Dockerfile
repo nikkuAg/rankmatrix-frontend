@@ -21,19 +21,16 @@ RUN pnpm run build
 
 # Start a new container for the runtime
 FROM node:22-alpine
-
 WORKDIR /rankmatrix
 
-# # Install pnpm globally in the runtime container
+# Install pnpm globally in the runtime container
 RUN npm install -g pnpm
-
 
 # Copy built app from builder
 COPY --from=builder /rankmatrix ./
-# RUN pnpm install
 
 # Expose the application port
 EXPOSE 3000
 
 # Start the application
-CMD ["pnpm", "run", "dev"]
+CMD ["pnpm", "start"]
