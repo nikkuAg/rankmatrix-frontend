@@ -2,17 +2,51 @@
 import { createContext, useMemo, useState, useContext } from 'react';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
-import { themes } from './themes';
+import { themes } from '../constants/themes';
+import { useEffect } from 'react';
 
 const ThemeContext = createContext();
 
 export const useThemeContext = () => useContext(ThemeContext);
 
+/**
+ * A component that wraps your app with a MUI theme provider and a context provider
+ * to manage the theme mode.
+ *
+ * The theme mode is stored in local storage and defaults to 'light' if no value is
+ * stored. If the user's system is set to dark mode, the theme will default to 'dark'
+ * unless a different value is stored in local storage.
+ *
+ * The context provides the current theme mode and a function to toggle the theme
+ * mode between 'light' and 'dark'.
+ *
+ * This component should be used at the root of your app, and should wrap all other
+ * components that need access to the theme mode.
+ *
+ * @param {{ children: React.ReactNode }} props
+ */
 export const ThemeProviderWrapper = ({ children }) => {
   const [mode, setMode] = useState('light');
 
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme) {
+        setMode(savedTheme);
+      } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        setMode('dark');
+      }
+    }
+  }, []);
+
   const toggleTheme = () => {
-    setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'));
+    setMode((prevMode) => {
+      const newMode = prevMode === 'light' ? 'dark' : 'light';
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('theme', newMode);
+      }
+      return newMode;
+    });
   };
 
   const theme = useMemo(
@@ -32,19 +66,18 @@ export const ThemeProviderWrapper = ({ children }) => {
             ...themes[mode].tertiary,
             main: themes[mode].tertiary['100'],
           },
-        },
-        text: {
-          black: themes[mode].textBlack,
-          white: themes[mode].textWhite,
-        },
-        toast: {
-          success: themes[mode].success,
-          error: themes[mode].error,
-          warning: themes[mode].warning,
+          text: {
+            primary: themes[mode].textPrimary,
+            secondary: themes[mode].textSecondary,
+          },
+          success: { ...themes[mode].success },
+          error: { ...themes[mode].error },
+          warning: { ...themes[mode].warning },
         },
         typography: {
           fontFamily: themes[mode].font,
         },
+        background: themes[mode].background,
       }),
     [mode],
   );

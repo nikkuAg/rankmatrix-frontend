@@ -1,6 +1,8 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { camelizeKeys, decamelizeKeys } from 'humps';
 
+import { openToast } from '../slices/toast';
+
 const baseQuery = fetchBaseQuery({
   baseUrl: process.env.NEXT_PUBLIC_API_URL,
   prepareHeaders: (headers) => {
@@ -28,7 +30,14 @@ const requestInterceptor = async (args, api, extraOptions) => {
   }
 
   if (result.error) {
-    // SHOW ALERT TOAST
+    api.dispatch(
+      openToast({
+        type: 'error',
+        message:
+          result.error.data.message ||
+          'Something went wrong. Please try again.',
+      }),
+    );
   }
 
   return result;
