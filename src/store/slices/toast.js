@@ -2,8 +2,8 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   type: 'info', // success, error, info, warning
-  duration: 20000,
-  open: true,
+  duration: 2000,
+  open: false,
   message: 'This is success toast',
   variant: 'filled', // filled, outlined
 };

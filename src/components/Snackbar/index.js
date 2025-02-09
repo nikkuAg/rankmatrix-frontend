@@ -13,11 +13,8 @@ export const SnackBar = () => {
     if (reason === 'clickaway') {
       return;
     }
-
     dispatch(closeToast());
   };
-
-  console.log(theme);
 
   return (
     <Snackbar

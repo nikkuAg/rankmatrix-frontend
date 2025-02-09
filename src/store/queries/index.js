@@ -2,17 +2,28 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { camelizeKeys, decamelizeKeys } from 'humps';
 
 import { openToast } from '../slices/toast';
+import { apis } from '../../constants/apis';
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: process.env.NEXT_PUBLIC_API_URL,
+  baseUrl: apis.BASE_URL,
   prepareHeaders: (headers) => {
-    headers.set('Conetnt-Type', 'application/json');
+    headers.set('Content-Type', 'application/json');
 
     return headers;
   },
 });
 
+const controllers = new Map();
+
 const requestInterceptor = async (args, api, extraOptions) => {
+  if (controllers.has(api.endpoint)) {
+    controllers.get(api.endpoint).abort();
+  }
+
+  // Create new AbortController for the latest request
+  const abortController = new AbortController();
+  controllers.set(api.endpoint, abortController);
+
   if (args && typeof args === 'object') {
     if (args.params) {
       args.params = decamelizeKeys(args.params);
@@ -22,6 +33,8 @@ const requestInterceptor = async (args, api, extraOptions) => {
       args.body = decamelizeKeys(args.body);
     }
   }
+
+  args.signal = abortController.signal;
 
   const result = await baseQuery(args, api, extraOptions);
 
