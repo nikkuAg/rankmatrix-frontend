@@ -37,7 +37,7 @@ export const Navbar = () => {
               sx={{
                 mr: 2,
                 fontWeight: '500',
-                display: { xs: 'none', md: 'flex' },
+                display: 'flex',
                 color: theme.palette.text.primary,
               }}
             >
