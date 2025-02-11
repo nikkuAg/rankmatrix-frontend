@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 
 import { announcementApi } from './queries/announcement';
-import announcementSlice from './slices/announcement';
+import loaderSlice from './slices/loader';
 import toastSlice from './slices/toast';
 import { baseApi } from './queries';
 
@@ -10,7 +10,7 @@ const store = configureStore({
     [baseApi.reducerPath]: baseApi.reducer,
     [announcementApi.reducerPath]: announcementApi.reducer,
     toast: toastSlice,
-    announcement: announcementSlice,
+    loader: loaderSlice,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(

@@ -7,11 +7,11 @@ export const announcementApi = baseApi.injectEndpoints({
       query: (year) => ({
         url: apis.announcement.get,
         method: 'GET',
-        params: year ? { search: year } : {},
       }),
     }),
   }),
   overrideExisting: false,
 });
 
-export const { useLazyGetAnnouncementsQuery } = announcementApi;
+export const { useLazyGetAnnouncementsQuery, useGetAnnouncementsQuery } =
+  announcementApi;

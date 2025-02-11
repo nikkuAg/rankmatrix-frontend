@@ -4,6 +4,7 @@ import React from 'react';
 import { Navbar } from '../Navbar';
 import { SnackBar } from '../Snackbar';
 import { useIsScreenAllowed } from '../../utils/screenSizeHook';
+import { FullPageSpinner } from '../FullPageSpinner';
 
 export const RankMatrixLayout = ({ children }) => {
   const theme = useTheme();
@@ -21,6 +22,7 @@ export const RankMatrixLayout = ({ children }) => {
           <Navbar />
           <Box p={2}>{children}</Box>
           <SnackBar />
+          <FullPageSpinner />
         </Stack>
       ) : (
         <Typography

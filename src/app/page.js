@@ -15,7 +15,6 @@ const Home = () => {
       columnSpacing={1}
     >
       <Grid2 size={{ xs: 1, sm: 1.5, lg: 2 }}>
-        <Box>Heu</Box>
         <Updates />
       </Grid2>
       {!isMobile && (

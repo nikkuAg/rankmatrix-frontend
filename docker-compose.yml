@@ -13,3 +13,6 @@ services:
     command: pnpm run dev
     env_file:
       - .env
+    stdin_open: true
+    tty: true
+    restart: always
