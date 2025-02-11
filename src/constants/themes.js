@@ -4,13 +4,13 @@ const lightTheme = {
     100: '#6096FC',
     90: '#70A0FC',
     80: '#80ABFD',
-    70: '#90B6FD',
+    70: '#5687E3',
     60: '#A0C0FD',
     50: '#AFCAFD',
     40: '#BFD5FE',
     30: '#CFE0FE',
     20: '#DFEAFE',
-    10: '#EFF5FF',
+    10: '#f4f6fd',
   },
   secondary: {
     100: '#002033',
@@ -22,7 +22,7 @@ const lightTheme = {
     40: '#99A6AD',
     30: '#B3BCC2',
     20: '#CCD2D6',
-    10: '#E6E9EB',
+    10: '#f4f6fd',
   },
   tertiary: {
     100: '#3E4950',
@@ -42,7 +42,7 @@ const lightTheme = {
   success: { main: '#4BCF6F' },
   warning: { main: '#FFCE42' },
   font: 'var(--font-poppins)',
-  background: { default: '#F8FAFF' },
+  background: { default: '#FBFCFF' },
 };
 
 // Dark Theme
@@ -57,7 +57,7 @@ const darkTheme = {
     40: '#99C6F8',
     30: '#B3D4FA',
     20: '#CCE2FC',
-    10: '#E6F1FD',
+    10: '#0c0d11',
   },
   secondary: {
     100: '#EDEFF1',
@@ -69,7 +69,7 @@ const darkTheme = {
     40: '#667985',
     30: '#4D6370',
     20: '#334D5C',
-    10: '#1A3647',
+    10: '#050e14',
   },
   tertiary: {
     100: '#F2F2F3',

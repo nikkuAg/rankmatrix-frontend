@@ -4,6 +4,7 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { themes } from '../constants/themes';
 import { useEffect } from 'react';
+import { GlobalStyles } from '@mui/material';
 
 const ThemeContext = createContext();
 
@@ -82,10 +83,24 @@ export const ThemeProviderWrapper = ({ children }) => {
     [mode],
   );
 
+  const globalStyles = (
+    <GlobalStyles
+      styles={{
+        a: {
+          color: `${theme.palette.primary[70]} !important`,
+        },
+        p: {
+          margin: 0,
+        },
+      }}
+    />
+  );
+
   return (
     <ThemeContext.Provider value={{ mode, toggleTheme }}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
+        {globalStyles}
         {children}
       </ThemeProvider>
     </ThemeContext.Provider>

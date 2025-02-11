@@ -21,6 +21,7 @@ export const SnackBar = () => {
       open={toast.open}
       autoHideDuration={toast.duration}
       onClose={handleClose}
+      sx={{ zIndex: 9999 }}
     >
       <Alert
         severity={toast.type}
@@ -28,7 +29,9 @@ export const SnackBar = () => {
         onClose={handleClose}
         sx={{ color: theme.palette.text.secondary }}
       >
-        {toast.message}
+        {toast.message?.length > 100
+          ? 'Something went wrong. Please try again.'
+          : toast.message}
       </Alert>
     </Snackbar>
   );

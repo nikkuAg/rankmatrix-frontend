@@ -22,7 +22,7 @@ export const RankMatrixLayout = ({ children }) => {
           <Navbar />
           <Box p={2}>{children}</Box>
           <SnackBar />
-          <FullPageSpinner />
+          {/* <FullPageSpinner /> */}
         </Stack>
       ) : (
         <Typography

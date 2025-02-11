@@ -13,10 +13,13 @@ const toastSlice = createSlice({
   initialState,
   reducers: {
     openToast: (state, action) => {
+      console.log(state, action);
       state = {
         ...state,
         ...action.payload,
+        open: true,
       };
+      return state;
     },
     closeToast: (state) => {
       state.open = false;
