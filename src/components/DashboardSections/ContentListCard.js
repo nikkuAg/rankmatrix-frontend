@@ -6,7 +6,6 @@ import CircleIcon from '@mui/icons-material/Circle';
 
 export const ContentListCard = ({ title, contentType }) => {
   const contentList = useSiteContent();
-  console.log(contentList);
   return (
     <Stack gap={1.5}>
       <Typography fontWeight={'600'} fontSize={'1.2rem'}>
