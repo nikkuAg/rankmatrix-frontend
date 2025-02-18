@@ -1,10 +1,13 @@
-'use client';
-import { Box, Stack, Typography, useTheme } from '@mui/material';
-import React from 'react';
-import { Navbar } from '../Navbar';
-import { SnackBar } from '../Snackbar';
-import { useIsScreenAllowed } from '../../utils/screenSizeHook';
-import { FullPageSpinner } from '../FullPageSpinner';
+"use client";
+
+import React from "react";
+
+import { Box, Stack, Typography, useTheme } from "@mui/material";
+
+import { useIsScreenAllowed } from "../../utils/screenSizeHook";
+import { FullPageSpinner } from "../FullPageSpinner";
+import { Navbar } from "../Navbar";
+import { SnackBar } from "../Snackbar";
 
 export const RankMatrixLayout = ({ children }) => {
   const theme = useTheme();
@@ -12,15 +15,17 @@ export const RankMatrixLayout = ({ children }) => {
   return (
     <Box
       sx={{
-        backgroundColor: theme.background.default,
-        width: '100vw',
-        height: '100vh',
+        backgroundColor: theme.background.main,
+        width: "100vw",
+        height: "100vh",
       }}
     >
       {isAllowed ? (
-        <Stack>
+        <Stack height={"100%"} width={"100%"}>
           <Navbar />
-          <Box p={2}>{children}</Box>
+          <Box flexGrow={1} p={2}>
+            {children}
+          </Box>
           <SnackBar />
           {/* <FullPageSpinner /> */}
         </Stack>

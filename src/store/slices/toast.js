@@ -1,19 +1,18 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  type: 'info', // success, error, info, warning
+  type: "info", // success, error, info, warning
   duration: 2000,
   open: false,
-  message: 'This is success toast',
-  variant: 'filled', // filled, outlined
+  message: "This is success toast",
+  variant: "filled", // filled, outlined
 };
 
 const toastSlice = createSlice({
-  name: 'toast',
+  name: "toast",
   initialState,
   reducers: {
     openToast: (state, action) => {
-      console.log(state, action);
       state = {
         ...state,
         ...action.payload,

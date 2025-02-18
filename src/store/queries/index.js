@@ -1,13 +1,13 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { camelizeKeys, decamelizeKeys } from 'humps';
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { camelizeKeys, decamelizeKeys } from "humps";
 
-import { openToast } from '../slices/toast';
-import { apis } from '../../constants/apis';
+import { apis } from "../../constants/apis";
+import { openToast } from "../slices/toast";
 
 const baseQuery = fetchBaseQuery({
   baseUrl: apis.BASE_URL,
   prepareHeaders: (headers) => {
-    headers.set('Content-Type', 'application/json');
+    headers.set("Content-Type", "application/json");
 
     return headers;
   },
@@ -24,7 +24,7 @@ const requestInterceptor = async (args, api, extraOptions) => {
   const abortController = new AbortController();
   controllers.set(api.endpoint, abortController);
 
-  if (args && typeof args === 'object') {
+  if (args && typeof args === "object") {
     if (args.params) {
       args.params = decamelizeKeys(args.params);
     }
@@ -42,14 +42,13 @@ const requestInterceptor = async (args, api, extraOptions) => {
     result.data = camelizeKeys(result.data);
   }
   if (result.error) {
-    console.log(result.error);
     api.dispatch(
       openToast({
-        type: 'error',
+        type: "error",
         message:
           result.error.data.message ||
           result.error.data ||
-          'Something went wrong. Please try again.',
+          "Something went wrong. Please try again.",
       }),
     );
   }
@@ -58,7 +57,7 @@ const requestInterceptor = async (args, api, extraOptions) => {
 };
 
 export const baseApi = createApi({
-  reducerPath: 'baseApi',
+  reducerPath: "baseApi",
   baseQuery: requestInterceptor,
   endpoints: () => ({}),
 });

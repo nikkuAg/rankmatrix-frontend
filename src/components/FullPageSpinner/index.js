@@ -1,6 +1,7 @@
-import { Box, CircularProgress, useTheme } from '@mui/material';
-import { useSelector } from 'react-redux';
-import React from 'react';
+import React from "react";
+import { useSelector } from "react-redux";
+
+import { Box, CircularProgress, useTheme } from "@mui/material";
 
 export const FullPageSpinner = () => {
   const loader = useSelector((state) => state.loader.show);
@@ -12,9 +13,9 @@ export const FullPageSpinner = () => {
       height="100vh"
       position="absolute"
       top={0}
-      display={'flex'}
-      justifyContent={'center'}
-      alignItems={'center'}
+      display={"flex"}
+      justifyContent={"center"}
+      alignItems={"center"}
       sx={{ backgroundColor: theme.background.default }}
     >
       <CircularProgress size="5rem" />
