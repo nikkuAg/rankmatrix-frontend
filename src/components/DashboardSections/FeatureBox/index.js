@@ -66,7 +66,13 @@ const FeatureCard = ({ title, image, link }) => {
   const router = useRouter();
 
   return (
-    <Card sx={{ width: "100%", height: "13rem" }}>
+    <Card
+      sx={{
+        width: "100%",
+        height: "13rem",
+        boxShadow: `0px 0px 55px 6px ${theme.palette.shadow.main}`,
+      }}
+    >
       <CardActionArea sx={{ width: "100%", height: "100%" }} onClick={() => router.push(link)}>
         <CardMedia
           sx={{
