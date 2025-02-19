@@ -11,6 +11,7 @@ import {
   format,
   isSameDay,
   isWithinInterval,
+  startOfDay,
   startOfMonth,
 } from "date-fns";
 
@@ -28,8 +29,8 @@ export const EventCalendar = () => {
       const endMonth = endOfMonth(selectedDate);
 
       const monthEvents = events.filter((event) => {
-        const start = new Date(event.startDate);
-        const end = event.endDate ? new Date(event.endDate) : start;
+        const start = startOfDay(new Date(event.startDate));
+        const end = event.endDate ? startOfDay(new Date(event.endDate)) : start;
         return (
           isWithinInterval(start, { start: startMonth, end: endMonth }) ||
           isWithinInterval(end, { start: startMonth, end: endMonth })
@@ -43,8 +44,8 @@ export const EventCalendar = () => {
   useEffect(() => {
     if (selectedDay) {
       const dayEvents = events.filter((event) => {
-        const start = new Date(event.startDate);
-        const end = event.endDate ? new Date(event.endDate) : start;
+        const start = startOfDay(new Date(event.startDate));
+        const end = event.endDate ? startOfDay(new Date(event.endDate)) : start;
         return isWithinInterval(selectedDay, { start, end });
       });
       setEventsToShow(dayEvents);
@@ -76,17 +77,9 @@ export const EventCalendar = () => {
     return "";
   };
 
-  const dayEvents = selectedDay
-    ? filteredEvents.filter((event) => {
-        const start = new Date(event.startDate);
-        const end = event.endDate ? new Date(event.endDate) : start;
-        return isWithinInterval(selectedDay, { start, end });
-      })
-    : filteredEvents;
-
   const handleDateClick = (date) => {
-    setSelectedDay((prev) => (isSameDay(prev, date) ? null : date));
-    setSelectedDate(date);
+    setSelectedDay((prev) => (isSameDay(prev, date) ? null : startOfDay(date)));
+    setSelectedDate(startOfDay(date));
   };
 
   return (
