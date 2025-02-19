@@ -5,7 +5,7 @@ import React from "react";
 import { SITE_CONTENT } from "@/constants/siteContent";
 import { Box, useTheme } from "@mui/material";
 
-import { ContentListCard } from "../ContentListCard";
+import { ContentListCard } from "./ContentListCard";
 
 export const Updates = () => {
   const theme = useTheme();
