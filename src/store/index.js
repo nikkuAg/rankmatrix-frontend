@@ -1,5 +1,4 @@
 import { configureStore } from "@reduxjs/toolkit";
-
 import { baseApi } from "./queries";
 import { siteContentApi } from "./queries/siteContent";
 import loaderSlice from "./slices/loader";

@@ -1,7 +1,5 @@
-import { Poppins } from "next/font/google";
-
 import { Box, Container } from "@mui/material";
-
+import { Poppins } from "next/font/google";
 import { RankMatrixLayout } from "../components/RankMatrixLayout";
 import StoreProvider from "../store/provider";
 import { ThemeProviderWrapper } from "../theme/ThemeContext";

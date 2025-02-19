@@ -65,6 +65,9 @@ importers:
       "@eslint/eslintrc":
         specifier: ^3.2.0
         version: 3.2.0
+      "@ianvs/prettier-plugin-sort-imports":
+        specifier: ^4.4.1
+        version: 4.4.1(prettier@3.4.2)
       "@next/eslint-plugin-next":
         specifier: ^15.1.7
         version: 15.1.7
@@ -536,6 +539,18 @@ packages:
         integrity: sha512-c7hNEllBlenFTHBky65mhq8WD2kbN9Q6gk0bTk8lSBvc554jpXSkST1iePudpt7+A/AQvuHs9EMqjHDXMY1lrA==,
       }
     engines: { node: ">=18.18" }
+
+  "@ianvs/prettier-plugin-sort-imports@4.4.1":
+    resolution:
+      {
+        integrity: sha512-F0/Hrcfpy8WuxlQyAWJTEren/uxKhYonOGY4OyWmwRdeTvkh9mMSCxowZLjNkhwi/2ipqCgtXwwOk7tW0mWXkA==,
+      }
+    peerDependencies:
+      "@vue/compiler-sfc": 2.7.x || 3.x
+      prettier: 2 || 3
+    peerDependenciesMeta:
+      "@vue/compiler-sfc":
+        optional: true
 
   "@img/sharp-darwin-arm64@0.33.5":
     resolution:
@@ -5778,6 +5793,17 @@ snapshots:
   "@humanwhocodes/retry@0.3.1": {}
 
   "@humanwhocodes/retry@0.4.1": {}
+
+  "@ianvs/prettier-plugin-sort-imports@4.4.1(prettier@3.4.2)":
+    dependencies:
+      "@babel/generator": 7.26.5
+      "@babel/parser": 7.26.7
+      "@babel/traverse": 7.26.7
+      "@babel/types": 7.26.7
+      prettier: 3.4.2
+      semver: 7.6.3
+    transitivePeerDependencies:
+      - supports-color
 
   "@img/sharp-darwin-arm64@0.33.5":
     optionalDependencies:

@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
-
-import { SITE_CONTENT } from "@/constants/siteContent";
-import { useSiteContent } from "@/store/selectors/siteContent";
 import { Box, Grid2, Stack, Typography, useTheme } from "@mui/material";
 import {
   eachDayOfInterval,
@@ -14,6 +11,8 @@ import {
   startOfDay,
   startOfMonth,
 } from "date-fns";
+import { SITE_CONTENT } from "@/constants/siteContent";
+import { useSiteContent } from "@/store/selectors/siteContent";
 
 export const EventCalendar = () => {
   const events = useSiteContent()?.event;

@@ -1,12 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-
-import Image from "next/image";
-import { useRouter } from "next/navigation";
-
 import {
-  Box,
   Card,
   CardActionArea,
   CardContent,
@@ -16,12 +11,14 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 const features = [
   {
     title: "Participating Colleges",
     image: "/college.svg",
-    link: "/tem",
+    link: "/colleges",
   },
   {
     title: "Participating Branches",

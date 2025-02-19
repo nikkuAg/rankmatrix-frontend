@@ -1,16 +1,13 @@
 "use client";
 
 import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
-
-import { useGetSiteContentsQuery } from "@/store/queries/siteContent";
-import { startLoading, stopLoading } from "@/store/slices/loader";
 import { Box, Grid2 } from "@mui/material";
-
+import { useDispatch } from "react-redux";
 import { EventCalendar } from "@/components/DashboardSections/Calendar";
 import { FeatureBox } from "@/components/DashboardSections/FeatureBox";
 import { Updates } from "@/components/DashboardSections/Updates";
-
+import { useGetSiteContentsQuery } from "@/store/queries/siteContent";
+import { startLoading, stopLoading } from "@/store/slices/loader";
 import { useIsMobile } from "@/utils/screenSizeHook";
 
 const Home = () => {

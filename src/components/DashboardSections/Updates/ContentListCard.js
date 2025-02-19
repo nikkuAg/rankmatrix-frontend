@@ -1,9 +1,8 @@
 import React from "react";
-
-import { SITE_CONTENT } from "@/constants/siteContent";
-import { useSiteContent } from "@/store/selectors/siteContent";
 import CircleIcon from "@mui/icons-material/Circle";
 import { Box, Link, Stack, Typography } from "@mui/material";
+import { SITE_CONTENT } from "@/constants/siteContent";
+import { useSiteContent } from "@/store/selectors/siteContent";
 
 export const ContentListCard = ({ title, contentType, height }) => {
   const contentList = useSiteContent();

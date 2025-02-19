@@ -1,10 +1,8 @@
 "use client";
 
 import React from "react";
-
-import { SITE_CONTENT } from "@/constants/siteContent";
 import { Box, useTheme } from "@mui/material";
-
+import { SITE_CONTENT } from "@/constants/siteContent";
 import { ContentListCard } from "./ContentListCard";
 
 export const Updates = () => {

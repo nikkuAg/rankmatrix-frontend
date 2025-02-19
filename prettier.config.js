@@ -6,19 +6,9 @@ module.exports = {
   tabWidth: 2,
   printWidth: 100,
   endOfLine: "lf",
-  plugins: ["@trivago/prettier-plugin-sort-imports"],
-  importOrder: [
-    "^react",
-    "^next",
-    "<THIRD_PARTY_MODULES>",
-    "^@/components/(.*)$",
-    "^@/hooks/(.*)$",
-    "^@/utils/(.*)$",
-    "^@/lib/(.*)$",
-    "^@/styles/(.*)$",
-    "^[./]", // Local imports
-  ],
-  importOrderSeparation: true,
+  plugins: ["@trivago/prettier-plugin-sort-imports", "@ianvs/prettier-plugin-sort-imports"],
+  importOrder: ["^react$", "<THIRD_PARTY_MODULES>", "^@/(.*)$", "^[./]"],
+  importOrderSeparation: false,
   importOrderSortSpecifiers: true,
   importOrderParserPlugins: ["typescript", "jsx", "decorators-legacy"],
 };

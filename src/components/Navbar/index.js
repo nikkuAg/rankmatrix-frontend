@@ -1,11 +1,7 @@
 "use client";
 
 import React from "react";
-
-import { useRouter } from "next/navigation";
-
-import { LightMode } from "@mui/icons-material";
-import { DarkMode } from "@mui/icons-material";
+import { DarkMode, LightMode } from "@mui/icons-material";
 import {
   AppBar,
   Avatar,
@@ -16,7 +12,7 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
-
+import { useRouter } from "next/navigation";
 import { useThemeContext } from "../../theme/ThemeContext";
 
 export const Navbar = () => {

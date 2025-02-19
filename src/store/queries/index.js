@@ -1,6 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { camelizeKeys, decamelizeKeys } from "humps";
-
 import { apis } from "../../constants/apis";
 import { openToast } from "../slices/toast";
 

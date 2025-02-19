@@ -1,7 +1,6 @@
 import React from "react";
-import { useSelector } from "react-redux";
-
 import { Box, CircularProgress, useTheme } from "@mui/material";
+import { useSelector } from "react-redux";
 
 export const FullPageSpinner = () => {
   const loader = useSelector((state) => state.loader.show);

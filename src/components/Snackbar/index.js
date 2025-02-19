@@ -1,10 +1,8 @@
 "use client";
 
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-
 import { Alert, Snackbar, useTheme } from "@mui/material";
-
+import { useDispatch, useSelector } from "react-redux";
 import { closeToast } from "../../store/slices/toast";
 
 export const SnackBar = () => {
