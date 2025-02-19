@@ -2,6 +2,8 @@
 
 import React from "react";
 
+import { useRouter } from "next/navigation";
+
 import { LightMode } from "@mui/icons-material";
 import { DarkMode } from "@mui/icons-material";
 import {
@@ -20,12 +22,17 @@ import { useThemeContext } from "../../theme/ThemeContext";
 export const Navbar = () => {
   const theme = useTheme();
   const { mode, toggleTheme } = useThemeContext();
-
+  const router = useRouter();
   return (
     <AppBar position="static" sx={{ py: 2, background: theme.background.main }} elevation={0}>
       <Container maxWidth="xl">
         <Stack direction={"row"} justifyContent={"space-between"}>
-          <Stack direction={"row"} gap={2}>
+          <Stack
+            direction={"row"}
+            gap={2}
+            onClick={() => router.push("/")}
+            sx={{ cursor: "pointer" }}
+          >
             <Avatar
               alt="Logo"
               src={`${mode === "dark" ? "/logoDark.svg" : "/logo.svg"}`}

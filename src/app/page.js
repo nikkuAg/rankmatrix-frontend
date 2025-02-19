@@ -50,7 +50,7 @@ const Home = () => {
           </Grid2>
           {isMobile && (
             <Grid2 size={2}>
-              <Box>Heuuu</Box>
+              <FeatureBox />
             </Grid2>
           )}
         </>
