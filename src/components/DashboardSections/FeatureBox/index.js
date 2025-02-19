@@ -64,9 +64,7 @@ const FeatureCard = ({ title, image, link }) => {
   const [isLoading, setIsLoading] = useState(true);
   const theme = useTheme();
   const router = useRouter();
-  const temp = () => {
-    console.log("hue hue loading complete");
-  };
+
   return (
     <Card sx={{ width: "100%", height: "13rem" }}>
       <CardActionArea sx={{ width: "100%", height: "100%" }} onClick={() => router.push(link)}>
