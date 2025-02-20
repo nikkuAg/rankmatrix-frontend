@@ -30,6 +30,7 @@ const Home = () => {
       columns={{ xs: 2, sm: 5, lg: 9 }}
       rowSpacing={1}
       columnSpacing={1}
+      p={2}
       height={"100%"}
     >
       {isSuccess && (

@@ -23,37 +23,37 @@ const features = [
   {
     title: "Participating Branches",
     image: "/college.svg",
-    link: "#",
+    link: "/branches",
   },
   {
     title: "Seat Matrix",
     image: "/seat.svg",
-    link: "#",
+    link: "/seat-matrix",
   },
   {
     title: "Opening & Closing Ranks",
     image: "/rank.svg",
-    link: "#",
+    link: "/ranks",
   },
   {
     title: "Predict Your College",
     image: "/predict.svg",
-    link: "#",
+    link: "/predict",
   },
   {
     title: "Prediction Matrix",
     image: "/matrix.svg",
-    link: "#",
+    link: "/matrix",
   },
   {
     title: "Test Your JoSAA Choices",
     image: "/choices.svg",
-    link: "#",
+    link: "/test-choices",
   },
   {
     title: "Important Documents",
     image: "/doc.svg",
-    link: "#",
+    link: "/documents",
   },
 ];
 

@@ -3,17 +3,17 @@ import { Typography } from "@mui/material";
 import { FeatureLayout } from "@/components/RankMatrixLayout/FeatureLayout";
 
 export const metadata = {
-  title: "Participating Colleges | RankMatrix",
+  title: "Prediction Matrix | RankMatrix",
   description:
-    "List of colleges participating in JoSAA counselling for admission in engineering colleges",
+    "Prediction Matrix is a feature to provided you a various kind of matrix to help you is making decision for JoSAA counselling",
 };
 
-const College = () => {
+const Matrix = () => {
   return (
-    <FeatureLayout title={"Participating Colleges"}>
+    <FeatureLayout title={"Prediction Matrix"}>
       <Typography>Testing</Typography>
     </FeatureLayout>
   );
 };
 
-export default College;
+export default Matrix;

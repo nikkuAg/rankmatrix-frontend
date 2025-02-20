@@ -3,6 +3,7 @@
 import React from "react";
 import { Box, Stack, Typography, useTheme } from "@mui/material";
 import { useIsScreenAllowed } from "../../utils/screenSizeHook";
+import { Footer } from "../Footer";
 import { Navbar } from "../Navbar";
 import { SnackBar } from "../Snackbar";
 
@@ -20,9 +21,8 @@ export const RankMatrixLayout = ({ children }) => {
       {isAllowed ? (
         <Stack height={"100%"} width={"100%"}>
           <Navbar />
-          <Box flexGrow={1} p={2}>
-            {children}
-          </Box>
+          <Box flexGrow={1}>{children}</Box>
+          <Footer />
           <SnackBar />
           {/* <FullPageSpinner /> */}
         </Stack>

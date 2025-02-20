@@ -3,17 +3,17 @@ import { Typography } from "@mui/material";
 import { FeatureLayout } from "@/components/RankMatrixLayout/FeatureLayout";
 
 export const metadata = {
-  title: "Participating Colleges | RankMatrix",
+  title: "Opening & Closing Ranks | RankMatrix",
   description:
-    "List of colleges participating in JoSAA counselling for admission in engineering colleges",
+    "Opening & Closing Ranks for all colleges and branches participating in JoSAA counselling",
 };
 
-const College = () => {
+const Ranks = () => {
   return (
-    <FeatureLayout title={"Participating Colleges"}>
+    <FeatureLayout title={"Opening & Closing Ranks"}>
       <Typography>Testing</Typography>
     </FeatureLayout>
   );
 };
 
-export default College;
+export default Ranks;
