@@ -2,16 +2,7 @@
 
 import React from "react";
 import { DarkMode, LightMode } from "@mui/icons-material";
-import {
-  AppBar,
-  Avatar,
-  Container,
-  IconButton,
-  Stack,
-  Toolbar,
-  Typography,
-  useTheme,
-} from "@mui/material";
+import { AppBar, Avatar, Container, IconButton, Stack, Typography, useTheme } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { useThemeContext } from "../../theme/ThemeContext";
 

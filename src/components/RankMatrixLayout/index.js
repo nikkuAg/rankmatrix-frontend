@@ -3,7 +3,6 @@
 import React from "react";
 import { Box, Stack, Typography, useTheme } from "@mui/material";
 import { useIsScreenAllowed } from "../../utils/screenSizeHook";
-import { FullPageSpinner } from "../FullPageSpinner";
 import { Navbar } from "../Navbar";
 import { SnackBar } from "../Snackbar";
 

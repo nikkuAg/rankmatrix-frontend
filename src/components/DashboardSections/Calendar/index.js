@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
-import { Box, Grid2, Stack, Typography, useTheme } from "@mui/material";
+import { Grid2, Stack, Typography, useTheme } from "@mui/material";
 import {
   eachDayOfInterval,
   endOfMonth,
@@ -11,7 +11,6 @@ import {
   startOfDay,
   startOfMonth,
 } from "date-fns";
-import { SITE_CONTENT } from "@/constants/siteContent";
 import { useSiteContent } from "@/store/selectors/siteContent";
 
 export const EventCalendar = () => {
@@ -51,7 +50,7 @@ export const EventCalendar = () => {
     } else {
       setEventsToShow(filteredEvents);
     }
-  }, [selectedDay, filteredEvents]);
+  }, [selectedDay, filteredEvents, events]);
 
   const eventDates = new Set();
   filteredEvents.forEach((event) => {
@@ -63,7 +62,7 @@ export const EventCalendar = () => {
     });
   });
 
-  const highlightDates = ({ date, view }) => {
+  const highlightDates = ({ date }) => {
     const isToday = isSameDay(date, new Date());
     const isSelected = selectedDate && isSameDay(date, selectedDate);
     const isEventDate = eventDates.has(date.toDateString());

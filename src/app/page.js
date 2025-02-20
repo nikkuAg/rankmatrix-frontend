@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect } from "react";
-import { Box, Grid2 } from "@mui/material";
+import { Grid2 } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { EventCalendar } from "@/components/DashboardSections/Calendar";
 import { FeatureBox } from "@/components/DashboardSections/FeatureBox";
@@ -12,7 +12,7 @@ import { useIsMobile } from "@/utils/screenSizeHook";
 
 const Home = () => {
   const isMobile = useIsMobile();
-  const { data, isLoading, isSuccess } = useGetSiteContentsQuery();
+  const { isLoading, isSuccess } = useGetSiteContentsQuery();
 
   const dispatch = useDispatch();
 

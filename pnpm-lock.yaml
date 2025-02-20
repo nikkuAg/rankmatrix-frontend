@@ -65,9 +65,6 @@ importers:
       "@eslint/eslintrc":
         specifier: ^3.2.0
         version: 3.2.0
-      "@ianvs/prettier-plugin-sort-imports":
-        specifier: ^4.4.1
-        version: 4.4.1(prettier@3.4.2)
       "@next/eslint-plugin-next":
         specifier: ^15.1.7
         version: 15.1.7
@@ -95,6 +92,9 @@ importers:
       eslint-plugin-simple-import-sort:
         specifier: ^12.1.1
         version: 12.1.1(eslint@9.19.0(jiti@2.4.2))
+      eslint-plugin-unused-imports:
+        specifier: ^4.1.4
+        version: 4.1.4(@typescript-eslint/eslint-plugin@8.19.0(@typescript-eslint/parser@8.21.0(eslint@9.19.0(jiti@2.4.2))(typescript@5.7.2))(eslint@9.19.0(jiti@2.4.2))(typescript@5.7.2))(eslint@9.19.0(jiti@2.4.2))
       husky:
         specifier: ^9.1.7
         version: 9.1.7
@@ -539,18 +539,6 @@ packages:
         integrity: sha512-c7hNEllBlenFTHBky65mhq8WD2kbN9Q6gk0bTk8lSBvc554jpXSkST1iePudpt7+A/AQvuHs9EMqjHDXMY1lrA==,
       }
     engines: { node: ">=18.18" }
-
-  "@ianvs/prettier-plugin-sort-imports@4.4.1":
-    resolution:
-      {
-        integrity: sha512-F0/Hrcfpy8WuxlQyAWJTEren/uxKhYonOGY4OyWmwRdeTvkh9mMSCxowZLjNkhwi/2ipqCgtXwwOk7tW0mWXkA==,
-      }
-    peerDependencies:
-      "@vue/compiler-sfc": 2.7.x || 3.x
-      prettier: 2 || 3
-    peerDependenciesMeta:
-      "@vue/compiler-sfc":
-        optional: true
 
   "@img/sharp-darwin-arm64@0.33.5":
     resolution:
@@ -2817,6 +2805,18 @@ packages:
       }
     peerDependencies:
       eslint: ">=5.0.0"
+
+  eslint-plugin-unused-imports@4.1.4:
+    resolution:
+      {
+        integrity: sha512-YptD6IzQjDardkl0POxnnRBhU1OEePMV0nd6siHaRBbd+lyh6NAhFEobiznKU7kTsSsDeSD62Pe7kAM1b7dAZQ==,
+      }
+    peerDependencies:
+      "@typescript-eslint/eslint-plugin": ^8.0.0-0 || ^7.0.0 || ^6.0.0 || ^5.0.0
+      eslint: ^9.0.0 || ^8.0.0
+    peerDependenciesMeta:
+      "@typescript-eslint/eslint-plugin":
+        optional: true
 
   eslint-scope@5.1.1:
     resolution:
@@ -5794,17 +5794,6 @@ snapshots:
 
   "@humanwhocodes/retry@0.4.1": {}
 
-  "@ianvs/prettier-plugin-sort-imports@4.4.1(prettier@3.4.2)":
-    dependencies:
-      "@babel/generator": 7.26.5
-      "@babel/parser": 7.26.7
-      "@babel/traverse": 7.26.7
-      "@babel/types": 7.26.7
-      prettier: 3.4.2
-      semver: 7.6.3
-    transitivePeerDependencies:
-      - supports-color
-
   "@img/sharp-darwin-arm64@0.33.5":
     optionalDependencies:
       "@img/sharp-libvips-darwin-arm64": 1.0.4
@@ -7478,6 +7467,12 @@ snapshots:
   eslint-plugin-simple-import-sort@12.1.1(eslint@9.19.0(jiti@2.4.2)):
     dependencies:
       eslint: 9.19.0(jiti@2.4.2)
+
+  eslint-plugin-unused-imports@4.1.4(@typescript-eslint/eslint-plugin@8.19.0(@typescript-eslint/parser@8.21.0(eslint@9.19.0(jiti@2.4.2))(typescript@5.7.2))(eslint@9.19.0(jiti@2.4.2))(typescript@5.7.2))(eslint@9.19.0(jiti@2.4.2)):
+    dependencies:
+      eslint: 9.19.0(jiti@2.4.2)
+    optionalDependencies:
+      "@typescript-eslint/eslint-plugin": 8.19.0(@typescript-eslint/parser@8.21.0(eslint@9.19.0(jiti@2.4.2))(typescript@5.7.2))(eslint@9.19.0(jiti@2.4.2))(typescript@5.7.2)
 
   eslint-scope@5.1.1:
     dependencies:

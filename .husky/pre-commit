@@ -1,2 +1,3 @@
 pnpm lint-staged
 pnpm exec prettier --write .
+pnpm eslint src --fix
