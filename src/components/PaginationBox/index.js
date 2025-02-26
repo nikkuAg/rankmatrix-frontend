@@ -10,7 +10,7 @@ export const PaginationBox = ({ currentPage, totalPages, onPageChange, start, en
       <Pagination
         count={totalPages}
         page={currentPage}
-        onChange={(event, value) => onPageChange(value)}
+        onChange={(value) => onPageChange(value)}
         sx={{
           '& .MuiPaginationItem-root': {
             color: theme.palette.text.main,

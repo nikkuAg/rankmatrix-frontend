@@ -12,6 +12,7 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  Typography,
   useTheme,
 } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
@@ -32,7 +33,7 @@ import { Spinner } from '../Spinner';
 import { TableSortCell } from '../TableSortCell';
 
 export const CollegeList = () => {
-  const [getCollegeData, { data, isLoading, isError, isFetching }] = useLazyGetCollegeDataQuery();
+  const [getCollegeData, { data, isLoading, isFetching }] = useLazyGetCollegeDataQuery();
   const collegeReqData = useSelector((state) => state.college);
   const theme = useTheme();
   const dispatch = useDispatch();
@@ -43,7 +44,7 @@ export const CollegeList = () => {
 
   useEffect(() => {
     getCollegeData(collegeReqData);
-  }, [collegeReqData]);
+  }, [collegeReqData, getCollegeData]);
 
   useEffect(() => {
     if (!isLoading) {
@@ -68,7 +69,7 @@ export const CollegeList = () => {
     } else {
       dispatch(updateOrdering(null));
     }
-  }, [sortField, sortOrder]);
+  }, [sortField, sortOrder, dispatch]);
 
   const handleCollegeTypeChange = (filterValues) => {
     if (filterValues.length > 0) {
@@ -119,7 +120,17 @@ export const CollegeList = () => {
         {isLoading || isFetching ? (
           <Spinner sx={{ width: '100%', height: '100%' }} />
         ) : (
-          <Box flexGrow={1}>
+          <Stack flexGrow={1}>
+            {!sortField && (
+              <Typography
+                variant="p"
+                alignSelf={'flex-end'}
+                fontWeight={300}
+                color={theme.palette.gray.dark}
+              >
+                *Data sorted by latest NIRF year
+              </Typography>
+            )}
             <TableContainer
               component={Box}
               width={'100%'}
@@ -203,7 +214,7 @@ export const CollegeList = () => {
                 </TableBody>
               </Table>
             </TableContainer>
-          </Box>
+          </Stack>
         )}
         {!isLoading && !isFetching && data?.totalPages > 1 && (
           <PaginationBox
