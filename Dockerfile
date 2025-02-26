@@ -11,7 +11,7 @@ WORKDIR /rankmatrix
 COPY package.json pnpm-lock.yaml ./
 
 # Install dependencies using pnpm
-RUN pnpm install --no-frozen-lockfile
+RUN pnpm Install
 
 # Copy the rest of the app files
 COPY . .
