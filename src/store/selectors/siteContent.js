@@ -1,4 +1,4 @@
-import { useGetSiteContentsQuery } from "../queries/siteContent";
+import { useGetSiteContentsQuery } from '../queries/siteContent';
 
 export const useSiteContent = () => {
   return useGetSiteContentsQuery(undefined, {

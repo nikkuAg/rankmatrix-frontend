@@ -1,14 +1,14 @@
-"use client";
+'use client';
 
-import React, { useEffect } from "react";
-import { Grid2 } from "@mui/material";
-import { useDispatch } from "react-redux";
-import { EventCalendar } from "@/components/DashboardSections/Calendar";
-import { FeatureBox } from "@/components/DashboardSections/FeatureBox";
-import { Updates } from "@/components/DashboardSections/Updates";
-import { useGetSiteContentsQuery } from "@/store/queries/siteContent";
-import { startLoading, stopLoading } from "@/store/slices/loader";
-import { useIsMobile } from "@/utils/screenSizeHook";
+import React, { useEffect } from 'react';
+import { Grid2 } from '@mui/material';
+import { useDispatch } from 'react-redux';
+import { EventCalendar } from '@/components/DashboardSections/Calendar';
+import { FeatureBox } from '@/components/DashboardSections/FeatureBox';
+import { Updates } from '@/components/DashboardSections/Updates';
+import { useGetSiteContentsQuery } from '@/store/queries/siteContent';
+import { startLoading, stopLoading } from '@/store/slices/loader';
+import { useIsMobile } from '@/utils/screenSizeHook';
 
 const Home = () => {
   const isMobile = useIsMobile();
@@ -31,7 +31,7 @@ const Home = () => {
       rowSpacing={1}
       columnSpacing={1}
       p={2}
-      height={"100%"}
+      height={'100%'}
     >
       {isSuccess && (
         <>
