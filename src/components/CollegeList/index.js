@@ -120,7 +120,7 @@ export const CollegeList = () => {
         )}
         {isLoading || isFetching ? (
           <Spinner sx={{ width: '100%', height: '100%' }} />
-        ) : data?.data?.length == 0 ? (
+        ) : data?.data?.length > 0 ? (
           <Stack flexGrow={1}>
             {!sortField && (
               <Typography
