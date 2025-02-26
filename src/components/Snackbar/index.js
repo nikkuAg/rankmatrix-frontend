@@ -3,7 +3,7 @@
 import React from 'react';
 import { Alert, Snackbar, useTheme } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
-import { closeToast } from '../../store/slices/toast';
+import { closeToast } from '@/store/slices/toast';
 
 export const SnackBar = () => {
   const toast = useSelector((state) => state.toast);

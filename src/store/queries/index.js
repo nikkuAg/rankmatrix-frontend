@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { camelizeKeys, decamelizeKeys } from 'humps';
-import { apis } from '../../constants/apis';
-import { openToast } from '../slices/toast';
+import { apis } from '@/constants/apis';
+import { openToast } from '@/store/slices/toast';
 
 const baseQuery = fetchBaseQuery({
   baseUrl: apis.BASE_URL,

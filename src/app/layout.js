@@ -1,7 +1,7 @@
 import { Poppins } from 'next/font/google';
-import { RankMatrixLayout } from '../components/RankMatrixLayout';
-import StoreProvider from '../store/provider';
-import { ThemeProviderWrapper } from '../theme/ThemeContext';
+import { RankMatrixLayout } from '@/components/RankMatrixLayout';
+import StoreProvider from '@/store/provider';
+import { ThemeProviderWrapper } from '@/theme/ThemeContext';
 
 const poppins = Poppins({
   variable: '--font-poppins',

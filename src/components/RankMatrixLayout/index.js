@@ -2,11 +2,11 @@
 
 import React from 'react';
 import { Box, Stack, Typography, useTheme } from '@mui/material';
-import { useIsScreenAllowed } from '../../utils/screenSizeHook';
-import { Footer } from '../Footer';
-import { Navbar } from '../Navbar';
-import { SnackBar } from '../Snackbar';
-import { FullPageSpinner } from '../Spinner/FullPage';
+import { Footer } from '@/components/Footer';
+import { Navbar } from '@/components/Navbar';
+import { SnackBar } from '@/components/Snackbar';
+import { FullPageSpinner } from '@/components/Spinner/FullPage';
+import { useIsScreenAllowed } from '@/utils/screenSizeHook';
 
 export const RankMatrixLayout = ({ children }) => {
   const theme = useTheme();

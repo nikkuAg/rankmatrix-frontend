@@ -16,22 +16,22 @@ import {
   useTheme,
 } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
-import { stopLoading } from '@/store/slices/loader';
-import { COLLEGE_TYPES } from '../../constants/josaa';
-import { useLazyGetCollegeDataQuery } from '../../store/queries/college';
+import { ChipFilter } from '@/components/ChipFilter';
+import { NoDataComponent } from '@/components/NoData';
+import { PaginationBox } from '@/components/PaginationBox';
+import { SearchBox } from '@/components/SearchBox';
+import { Spinner } from '@/components/Spinner';
+import { TableSortCell } from '@/components/TableSortCell';
+import { COLLEGE_TYPES } from '@/constants/josaa';
+import { useLazyGetCollegeDataQuery } from '@/store/queries/college';
 import {
   removeFilters,
   updateFilters,
   updateOrdering,
   updatePageNumber,
   updateSearchValue,
-} from '../../store/slices/college';
-import { ChipFilter } from '../ChipFilter';
-import { NoDataComponent } from '../NoData';
-import { PaginationBox } from '../PaginationBox';
-import { SearchBox } from '../SearchBox';
-import { Spinner } from '../Spinner';
-import { TableSortCell } from '../TableSortCell';
+} from '@/store/slices/college';
+import { stopLoading } from '@/store/slices/loader';
 
 export const CollegeList = () => {
   const [getCollegeData, { data, isLoading, isFetching }] = useLazyGetCollegeDataQuery();

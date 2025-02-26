@@ -1,5 +1,5 @@
+import { apis } from '@/constants/apis';
 import { baseApi } from '.';
-import { apis } from '../../constants/apis';
 
 export const siteContentApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
