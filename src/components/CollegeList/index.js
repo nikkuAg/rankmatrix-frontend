@@ -27,6 +27,7 @@ import {
   updateSearchValue,
 } from '../../store/slices/college';
 import { ChipFilter } from '../ChipFilter';
+import { NoDataComponent } from '../NoData';
 import { PaginationBox } from '../PaginationBox';
 import { SearchBox } from '../SearchBox';
 import { Spinner } from '../Spinner';
@@ -119,7 +120,7 @@ export const CollegeList = () => {
         )}
         {isLoading || isFetching ? (
           <Spinner sx={{ width: '100%', height: '100%' }} />
-        ) : (
+        ) : data?.data?.length == 0 ? (
           <Stack flexGrow={1}>
             {!sortField && (
               <Typography
@@ -215,6 +216,8 @@ export const CollegeList = () => {
               </Table>
             </TableContainer>
           </Stack>
+        ) : (
+          <NoDataComponent />
         )}
         {!isLoading && !isFetching && data?.totalPages > 1 && (
           <PaginationBox
