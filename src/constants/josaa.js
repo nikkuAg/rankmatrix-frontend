@@ -11,7 +11,7 @@ export const CATEGORIES = {
   OBC_NCL_PWD: 'OBC-NCL(PwD)',
 };
 
-export const INSTITUTE_TYPES = {
+export const COLLEGE_TYPES = {
   IIT: 'IIT',
   NIT: 'NIT',
   IIIT: 'IIIT',

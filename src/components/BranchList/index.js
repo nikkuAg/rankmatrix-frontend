@@ -1,0 +1,212 @@
+'use client';
+
+import React, { useEffect, useState } from 'react';
+import {
+  Box,
+  Stack,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  useTheme,
+} from '@mui/material';
+import { useDispatch, useSelector } from 'react-redux';
+import { ChipFilter } from '@/components/ChipFilter';
+import { NoDataComponent } from '@/components/NoData';
+import { PaginationBox } from '@/components/PaginationBox';
+import { SearchBox } from '@/components/SearchBox';
+import { Spinner } from '@/components/Spinner';
+import { TableSortCell } from '@/components/TableSortCell';
+import { COLLEGE_TYPES } from '@/constants/josaa';
+import { useGetBranchFiltersQuery, useLazyGetBranchDataQuery } from '@/store/queries/branch';
+import {
+  removeFilters,
+  updateFilters,
+  updateOrdering,
+  updatePageNumber,
+  updateSearchValue,
+} from '@/store/slices/branch';
+import { stopLoading } from '@/store/slices/loader';
+
+export const BranchList = () => {
+  const [getBranchData, { data, isLoading: isBranchLoading, isFetching: isBranchFetching }] =
+    useLazyGetBranchDataQuery();
+  const {
+    data: filtersData,
+    isLoading: isFiltersLoading,
+    isFetching: isFiltersFetching,
+  } = useGetBranchFiltersQuery();
+  const branchReqData = useSelector((state) => state.branch);
+  const theme = useTheme();
+  const dispatch = useDispatch();
+  const [isLoading, setIsLoading] = useState(true);
+  const [sortField, setSortField] = useState(null);
+  const [sortOrder, setSortOrder] = useState(null);
+
+  useEffect(() => {
+    getBranchData(branchReqData);
+  }, [branchReqData, getBranchData]);
+
+  useEffect(() => {
+    if (!isLoading) {
+      dispatch(stopLoading());
+    }
+  }, [dispatch, isLoading]);
+
+  useEffect(() => {
+    if (sortField) {
+      if (sortOrder === 'asc') {
+        dispatch(updateOrdering(sortField));
+      } else if (sortOrder === 'desc') {
+        dispatch(updateOrdering(`-${sortField}`));
+      }
+    } else {
+      dispatch(updateOrdering(null));
+    }
+  }, [sortField, sortOrder, dispatch]);
+
+  useEffect(() => {
+    if (!isBranchFetching && !isFiltersFetching && !isBranchLoading && !isFiltersLoading) {
+      setIsLoading(false);
+    } else {
+      setIsLoading(true);
+    }
+  }, [isBranchFetching, isFiltersFetching, isBranchLoading, isFiltersLoading]);
+
+  const handleCollegeTypeChange = (filterValues) => {
+    dispatch(updateFilters({ institute__type: filterValues }));
+  };
+
+  const handleFilter = (filterValues, field) => {
+    if (filterValues.length > 0) {
+      dispatch(updateFilters({ [field]: filterValues }));
+    } else {
+      dispatch(removeFilters(field));
+    }
+  };
+
+  const handleSearchChange = (searchValue) => {
+    dispatch(updateSearchValue(searchValue));
+  };
+
+  const handleSort = (field) => {
+    if (sortField === field) {
+      if (sortOrder === 'asc') {
+        setSortOrder('desc');
+      } else if (sortOrder === 'desc') {
+        setSortOrder(null);
+        setSortField(null);
+      }
+    } else {
+      setSortField(field);
+      setSortOrder('asc');
+    }
+  };
+
+  const handlePageChange = (page) => {
+    dispatch(updatePageNumber(page));
+  };
+
+  return (
+    <Box width={'100%'} height={'100%'} p={2}>
+      <Stack spacing={2} height={'100%'}>
+        <Stack direction={'row'} justifyContent={'space-between'} alignItems={'center'}>
+          <ChipFilter
+            filterList={Object.keys(COLLEGE_TYPES)}
+            onChange={handleCollegeTypeChange}
+            defaultSelected={Object.keys(COLLEGE_TYPES)}
+          />
+          <SearchBox onChange={handleSearchChange} width={'35%'} />
+        </Stack>
+        {!isLoading && data?.totalPages > 1 && (
+          <PaginationBox
+            currentPage={data.page}
+            totalPages={data.totalPages}
+            onPageChange={handlePageChange}
+            start={data.startIndex}
+            end={data.endIndex}
+            totalItems={data.totalItems}
+          />
+        )}
+        {isLoading ? (
+          <Spinner sx={{ width: '100%', height: '100%' }} />
+        ) : data?.data?.length > 0 ? (
+          <Stack flexGrow={1}>
+            <TableContainer
+              component={Box}
+              width={'100%'}
+              borderRadius={'12px'}
+              bgcolor={theme.background.default}
+              boxShadow={`0px 0px 28px 0px ${theme.palette.shadow.main}`}
+              overflow={'auto'}
+            >
+              <Table aria-label="college-table">
+                <TableHead>
+                  <TableRow>
+                    <TableCell>Branch Code</TableCell>
+                    <TableSortCell
+                      sortField={sortField}
+                      sortOrder={sortOrder}
+                      handleSort={handleSort}
+                      title="Branch Name"
+                      field="branch__name"
+                      showFilter={false}
+                    />
+                    <TableSortCell
+                      sortField={sortField}
+                      sortOrder={sortOrder}
+                      handleSort={handleSort}
+                      title="Degree"
+                      field="branch__degree"
+                      filterTitle={'Filter by Degree'}
+                      filterValues={filtersData?.degree}
+                      onApplyFilter={(filterValues) => handleFilter(filterValues, 'branch__degree')}
+                      defaultSelected={branchReqData.filters.branch__degree}
+                    />
+                    <TableSortCell
+                      sortField={sortField}
+                      sortOrder={sortOrder}
+                      handleSort={handleSort}
+                      title="Duration"
+                      field="branch__course_duration"
+                      filterTitle={'Filter by Duration'}
+                      filterValues={filtersData?.duration}
+                      onApplyFilter={(filterValues) =>
+                        handleFilter(filterValues, 'branch__course_duration')
+                      }
+                      defaultSelected={branchReqData.filters.branch__course_duration}
+                    />
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {data?.data?.map((branch) => (
+                    <TableRow key={branch.code}>
+                      <TableCell>{branch.code}</TableCell>
+                      <TableCell>{branch.name}</TableCell>
+                      <TableCell>{branch.degree}</TableCell>
+                      <TableCell>{branch.courseDuration} years</TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </Stack>
+        ) : (
+          <NoDataComponent />
+        )}
+        {!isLoading && data?.totalPages > 1 && (
+          <PaginationBox
+            currentPage={data.page}
+            totalPages={data.totalPages}
+            onPageChange={handlePageChange}
+            start={data.startIndex}
+            end={data.endIndex}
+            totalItems={data.totalItems}
+          />
+        )}
+      </Stack>
+    </Box>
+  );
+};

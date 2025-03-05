@@ -1,30 +1,15 @@
 'use client';
-import { createContext, useMemo, useState, useContext } from 'react';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
+
+import { createContext, useContext, useEffect, useMemo, useState } from 'react';
+import { GlobalStyles } from '@mui/material';
 import CssBaseline from '@mui/material/CssBaseline';
-import { themes } from '../constants/themes';
-import { useEffect } from 'react';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { themes } from '@/constants/themes';
 
 const ThemeContext = createContext();
 
 export const useThemeContext = () => useContext(ThemeContext);
 
-/**
- * A component that wraps your app with a MUI theme provider and a context provider
- * to manage the theme mode.
- *
- * The theme mode is stored in local storage and defaults to 'light' if no value is
- * stored. If the user's system is set to dark mode, the theme will default to 'dark'
- * unless a different value is stored in local storage.
- *
- * The context provides the current theme mode and a function to toggle the theme
- * mode between 'light' and 'dark'.
- *
- * This component should be used at the root of your app, and should wrap all other
- * components that need access to the theme mode.
- *
- * @param {{ children: React.ReactNode }} props
- */
 export const ThemeProviderWrapper = ({ children }) => {
   const [mode, setMode] = useState('light');
 
@@ -54,25 +39,14 @@ export const ThemeProviderWrapper = ({ children }) => {
       createTheme({
         palette: {
           mode,
-          primary: {
-            ...themes[mode].primary,
-            main: themes[mode].primary['100'],
-          },
-          secondary: {
-            ...themes[mode].secondary,
-            main: themes[mode].secondary['100'],
-          },
-          tertiary: {
-            ...themes[mode].tertiary,
-            main: themes[mode].tertiary['100'],
-          },
-          text: {
-            primary: themes[mode].textPrimary,
-            secondary: themes[mode].textSecondary,
-          },
-          success: { ...themes[mode].success },
-          error: { ...themes[mode].error },
-          warning: { ...themes[mode].warning },
+          primary: themes[mode].primary,
+          gray: themes[mode].gray,
+          text: themes[mode].text,
+          success: { main: themes[mode].alert.success },
+          error: { main: themes[mode].alert.error },
+          warning: { main: themes[mode].alert.warning },
+          low: themes[mode].alert.low,
+          shadow: themes[mode].shadow,
         },
         typography: {
           fontFamily: themes[mode].font,
@@ -82,10 +56,24 @@ export const ThemeProviderWrapper = ({ children }) => {
     [mode],
   );
 
+  const globalStyles = (
+    <GlobalStyles
+      styles={{
+        a: {
+          color: `${theme.palette.text.link} !important`,
+        },
+        p: {
+          margin: 0,
+        },
+      }}
+    />
+  );
+
   return (
     <ThemeContext.Provider value={{ mode, toggleTheme }}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
+        {globalStyles}
         {children}
       </ThemeProvider>
     </ThemeContext.Provider>

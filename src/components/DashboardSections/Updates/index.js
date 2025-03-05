@@ -1,19 +1,25 @@
 'use client';
-import React, { useEffect } from 'react';
-import { useLazyGetAnnouncementsQuery } from '../../../store/queries/announcement';
-import { useSelector } from 'react-redux';
+
+import React from 'react';
+import { Box, useTheme } from '@mui/material';
+import { SITE_CONTENT } from '@/constants/siteContent';
+import { ContentListCard } from './ContentListCard';
 
 export const Updates = () => {
-  const [getAnnouncements, { data, isError, isLoading }] =
-    useLazyGetAnnouncementsQuery();
-
-  const announcementYear = useSelector((state) => state.announcement.year);
-
-  useEffect(() => {
-    getAnnouncements(announcementYear);
-  }, [announcementYear, getAnnouncements]);
-
-  console.log(data, isLoading);
-
-  return <div>Updates</div>;
+  const theme = useTheme();
+  return (
+    <Box
+      width="100%"
+      height={'80%'}
+      sx={{
+        backgroundColor: theme.background.dark,
+        borderRadius: '12px',
+        boxShadow: `0px 0px 15px -6px ${theme.palette.shadow.main}`,
+        color: theme.palette.text.main,
+      }}
+    >
+      <ContentListCard height={'50%'} title={'Updates'} contentType={SITE_CONTENT.UPDATES} />
+      <ContentListCard height={'50%'} title={'Important Links'} contentType={SITE_CONTENT.LINKS} />
+    </Box>
+  );
 };

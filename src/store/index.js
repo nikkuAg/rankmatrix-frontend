@@ -1,21 +1,30 @@
 import { configureStore } from '@reduxjs/toolkit';
-
-import { announcementApi } from './queries/announcement';
-import announcementSlice from './slices/announcement';
-import toastSlice from './slices/toast';
 import { baseApi } from './queries';
+import { branchApi } from './queries/branch';
+import { collegeApi } from './queries/college';
+import { siteContentApi } from './queries/siteContent';
+import branchReducer from './slices/branch';
+import collegeReducer from './slices/college';
+import loaderReducer from './slices/loader';
+import toastReducer from './slices/toast';
 
 const store = configureStore({
   reducer: {
     [baseApi.reducerPath]: baseApi.reducer,
-    [announcementApi.reducerPath]: announcementApi.reducer,
-    toast: toastSlice,
-    announcement: announcementSlice,
+    [siteContentApi.reducerPath]: siteContentApi.reducer,
+    [collegeApi.reducerPath]: collegeApi.reducer,
+    [branchApi.reducerPath]: branchApi.reducer,
+    toast: toastReducer,
+    loader: loaderReducer,
+    college: collegeReducer,
+    branch: branchReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(
       baseApi.middleware,
-      announcementApi.middleware,
+      siteContentApi.middleware,
+      collegeApi.middleware,
+      branchApi.middleware,
     ),
 });
 

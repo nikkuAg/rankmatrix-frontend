@@ -16,7 +16,9 @@ const toastSlice = createSlice({
       state = {
         ...state,
         ...action.payload,
+        open: true,
       };
+      return state;
     },
     closeToast: (state) => {
       state.open = false;
