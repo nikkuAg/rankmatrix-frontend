@@ -1,11 +1,9 @@
-"use client";
+'use client';
 
-import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-
-import { Alert, Snackbar, useTheme } from "@mui/material";
-
-import { closeToast } from "../../store/slices/toast";
+import React from 'react';
+import { Alert, Snackbar, useTheme } from '@mui/material';
+import { useDispatch, useSelector } from 'react-redux';
+import { closeToast } from '@/store/slices/toast';
 
 export const SnackBar = () => {
   const toast = useSelector((state) => state.toast);
@@ -13,7 +11,7 @@ export const SnackBar = () => {
   const dispatch = useDispatch();
 
   const handleClose = (event, reason) => {
-    if (reason === "clickaway") {
+    if (reason === 'clickaway') {
       return;
     }
     dispatch(closeToast());
@@ -32,7 +30,7 @@ export const SnackBar = () => {
         onClose={handleClose}
         sx={{ color: theme.palette.text.main }}
       >
-        {toast.message?.length > 100 ? "Something went wrong. Please try again." : toast.message}
+        {toast.message?.length > 100 ? 'Something went wrong. Please try again.' : toast.message}
       </Alert>
     </Snackbar>
   );

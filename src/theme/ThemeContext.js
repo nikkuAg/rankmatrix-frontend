@@ -1,36 +1,34 @@
-"use client";
+'use client';
 
-import { createContext, useContext, useEffect, useMemo, useState } from "react";
-
-import { GlobalStyles } from "@mui/material";
-import CssBaseline from "@mui/material/CssBaseline";
-import { ThemeProvider, createTheme } from "@mui/material/styles";
-
-import { themes } from "../constants/themes";
+import { createContext, useContext, useEffect, useMemo, useState } from 'react';
+import { GlobalStyles } from '@mui/material';
+import CssBaseline from '@mui/material/CssBaseline';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { themes } from '@/constants/themes';
 
 const ThemeContext = createContext();
 
 export const useThemeContext = () => useContext(ThemeContext);
 
 export const ThemeProviderWrapper = ({ children }) => {
-  const [mode, setMode] = useState("light");
+  const [mode, setMode] = useState('light');
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      const savedTheme = localStorage.getItem("theme");
+    if (typeof window !== 'undefined') {
+      const savedTheme = localStorage.getItem('theme');
       if (savedTheme) {
         setMode(savedTheme);
-      } else if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
-        setMode("dark");
+      } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        setMode('dark');
       }
     }
   }, []);
 
   const toggleTheme = () => {
     setMode((prevMode) => {
-      const newMode = prevMode === "light" ? "dark" : "light";
-      if (typeof window !== "undefined") {
-        localStorage.setItem("theme", newMode);
+      const newMode = prevMode === 'light' ? 'dark' : 'light';
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('theme', newMode);
       }
       return newMode;
     });
@@ -42,6 +40,7 @@ export const ThemeProviderWrapper = ({ children }) => {
         palette: {
           mode,
           primary: themes[mode].primary,
+          gray: themes[mode].gray,
           text: themes[mode].text,
           success: { main: themes[mode].alert.success },
           error: { main: themes[mode].alert.error },

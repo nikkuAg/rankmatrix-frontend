@@ -1,8 +1,7 @@
-"use client";
+'use client';
 
-import { Provider } from "react-redux";
-
-import store from ".";
+import { Provider } from 'react-redux';
+import store from '.';
 
 /**
  * A React context provider for Redux store.

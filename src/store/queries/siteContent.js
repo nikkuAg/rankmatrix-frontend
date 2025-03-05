@@ -1,12 +1,12 @@
-import { baseApi } from ".";
-import { apis } from "../../constants/apis";
+import { apis } from '@/constants/apis';
+import { baseApi } from '.';
 
 export const siteContentApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getSiteContents: builder.query({
       query: () => ({
         url: apis.siteContent.get,
-        method: "GET",
+        method: 'GET',
       }),
     }),
   }),
