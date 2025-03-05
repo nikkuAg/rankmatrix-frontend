@@ -2,8 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { Chip, Stack, useTheme } from '@mui/material';
 import { useDebounce } from '@/utils/debounceHook';
 
-export const ChipFilter = ({ filterList, flexDirection = 'row', onChange }) => {
-  const [filterValues, setFilterValues] = useState([]);
+export const ChipFilter = ({
+  filterList,
+  flexDirection = 'row',
+  onChange,
+  defaultSelected = [],
+}) => {
+  const [filterValues, setFilterValues] = useState(defaultSelected);
   const debouncedFilterValues = useDebounce(filterValues, 500);
   const theme = useTheme();
 

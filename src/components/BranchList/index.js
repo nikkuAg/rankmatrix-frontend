@@ -1,10 +1,8 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { KeyboardArrowLeft, KeyboardArrowRight } from '@mui/icons-material';
 import {
   Box,
-  Button,
   Stack,
   Table,
   TableBody,
@@ -12,7 +10,6 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Typography,
   useTheme,
 } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
@@ -23,41 +20,40 @@ import { SearchBox } from '@/components/SearchBox';
 import { Spinner } from '@/components/Spinner';
 import { TableSortCell } from '@/components/TableSortCell';
 import { COLLEGE_TYPES } from '@/constants/josaa';
-import { useLazyGetCollegeDataQuery } from '@/store/queries/college';
+import { useGetBranchFiltersQuery, useLazyGetBranchDataQuery } from '@/store/queries/branch';
 import {
+  removeFilters,
   updateFilters,
   updateOrdering,
   updatePageNumber,
   updateSearchValue,
-} from '@/store/slices/college';
+} from '@/store/slices/branch';
 import { stopLoading } from '@/store/slices/loader';
 
-export const CollegeList = () => {
-  const [getCollegeData, { data, isLoading, isFetching }] = useLazyGetCollegeDataQuery();
-  const collegeReqData = useSelector((state) => state.college);
+export const BranchList = () => {
+  const [getBranchData, { data, isLoading: isBranchLoading, isFetching: isBranchFetching }] =
+    useLazyGetBranchDataQuery();
+  const {
+    data: filtersData,
+    isLoading: isFiltersLoading,
+    isFetching: isFiltersFetching,
+  } = useGetBranchFiltersQuery();
+  const branchReqData = useSelector((state) => state.branch);
   const theme = useTheme();
   const dispatch = useDispatch();
-  const [nirfYears, setNirfYears] = useState([]);
-  const [expandedNirf, setExpandedNirf] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [sortField, setSortField] = useState(null);
   const [sortOrder, setSortOrder] = useState(null);
 
   useEffect(() => {
-    getCollegeData(collegeReqData);
-  }, [collegeReqData, getCollegeData]);
+    getBranchData(branchReqData);
+  }, [branchReqData, getBranchData]);
 
   useEffect(() => {
     if (!isLoading) {
       dispatch(stopLoading());
     }
   }, [dispatch, isLoading]);
-
-  useEffect(() => {
-    if (data?.data?.length > 0) {
-      const nirfRanks = data?.data[0].nirfRanks;
-      setNirfYears(nirfRanks.map((rank) => rank.year));
-    }
-  }, [data]);
 
   useEffect(() => {
     if (sortField) {
@@ -71,8 +67,24 @@ export const CollegeList = () => {
     }
   }, [sortField, sortOrder, dispatch]);
 
+  useEffect(() => {
+    if (!isBranchFetching && !isFiltersFetching && !isBranchLoading && !isFiltersLoading) {
+      setIsLoading(false);
+    } else {
+      setIsLoading(true);
+    }
+  }, [isBranchFetching, isFiltersFetching, isBranchLoading, isFiltersLoading]);
+
   const handleCollegeTypeChange = (filterValues) => {
-    dispatch(updateFilters({ type: filterValues }));
+    dispatch(updateFilters({ institute__type: filterValues }));
+  };
+
+  const handleFilter = (filterValues, field) => {
+    if (filterValues.length > 0) {
+      dispatch(updateFilters({ [field]: filterValues }));
+    } else {
+      dispatch(removeFilters(field));
+    }
   };
 
   const handleSearchChange = (searchValue) => {
@@ -108,7 +120,7 @@ export const CollegeList = () => {
           />
           <SearchBox onChange={handleSearchChange} width={'35%'} />
         </Stack>
-        {!isLoading && !isFetching && data?.totalPages > 1 && (
+        {!isLoading && data?.totalPages > 1 && (
           <PaginationBox
             currentPage={data.page}
             totalPages={data.totalPages}
@@ -118,20 +130,10 @@ export const CollegeList = () => {
             totalItems={data.totalItems}
           />
         )}
-        {isLoading || isFetching ? (
+        {isLoading ? (
           <Spinner sx={{ width: '100%', height: '100%' }} />
         ) : data?.data?.length > 0 ? (
           <Stack flexGrow={1}>
-            {!sortField && (
-              <Typography
-                variant="p"
-                alignSelf={'flex-end'}
-                fontWeight={300}
-                color={theme.palette.gray.dark}
-              >
-                *Data sorted by latest NIRF year
-              </Typography>
-            )}
             <TableContainer
               component={Box}
               width={'100%'}
@@ -143,75 +145,48 @@ export const CollegeList = () => {
               <Table aria-label="college-table">
                 <TableHead>
                   <TableRow>
-                    <TableCell>College Code</TableCell>
+                    <TableCell>Branch Code</TableCell>
                     <TableSortCell
                       sortField={sortField}
                       sortOrder={sortOrder}
                       handleSort={handleSort}
-                      title="College Name"
-                      field="name"
+                      title="Branch Name"
+                      field="branch__name"
                       showFilter={false}
                     />
-                    <TableCell>College Type</TableCell>
                     <TableSortCell
                       sortField={sortField}
                       sortOrder={sortOrder}
                       handleSort={handleSort}
-                      title="State"
-                      field="state"
-                      showFilter={false}
+                      title="Degree"
+                      field="branch__degree"
+                      filterTitle={'Filter by Degree'}
+                      filterValues={filtersData?.degree}
+                      onApplyFilter={(filterValues) => handleFilter(filterValues, 'branch__degree')}
+                      defaultSelected={branchReqData.filters.branch__degree}
                     />
-                    <TableCell
-                      colSpan={expandedNirf ? nirfYears.length : 1}
-                      sx={{
-                        transition: 'all 0.3s ease',
-                      }}
-                    >
-                      <Button
-                        onClick={() => setExpandedNirf(!expandedNirf)}
-                        color="inherit"
-                        sx={{ textTransform: 'none' }}
-                      >
-                        NIRF Rank{expandedNirf ? 's' : ` (${nirfYears[0]})`}
-                        {expandedNirf ? <KeyboardArrowLeft /> : <KeyboardArrowRight />}
-                      </Button>
-                    </TableCell>
+                    <TableSortCell
+                      sortField={sortField}
+                      sortOrder={sortOrder}
+                      handleSort={handleSort}
+                      title="Duration"
+                      field="branch__course_duration"
+                      filterTitle={'Filter by Duration'}
+                      filterValues={filtersData?.duration}
+                      onApplyFilter={(filterValues) =>
+                        handleFilter(filterValues, 'branch__course_duration')
+                      }
+                      defaultSelected={branchReqData.filters.branch__course_duration}
+                    />
                   </TableRow>
-                  {expandedNirf && (
-                    <TableRow>
-                      <TableCell colSpan={4} />
-                      {nirfYears.map((year) => (
-                        <TableCell key={year}>{year}</TableCell>
-                      ))}
-                    </TableRow>
-                  )}
                 </TableHead>
                 <TableBody>
-                  {data?.data?.map((college) => (
-                    <TableRow key={college.code}>
-                      <TableCell>{college.code}</TableCell>
-                      <TableCell>{college.name}</TableCell>
-                      <TableCell>{college.type}</TableCell>
-                      <TableCell>{college.state}</TableCell>
-                      {!expandedNirf && (
-                        <TableCell
-                          sx={{
-                            transition: 'all 0.3s ease',
-                            ...(expandedNirf && {
-                              colSpan: nirfYears.length,
-                            }),
-                          }}
-                        >
-                          {college.nirfRanks.find((rank) => rank.year === nirfYears[0])?.rank ||
-                            '-'}
-                        </TableCell>
-                      )}
-                      {expandedNirf &&
-                        nirfYears.map((year) => (
-                          <TableCell key={year}>
-                            {college.nirfRanks.find((rank) => rank.year === year)?.rank || '-'}
-                          </TableCell>
-                        ))}
+                  {data?.data?.map((branch) => (
+                    <TableRow key={branch.code}>
+                      <TableCell>{branch.code}</TableCell>
+                      <TableCell>{branch.name}</TableCell>
+                      <TableCell>{branch.degree}</TableCell>
+                      <TableCell>{branch.courseDuration} years</TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
@@ -221,7 +196,7 @@ export const CollegeList = () => {
         ) : (
           <NoDataComponent />
         )}
-        {!isLoading && !isFetching && data?.totalPages > 1 && (
+        {!isLoading && data?.totalPages > 1 && (
           <PaginationBox
             currentPage={data.page}
             totalPages={data.totalPages}

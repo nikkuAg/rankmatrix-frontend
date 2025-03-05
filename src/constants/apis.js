@@ -6,4 +6,8 @@ export const apis = {
   college: {
     search: '/api/institutes/search',
   },
+  branch: {
+    search: '/api/branches/search',
+    filter: '/api/site/content/branch',
+  },
 };
