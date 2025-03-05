@@ -1,5 +1,5 @@
 import React from 'react';
-import { Typography } from '@mui/material';
+import { BranchList } from '@/components/BranchList';
 import { FeatureLayout } from '@/components/RankMatrixLayout/FeatureLayout';
 
 export const metadata = {
@@ -11,7 +11,7 @@ export const metadata = {
 const Branch = () => {
   return (
     <FeatureLayout title={'Participating Branches'}>
-      <Typography>Testing</Typography>
+      <BranchList />
     </FeatureLayout>
   );
 };

@@ -3,14 +3,21 @@
 import React from 'react';
 import { Pagination, Stack, Typography, useTheme } from '@mui/material';
 
-export const PaginationBox = ({ currentPage, totalPages, onPageChange, start, end }) => {
+export const PaginationBox = ({
+  currentPage,
+  totalPages,
+  onPageChange,
+  start,
+  end,
+  totalItems,
+}) => {
   const theme = useTheme();
   return (
     <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
       <Pagination
         count={totalPages}
         page={currentPage}
-        onChange={(value) => onPageChange(value)}
+        onChange={(_, value) => onPageChange(value)}
         sx={{
           '& .MuiPaginationItem-root': {
             color: theme.palette.text.main,
@@ -32,7 +39,7 @@ export const PaginationBox = ({ currentPage, totalPages, onPageChange, start, en
         }}
       />
       <Typography variant="body2" color={theme.palette.text.main}>
-        Showing results from {start} - {end} of {totalPages}
+        Showing results: {start} - {end} of {totalItems}
       </Typography>
     </Stack>
   );
