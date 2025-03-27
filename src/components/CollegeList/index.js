@@ -98,7 +98,7 @@ export const CollegeList = () => {
   };
 
   return (
-    <Box width={'100%'} height={'100%'} p={2}>
+    <Box width={'100%'} height={'100%'} py={2}>
       <Stack spacing={2} height={'100%'}>
         <Stack direction={'row'} justifyContent={'space-between'} alignItems={'center'}>
           <ChipFilter
