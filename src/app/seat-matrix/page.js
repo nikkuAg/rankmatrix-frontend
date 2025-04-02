@@ -1,6 +1,6 @@
 import React from 'react';
-import { Typography } from '@mui/material';
 import { FeatureLayout } from '@/components/RankMatrixLayout/FeatureLayout';
+import { SeatList } from '@/components/SeatList';
 
 export const metadata = {
   title: 'Seat Matrix | RankMatrix',
@@ -10,7 +10,7 @@ export const metadata = {
 const SeatMatrix = () => {
   return (
     <FeatureLayout title={'Seat Matrix'}>
-      <Typography>Testing</Typography>
+      <SeatList />
     </FeatureLayout>
   );
 };

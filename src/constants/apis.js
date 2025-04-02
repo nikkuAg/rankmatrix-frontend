@@ -10,4 +10,8 @@ export const apis = {
     search: '/api/branches/search',
     filter: '/api/site/content/branch',
   },
+  seat: {
+    search: '/api/josaa/seats/search',
+    filter: '/api/site/content/seat',
+  },
 };

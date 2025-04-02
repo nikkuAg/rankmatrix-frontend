@@ -40,12 +40,12 @@ const requestInterceptor = async (args, api, extraOptions) => {
   if (result.data) {
     result.data = camelizeKeys(result.data);
   }
-  if (result.error) {
+  if (result.error && result.error.status !== 'FETCH_ERROR') {
     api.dispatch(
       openToast({
         type: 'error',
         message:
-          result.error.data.message ||
+          result.error.data?.message ||
           result.error.data ||
           'Something went wrong. Please try again.',
       }),

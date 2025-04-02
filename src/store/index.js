@@ -2,10 +2,12 @@ import { configureStore } from '@reduxjs/toolkit';
 import { baseApi } from './queries';
 import { branchApi } from './queries/branch';
 import { collegeApi } from './queries/college';
+import { seatApi } from './queries/seats';
 import { siteContentApi } from './queries/siteContent';
 import branchReducer from './slices/branch';
 import collegeReducer from './slices/college';
 import loaderReducer from './slices/loader';
+import seatReducer from './slices/seats';
 import toastReducer from './slices/toast';
 
 const store = configureStore({
@@ -14,10 +16,12 @@ const store = configureStore({
     [siteContentApi.reducerPath]: siteContentApi.reducer,
     [collegeApi.reducerPath]: collegeApi.reducer,
     [branchApi.reducerPath]: branchApi.reducer,
+    [seatApi.reducerPath]: seatApi.reducer,
     toast: toastReducer,
     loader: loaderReducer,
     college: collegeReducer,
     branch: branchReducer,
+    seat: seatReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(
@@ -25,6 +29,7 @@ const store = configureStore({
       siteContentApi.middleware,
       collegeApi.middleware,
       branchApi.middleware,
+      seatApi.middleware,
     ),
 });
 
