@@ -1,30 +1,34 @@
 import React from 'react';
-import { Box, Typography, useTheme } from '@mui/material';
+import { Box, TableCell, Typography, useTheme } from '@mui/material';
 
-export const NoDataComponent = () => {
+export const NoDataComponent = ({ colSpan }) => {
   const theme = useTheme();
   return (
-    <Box
-      width={'100%'}
-      height={'100%'}
-      display={'flex'}
-      justifyContent={'center'}
-      alignItems={'center'}
+    <TableCell
+      colSpan={colSpan}
+      sx={{ borderRight: '0px !important', borderBottom: '0px !important' }}
     >
-      <Typography
-        variant="p"
-        alignSelf={'center'}
-        fontWeight={500}
-        fontSize={'1.5rem'}
-        sx={{
-          color: theme.palette.text.main,
-          background: theme.palette.warning.main,
-          padding: '10px 20px',
-          borderRadius: '10px',
-        }}
+      <Box
+        width={'100%'}
+        height={'100%'}
+        display={'flex'}
+        justifyContent={'center'}
+        alignItems={'center'}
       >
-        Data does not exist
-      </Typography>
-    </Box>
+        <Typography
+          variant="p"
+          alignSelf={'center'}
+          fontWeight={400}
+          fontSize={'1rem'}
+          sx={{
+            color: theme.palette.text.main,
+            padding: '10px 20px',
+            borderRadius: '10px',
+          }}
+        >
+          Data for the applied filters does not exists
+        </Typography>
+      </Box>
+    </TableCell>
   );
 };

@@ -7,7 +7,6 @@ import {
   Table,
   TableBody,
   TableCell,
-  TableContainer,
   TableHead,
   TableRow,
   useTheme,
@@ -19,6 +18,7 @@ import { PaginationBox } from '@/components/PaginationBox';
 import { SearchBox } from '@/components/SearchBox';
 import { Spinner } from '@/components/Spinner';
 import { TableSortCell } from '@/components/TableSortCell';
+import { SORT_ORDER } from '@/constants';
 import { COLLEGE_TYPES } from '@/constants/josaa';
 import { useGetBranchFiltersQuery, useLazyGetBranchDataQuery } from '@/store/queries/branch';
 import {
@@ -29,6 +29,7 @@ import {
   updateSearchValue,
 } from '@/store/slices/branch';
 import { stopLoading } from '@/store/slices/loader';
+import { TableLayout } from '../TableLayout';
 
 export const BranchList = () => {
   const [getBranchData, { data, isLoading: isBranchLoading, isFetching: isBranchFetching }] =
@@ -57,9 +58,9 @@ export const BranchList = () => {
 
   useEffect(() => {
     if (sortField) {
-      if (sortOrder === 'asc') {
+      if (sortOrder === SORT_ORDER.ASC) {
         dispatch(updateOrdering(sortField));
-      } else if (sortOrder === 'desc') {
+      } else if (sortOrder === SORT_ORDER.DESC) {
         dispatch(updateOrdering(`-${sortField}`));
       }
     } else {
@@ -93,15 +94,15 @@ export const BranchList = () => {
 
   const handleSort = (field) => {
     if (sortField === field) {
-      if (sortOrder === 'asc') {
-        setSortOrder('desc');
-      } else if (sortOrder === 'desc') {
+      if (sortOrder === SORT_ORDER.ASC) {
+        setSortOrder(SORT_ORDER.DESC);
+      } else if (sortOrder === SORT_ORDER.DESC) {
         setSortOrder(null);
         setSortField(null);
       }
     } else {
       setSortField(field);
-      setSortOrder('asc');
+      setSortOrder(SORT_ORDER.ASC);
     }
   };
 
@@ -132,16 +133,9 @@ export const BranchList = () => {
         )}
         {isLoading ? (
           <Spinner sx={{ width: '100%', height: '100%' }} />
-        ) : data?.data?.length > 0 ? (
+        ) : (
           <Stack flexGrow={1}>
-            <TableContainer
-              component={Box}
-              width={'100%'}
-              borderRadius={'12px'}
-              bgcolor={theme.background.default}
-              boxShadow={`0px 0px 28px 0px ${theme.palette.shadow.main}`}
-              overflow={'auto'}
-            >
+            <TableLayout>
               <Table aria-label="college-table">
                 <TableHead>
                   <TableRow>
@@ -177,24 +171,40 @@ export const BranchList = () => {
                         handleFilter(filterValues, 'branch__course_duration')
                       }
                       defaultSelected={branchReqData.filters.branch__course_duration}
+                      hideBorderRight={true}
                     />
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {data?.data?.map((branch) => (
-                    <TableRow key={branch.code}>
-                      <TableCell>{branch.code}</TableCell>
-                      <TableCell>{branch.name}</TableCell>
-                      <TableCell>{branch.degree}</TableCell>
-                      <TableCell>{branch.courseDuration} years</TableCell>
+                  {data?.data?.length > 0 ? (
+                    data?.data?.map((branch, i) => (
+                      <TableRow
+                        key={branch.code}
+                        sx={
+                          i === data.data.length - 1 && {
+                            '& td': {
+                              borderBottom: '0px !important',
+                            },
+                          }
+                        }
+                      >
+                        <TableCell>{branch.code}</TableCell>
+                        <TableCell>{branch.name}</TableCell>
+                        <TableCell>{branch.degree}</TableCell>
+                        <TableCell sx={{ borderRight: '0px !important' }}>
+                          {branch.courseDuration} years
+                        </TableCell>
+                      </TableRow>
+                    ))
+                  ) : (
+                    <TableRow>
+                      <NoDataComponent colSpan={4} />
                     </TableRow>
-                  ))}
+                  )}
                 </TableBody>
               </Table>
-            </TableContainer>
+            </TableLayout>
           </Stack>
-        ) : (
-          <NoDataComponent />
         )}
         {!isLoading && data?.totalPages > 1 && (
           <PaginationBox

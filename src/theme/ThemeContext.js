@@ -65,6 +65,14 @@ export const ThemeProviderWrapper = ({ children }) => {
         p: {
           margin: 0,
         },
+        th: {
+          borderBottom: `1px solid ${theme.palette.gray.light} !important`,
+          borderRight: `1px solid ${theme.palette.gray.light} !important`,
+        },
+        td: {
+          borderBottom: `1px solid ${theme.palette.gray.light} !important`,
+          borderRight: `1px solid ${theme.palette.gray.light} !important`,
+        },
       }}
     />
   );

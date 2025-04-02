@@ -39,7 +39,8 @@ export const FilterBox = ({
     setAnchorEl(null);
   };
 
-  const handleToggle = (value) => {
+  const handleToggle = (data) => {
+    const value = typeof data === 'object' ? data.value : data;
     const currentIndex = tempSelected.indexOf(value);
     const newChecked = [...tempSelected];
 
@@ -115,8 +116,15 @@ export const FilterBox = ({
             <Box sx={{ py: 1, maxHeight: 180, overflow: 'auto' }}>
               {filterValue.map((value) => (
                 <MenuItem key={value} dense onClick={() => handleToggle(value)} sx={{ py: 0.5 }}>
-                  <Checkbox checked={tempSelected.indexOf(value) !== -1} size="small" />
-                  <Typography variant="body2">{value}</Typography>
+                  <Checkbox
+                    checked={
+                      tempSelected.indexOf(typeof value === 'object' ? value.value : value) !== -1
+                    }
+                    size="small"
+                  />
+                  <Typography variant="body2">
+                    {typeof value === 'object' ? value.label : value}
+                  </Typography>
                 </MenuItem>
               ))}
             </Box>
