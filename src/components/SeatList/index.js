@@ -75,7 +75,7 @@ export const SeatList = () => {
         dispatch(removeIncreaseFilter());
       }
     }
-  }, [tabValue, increaseBtnSelected, dispatch, filterData.years]);
+  }, [tabValue, increaseBtnSelected, dispatch]);
 
   useEffect(() => {
     if (sortField) {
