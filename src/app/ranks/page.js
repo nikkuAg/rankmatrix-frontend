@@ -1,5 +1,5 @@
 import React from 'react';
-import { Typography } from '@mui/material';
+import { RankList } from '@/components/RankList';
 import { FeatureLayout } from '@/components/RankMatrixLayout/FeatureLayout';
 
 export const metadata = {
@@ -11,7 +11,7 @@ export const metadata = {
 const Ranks = () => {
   return (
     <FeatureLayout title={'Opening & Closing Ranks'}>
-      <Typography>Testing</Typography>
+      <RankList />
     </FeatureLayout>
   );
 };

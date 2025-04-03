@@ -2,11 +2,13 @@ import { configureStore } from '@reduxjs/toolkit';
 import { baseApi } from './queries';
 import { branchApi } from './queries/branch';
 import { collegeApi } from './queries/college';
+import { rankApi } from './queries/rank';
 import { seatApi } from './queries/seats';
 import { siteContentApi } from './queries/siteContent';
 import branchReducer from './slices/branch';
 import collegeReducer from './slices/college';
 import loaderReducer from './slices/loader';
+import rankReducer from './slices/rank';
 import seatReducer from './slices/seats';
 import toastReducer from './slices/toast';
 
@@ -17,11 +19,13 @@ const store = configureStore({
     [collegeApi.reducerPath]: collegeApi.reducer,
     [branchApi.reducerPath]: branchApi.reducer,
     [seatApi.reducerPath]: seatApi.reducer,
+    [rankApi.reducerPath]: rankApi.reducer,
     toast: toastReducer,
     loader: loaderReducer,
     college: collegeReducer,
     branch: branchReducer,
     seat: seatReducer,
+    rank: rankReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(
@@ -30,6 +34,7 @@ const store = configureStore({
       collegeApi.middleware,
       branchApi.middleware,
       seatApi.middleware,
+      rankApi.middleware,
     ),
 });
 

@@ -23,7 +23,7 @@ export const ChipFilter = ({
 
   useEffect(() => {
     onChange(debouncedFilterValues);
-  }, [debouncedFilterValues]);
+  }, [debouncedFilterValues, onChange]);
 
   return (
     <Stack direction={flexDirection} spacing={1}>

@@ -3,7 +3,7 @@
 import React from 'react';
 import { Box, Container, Stack, Typography, useTheme } from '@mui/material';
 
-export const FeatureLayout = ({ children, title, maxWidth = 'lg' }) => {
+export const FeatureLayout = ({ children, title, maxWidth = 'xl' }) => {
   const theme = useTheme();
   return (
     <Stack height={'100%'}>
@@ -18,8 +18,8 @@ export const FeatureLayout = ({ children, title, maxWidth = 'lg' }) => {
           {title}
         </Typography>
       </Box>
-      <Container maxWidth={maxWidth} sx={{ flexGrow: 1 }} width={'100%'} height={'100%'}>
-        {children}
+      <Container maxWidth={maxWidth} sx={{ flexGrow: 1 }} height={'100%'}>
+        <Box px={4}>{children}</Box>
       </Container>
     </Stack>
   );

@@ -10,7 +10,7 @@ export const metadata = {
 
 const College = () => {
   return (
-    <FeatureLayout title={'Participating Colleges'} maxWidth={'lg'}>
+    <FeatureLayout title={'Participating Colleges'} maxWidth={'xl'}>
       <CollegeList />
     </FeatureLayout>
   );
