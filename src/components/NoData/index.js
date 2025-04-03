@@ -1,7 +1,10 @@
 import React from 'react';
 import { Box, TableCell, Typography, useTheme } from '@mui/material';
 
-export const NoDataComponent = ({ colSpan }) => {
+export const NoDataComponent = ({
+  colSpan,
+  text = 'Data for the applied filters does not exists',
+}) => {
   const theme = useTheme();
   return (
     <TableCell
@@ -26,7 +29,7 @@ export const NoDataComponent = ({ colSpan }) => {
             borderRadius: '10px',
           }}
         >
-          Data for the applied filters does not exists
+          {text}
         </Typography>
       </Box>
     </TableCell>

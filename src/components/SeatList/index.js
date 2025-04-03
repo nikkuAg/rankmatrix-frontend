@@ -41,7 +41,6 @@ export const SeatList = () => {
     useSelector((state) => state.seat),
     50,
   );
-  // console.log(theme);
   const [tabValue, setTabValue] = useState();
   const [increaseBtnSelected, setIncreaseBtnSelected] = useState(false);
   const [increaseTabBtnText, setIncreaseTabBtnText] = useState(null);
@@ -76,7 +75,7 @@ export const SeatList = () => {
         dispatch(removeIncreaseFilter());
       }
     }
-  }, [tabValue, increaseBtnSelected]);
+  }, [tabValue, increaseBtnSelected, dispatch]);
 
   useEffect(() => {
     if (sortField) {
@@ -94,7 +93,7 @@ export const SeatList = () => {
     if (!isFiltersFetching && !isFiltersLoading) {
       getSeatData(seatReqData);
     }
-  }, [seatReqData, getSeatData]);
+  }, [seatReqData, getSeatData, isFiltersFetching, isFiltersLoading]);
 
   const handleCollegeTypeChange = (filterValues) => {
     dispatch(updateFilters({ institute__type: filterValues }));

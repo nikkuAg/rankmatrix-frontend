@@ -2,19 +2,9 @@
 
 import React, { useState } from 'react';
 import { FilterList } from '@mui/icons-material';
-import {
-  Badge,
-  Box,
-  Button,
-  Checkbox,
-  Divider,
-  IconButton,
-  Menu,
-  MenuItem,
-  Stack,
-  Typography,
-  useTheme,
-} from '@mui/material';
+import { Badge, IconButton, Menu, Stack, useTheme } from '@mui/material';
+import { ListFilter } from './ListFilter';
+import { RangeFilter } from './RangeFilter';
 
 export const FilterBox = ({
   children,
@@ -24,6 +14,7 @@ export const FilterBox = ({
   showFilter = true,
   onApplyFilter,
   defaultSelected = [],
+  showRangeFilter = false,
 }) => {
   const theme = useTheme();
   const [anchorEl, setAnchorEl] = useState(null);
@@ -34,45 +25,24 @@ export const FilterBox = ({
     setAnchorEl(event.currentTarget);
     setTempSelected([...selectedValues]);
   };
-
   const handleClose = () => {
     setAnchorEl(null);
-  };
-
-  const handleToggle = (data) => {
-    const value = typeof data === 'object' ? data.value : data;
-    const currentIndex = tempSelected.indexOf(value);
-    const newChecked = [...tempSelected];
-
-    if (currentIndex === -1) {
-      newChecked.push(value);
-    } else {
-      newChecked.splice(currentIndex, 1);
-    }
-
-    setTempSelected(newChecked);
-  };
-
-  const handleClear = () => {
-    setTempSelected([]);
-  };
-
-  const handleApply = () => {
-    setSelectedValues(tempSelected);
-    handleClose();
-    if (onApplyFilter) {
-      onApplyFilter(tempSelected);
-    }
   };
 
   return (
     <Stack direction={flexDirection} justifyContent={'space-between'} alignItems={'center'}>
       {children}
-      {showFilter && (
+      {(showFilter || showRangeFilter) && (
         <>
           <IconButton onClick={handleClick}>
             <Badge
-              badgeContent={selectedValues.length}
+              badgeContent={
+                showRangeFilter
+                  ? selectedValues[0] === filterValue[0] && selectedValues[1] === filterValue[1]
+                    ? 0
+                    : 1
+                  : selectedValues.length
+              }
               sx={{
                 '& .MuiBadge-badge': {
                   right: -3,
@@ -82,7 +52,15 @@ export const FilterBox = ({
                 },
               }}
             >
-              <FilterList color={selectedValues.length > 0 ? 'primary' : 'inherit'} />
+              <FilterList
+                color={
+                  (showFilter && selectedValues.length > 0) ||
+                  (showRangeFilter &&
+                    (selectedValues[0] !== filterValue[0] || selectedValues[1] !== filterValue[1]))
+                    ? 'primary'
+                    : 'inherit'
+                }
+              />
             </Badge>
           </IconButton>
           <Menu
@@ -107,60 +85,28 @@ export const FilterBox = ({
               },
             }}
           >
-            <Box sx={{ p: 1 }}>
-              <Typography variant="subtitle1" fontWeight="500">
-                {filterTitle}
-              </Typography>
-            </Box>
-            <Divider />
-            <Box sx={{ py: 1, maxHeight: 180, overflow: 'auto' }}>
-              {filterValue.map((value) => (
-                <MenuItem key={value} dense onClick={() => handleToggle(value)} sx={{ py: 0.5 }}>
-                  <Checkbox
-                    checked={
-                      tempSelected.indexOf(typeof value === 'object' ? value.value : value) !== -1
-                    }
-                    size="small"
-                  />
-                  <Typography variant="body2">
-                    {typeof value === 'object' ? value.label : value}
-                  </Typography>
-                </MenuItem>
-              ))}
-            </Box>
-            <Divider />
-            <Box sx={{ p: 1, display: 'flex', justifyContent: 'space-between', gap: 1 }}>
-              <Button
-                size="small"
-                onClick={handleClear}
-                variant="outlined"
-                sx={{
-                  borderColor: theme.palette.primary.main,
-                  color: theme.palette.primary.main,
-                  '&:hover': {
-                    borderColor: theme.palette.primary.dark,
-                    color: theme.palette.primary.dark,
-                    backgroundColor: theme.palette.primary.light,
-                  },
-                }}
-              >
-                Clear
-              </Button>
-              <Button
-                size="small"
-                onClick={handleApply}
-                variant="contained"
-                sx={{
-                  backgroundColor: theme.palette.primary.main,
-                  color: theme.palette.text.light,
-                  '&:hover': {
-                    backgroundColor: theme.palette.primary.dark,
-                  },
-                }}
-              >
-                Apply
-              </Button>
-            </Box>
+            {showFilter && (
+              <ListFilter
+                onApplyFilter={onApplyFilter}
+                filterTitle={filterTitle}
+                filterValue={filterValue}
+                handleClose={handleClose}
+                setSelectedValues={setSelectedValues}
+                tempSelected={tempSelected}
+                setTempSelected={setTempSelected}
+              />
+            )}
+            {showRangeFilter && (
+              <RangeFilter
+                onApplyFilter={onApplyFilter}
+                filterTitle={filterTitle}
+                filterValue={filterValue}
+                handleClose={handleClose}
+                setSelectedValues={setSelectedValues}
+                tempSelected={tempSelected}
+                setTempSelected={setTempSelected}
+              />
+            )}
           </Menu>
         </>
       )}

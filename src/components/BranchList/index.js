@@ -1,16 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import {
-  Box,
-  Stack,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
-  useTheme,
-} from '@mui/material';
+import { Box, Stack, Table, TableBody, TableCell, TableHead, TableRow } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { ChipFilter } from '@/components/ChipFilter';
 import { NoDataComponent } from '@/components/NoData';
@@ -40,7 +31,6 @@ export const BranchList = () => {
     isFetching: isFiltersFetching,
   } = useGetBranchFiltersQuery();
   const branchReqData = useSelector((state) => state.branch);
-  const theme = useTheme();
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(true);
   const [sortField, setSortField] = useState(null);

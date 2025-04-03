@@ -14,4 +14,8 @@ export const apis = {
     search: '/api/josaa/seats/search',
     filter: '/api/site/content/seat',
   },
+  rank: {
+    search: '/api/josaa/ranks/search',
+    filter: '/api/site/content/rank',
+  },
 };

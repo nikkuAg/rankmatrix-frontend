@@ -79,6 +79,8 @@ const FeatureCard = ({ title, image, link }) => {
         width: '100%',
         height: '13rem',
         boxShadow: `0px 0px 55px 6px ${theme.palette.shadow.main}`,
+        p: 1,
+        borderRadius: 2,
       }}
     >
       <CardActionArea sx={{ width: '100%', height: '100%' }} onClick={() => router.push(link)}>
@@ -89,6 +91,7 @@ const FeatureCard = ({ title, image, link }) => {
             backgroundColor: theme.background.light,
             display: 'flex',
             justifyContent: 'center',
+            borderRadius: 2,
           }}
         >
           {isLoading && <Skeleton variant="rounded" width={'100%'} height={'100%'} />}

@@ -1,6 +1,6 @@
 import React from 'react';
 import { ArrowDownward, ArrowUpward } from '@mui/icons-material';
-import { Box, TableCell, useTheme } from '@mui/material';
+import { Box, TableCell } from '@mui/material';
 import { SORT_ORDER } from '@/constants';
 import { FilterBox } from '../FilterBox';
 
@@ -17,8 +17,8 @@ export const TableSortCell = ({
   defaultSelected = [],
   hideBorderRight = false,
   hideBorderBottom = false,
+  showRangeFilter = false,
 }) => {
-  const theme = useTheme();
   return (
     <TableCell
       sx={{
@@ -33,6 +33,7 @@ export const TableSortCell = ({
         showFilter={showFilter}
         onApplyFilter={onApplyFilter}
         defaultSelected={defaultSelected}
+        showRangeFilter={showRangeFilter}
       >
         <Box
           display="flex"

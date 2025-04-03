@@ -10,7 +10,7 @@ export const SearchBox = ({ onChange, width = '100%' }) => {
 
   useEffect(() => {
     onChange(debouncedSearchValue);
-  }, [debouncedSearchValue]);
+  }, [debouncedSearchValue, onChange]);
 
   return (
     <TextField
