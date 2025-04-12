@@ -15,7 +15,7 @@ export const RankMatrixLayout = ({ children }) => {
     <Box
       sx={{
         backgroundColor: theme.background.main,
-        width: '100vw',
+        width: '100%',
         height: '100vh',
       }}
     >

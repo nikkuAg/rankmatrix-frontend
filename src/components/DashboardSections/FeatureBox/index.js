@@ -42,21 +42,21 @@ const features = [
     image: '/predict.svg',
     link: '/predict',
   },
-  {
-    title: 'Prediction Matrix',
-    image: '/matrix.svg',
-    link: '/matrix',
-  },
-  {
-    title: 'Test Your JoSAA Choices',
-    image: '/choices.svg',
-    link: '/test-choices',
-  },
-  {
-    title: 'Important Documents',
-    image: '/doc.svg',
-    link: '/documents',
-  },
+  // {
+  //   title: 'Prediction Matrix',
+  //   image: '/matrix.svg',
+  //   link: '/matrix',
+  // },
+  // {
+  //   title: 'Test Your JoSAA Choices',
+  //   image: '/choices.svg',
+  //   link: '/test-choices',
+  // },
+  // {
+  //   title: 'Important Documents',
+  //   image: '/doc.svg',
+  //   link: '/documents',
+  // },
 ];
 
 const FeatureCard = ({ title, image, link }) => {

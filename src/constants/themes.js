@@ -37,7 +37,7 @@ const lightTheme = {
 // Dark Theme
 const darkTheme = {
   primary: {
-    main: '#6096FC',
+    main: '#0A245A',
     light: '#D4E3FF',
     dark: '#467BED',
   },
@@ -45,15 +45,16 @@ const darkTheme = {
     main: '#FBFCFF',
     dark: '#F4F6FD',
     light: '#F8FAFF',
-  },
-  shadow: {
-    main: 'rgba(0, 25, 71, 0.05)',
+    default: '#FFFFFF',
   },
   text: {
     main: '#002942',
     dark: '#000000',
     light: '#FFFFFF',
     link: '#3245EB',
+  },
+  shadow: {
+    main: 'rgba(0, 25, 71, 0.05)',
   },
   font: 'var(--font-poppins)',
   alert: {
