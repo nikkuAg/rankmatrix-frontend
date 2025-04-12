@@ -79,7 +79,9 @@ export const BranchList = () => {
   };
 
   const handleSearchChange = (searchValue) => {
-    dispatch(updateSearchValue(searchValue));
+    if (branchReqData.search !== searchValue) {
+      dispatch(updateSearchValue(searchValue));
+    }
   };
 
   const handleSort = (field) => {

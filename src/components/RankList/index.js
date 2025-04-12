@@ -10,6 +10,7 @@ import {
   removeFilters,
   updateFilters,
   updateOrdering,
+  updatePageNumber,
   updateSearchValue,
   updateYear,
 } from '@/store/slices/rank';
@@ -17,6 +18,7 @@ import { useDebounce } from '@/utils/debounceHook';
 import { ChipFilter } from '../ChipFilter';
 import { Dropdown } from '../Dropdown';
 import { NoDataComponent } from '../NoData';
+import { PaginationBox } from '../PaginationBox';
 import { SearchBox } from '../SearchBox';
 import { Spinner } from '../Spinner';
 import { TableLayout } from '../TableLayout';
@@ -118,7 +120,9 @@ export const RankList = () => {
   };
 
   const handleSearchChange = (searchValue) => {
-    dispatch(updateSearchValue(searchValue));
+    if (rankReqData.search !== searchValue) {
+      dispatch(updateSearchValue(searchValue));
+    }
   };
 
   const handleYearChange = (e) => {
@@ -163,6 +167,10 @@ export const RankList = () => {
     );
   };
 
+  const handlePageChange = (page) => {
+    dispatch(updatePageNumber(page));
+  };
+
   return (
     <Box width={'100%'} height={'100%'} py={2}>
       <Stack spacing={2} height={'100%'}>
@@ -195,6 +203,16 @@ export const RankList = () => {
                 disabled={roundList.length === 0}
               />
             </Stack>
+            {!isRanksFetching && !isRanksLoading && rankData?.totalPages > 1 && (
+              <PaginationBox
+                currentPage={rankData.page}
+                totalPages={rankData.totalPages}
+                onPageChange={handlePageChange}
+                start={rankData.startIndex}
+                end={rankData.endIndex}
+                totalItems={rankData.totalItems}
+              />
+            )}
             {rankReqData.filters?.round ? (
               isRanksFetching || isRanksLoading ? (
                 <Spinner sx={{ width: '100%', height: '100%' }} />
@@ -320,6 +338,16 @@ export const RankList = () => {
               )
             ) : (
               <NoDataComponent text="Select a year and round to view the opening and closing ranks" />
+            )}
+            {!isRanksFetching && !isRanksLoading && rankData?.totalPages > 1 && (
+              <PaginationBox
+                currentPage={rankData.page}
+                totalPages={rankData.totalPages}
+                onPageChange={handlePageChange}
+                start={rankData.startIndex}
+                end={rankData.endIndex}
+                totalItems={rankData.totalItems}
+              />
             )}
           </>
         )}

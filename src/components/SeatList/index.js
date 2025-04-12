@@ -23,11 +23,13 @@ import {
   setIncreaseFilter,
   updateFilters,
   updateOrdering,
+  updatePageNumber,
   updateSearchValue,
 } from '@/store/slices/seats';
 import { useDebounce } from '@/utils/debounceHook';
 import { ChipFilter } from '../ChipFilter';
 import { NoDataComponent } from '../NoData';
+import { PaginationBox } from '../PaginationBox';
 import { SearchBox } from '../SearchBox';
 import { Spinner } from '../Spinner';
 import { TableLayout } from '../TableLayout';
@@ -100,7 +102,9 @@ export const SeatList = () => {
   };
 
   const handleSearchChange = (searchValue) => {
-    dispatch(updateSearchValue(searchValue));
+    if (seatReqData.search !== searchValue) {
+      dispatch(updateSearchValue(searchValue));
+    }
   };
 
   const handleTabChange = (value) => {
@@ -133,6 +137,10 @@ export const SeatList = () => {
     } else {
       dispatch(removeFilters(field));
     }
+  };
+
+  const handlePageChange = (page) => {
+    dispatch(updatePageNumber(page));
   };
 
   return (
@@ -193,6 +201,16 @@ export const SeatList = () => {
                 />
               </Tabs>
             </Stack>
+            {!isSeatsFetching && !isSeatsLoading && seatData?.totalPages > 1 && (
+              <PaginationBox
+                currentPage={seatData.page}
+                totalPages={seatData.totalPages}
+                onPageChange={handlePageChange}
+                start={seatData.startIndex}
+                end={seatData.endIndex}
+                totalItems={seatData.totalItems}
+              />
+            )}
             {isSeatsFetching || isSeatsLoading ? (
               <Spinner sx={{ width: '100%', height: '100%' }} />
             ) : (
@@ -305,6 +323,16 @@ export const SeatList = () => {
                   </Table>
                 </TableLayout>
               </Stack>
+            )}
+            {!isSeatsFetching && !isSeatsLoading && seatData?.totalPages > 1 && (
+              <PaginationBox
+                currentPage={seatData.page}
+                totalPages={seatData.totalPages}
+                onPageChange={handlePageChange}
+                start={seatData.startIndex}
+                end={seatData.endIndex}
+                totalItems={seatData.totalItems}
+              />
             )}
           </>
         )}
