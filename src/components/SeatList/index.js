@@ -177,6 +177,11 @@ export const SeatList = () => {
                       ':hover': {
                         color: theme.palette.primary.main,
                       },
+                      ...(theme.palette.mode === 'dark' && {
+                        '&.Mui-selected': {
+                          color: theme.palette.primary.light,
+                        },
+                      }),
                     }}
                   />
                 ))}
@@ -197,6 +202,11 @@ export const SeatList = () => {
                     ':hover': {
                       color: theme.palette.primary.main,
                     },
+                    ...(theme.palette.mode === 'dark' && {
+                      '&.Mui-selected': {
+                        color: theme.palette.primary.light,
+                      },
+                    }),
                   }}
                 />
               </Tabs>
@@ -296,13 +306,16 @@ export const SeatList = () => {
                         seatData?.data?.map((seat, i) => (
                           <TableRow
                             key={`${seat.institute.code}_${seat.branch.code}_${seat.category}_${seat.quota}_${seat.seatPool}`}
-                            sx={
-                              i === seatData.data.length - 1 && {
+                            sx={{
+                              '&:hover': {
+                                backgroundColor: theme.palette.primary.light,
+                              },
+                              ...(i === seatData.data.length - 1 && {
                                 '& td': {
                                   borderBottom: '0px !important',
                                 },
-                              }
-                            }
+                              }),
+                            }}
                           >
                             <TableCell>{seat.institute.name}</TableCell>
                             <TableCell>{seat.branch.name}</TableCell>

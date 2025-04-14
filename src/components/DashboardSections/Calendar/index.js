@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
+import React, { useEffect, useState } from 'react';
 import { Grid2, Stack, Typography, useTheme } from '@mui/material';
 import {
   eachDayOfInterval,
@@ -11,6 +10,7 @@ import {
   startOfDay,
   startOfMonth,
 } from 'date-fns';
+import Calendar from 'react-calendar';
 import { useSiteContent } from '@/store/selectors/siteContent';
 
 export const EventCalendar = () => {
@@ -93,8 +93,9 @@ export const EventCalendar = () => {
         boxShadow: `0px 0px 15px -6px ${theme.palette.shadow.main}`,
         color: theme.palette.text.main,
         '& .rankmatrix-event-date': {
-          backgroundColor: `${theme.palette.primary.main}26`,
-          color: theme.palette.primary.main,
+          backgroundColor: `${theme.palette.mode === 'dark' ? theme.palette.primary.light : `${theme.palette.primary.main}`}20`,
+          color:
+            theme.palette.mode === 'dark' ? theme.palette.text.light : theme.palette.primary.main,
           position: 'absolute',
           top: 0,
           left: 0,
@@ -103,7 +104,7 @@ export const EventCalendar = () => {
         },
         '& .react-calendar': {
           width: '100%',
-          background: theme.background.default,
+          background: theme.background.main,
           borderRadius: '6px',
           borderColor: 'transparent',
           fontFamily: theme.typography.fontFamily,
@@ -113,14 +114,20 @@ export const EventCalendar = () => {
           marginBottom: '0.2rem',
         },
         '& .react-calendar__navigation button': {
-          color: theme.palette.text.dark,
+          color: theme.palette.mode === 'dark' ? theme.palette.text.light : theme.palette.text.dark,
           '&:hover': {
-            backgroundColor: `${theme.palette.primary.main}26 !important`,
-            color: theme.palette.primary.main,
+            backgroundColor: `${theme.palette.mode === 'dark' ? theme.palette.primary.light : theme.palette.primary.main}20 !important`,
+            color:
+              theme.palette.mode === 'dark'
+                ? theme.palette.primary.light
+                : theme.palette.primary.main,
           },
           '&:focus': {
             backgroundColor: `${theme.palette.primary.main}26 !important`,
-            color: theme.palette.primary.main,
+            color:
+              theme.palette.mode === 'dark'
+                ? theme.palette.primary.light
+                : theme.palette.primary.main,
           },
           '&.react-calendar__navigation__label': {
             fontWeight: '600',
@@ -129,30 +136,40 @@ export const EventCalendar = () => {
         '& .react-calendar__month-view__weekdays__weekday': {
           fontWeight: '400',
           opacity: 0.5,
-          color: theme.palette.text.dark,
+          color: theme.palette.mode === 'dark' ? theme.palette.text.light : theme.palette.text.dark,
           '& abbr': {
             textDecoration: 'none',
           },
         },
         '& .react-calendar__month-view__days__day--weekend': {
-          color: theme.palette.text.dark,
+          color: theme.palette.mode === 'dark' ? theme.palette.text.light : theme.palette.text.dark,
         },
         '& .react-calendar__tile': {
           textAlign: 'center',
           borderRadius: '50%',
           position: 'relative',
+          color: theme.palette.mode === 'dark' ? theme.palette.text.light : theme.palette.text.dark,
           '&:hover': {
-            backgroundColor: `${theme.palette.primary.main}26 !important`,
-            color: theme.palette.primary.main,
+            backgroundColor: `${theme.palette.primary.main}${theme.palette.mode === 'dark' ? '' : '26'} !important`,
+            color:
+              theme.palette.mode === 'dark'
+                ? theme.palette.primary.light
+                : theme.palette.primary.main,
           },
           '&:focus': {
-            backgroundColor: `${theme.palette.primary.main}26 !important`,
-            color: theme.palette.primary.main,
+            backgroundColor: `${theme.palette.primary.main}${theme.palette.mode === 'dark' ? '' : '26'} !important`,
+            color:
+              theme.palette.mode === 'dark'
+                ? theme.palette.primary.light
+                : theme.palette.primary.main,
           },
         },
         '& .react-calendar__tile--now': {
           backgroundColor: 'transparent',
-          color: theme.palette.primary.dark,
+          color:
+            theme.palette.mode === 'dark'
+              ? theme.palette.primary.light
+              : theme.palette.primary.dark,
           border: '2px solid ' + theme.palette.primary.main,
           padding: 0,
           '&.react-calendar__tile--active': {
@@ -169,7 +186,7 @@ export const EventCalendar = () => {
           },
         },
         '& .react-calendar__month-view__days__day--neighboringMonth': {
-          color: theme.palette.text.dark,
+          color: theme.palette.mode === 'dark' ? theme.palette.text.main : theme.palette.text.dark,
           opacity: 0.2,
         },
       }}
@@ -181,6 +198,8 @@ export const EventCalendar = () => {
         onActiveStartDateChange={({ activeStartDate }) => setSelectedDate(activeStartDate)}
         tileClassName={highlightDates}
         onClickDay={handleDateClick}
+        onClickMonth={() => setSelectedDay(null)}
+        onClickYear={() => setSelectedDay(null)}
         tileContent={highlightDates}
         value={selectedDay}
       />

@@ -18,6 +18,7 @@ export const TableSortCell = ({
   hideBorderRight = false,
   hideBorderBottom = false,
   showRangeFilter = false,
+  showSort = true,
 }) => {
   return (
     <TableCell
@@ -43,7 +44,8 @@ export const TableSortCell = ({
           sx={{ cursor: 'pointer' }}
         >
           {title}
-          {sortField === field &&
+          {showSort &&
+            sortField === field &&
             (sortOrder === SORT_ORDER.ASC ? (
               <ArrowUpward fontSize="small" />
             ) : (

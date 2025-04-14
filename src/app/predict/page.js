@@ -1,6 +1,6 @@
 import React from 'react';
-import { Typography } from '@mui/material';
 import { FeatureLayout } from '@/components/RankMatrixLayout/FeatureLayout';
+import { CollegePredictor } from '../../components/CollegePredictor';
 
 export const metadata = {
   title: 'Predict Your College | RankMatrix',
@@ -11,7 +11,7 @@ export const metadata = {
 const Predict = () => {
   return (
     <FeatureLayout title={'Predict Your College'}>
-      <Typography>Testing</Typography>
+      <CollegePredictor />
     </FeatureLayout>
   );
 };

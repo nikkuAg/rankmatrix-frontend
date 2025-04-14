@@ -22,7 +22,7 @@ export const Navbar = () => {
           >
             <Avatar
               alt="Logo"
-              src={`${mode === 'dark' ? '/logoDark.svg' : '/logo.svg'}`}
+              src={`${mode === 'dark' ? '/logo_dark.svg' : '/logo.svg'}`}
               variant="square"
             />
             <Typography

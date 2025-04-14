@@ -197,13 +197,16 @@ export const CollegeList = () => {
                     data?.data?.map((college, i) => (
                       <TableRow
                         key={college.code}
-                        sx={
-                          i === data.data.length - 1 && {
+                        sx={{
+                          '&:hover': {
+                            backgroundColor: theme.palette.primary.light,
+                          },
+                          ...(i === data.data.length - 1 && {
                             '& td': {
                               borderBottom: '0px !important',
                             },
-                          }
-                        }
+                          }),
+                        }}
                       >
                         <TableCell>{college.code}</TableCell>
                         <TableCell>{college.name}</TableCell>

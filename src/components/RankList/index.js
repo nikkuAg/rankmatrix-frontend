@@ -1,7 +1,16 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { Box, Stack, Table, TableBody, TableCell, TableHead, TableRow } from '@mui/material';
+import {
+  Box,
+  Stack,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+  useTheme,
+} from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { SORT_ORDER } from '@/constants';
 import { CATEGORIES, COLLEGE_TYPES, QUOTAS, SEAT_POOLS } from '@/constants/josaa';
@@ -26,6 +35,7 @@ import { TableSortCell } from '../TableSortCell';
 
 export const RankList = () => {
   const dispatch = useDispatch();
+  const theme = useTheme();
   const rankReqData = useDebounce(
     useSelector((state) => state.rank),
     50,
@@ -307,13 +317,16 @@ export const RankList = () => {
                           rankData?.data?.map((rank, i) => (
                             <TableRow
                               key={`${rank.institute.code}_${rank.branch.code}_${rank.category}_${rank.quota}_${rank.seatPool}`}
-                              sx={
-                                i === rankData.data.length - 1 && {
+                              sx={{
+                                '&:hover': {
+                                  backgroundColor: theme.palette.primary.light,
+                                },
+                                ...(i === rankData.data.length - 1 && {
                                   '& td': {
                                     borderBottom: '0px !important',
                                   },
-                                }
-                              }
+                                }),
+                              }}
                             >
                               <TableCell>{rank.institute.name}</TableCell>
                               <TableCell>{rank.branch.name}</TableCell>

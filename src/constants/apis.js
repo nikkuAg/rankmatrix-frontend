@@ -18,4 +18,7 @@ export const apis = {
     search: '/api/josaa/ranks/search',
     filter: '/api/site/content/rank',
   },
+  prediction: {
+    college: '/api/predictions/institute',
+  },
 };

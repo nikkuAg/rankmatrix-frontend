@@ -29,29 +29,29 @@ export const SearchBox = ({ onChange, width = '100%' }) => {
         },
         '& .MuiOutlinedInput-notchedOutline': {
           border: `2px solid`,
-          borderColor: `${theme.palette.gray.main} !important`,
+          borderColor: `${theme.palette.mode === 'dark' ? theme.palette.gray.dark : theme.palette.gray.main} !important`,
         },
         '& .MuiFormLabel-root': {
-          color: `${theme.palette.gray.dark}`,
+          color: `${theme.palette.mode === 'dark' ? theme.palette.gray.dark : theme.palette.gray.dark}`,
           '&.Mui-focused': {
-            color: `${theme.palette.primary.main}`,
+            color: `${theme.palette.mode === 'dark' ? theme.palette.primary.light : theme.palette.primary.main}`,
           },
         },
         '& .MuiOutlinedInput-root:hover': {
           '& > fieldset': {
-            borderColor: `${theme.palette.primary.main} !important`,
+            borderColor: `${theme.palette.mode === 'dark' ? theme.palette.primary.light : theme.palette.primary.main} !important`,
           },
         },
         '& .MuiOutlinedInput-root.Mui-focused': {
           '& > fieldset': {
-            borderColor: `${theme.palette.primary.main} !important`,
+            borderColor: `${theme.palette.mode === 'dark' ? theme.palette.primary.light : theme.palette.primary.main} !important`,
           },
         },
         '& .MuiOutlinedInput-input': {
           paddingY: '0.4rem',
         },
         '& .Mui-focused > .MuiInputAdornment-root > .MuiSvgIcon-root': {
-          color: `${theme.palette.primary.main} !important`,
+          color: `${theme.palette.mode === 'dark' ? theme.palette.primary.light : theme.palette.primary.main} !important`,
         },
       }}
       onChange={(e) => setSearchValue(e.target.value)}
@@ -60,7 +60,14 @@ export const SearchBox = ({ onChange, width = '100%' }) => {
         input: {
           startAdornment: (
             <InputAdornment position="start">
-              <Search sx={{ color: theme.palette.gray.dark }} />
+              <Search
+                sx={{
+                  color:
+                    theme.palette.mode === 'dark'
+                      ? theme.palette.gray.dark
+                      : theme.palette.gray.dark,
+                }}
+              />
             </InputAdornment>
           ),
         },

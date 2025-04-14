@@ -53,6 +53,11 @@ export const ListFilter = ({
             <Checkbox
               checked={tempSelected.indexOf(typeof value === 'object' ? value.value : value) !== -1}
               size="small"
+              sx={
+                theme.palette.mode === 'dark' && {
+                  '&.Mui-checked': { color: theme.palette.primary.light },
+                }
+              }
             />
             <Typography variant="body2">
               {typeof value === 'object' ? value.label : value}
@@ -67,8 +72,14 @@ export const ListFilter = ({
           onClick={handleClear}
           variant="outlined"
           sx={{
-            borderColor: theme.palette.primary.main,
-            color: theme.palette.primary.main,
+            borderColor:
+              theme.palette.mode === 'dark'
+                ? theme.palette.primary.light
+                : theme.palette.primary.main,
+            color:
+              theme.palette.mode === 'dark'
+                ? theme.palette.primary.light
+                : theme.palette.primary.main,
             '&:hover': {
               borderColor: theme.palette.primary.dark,
               color: theme.palette.primary.dark,

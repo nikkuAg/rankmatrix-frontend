@@ -1,7 +1,16 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { Box, Stack, Table, TableBody, TableCell, TableHead, TableRow } from '@mui/material';
+import {
+  Box,
+  Stack,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+  useTheme,
+} from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { ChipFilter } from '@/components/ChipFilter';
 import { NoDataComponent } from '@/components/NoData';
@@ -23,6 +32,7 @@ import { stopLoading } from '@/store/slices/loader';
 import { TableLayout } from '../TableLayout';
 
 export const BranchList = () => {
+  const theme = useTheme();
   const [getBranchData, { data, isLoading: isBranchLoading, isFetching: isBranchFetching }] =
     useLazyGetBranchDataQuery();
   const {
@@ -172,13 +182,16 @@ export const BranchList = () => {
                     data?.data?.map((branch, i) => (
                       <TableRow
                         key={branch.code}
-                        sx={
-                          i === data.data.length - 1 && {
+                        sx={{
+                          '&:hover': {
+                            backgroundColor: theme.palette.primary.light,
+                          },
+                          ...(i === data.data.length - 1 && {
                             '& td': {
                               borderBottom: '0px !important',
                             },
-                          }
-                        }
+                          }),
+                        }}
                       >
                         <TableCell>{branch.code}</TableCell>
                         <TableCell>{branch.name}</TableCell>

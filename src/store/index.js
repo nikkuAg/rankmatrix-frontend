@@ -2,6 +2,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import { baseApi } from './queries';
 import { branchApi } from './queries/branch';
 import { collegeApi } from './queries/college';
+import { predictionApi } from './queries/prediction';
 import { rankApi } from './queries/rank';
 import { seatApi } from './queries/seats';
 import { siteContentApi } from './queries/siteContent';
@@ -20,6 +21,7 @@ const store = configureStore({
     [branchApi.reducerPath]: branchApi.reducer,
     [seatApi.reducerPath]: seatApi.reducer,
     [rankApi.reducerPath]: rankApi.reducer,
+    [predictionApi.reducerPath]: predictionApi.reducer,
     toast: toastReducer,
     loader: loaderReducer,
     college: collegeReducer,
@@ -35,6 +37,7 @@ const store = configureStore({
       branchApi.middleware,
       seatApi.middleware,
       rankApi.middleware,
+      predictionApi.middleware,
     ),
 });
 
