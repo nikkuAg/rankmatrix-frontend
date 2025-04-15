@@ -193,7 +193,7 @@ export const RankList = () => {
           <SearchBox onChange={handleSearchChange} width={'35%'} />
         </Stack>
         {isFiltersFetching || isFiltersLoading ? (
-          <Spinner sx={{ width: '100%', height: '100%' }} />
+          <Spinner sx={{ width: '6rem' }} />
         ) : (
           <>
             <Stack direction={'row'} gap={2} alignItems={'center'}>
@@ -225,7 +225,7 @@ export const RankList = () => {
             )}
             {rankReqData.filters?.round ? (
               isRanksFetching || isRanksLoading ? (
-                <Spinner sx={{ width: '100%', height: '100%' }} />
+                <Spinner sx={{ width: '6rem' }} />
               ) : (
                 <Stack flexGrow={1}>
                   <TableLayout showTable={rankData?.data?.length > 0}>

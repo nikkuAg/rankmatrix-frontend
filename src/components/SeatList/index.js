@@ -155,7 +155,7 @@ export const SeatList = () => {
           <SearchBox onChange={handleSearchChange} width={'35%'} />
         </Stack>
         {isFiltersFetching || isFiltersLoading ? (
-          <Spinner sx={{ width: '100%', height: '100%' }} />
+          <Spinner sx={{ width: '6rem' }} />
         ) : (
           <>
             <Stack direction={'row'} justifyContent={'space-between'} width={'100%'}>
@@ -222,7 +222,7 @@ export const SeatList = () => {
               />
             )}
             {isSeatsFetching || isSeatsLoading ? (
-              <Spinner sx={{ width: '100%', height: '100%' }} />
+              <Spinner sx={{ width: '6rem' }} />
             ) : (
               <Stack flexGrow={1}>
                 <TableLayout showTable={seatData?.data?.length > 0}>

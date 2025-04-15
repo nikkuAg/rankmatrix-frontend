@@ -11,6 +11,7 @@ import {
   Typography,
   useTheme,
 } from '@mui/material';
+import { sendGTMEvent } from '@next/third-parties/google';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useDispatch } from 'react-redux';
@@ -92,7 +93,13 @@ const FeatureCard = ({ title, image, link }) => {
         backgroundColor: theme.background.default,
       }}
     >
-      <CardActionArea sx={{ width: '100%', height: '100%' }} onClick={() => router.push(link)}>
+      <CardActionArea
+        sx={{ width: '100%', height: '100%' }}
+        onClick={() => {
+          router.push(link);
+          sendGTMEvent({ event: `buttonClicked${title}`, value: 'xyz' });
+        }}
+      >
         <CardMedia
           sx={{
             width: '100%',

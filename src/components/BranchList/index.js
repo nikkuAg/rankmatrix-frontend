@@ -134,7 +134,7 @@ export const BranchList = () => {
           />
         )}
         {isLoading ? (
-          <Spinner sx={{ width: '100%', height: '100%' }} />
+          <Spinner sx={{ width: '6rem' }} />
         ) : (
           <Stack flexGrow={1}>
             <TableLayout>

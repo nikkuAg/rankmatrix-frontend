@@ -69,7 +69,7 @@ export const CollegePredictor = () => {
           {formData != null && (
             <>
               {isRanksFetching || isRanksLoading ? (
-                <Spinner sx={{ width: '100%', height: '100%' }} />
+                <Spinner sx={{ width: '6rem' }} />
               ) : (
                 <Stack flexGrow={1}>
                   <TableLayout showTable={rankData?.data?.length > 0}>
