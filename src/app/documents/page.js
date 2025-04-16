@@ -10,7 +10,7 @@ export const metadata = {
 const Documents = () => {
   return (
     <FeatureLayout title={'Important Documents'}>
-      <Typography>Testing</Typography>
+      <Typography>Coming soon</Typography>
     </FeatureLayout>
   );
 };

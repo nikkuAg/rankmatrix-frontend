@@ -11,6 +11,7 @@ import {
   Typography,
   useTheme,
 } from '@mui/material';
+import { sendGTMEvent } from '@next/third-parties/google';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useDispatch } from 'react-redux';
@@ -20,43 +21,51 @@ const features = [
   {
     title: 'Participating Colleges',
     image: '/college.svg',
+    imageDark: '/college_dark.svg',
     link: '/colleges',
   },
   {
     title: 'Participating Branches',
-    image: '/college.svg',
+    image: '/branch.svg',
+    imageDark: '/branch_dark.svg',
     link: '/branches',
   },
   {
     title: 'Seat Matrix',
     image: '/seat.svg',
+    imageDark: '/seat_dark.svg',
     link: '/seat-matrix',
   },
   {
     title: 'Opening & Closing Ranks',
     image: '/rank.svg',
+    imageDark: '/rank_dark.svg',
     link: '/ranks',
   },
   {
     title: 'Predict Your College',
-    image: '/predict.svg',
+    image: '/matrix.svg',
+    imageDark: '/matrix_dark.svg',
     link: '/predict',
   },
-  {
-    title: 'Prediction Matrix',
-    image: '/matrix.svg',
-    link: '/matrix',
-  },
-  {
-    title: 'Test Your JoSAA Choices',
-    image: '/choices.svg',
-    link: '/test-choices',
-  },
-  {
-    title: 'Important Documents',
-    image: '/doc.svg',
-    link: '/documents',
-  },
+  // {
+  //   title: 'Prediction Matrix',
+  //   image: '/matrix.svg',
+  //   imageDark: '/matrix.svg',
+  //   link: '/matrix',
+  // },
+  // {
+  //   title: 'Test Your JoSAA Choices',
+  //   image: '/choices.svg',
+  //   imageDark: '/choices.svg',
+  //   link: '/test-choices',
+  // },
+  // {
+  //   title: 'Important Documents',
+  //   image: '/doc.svg',
+  //   imageDark: '/doc.svg',
+  //   link: '/documents',
+  // },
 ];
 
 const FeatureCard = ({ title, image, link }) => {
@@ -81,9 +90,16 @@ const FeatureCard = ({ title, image, link }) => {
         boxShadow: `0px 0px 55px 6px ${theme.palette.shadow.main}`,
         p: 1,
         borderRadius: 2,
+        backgroundColor: theme.background.default,
       }}
     >
-      <CardActionArea sx={{ width: '100%', height: '100%' }} onClick={() => router.push(link)}>
+      <CardActionArea
+        sx={{ width: '100%', height: '100%' }}
+        onClick={() => {
+          router.push(link);
+          sendGTMEvent({ event: `buttonClicked${title}`, value: 'xyz' });
+        }}
+      >
         <CardMedia
           sx={{
             width: '100%',
@@ -113,6 +129,7 @@ const FeatureCard = ({ title, image, link }) => {
 };
 
 export const FeatureBox = () => {
+  const theme = useTheme();
   return (
     <Grid2
       width={'100%'}
@@ -124,7 +141,12 @@ export const FeatureBox = () => {
       display={'grid'}
     >
       {features.map((feature, index) => (
-        <FeatureCard title={feature.title} image={feature.image} link={feature.link} key={index} />
+        <FeatureCard
+          title={feature.title}
+          image={theme.palette.mode === 'dark' ? feature.imageDark : feature.image}
+          link={feature.link}
+          key={index}
+        />
       ))}
     </Grid2>
   );

@@ -1,7 +1,16 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { Box, Stack, Table, TableBody, TableCell, TableHead, TableRow } from '@mui/material';
+import {
+  Box,
+  Stack,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+  useTheme,
+} from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { SORT_ORDER } from '@/constants';
 import { CATEGORIES, COLLEGE_TYPES, QUOTAS, SEAT_POOLS } from '@/constants/josaa';
@@ -10,6 +19,7 @@ import {
   removeFilters,
   updateFilters,
   updateOrdering,
+  updatePageNumber,
   updateSearchValue,
   updateYear,
 } from '@/store/slices/rank';
@@ -17,6 +27,7 @@ import { useDebounce } from '@/utils/debounceHook';
 import { ChipFilter } from '../ChipFilter';
 import { Dropdown } from '../Dropdown';
 import { NoDataComponent } from '../NoData';
+import { PaginationBox } from '../PaginationBox';
 import { SearchBox } from '../SearchBox';
 import { Spinner } from '../Spinner';
 import { TableLayout } from '../TableLayout';
@@ -24,6 +35,7 @@ import { TableSortCell } from '../TableSortCell';
 
 export const RankList = () => {
   const dispatch = useDispatch();
+  const theme = useTheme();
   const rankReqData = useDebounce(
     useSelector((state) => state.rank),
     50,
@@ -118,7 +130,9 @@ export const RankList = () => {
   };
 
   const handleSearchChange = (searchValue) => {
-    dispatch(updateSearchValue(searchValue));
+    if (rankReqData.search !== searchValue) {
+      dispatch(updateSearchValue(searchValue));
+    }
   };
 
   const handleYearChange = (e) => {
@@ -163,6 +177,10 @@ export const RankList = () => {
     );
   };
 
+  const handlePageChange = (page) => {
+    dispatch(updatePageNumber(page));
+  };
+
   return (
     <Box width={'100%'} height={'100%'} py={2}>
       <Stack spacing={2} height={'100%'}>
@@ -175,7 +193,7 @@ export const RankList = () => {
           <SearchBox onChange={handleSearchChange} width={'35%'} />
         </Stack>
         {isFiltersFetching || isFiltersLoading ? (
-          <Spinner sx={{ width: '100%', height: '100%' }} />
+          <Spinner sx={{ width: '6rem' }} />
         ) : (
           <>
             <Stack direction={'row'} gap={2} alignItems={'center'}>
@@ -195,9 +213,19 @@ export const RankList = () => {
                 disabled={roundList.length === 0}
               />
             </Stack>
+            {!isRanksFetching && !isRanksLoading && rankData?.totalPages > 1 && (
+              <PaginationBox
+                currentPage={rankData.page}
+                totalPages={rankData.totalPages}
+                onPageChange={handlePageChange}
+                start={rankData.startIndex}
+                end={rankData.endIndex}
+                totalItems={rankData.totalItems}
+              />
+            )}
             {rankReqData.filters?.round ? (
               isRanksFetching || isRanksLoading ? (
-                <Spinner sx={{ width: '100%', height: '100%' }} />
+                <Spinner sx={{ width: '6rem' }} />
               ) : (
                 <Stack flexGrow={1}>
                   <TableLayout showTable={rankData?.data?.length > 0}>
@@ -289,13 +317,16 @@ export const RankList = () => {
                           rankData?.data?.map((rank, i) => (
                             <TableRow
                               key={`${rank.institute.code}_${rank.branch.code}_${rank.category}_${rank.quota}_${rank.seatPool}`}
-                              sx={
-                                i === rankData.data.length - 1 && {
+                              sx={{
+                                '&:hover': {
+                                  backgroundColor: theme.palette.primary.light,
+                                },
+                                ...(i === rankData.data.length - 1 && {
                                   '& td': {
                                     borderBottom: '0px !important',
                                   },
-                                }
-                              }
+                                }),
+                              }}
                             >
                               <TableCell>{rank.institute.name}</TableCell>
                               <TableCell>{rank.branch.name}</TableCell>
@@ -320,6 +351,16 @@ export const RankList = () => {
               )
             ) : (
               <NoDataComponent text="Select a year and round to view the opening and closing ranks" />
+            )}
+            {!isRanksFetching && !isRanksLoading && rankData?.totalPages > 1 && (
+              <PaginationBox
+                currentPage={rankData.page}
+                totalPages={rankData.totalPages}
+                onPageChange={handlePageChange}
+                start={rankData.startIndex}
+                end={rankData.endIndex}
+                totalItems={rankData.totalItems}
+              />
             )}
           </>
         )}

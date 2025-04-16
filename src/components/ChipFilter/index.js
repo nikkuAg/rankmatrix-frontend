@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useEffect, useState } from 'react';
 import { Chip, Stack, useTheme } from '@mui/material';
 import { useDebounce } from '@/utils/debounceHook';

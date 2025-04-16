@@ -11,7 +11,7 @@ export const metadata = {
 const Matrix = () => {
   return (
     <FeatureLayout title={'Prediction Matrix'}>
-      <Typography>Testing</Typography>
+      <Typography>Coming Soon</Typography>
     </FeatureLayout>
   );
 };

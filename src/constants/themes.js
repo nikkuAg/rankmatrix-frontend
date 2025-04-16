@@ -37,23 +37,24 @@ const lightTheme = {
 // Dark Theme
 const darkTheme = {
   primary: {
-    main: '#6096FC',
-    light: '#D4E3FF',
-    dark: '#467BED',
+    main: '#0A245A',
+    light: '#4B5E9E',
+    dark: '#050F2C',
   },
   background: {
-    main: '#FBFCFF',
-    dark: '#F4F6FD',
-    light: '#F8FAFF',
-  },
-  shadow: {
-    main: 'rgba(0, 25, 71, 0.05)',
+    main: '#121828',
+    dark: '#14223D',
+    light: '#173571',
+    default: '#14223D',
   },
   text: {
-    main: '#002942',
+    main: '#E1E7FD',
     dark: '#000000',
     light: '#FFFFFF',
     link: '#3245EB',
+  },
+  shadow: {
+    main: 'rgba(0, 25, 71, 0.05)',
   },
   font: 'var(--font-poppins)',
   alert: {
@@ -63,9 +64,9 @@ const darkTheme = {
     low: '#FF834F',
   },
   gray: {
-    light: '#E1E5F0',
-    main: '#D5DAE9',
-    dark: '#9EA9C1',
+    light: '#474f60',
+    main: '#173571',
+    dark: '#B2CAFF',
   },
 };
 

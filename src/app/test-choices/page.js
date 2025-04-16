@@ -11,7 +11,7 @@ export const metadata = {
 const TestChoice = () => {
   return (
     <FeatureLayout title={'Test Your JoSAA Choices'}>
-      <Typography>Testing</Typography>
+      <Typography>Coming soon</Typography>
     </FeatureLayout>
   );
 };

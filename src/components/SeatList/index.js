@@ -23,11 +23,13 @@ import {
   setIncreaseFilter,
   updateFilters,
   updateOrdering,
+  updatePageNumber,
   updateSearchValue,
 } from '@/store/slices/seats';
 import { useDebounce } from '@/utils/debounceHook';
 import { ChipFilter } from '../ChipFilter';
 import { NoDataComponent } from '../NoData';
+import { PaginationBox } from '../PaginationBox';
 import { SearchBox } from '../SearchBox';
 import { Spinner } from '../Spinner';
 import { TableLayout } from '../TableLayout';
@@ -100,7 +102,9 @@ export const SeatList = () => {
   };
 
   const handleSearchChange = (searchValue) => {
-    dispatch(updateSearchValue(searchValue));
+    if (seatReqData.search !== searchValue) {
+      dispatch(updateSearchValue(searchValue));
+    }
   };
 
   const handleTabChange = (value) => {
@@ -135,6 +139,10 @@ export const SeatList = () => {
     }
   };
 
+  const handlePageChange = (page) => {
+    dispatch(updatePageNumber(page));
+  };
+
   return (
     <Box width={'100%'} height={'100%'} py={2}>
       <Stack spacing={2} height={'100%'}>
@@ -147,7 +155,7 @@ export const SeatList = () => {
           <SearchBox onChange={handleSearchChange} width={'35%'} />
         </Stack>
         {isFiltersFetching || isFiltersLoading ? (
-          <Spinner sx={{ width: '100%', height: '100%' }} />
+          <Spinner sx={{ width: '6rem' }} />
         ) : (
           <>
             <Stack direction={'row'} justifyContent={'space-between'} width={'100%'}>
@@ -169,6 +177,11 @@ export const SeatList = () => {
                       ':hover': {
                         color: theme.palette.primary.main,
                       },
+                      ...(theme.palette.mode === 'dark' && {
+                        '&.Mui-selected': {
+                          color: theme.palette.primary.light,
+                        },
+                      }),
                     }}
                   />
                 ))}
@@ -189,12 +202,27 @@ export const SeatList = () => {
                     ':hover': {
                       color: theme.palette.primary.main,
                     },
+                    ...(theme.palette.mode === 'dark' && {
+                      '&.Mui-selected': {
+                        color: theme.palette.primary.light,
+                      },
+                    }),
                   }}
                 />
               </Tabs>
             </Stack>
+            {!isSeatsFetching && !isSeatsLoading && seatData?.totalPages > 1 && (
+              <PaginationBox
+                currentPage={seatData.page}
+                totalPages={seatData.totalPages}
+                onPageChange={handlePageChange}
+                start={seatData.startIndex}
+                end={seatData.endIndex}
+                totalItems={seatData.totalItems}
+              />
+            )}
             {isSeatsFetching || isSeatsLoading ? (
-              <Spinner sx={{ width: '100%', height: '100%' }} />
+              <Spinner sx={{ width: '6rem' }} />
             ) : (
               <Stack flexGrow={1}>
                 <TableLayout showTable={seatData?.data?.length > 0}>
@@ -278,13 +306,16 @@ export const SeatList = () => {
                         seatData?.data?.map((seat, i) => (
                           <TableRow
                             key={`${seat.institute.code}_${seat.branch.code}_${seat.category}_${seat.quota}_${seat.seatPool}`}
-                            sx={
-                              i === seatData.data.length - 1 && {
+                            sx={{
+                              '&:hover': {
+                                backgroundColor: theme.palette.primary.light,
+                              },
+                              ...(i === seatData.data.length - 1 && {
                                 '& td': {
                                   borderBottom: '0px !important',
                                 },
-                              }
-                            }
+                              }),
+                            }}
                           >
                             <TableCell>{seat.institute.name}</TableCell>
                             <TableCell>{seat.branch.name}</TableCell>
@@ -305,6 +336,16 @@ export const SeatList = () => {
                   </Table>
                 </TableLayout>
               </Stack>
+            )}
+            {!isSeatsFetching && !isSeatsLoading && seatData?.totalPages > 1 && (
+              <PaginationBox
+                currentPage={seatData.page}
+                totalPages={seatData.totalPages}
+                onPageChange={handlePageChange}
+                start={seatData.startIndex}
+                end={seatData.endIndex}
+                totalItems={seatData.totalItems}
+              />
             )}
           </>
         )}

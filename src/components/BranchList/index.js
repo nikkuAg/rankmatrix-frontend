@@ -1,7 +1,16 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { Box, Stack, Table, TableBody, TableCell, TableHead, TableRow } from '@mui/material';
+import {
+  Box,
+  Stack,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+  useTheme,
+} from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { ChipFilter } from '@/components/ChipFilter';
 import { NoDataComponent } from '@/components/NoData';
@@ -23,6 +32,7 @@ import { stopLoading } from '@/store/slices/loader';
 import { TableLayout } from '../TableLayout';
 
 export const BranchList = () => {
+  const theme = useTheme();
   const [getBranchData, { data, isLoading: isBranchLoading, isFetching: isBranchFetching }] =
     useLazyGetBranchDataQuery();
   const {
@@ -79,7 +89,9 @@ export const BranchList = () => {
   };
 
   const handleSearchChange = (searchValue) => {
-    dispatch(updateSearchValue(searchValue));
+    if (branchReqData.search !== searchValue) {
+      dispatch(updateSearchValue(searchValue));
+    }
   };
 
   const handleSort = (field) => {
@@ -122,7 +134,7 @@ export const BranchList = () => {
           />
         )}
         {isLoading ? (
-          <Spinner sx={{ width: '100%', height: '100%' }} />
+          <Spinner sx={{ width: '6rem' }} />
         ) : (
           <Stack flexGrow={1}>
             <TableLayout>
@@ -170,13 +182,16 @@ export const BranchList = () => {
                     data?.data?.map((branch, i) => (
                       <TableRow
                         key={branch.code}
-                        sx={
-                          i === data.data.length - 1 && {
+                        sx={{
+                          '&:hover': {
+                            backgroundColor: theme.palette.primary.light,
+                          },
+                          ...(i === data.data.length - 1 && {
                             '& td': {
                               borderBottom: '0px !important',
                             },
-                          }
-                        }
+                          }),
+                        }}
                       >
                         <TableCell>{branch.code}</TableCell>
                         <TableCell>{branch.name}</TableCell>

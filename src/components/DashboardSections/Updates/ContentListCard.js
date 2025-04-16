@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import CircleIcon from '@mui/icons-material/Circle';
 import { Box, Link, Stack, Typography } from '@mui/material';

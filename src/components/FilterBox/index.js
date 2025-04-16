@@ -81,6 +81,7 @@ export const FilterBox = ({
                   minWidth: 300,
                   maxHeight: 300,
                   py: 0,
+                  backgroundColor: theme.background.main,
                 },
               },
             }}

@@ -59,6 +59,9 @@ export const ThemeProviderWrapper = ({ children }) => {
   const globalStyles = (
     <GlobalStyles
       styles={{
+        body: {
+          backgroundColor: theme.background.main,
+        },
         a: {
           color: `${theme.palette.text.link} !important`,
         },
@@ -72,6 +75,13 @@ export const ThemeProviderWrapper = ({ children }) => {
         td: {
           borderBottom: `1px solid ${theme.palette.gray.light} !important`,
           borderRight: `1px solid ${theme.palette.gray.light} !important`,
+        },
+        tr: {
+          '&:hover': {
+            '& td': {
+              borderRight: `1px solid ${theme.palette.gray.dark} !important`,
+            },
+          },
         },
       }}
     />

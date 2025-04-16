@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useEffect, useState } from 'react';
 import {
   Box,
@@ -92,8 +94,14 @@ export const RangeFilter = ({
           onClick={handleClear}
           variant="outlined"
           sx={{
-            borderColor: theme.palette.primary.main,
-            color: theme.palette.primary.main,
+            borderColor:
+              theme.palette.mode === 'dark'
+                ? theme.palette.primary.light
+                : theme.palette.primary.main,
+            color:
+              theme.palette.mode === 'dark'
+                ? theme.palette.primary.light
+                : theme.palette.primary.main,
             '&:hover': {
               borderColor: theme.palette.primary.dark,
               color: theme.palette.primary.dark,

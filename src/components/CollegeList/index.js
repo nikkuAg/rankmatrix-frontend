@@ -77,7 +77,9 @@ export const CollegeList = () => {
   };
 
   const handleSearchChange = (searchValue) => {
-    dispatch(updateSearchValue(searchValue));
+    if (collegeReqData.search !== searchValue) {
+      dispatch(updateSearchValue(searchValue));
+    }
   };
 
   const handleSort = (field) => {
@@ -120,7 +122,7 @@ export const CollegeList = () => {
           />
         )}
         {isLoading || isFetching ? (
-          <Spinner sx={{ width: '100%', height: '100%' }} />
+          <Spinner sx={{ width: '6rem' }} />
         ) : (
           <Stack flexGrow={1}>
             {!sortField && (
@@ -195,13 +197,16 @@ export const CollegeList = () => {
                     data?.data?.map((college, i) => (
                       <TableRow
                         key={college.code}
-                        sx={
-                          i === data.data.length - 1 && {
+                        sx={{
+                          '&:hover': {
+                            backgroundColor: theme.palette.primary.light,
+                          },
+                          ...(i === data.data.length - 1 && {
                             '& td': {
                               borderBottom: '0px !important',
                             },
-                          }
-                        }
+                          }),
+                        }}
                       >
                         <TableCell>{college.code}</TableCell>
                         <TableCell>{college.name}</TableCell>
