@@ -208,7 +208,7 @@ export const EventCalendar = () => {
       <Stack gap={1} pt={1}>
         {eventsToShow.map((event, index) => (
           <Grid2
-            gridTemplateColumns={'1fr 3fr'}
+            gridTemplateColumns={'1.2fr 3fr'}
             columnGap={2}
             display={'grid'}
             alignItems={'center'}
