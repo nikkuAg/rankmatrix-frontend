@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import { ArrowDownward, ArrowUpward } from '@mui/icons-material';
 import { Box, TableCell } from '@mui/material';

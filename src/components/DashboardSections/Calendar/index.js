@@ -1,3 +1,5 @@
+'use client';
+
 import 'react-calendar/dist/Calendar.css';
 import React, { useEffect, useState } from 'react';
 import { Grid2, Stack, Typography, useTheme } from '@mui/material';

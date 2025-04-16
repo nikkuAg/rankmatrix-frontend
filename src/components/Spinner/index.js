@@ -2,9 +2,11 @@
 
 import React from 'react';
 import { Box, useTheme } from '@mui/material';
-import Lottie from 'lottie-react';
+import dynamic from 'next/dynamic';
 import animationDataDark from './loader_dark.json';
 import animationData from './loader.json';
+
+const Lottie = dynamic(() => import('lottie-react'), { ssr: false });
 
 export const Spinner = ({ sx }) => {
   const theme = useTheme();
