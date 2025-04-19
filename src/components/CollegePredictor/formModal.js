@@ -84,6 +84,7 @@ export const FormModal = ({ open, setOpen, setFormData, getPredictionData, defau
             defaultValue={defaultValues && defaultValues['mainsRank']}
           />
           <TextField
+            required
             margin="dense"
             name="advRank"
             label="JEE Advanced Rank"
