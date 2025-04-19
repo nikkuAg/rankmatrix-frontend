@@ -203,7 +203,10 @@ export const CollegePredictor = () => {
                           ))
                         ) : (
                           <TableRow>
-                            <NoDataComponent colSpan={9} text="Prediction data does not exists" />
+                            <NoDataComponent
+                              colSpan={9}
+                              text="Prediction data does not exists for the provided details"
+                            />
                           </TableRow>
                         )}
                       </TableBody>
