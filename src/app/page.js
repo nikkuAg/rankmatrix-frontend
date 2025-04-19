@@ -12,7 +12,7 @@ import { useIsMobile } from '@/utils/screenSizeHook';
 
 const Home = () => {
   const isMobile800 = useIsMobile(800);
-  const isMobile460 = useIsMobile(460);
+  const isMobile485 = useIsMobile(485);
 
   const { isLoading, isSuccess } = useGetSiteContentsQuery();
 
@@ -29,7 +29,7 @@ const Home = () => {
   return (
     <Grid2
       container
-      columns={isMobile460 ? 1 : isMobile800 ? 2 : { xs: 2, sm: 7, md: 8, lg: 10 }}
+      columns={isMobile485 ? 1 : isMobile800 ? 2 : { xs: 2, sm: 7, md: 8, lg: 10 }}
       rowSpacing={1}
       columnSpacing={1}
       p={2}
@@ -37,7 +37,7 @@ const Home = () => {
     >
       {isSuccess && (
         <>
-          {!isMobile460 && (
+          {!isMobile485 && (
             <Grid2 size={isMobile800 ? 1 : { xs: 1, sm: 2, lg: 2.25 }}>
               <Updates />
             </Grid2>
@@ -47,7 +47,7 @@ const Home = () => {
               <FeatureBox />
             </Grid2>
           )}
-          <Grid2 size={isMobile460 || isMobile800 ? 1 : { xs: 1, sm: 2, lg: 2.25 }}>
+          <Grid2 size={isMobile485 || isMobile800 ? 1 : { xs: 1, sm: 2, lg: 2.25 }}>
             <EventCalendar />
           </Grid2>
           {isMobile800 && (
@@ -55,7 +55,7 @@ const Home = () => {
               <FeatureBox />
             </Grid2>
           )}
-          {isMobile460 && (
+          {isMobile485 && (
             <Grid2 size={1}>
               <Updates />
             </Grid2>
