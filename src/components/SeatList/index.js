@@ -27,6 +27,7 @@ import {
   updateSearchValue,
 } from '@/store/slices/seats';
 import { useDebounce } from '@/utils/debounceHook';
+import { useIsMobile } from '../../utils/screenSizeHook';
 import { ChipFilter } from '../ChipFilter';
 import { NoDataComponent } from '../NoData';
 import { PaginationBox } from '../PaginationBox';
@@ -38,6 +39,9 @@ import { TableSortCell } from '../TableSortCell';
 export const SeatList = () => {
   const INCREASE = 'increase';
   const theme = useTheme();
+  const isMobile650 = useIsMobile(650);
+  const isMobile800 = useIsMobile(800);
+
   const dispatch = useDispatch();
   const seatReqData = useDebounce(
     useSelector((state) => state.seat),
@@ -146,13 +150,18 @@ export const SeatList = () => {
   return (
     <Box width={'100%'} height={'100%'} py={2}>
       <Stack spacing={2} height={'100%'}>
-        <Stack direction={'row'} justifyContent={'space-between'} alignItems={'center'}>
+        <Stack
+          direction={isMobile650 ? 'column' : 'row'}
+          justifyContent={'space-between'}
+          gap={2}
+          alignItems={isMobile650 ? 'flex-start' : 'center'}
+        >
           <ChipFilter
             filterList={Object.keys(COLLEGE_TYPES)}
             onChange={handleCollegeTypeChange}
             defaultSelected={Object.keys(COLLEGE_TYPES)}
           />
-          <SearchBox onChange={handleSearchChange} width={'35%'} />
+          <SearchBox onChange={handleSearchChange} width={isMobile650 ? '100%' : '35%'} />
         </Stack>
         {isFiltersFetching || isFiltersLoading ? (
           <Spinner sx={{ width: '6rem' }} />
@@ -188,7 +197,7 @@ export const SeatList = () => {
               </Tabs>
               <Tabs
                 value={increaseBtnSelected && INCREASE}
-                sx={{ width: '20%' }}
+                sx={{ width: isMobile800 ? '45%' : '20%' }}
                 onChange={() => {
                   handleTabChange(INCREASE);
                 }}

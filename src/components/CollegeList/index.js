@@ -31,12 +31,14 @@ import {
   updateSearchValue,
 } from '@/store/slices/college';
 import { stopLoading } from '@/store/slices/loader';
+import { useIsMobile } from '../../utils/screenSizeHook';
 import { TableLayout } from '../TableLayout';
 
 export const CollegeList = () => {
   const [getCollegeData, { data, isLoading, isFetching }] = useLazyGetCollegeDataQuery();
   const collegeReqData = useSelector((state) => state.college);
   const theme = useTheme();
+  const isMobile650 = useIsMobile(650);
   const dispatch = useDispatch();
   const [nirfYears, setNirfYears] = useState([]);
   const [expandedNirf, setExpandedNirf] = useState(false);
@@ -103,13 +105,18 @@ export const CollegeList = () => {
   return (
     <Box width={'100%'} height={'100%'} py={2}>
       <Stack spacing={2} height={'100%'}>
-        <Stack direction={'row'} justifyContent={'space-between'} alignItems={'center'}>
+        <Stack
+          direction={isMobile650 ? 'column' : 'row'}
+          justifyContent={'space-between'}
+          gap={2}
+          alignItems={isMobile650 ? 'flex-start' : 'center'}
+        >
           <ChipFilter
             filterList={Object.keys(COLLEGE_TYPES)}
             onChange={handleCollegeTypeChange}
             defaultSelected={Object.keys(COLLEGE_TYPES)}
           />
-          <SearchBox onChange={handleSearchChange} width={'35%'} />
+          <SearchBox onChange={handleSearchChange} width={isMobile650 ? '100%' : '35%'} />
         </Stack>
         {!isLoading && !isFetching && data?.totalPages > 1 && (
           <PaginationBox

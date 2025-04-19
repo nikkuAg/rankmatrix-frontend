@@ -14,10 +14,12 @@ import {
 } from 'date-fns';
 import Calendar from 'react-calendar';
 import { useSiteContent } from '@/store/selectors/siteContent';
+import { useIsMobile } from '../../../utils/screenSizeHook';
 
 export const EventCalendar = () => {
   const events = useSiteContent()?.event;
   const theme = useTheme();
+  const isMobile = useIsMobile(800);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [selectedDay, setSelectedDay] = useState(null);
   const [filteredEvents, setFilteredEvents] = useState([]);
@@ -85,7 +87,7 @@ export const EventCalendar = () => {
   return (
     <Stack
       width="100%"
-      height={'80%'}
+      height={isMobile ? '100%' : '80%'}
       px={'1rem'}
       py={'1.5rem'}
       gap={1}
@@ -214,22 +216,34 @@ export const EventCalendar = () => {
             alignItems={'center'}
             key={index}
           >
-            <Typography
-              fontSize={'1rem'}
-              width={'fit-content'}
-              padding={'0.2rem 0.5rem'}
-              borderRadius={'50%'}
-              bgcolor={theme.palette.primary.main}
-              color={theme.palette.text.light}
-            >
-              {format(new Date(event.startDate), 'dd')}
+            <Stack direction={'row'} alignItems={'center'} gap={0.5}>
+              <Typography
+                fontSize={'1rem'}
+                width={'fit-content'}
+                padding={'0.2rem 0.5rem'}
+                borderRadius={'50%'}
+                bgcolor={theme.palette.primary.main}
+                color={theme.palette.text.light}
+              >
+                {format(new Date(event.startDate), 'dd')}
+              </Typography>
+
               {event.endDate && (
                 <>
                   {' - '}
-                  {format(new Date(event.endDate), 'dd')}
+                  <Typography
+                    fontSize={'1rem'}
+                    width={'fit-content'}
+                    padding={'0.2rem 0.5rem'}
+                    borderRadius={'50%'}
+                    bgcolor={theme.palette.primary.main}
+                    color={theme.palette.text.light}
+                  >
+                    {format(new Date(event.endDate), 'dd')}
+                  </Typography>
                 </>
               )}
-            </Typography>
+            </Stack>
             <Typography fontSize={'1rem'} flexGrow={1} flexWrap={'wrap'} component={'div'}>
               {event.title}
             </Typography>

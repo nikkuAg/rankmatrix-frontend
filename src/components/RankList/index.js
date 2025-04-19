@@ -24,6 +24,7 @@ import {
   updateYear,
 } from '@/store/slices/rank';
 import { useDebounce } from '@/utils/debounceHook';
+import { useIsMobile } from '../../utils/screenSizeHook';
 import { ChipFilter } from '../ChipFilter';
 import { Dropdown } from '../Dropdown';
 import { NoDataComponent } from '../NoData';
@@ -36,6 +37,8 @@ import { TableSortCell } from '../TableSortCell';
 export const RankList = () => {
   const dispatch = useDispatch();
   const theme = useTheme();
+  const isMobile650 = useIsMobile(650);
+
   const rankReqData = useDebounce(
     useSelector((state) => state.rank),
     50,
@@ -184,13 +187,18 @@ export const RankList = () => {
   return (
     <Box width={'100%'} height={'100%'} py={2}>
       <Stack spacing={2} height={'100%'}>
-        <Stack direction={'row'} justifyContent={'space-between'} alignItems={'center'}>
+        <Stack
+          direction={isMobile650 ? 'column' : 'row'}
+          justifyContent={'space-between'}
+          gap={2}
+          alignItems={isMobile650 ? 'flex-start' : 'center'}
+        >
           <ChipFilter
             filterList={Object.keys(COLLEGE_TYPES)}
             onChange={handleCollegeTypeChange}
             defaultSelected={Object.keys(COLLEGE_TYPES)}
           />
-          <SearchBox onChange={handleSearchChange} width={'35%'} />
+          <SearchBox onChange={handleSearchChange} width={isMobile650 ? '100%' : '35%'} />
         </Stack>
         {isFiltersFetching || isFiltersLoading ? (
           <Spinner sx={{ width: '6rem' }} />
@@ -203,6 +211,7 @@ export const RankList = () => {
                 listData={yearList}
                 selectedValue={rankReqData.year}
                 handleChange={handleYearChange}
+                width={isMobile650 ? '40%' : '20%'}
               />
               <Dropdown
                 label={'Select Round'}
@@ -211,6 +220,7 @@ export const RankList = () => {
                 selectedValue={rankReqData?.filters?.round || ''}
                 handleChange={handleRoundChange}
                 disabled={roundList.length === 0}
+                width={isMobile650 ? '40%' : '20%'}
               />
             </Stack>
             {!isRanksFetching && !isRanksLoading && rankData?.totalPages > 1 && (

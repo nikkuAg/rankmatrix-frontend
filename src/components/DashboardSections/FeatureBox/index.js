@@ -6,8 +6,8 @@ import {
   CardActionArea,
   CardContent,
   CardMedia,
-  Grid2,
   Skeleton,
+  Stack,
   Typography,
   useTheme,
 } from '@mui/material';
@@ -85,7 +85,7 @@ const FeatureCard = ({ title, image, link }) => {
   return (
     <Card
       sx={{
-        width: '100%',
+        width: '16rem',
         height: '13rem',
         boxShadow: `0px 0px 55px 6px ${theme.palette.shadow.main}`,
         p: 1,
@@ -131,14 +131,14 @@ const FeatureCard = ({ title, image, link }) => {
 export const FeatureBox = () => {
   const theme = useTheme();
   return (
-    <Grid2
+    <Stack
+      direction={'row'}
       width={'100%'}
       height={'100%'}
-      px={1}
-      gridTemplateColumns={'1fr 1fr 1fr'}
-      rowGap={2}
-      columnGap={2}
-      display={'grid'}
+      px={0.5}
+      gap={1}
+      flexWrap={'wrap'}
+      justifyContent={'space-evenly'}
     >
       {features.map((feature, index) => (
         <FeatureCard
@@ -148,6 +148,6 @@ export const FeatureBox = () => {
           key={index}
         />
       ))}
-    </Grid2>
+    </Stack>
   );
 };
