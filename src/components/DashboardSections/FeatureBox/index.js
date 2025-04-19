@@ -16,6 +16,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useDispatch } from 'react-redux';
 import { startLoading, stopLoading } from '@/store/slices/loader';
+import { useIsMobile } from '../../../utils/screenSizeHook';
 
 const features = [
   {
@@ -71,6 +72,7 @@ const features = [
 const FeatureCard = ({ title, image, link }) => {
   const [isLoading, setIsLoading] = useState(true);
   const theme = useTheme();
+  const isMobile550 = useIsMobile(550);
   const router = useRouter();
   const dispatch = useDispatch();
 
@@ -85,7 +87,7 @@ const FeatureCard = ({ title, image, link }) => {
   return (
     <Card
       sx={{
-        width: '16rem',
+        width: isMobile550 ? '100%' : '16rem',
         height: '13rem',
         boxShadow: `0px 0px 55px 6px ${theme.palette.shadow.main}`,
         p: 1,
