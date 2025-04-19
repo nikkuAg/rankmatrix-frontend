@@ -13,10 +13,32 @@ const poppins = Poppins({
 });
 
 export const metadata = {
-  title: 'RankMatrix',
-  description: 'A free tool for JoSAA Aspirants to help choose thier dream college',
+  title: 'RankMatrix Dashboard – Your Gateway to JoSAA Insights',
+  description:
+    'Navigate through colleges, branches, rank trends, seat matrix, and get personalized college predictions based on your JEE Mains/Advanced rank.',
+  openGraph: {
+    title: 'RankMatrix Dashboard – Explore Colleges & Predict Your Future',
+    description:
+      'Explore JoSAA participating institutes, rank trends, and use our prediction tool to find the best college and branch for you.',
+    url: 'https://rankmatrix.in/dashboard',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'RankMatrix Dashboard',
+    description: 'Explore JoSAA data and find your dream college with our JEE Main rank predictor.',
+  },
+  keywords: [
+    'JoSAA',
+    'JOSAA counselling',
+    'JEE College Predictor',
+    'Seat Matrix',
+    'Opening and Closing Rank',
+    'Participating Colleges',
+    'Engineering Admission',
+    'Rank Trends',
+  ],
 };
-
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
