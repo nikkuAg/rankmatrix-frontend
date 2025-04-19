@@ -263,7 +263,7 @@ export const RankList = () => {
               <Dropdown
                 label={'Select Year'}
                 id={'select-year'}
-                listData={yearList}
+                listData={yearList.sort((a, b) => b.value - a.value)}
                 selectedValue={rankReqData.year}
                 handleChange={handleYearChange}
                 width={isMobile650 ? '40%' : '20%'}

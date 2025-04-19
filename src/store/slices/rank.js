@@ -2,7 +2,9 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   search: '',
-  filters: {},
+  filters: {
+    is_preparatory: false,
+  },
   pageSize: 25,
   page: 1,
   ordering: 'opening_rank',
@@ -29,7 +31,9 @@ const rankSlice = createSlice({
       state.page = 1;
     },
     resetFilters: (state) => {
-      state.filters = {};
+      state.filters = {
+        is_preparatory: false,
+      };
       state.page = 1;
     },
     updatePageNumber: (state, action) => {

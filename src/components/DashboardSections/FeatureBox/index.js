@@ -32,6 +32,12 @@ const features = [
     link: '/ranks',
   },
   {
+    title: 'Seat Matrix',
+    image: '/seat.svg',
+    imageDark: '/seat_dark.svg',
+    link: '/seat-matrix',
+  },
+  {
     title: 'Participating Colleges',
     image: '/college.svg',
     imageDark: '/college_dark.svg',
@@ -42,12 +48,6 @@ const features = [
     image: '/branch.svg',
     imageDark: '/branch_dark.svg',
     link: '/branches',
-  },
-  {
-    title: 'Seat Matrix',
-    image: '/seat.svg',
-    imageDark: '/seat_dark.svg',
-    link: '/seat-matrix',
   },
   // {
   //   title: 'Prediction Matrix',
