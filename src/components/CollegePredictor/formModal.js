@@ -33,6 +33,9 @@ export const FormModal = ({ open, setOpen, setFormData, getPredictionData, defau
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const formJson = Object.fromEntries(formData.entries());
+    if (formJson.advRank.trim() === '') {
+      delete formJson.advRank;
+    }
     getPredictionData(formJson)
       .unwrap()
       .then((_) => {
