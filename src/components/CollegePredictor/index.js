@@ -13,6 +13,7 @@ import {
   useTheme,
 } from '@mui/material';
 import { useLazyGetpredictionDataQuery } from '../../store/queries/prediction';
+import { sendAnalyticsEvent } from '../../utils/analyticEvent';
 import { NoDataComponent } from '../NoData';
 import { Spinner } from '../Spinner';
 import { TableLayout } from '../TableLayout';
@@ -27,6 +28,16 @@ export const CollegePredictor = () => {
     getPredictionData,
     { data: rankData, isLoading: isRanksLoading, isFetching: isRanksFetching },
   ] = useLazyGetpredictionDataQuery();
+
+  const handleOpenForm = () => {
+    setOpen(true);
+    sendAnalyticsEvent({
+      action: `${formData ? 'update' : 'add'}_form_open_clicked`,
+      category: 'college_predictor',
+      label: 'College predictor form open',
+      value: 1,
+    });
+  };
 
   return (
     <>
@@ -50,7 +61,7 @@ export const CollegePredictor = () => {
                   color: theme.palette.text.light,
                 },
               }}
-              onClick={() => setOpen(true)}
+              onClick={handleOpenForm}
             >
               {formData ? 'Update' : 'Add'} Prediction Details
             </Button>

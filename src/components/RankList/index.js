@@ -24,6 +24,7 @@ import {
   updateYear,
 } from '@/store/slices/rank';
 import { useDebounce } from '@/utils/debounceHook';
+import { sendAnalyticsEvent } from '../../utils/analyticEvent';
 import { useIsMobile } from '../../utils/screenSizeHook';
 import { ChipFilter } from '../ChipFilter';
 import { Dropdown } from '../Dropdown';
@@ -100,6 +101,12 @@ export const RankList = () => {
       } else if (sortOrder === SORT_ORDER.DESC) {
         dispatch(updateOrdering(`-${sortField}`));
       }
+      sendAnalyticsEvent({
+        action: 'sort_applied',
+        category: 'rank_list',
+        label: 'Rank List sort',
+        value: { sortField, sortOrder },
+      });
     } else {
       dispatch(updateOrdering(null));
     }
@@ -130,21 +137,45 @@ export const RankList = () => {
 
   const handleCollegeTypeChange = (filterValues) => {
     dispatch(updateFilters({ institute__type: filterValues }));
+    sendAnalyticsEvent({
+      action: 'college_type_applied',
+      category: 'rank_list',
+      label: 'Rank List filters',
+      value: filterValues,
+    });
   };
 
   const handleSearchChange = (searchValue) => {
     if (rankReqData.search !== searchValue) {
       dispatch(updateSearchValue(searchValue));
+      sendAnalyticsEvent({
+        action: 'search',
+        category: 'rank_list',
+        label: 'Rank List Search',
+        value: searchValue,
+      });
     }
   };
 
   const handleYearChange = (e) => {
     dispatch(updateYear(e.target.value));
     dispatch(removeFilters('round'));
+    sendAnalyticsEvent({
+      action: 'year_changed',
+      category: 'rank_list',
+      label: 'Rank List Search',
+      value: e.target.value,
+    });
   };
 
   const handleRoundChange = (e) => {
     dispatch(updateFilters({ round: e.target.value }));
+    sendAnalyticsEvent({
+      action: 'round_changed',
+      category: 'rank_list',
+      label: 'Rank List Search',
+      value: e.target.value,
+    });
   };
 
   const handleSort = (field) => {
@@ -164,8 +195,20 @@ export const RankList = () => {
   const handleFilter = (filterValues, field) => {
     if (filterValues.length > 0) {
       dispatch(updateFilters({ [field]: filterValues }));
+      sendAnalyticsEvent({
+        action: 'filters_applied',
+        category: 'rank_list',
+        label: 'Rank List Filters',
+        value: { filterValues, field },
+      });
     } else {
       dispatch(removeFilters(field));
+      sendAnalyticsEvent({
+        action: 'filters_removed',
+        category: 'rank_list',
+        label: 'Rank List Filters remove',
+        value: { field },
+      });
     }
   };
 
@@ -178,10 +221,22 @@ export const RankList = () => {
         },
       }),
     );
+    sendAnalyticsEvent({
+      action: 'filter_range_applied',
+      category: 'rank_list',
+      label: 'Rank List Filters',
+      value: { filterValue, field },
+    });
   };
 
   const handlePageChange = (page) => {
     dispatch(updatePageNumber(page));
+    sendAnalyticsEvent({
+      action: 'page_change',
+      category: 'rank_list',
+      label: 'Rank List page Change',
+      value: page,
+    });
   };
 
   return (
@@ -254,7 +309,7 @@ export const RankList = () => {
                             sortField={sortField}
                             sortOrder={sortOrder}
                             handleSort={handleSort}
-                            title="Branch Name"
+                            title="Rank Name"
                             field="branch__name"
                             showFilter={false}
                           />

@@ -27,6 +27,7 @@ import {
   updateSearchValue,
 } from '@/store/slices/seats';
 import { useDebounce } from '@/utils/debounceHook';
+import { sendAnalyticsEvent } from '../../utils/analyticEvent';
 import { useIsMobile } from '../../utils/screenSizeHook';
 import { ChipFilter } from '../ChipFilter';
 import { NoDataComponent } from '../NoData';
@@ -90,6 +91,12 @@ export const SeatList = () => {
       } else if (sortOrder === SORT_ORDER.DESC) {
         dispatch(updateOrdering(`-${sortField}`));
       }
+      sendAnalyticsEvent({
+        action: 'sort_applied',
+        category: 'seat_list',
+        label: 'Seat List sort',
+        value: { sortField, sortOrder },
+      });
     } else {
       dispatch(updateOrdering(null));
     }
@@ -103,11 +110,23 @@ export const SeatList = () => {
 
   const handleCollegeTypeChange = (filterValues) => {
     dispatch(updateFilters({ institute__type: filterValues }));
+    sendAnalyticsEvent({
+      action: 'college_type_applied',
+      category: 'seat_list',
+      label: 'Seat List filters',
+      value: filterValues,
+    });
   };
 
   const handleSearchChange = (searchValue) => {
     if (seatReqData.search !== searchValue) {
       dispatch(updateSearchValue(searchValue));
+      sendAnalyticsEvent({
+        action: 'search',
+        category: 'seat_list',
+        label: 'Seat List Search',
+        value: searchValue,
+      });
     }
   };
 
@@ -115,9 +134,21 @@ export const SeatList = () => {
     if (value === INCREASE) {
       setTabValue(null);
       setIncreaseBtnSelected(true);
+      sendAnalyticsEvent({
+        action: 'tab_increase_clicked',
+        category: 'seat_list',
+        label: 'Seat List tab',
+        value: value,
+      });
     } else {
       setTabValue(value);
       setIncreaseBtnSelected(false);
+      sendAnalyticsEvent({
+        action: 'tab_clicked',
+        category: 'seat_list',
+        label: 'Seat List tab',
+        value: value,
+      });
     }
   };
 
@@ -138,13 +169,31 @@ export const SeatList = () => {
   const handleFilter = (filterValues, field) => {
     if (filterValues.length > 0) {
       dispatch(updateFilters({ [field]: filterValues }));
+      sendAnalyticsEvent({
+        action: 'filters_applied',
+        category: 'seat_list',
+        label: 'Seat List Filters',
+        value: { filterValues, field },
+      });
     } else {
       dispatch(removeFilters(field));
+      sendAnalyticsEvent({
+        action: 'filters_removed',
+        category: 'seat_list',
+        label: 'Seat List Filters remove',
+        value: { field },
+      });
     }
   };
 
   const handlePageChange = (page) => {
     dispatch(updatePageNumber(page));
+    sendAnalyticsEvent({
+      action: 'page_change',
+      category: 'seat_list',
+      label: 'Seat List page Change',
+      value: page,
+    });
   };
 
   return (

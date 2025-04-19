@@ -29,6 +29,7 @@ import {
   updateSearchValue,
 } from '@/store/slices/branch';
 import { stopLoading } from '@/store/slices/loader';
+import { sendAnalyticsEvent } from '../../utils/analyticEvent';
 import { useIsMobile } from '../../utils/screenSizeHook';
 import { TableLayout } from '../TableLayout';
 
@@ -66,6 +67,12 @@ export const BranchList = () => {
       } else if (sortOrder === SORT_ORDER.DESC) {
         dispatch(updateOrdering(`-${sortField}`));
       }
+      sendAnalyticsEvent({
+        action: 'sort_applied',
+        category: 'branch_list',
+        label: 'Branch List sort',
+        value: { sortField, sortOrder },
+      });
     } else {
       dispatch(updateOrdering(null));
     }
@@ -81,19 +88,43 @@ export const BranchList = () => {
 
   const handleCollegeTypeChange = (filterValues) => {
     dispatch(updateFilters({ institute__type: filterValues }));
+    sendAnalyticsEvent({
+      action: 'college_type_applied',
+      category: 'branch_list',
+      label: 'Branch List filters',
+      value: filterValues,
+    });
   };
 
   const handleFilter = (filterValues, field) => {
     if (filterValues.length > 0) {
       dispatch(updateFilters({ [field]: filterValues }));
+      sendAnalyticsEvent({
+        action: 'filters_applied',
+        category: 'branch_list',
+        label: 'Branch List Filters',
+        value: { filterValues, field },
+      });
     } else {
       dispatch(removeFilters(field));
+      sendAnalyticsEvent({
+        action: 'filters_removed',
+        category: 'branch_list',
+        label: 'Branch List Filters remove',
+        value: { field },
+      });
     }
   };
 
   const handleSearchChange = (searchValue) => {
     if (branchReqData.search !== searchValue) {
       dispatch(updateSearchValue(searchValue));
+      sendAnalyticsEvent({
+        action: 'search',
+        category: 'branch_list',
+        label: 'Branch List Search',
+        value: searchValue,
+      });
     }
   };
 
@@ -113,6 +144,12 @@ export const BranchList = () => {
 
   const handlePageChange = (page) => {
     dispatch(updatePageNumber(page));
+    sendAnalyticsEvent({
+      action: 'page_change',
+      category: 'branch_list',
+      label: 'Branch List page Change',
+      value: page,
+    });
   };
 
   return (
