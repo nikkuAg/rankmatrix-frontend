@@ -12,7 +12,7 @@ export const Updates = () => {
   return (
     <Box
       width="100%"
-      height={isMobile ? '100%' : '80%'}
+      height={isMobile ? '100%' : '90%'}
       sx={{
         backgroundColor: theme.background.dark,
         borderRadius: '12px',
@@ -20,7 +20,7 @@ export const Updates = () => {
         color: theme.palette.text.main,
       }}
     >
-      <ContentListCard height={'40%'} title={'Updates'} contentType={SITE_CONTENT.UPDATES} />
+      <ContentListCard height={'43%'} title={'Updates'} contentType={SITE_CONTENT.UPDATES} />
       <ContentListCard height={'60%'} title={'Important Links'} contentType={SITE_CONTENT.LINKS} />
     </Box>
   );
