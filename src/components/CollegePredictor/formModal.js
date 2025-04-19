@@ -15,11 +15,18 @@ import {
 } from '@mui/material';
 import { PAGE_SIZES } from '../../constants';
 import { CATEGORIES, SEAT_POOLS, STATES } from '../../constants/josaa';
+import { sendAnalyticsEvent } from '../../utils/analyticEvent';
 
 export const FormModal = ({ open, setOpen, setFormData, getPredictionData, defaultValues }) => {
   const theme = useTheme();
   const handleClose = () => {
     setOpen(false);
+    sendAnalyticsEvent({
+      action: `form_closed`,
+      category: 'college_predictor',
+      label: 'College predictor form closed',
+      value: 1,
+    });
   };
 
   const handleSubmit = (event) => {
@@ -32,6 +39,13 @@ export const FormModal = ({ open, setOpen, setFormData, getPredictionData, defau
         setFormData(formJson);
         handleClose();
       });
+
+    sendAnalyticsEvent({
+      action: `form_submitted`,
+      category: 'college_predictor',
+      label: 'College predictor form submit',
+      value: formJson,
+    });
   };
 
   return (

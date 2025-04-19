@@ -25,12 +25,19 @@ export const ThemeProviderWrapper = ({ children }) => {
   }, []);
 
   const toggleTheme = () => {
+    let newMode = '';
     setMode((prevMode) => {
-      const newMode = prevMode === 'light' ? 'dark' : 'light';
+      newMode = prevMode === 'light' ? 'dark' : 'light';
       if (typeof window !== 'undefined') {
         localStorage.setItem('theme', newMode);
       }
       return newMode;
+    });
+    sendAnalyticsEvent({
+      action: `theme_changed`,
+      category: 'dashboard',
+      label: 'Theme changed',
+      value: newMode,
     });
   };
 

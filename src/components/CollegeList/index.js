@@ -31,6 +31,7 @@ import {
   updateSearchValue,
 } from '@/store/slices/college';
 import { stopLoading } from '@/store/slices/loader';
+import { sendAnalyticsEvent } from '../../utils/analyticEvent';
 import { useIsMobile } from '../../utils/screenSizeHook';
 import { TableLayout } from '../TableLayout';
 
@@ -69,6 +70,12 @@ export const CollegeList = () => {
       } else if (sortOrder === SORT_ORDER.DESC) {
         dispatch(updateOrdering(`-${sortField}`));
       }
+      sendAnalyticsEvent({
+        action: 'sort_applied',
+        category: 'college_list',
+        label: 'College List sort',
+        value: { sortField, sortOrder },
+      });
     } else {
       dispatch(updateOrdering(null));
     }
@@ -76,11 +83,23 @@ export const CollegeList = () => {
 
   const handleCollegeTypeChange = (filterValues) => {
     dispatch(updateFilters({ type: filterValues }));
+    sendAnalyticsEvent({
+      action: 'college_type_applied',
+      category: 'college_list',
+      label: 'College List filters',
+      value: filterValues,
+    });
   };
 
   const handleSearchChange = (searchValue) => {
     if (collegeReqData.search !== searchValue) {
       dispatch(updateSearchValue(searchValue));
+      sendAnalyticsEvent({
+        action: 'search',
+        category: 'college_list',
+        label: 'College List Search',
+        value: searchValue,
+      });
     }
   };
 
@@ -100,6 +119,22 @@ export const CollegeList = () => {
 
   const handlePageChange = (page) => {
     dispatch(updatePageNumber(page));
+    sendAnalyticsEvent({
+      action: 'page_change',
+      category: 'college_list',
+      label: 'College List page Change',
+      value: page,
+    });
+  };
+
+  const handleExpandNIRF = () => {
+    setExpandedNirf(!expandedNirf);
+    sendAnalyticsEvent({
+      action: 'expand_nirf',
+      category: 'college_list',
+      label: 'College List NIRF Expanded',
+      value: !expandedNirf,
+    });
   };
 
   return (
@@ -172,7 +207,7 @@ export const CollegeList = () => {
                       }}
                     >
                       <Button
-                        onClick={() => setExpandedNirf(!expandedNirf)}
+                        onClick={handleExpandNIRF}
                         color="inherit"
                         sx={{ textTransform: 'none' }}
                       >
