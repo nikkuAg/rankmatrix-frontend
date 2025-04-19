@@ -87,7 +87,7 @@ export const EventCalendar = () => {
   return (
     <Stack
       width="100%"
-      height={isMobile ? '100%' : '80%'}
+      height={isMobile ? '100%' : '90%'}
       px={'1rem'}
       py={'1.5rem'}
       gap={1}
@@ -207,7 +207,7 @@ export const EventCalendar = () => {
         tileContent={highlightDates}
         value={selectedDay}
       />
-      <Stack gap={1} pt={1}>
+      <Stack gap={1} pt={1} maxHeight={'45%'} sx={{ overflowY: 'auto' }}>
         {eventsToShow.map((event, index) => (
           <Grid2
             gridTemplateColumns={'1.2fr 3fr'}
