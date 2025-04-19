@@ -1,0 +1,11 @@
+# *
+User-agent: *
+Allow: /
+Disallow: /api
+Disallow: /admin
+
+# Host
+Host: https://rankmatrix.in
+
+# Sitemaps
+Sitemap: https://rankmatrix.in/sitemap.xml
