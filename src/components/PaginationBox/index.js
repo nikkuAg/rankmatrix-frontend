@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { Pagination, Stack, Typography, useTheme } from '@mui/material';
+import { useIsMobile } from '../../utils/screenSizeHook';
 
 export const PaginationBox = ({
   currentPage,
@@ -12,8 +13,14 @@ export const PaginationBox = ({
   totalItems,
 }) => {
   const theme = useTheme();
+  const isMobile650 = useIsMobile(650);
   return (
-    <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
+    <Stack
+      direction={isMobile650 ? 'column' : 'row'}
+      justifyContent="space-between"
+      alignItems={isMobile650 ? 'flex-start' : 'center'}
+      spacing={2}
+    >
       <Pagination
         count={totalPages}
         page={currentPage}

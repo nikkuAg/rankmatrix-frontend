@@ -28,7 +28,7 @@ export const ChipFilter = ({
   }, [debouncedFilterValues]);
 
   return (
-    <Stack direction={flexDirection} spacing={1}>
+    <Stack direction={flexDirection} spacing={0.8}>
       {filterList.map((filter) => (
         <Chip
           label={filter}
