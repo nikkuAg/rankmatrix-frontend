@@ -99,7 +99,7 @@ export const FormModal = ({ open, setOpen, setFormData, getPredictionData, defau
             required
             margin="dense"
             name="category"
-            label="JoSAA Category"
+            label="Category"
             select
             fullWidth
             variant="standard"

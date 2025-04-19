@@ -20,6 +20,18 @@ import { useIsMobile } from '../../../utils/screenSizeHook';
 
 const features = [
   {
+    title: 'Predict Your College',
+    image: '/matrix.svg',
+    imageDark: '/matrix_dark.svg',
+    link: '/predict',
+  },
+  {
+    title: 'Opening & Closing Ranks',
+    image: '/rank.svg',
+    imageDark: '/rank_dark.svg',
+    link: '/ranks',
+  },
+  {
     title: 'Participating Colleges',
     image: '/college.svg',
     imageDark: '/college_dark.svg',
@@ -36,18 +48,6 @@ const features = [
     image: '/seat.svg',
     imageDark: '/seat_dark.svg',
     link: '/seat-matrix',
-  },
-  {
-    title: 'Opening & Closing Ranks',
-    image: '/rank.svg',
-    imageDark: '/rank_dark.svg',
-    link: '/ranks',
-  },
-  {
-    title: 'Predict Your College',
-    image: '/matrix.svg',
-    imageDark: '/matrix_dark.svg',
-    link: '/predict',
   },
   // {
   //   title: 'Prediction Matrix',

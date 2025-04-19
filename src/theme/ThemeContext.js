@@ -5,6 +5,7 @@ import { GlobalStyles } from '@mui/material';
 import CssBaseline from '@mui/material/CssBaseline';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { themes } from '@/constants/themes';
+import { sendAnalyticsEvent } from '../utils/analyticEvent';
 
 const ThemeContext = createContext();
 

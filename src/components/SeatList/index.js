@@ -67,7 +67,7 @@ export const SeatList = () => {
     if (filterData?.years?.length > 0) {
       setTabValue(filterData.years[0]);
       setIncreaseTabBtnText(
-        `Seat change from JoSAA ${filterData.years[0]} to JoSAA ${filterData.years[0] - 1}`,
+        `Seat change from JoSAA ${filterData.years[0] - 1} to JoSAA ${filterData.years[0]}`,
       );
     }
   }, [filterData]);
