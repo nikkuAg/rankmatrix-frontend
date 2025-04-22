@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import { Download } from '@mui/icons-material';
 import {
   Box,
   Button,
@@ -14,6 +15,7 @@ import {
 } from '@mui/material';
 import { useLazyGetpredictionDataQuery } from '../../store/queries/prediction';
 import { sendAnalyticsEvent } from '../../utils/analyticEvent';
+import { downloadCSV } from '../../utils/downloadCSV';
 import { NoDataComponent } from '../NoData';
 import { Spinner } from '../Spinner';
 import { TableLayout } from '../TableLayout';
@@ -39,6 +41,31 @@ export const CollegePredictor = () => {
     });
   };
 
+  const handleDownload = () => {
+    const data = [];
+    rankData.forEach((item) => {
+      data.push({
+        institute: item.institute.name,
+        instituteType: item.institute.type,
+        branch: item.branch.name,
+        degree: item.branch.degree,
+        duration: item.branch.courseDuration,
+        quota: item.quota,
+        category: item.category,
+        seatPool: item.seatPool,
+        openingRank: item.openingRank,
+        closingRank: item.closingRank,
+      });
+    });
+    downloadCSV(data);
+    sendAnalyticsEvent({
+      action: 'csv_download',
+      category: 'college_predictor',
+      label: 'College predictor download CSV',
+      value: 1,
+    });
+  };
+
   return (
     <>
       <FormModal
@@ -50,7 +77,7 @@ export const CollegePredictor = () => {
       />
       <Box width={'100%'} height={'100%'} py={2}>
         <Stack spacing={2} height={'100%'}>
-          <Stack direction={'row'}>
+          <Stack direction={'row'} justifyContent={'space-between'}>
             <Button
               sx={{
                 width: 'fit-content',
@@ -65,6 +92,21 @@ export const CollegePredictor = () => {
             >
               {formData ? 'Update' : 'Add'} Prediction Details
             </Button>
+            {rankData?.length > 0 && (
+              <Button
+                sx={{
+                  color: theme.palette.primary.dark,
+                  '&:hover': {
+                    color: theme.palette.primary.main,
+                  },
+                }}
+                onClick={handleDownload}
+                variant="outlined"
+                startIcon={<Download />}
+              >
+                Download
+              </Button>
+            )}
           </Stack>
           {formData == null && (
             <Box
@@ -83,7 +125,7 @@ export const CollegePredictor = () => {
                 <Spinner sx={{ width: '6rem' }} />
               ) : (
                 <Stack flexGrow={1}>
-                  <TableLayout showTable={rankData?.data?.length > 0}>
+                  <TableLayout showTable={rankData?.length > 0}>
                     <Table aria-label="rank-table">
                       <TableHead>
                         <TableRow>
