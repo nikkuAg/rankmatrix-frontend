@@ -95,9 +95,17 @@ export const CollegePredictor = () => {
             {rankData?.length > 0 && (
               <Button
                 sx={{
-                  color: theme.palette.primary.dark,
+                  color:
+                    theme.palette.mode === 'dark'
+                      ? theme.palette.primary.light
+                      : theme.palette.primary.dark,
+                  borderColor:
+                    theme.palette.mode === 'dark'
+                      ? theme.palette.primary.light
+                      : theme.palette.primary.dark,
                   '&:hover': {
                     color: theme.palette.primary.main,
+                    borderColor: theme.palette.primary.main,
                   },
                 }}
                 onClick={handleDownload}
