@@ -1,5 +1,5 @@
 export const apis = {
-  BASE_URL: process.env.NEXT_PUBLIC_API_URL,
+  BASE_URL: '/backend-api',
   siteContent: {
     get: '/api/site/content',
   },

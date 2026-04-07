@@ -3,6 +3,14 @@ import { withSentryConfig } from '@sentry/nextjs';
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   experimental: {},
+  async rewrites() {
+    return [
+      {
+        source: '/backend-api/:path*',
+        destination: `${process.env.API_URL}/:path*`,
+      },
+    ];
+  },
 };
 
 export default withSentryConfig(nextConfig, {

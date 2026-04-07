@@ -16,6 +16,10 @@ RUN pnpm install
 # Copy the rest of the app files
 COPY . .
 
+# API_URL is needed at build time for Next.js rewrites
+ARG API_URL
+ENV API_URL=$API_URL
+
 # Build the app
 RUN pnpm run build
 

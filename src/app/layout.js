@@ -43,7 +43,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <Script
-        src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_MANAGMENT_ID}`}
+        src={`https://www.googletagmanager.com/gtag/js?id=${process.env.GOOGLE_MANAGMENT_ID}`}
         strategy="afterInteractive"
       />
       <Script id="google-analytics" strategy="afterInteractive">
@@ -51,13 +51,13 @@ export default function RootLayout({ children }) {
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
-            gtag('config', '${process.env.NEXT_PUBLIC_GOOGLE_MANAGMENT_ID}');
+            gtag('config', '${process.env.GOOGLE_MANAGMENT_ID}');
           `}
       </Script>
       <Script
         strategy="afterInteractive"
         async
-        src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${process.env.NEXT_PUBLIC_GOOGLE_AD_ID}`}
+        src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${process.env.GOOGLE_AD_ID}`}
         crossOrigin="anonymous"
       />
       <head>
