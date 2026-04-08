@@ -1,5 +1,6 @@
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
+import { fixupConfigRules } from '@eslint/compat';
 import { FlatCompat } from '@eslint/eslintrc';
 import unusedImports from 'eslint-plugin-unused-imports';
 
@@ -11,7 +12,7 @@ const compat = new FlatCompat({
 });
 
 const eslintConfig = [
-  ...compat.extends('next/core-web-vitals'),
+  ...fixupConfigRules(compat.extends('next/core-web-vitals')),
   {
     plugins: {
       'unused-imports': unusedImports,

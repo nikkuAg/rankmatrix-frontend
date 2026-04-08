@@ -60,7 +60,6 @@ export default function RootLayout({ children }) {
         src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${process.env.NEXT_PUBLIC_GOOGLE_AD_ID}`}
         crossOrigin="anonymous"
       />
-      {console.log(process.env.NEXT_PUBLIC_API_URL, "PROCESS", process.env)}
       <head>
         <meta name="google-adsense-account" content="ca-pub-9885608075288305" />
       </head>
