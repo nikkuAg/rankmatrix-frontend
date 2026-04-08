@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { DarkMode, LightMode } from '@mui/icons-material';
-import { AppBar, Avatar, Container, IconButton, Stack, Typography, useTheme } from '@mui/material';
+import { AppBar, Avatar, Box, IconButton, Stack, Typography, useTheme } from '@mui/material';
 import { useRouter } from 'next/navigation';
 import { useThemeContext } from '@/theme/ThemeContext';
 
@@ -12,7 +12,7 @@ export const Navbar = () => {
   const router = useRouter();
   return (
     <AppBar position="static" sx={{ py: 2, background: theme.background.main }} elevation={0}>
-      <Container maxWidth="xl">
+      <Box width="100%" px={4}>
         <Stack direction={'row'} justifyContent={'space-between'}>
           <Stack
             direction={'row'}
@@ -41,7 +41,7 @@ export const Navbar = () => {
             {mode === 'light' ? <DarkMode /> : <LightMode />}
           </IconButton>
         </Stack>
-      </Container>
+      </Box>
     </AppBar>
   );
 };

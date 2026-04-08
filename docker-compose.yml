@@ -6,7 +6,9 @@ services:
       context: .
       dockerfile: Dockerfile
       args:
-        API_URL: ${API_URL}
+        NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL}
+        NEXT_PUBLIC_GOOGLE_MANAGMENT_ID: ${NEXT_PUBLIC_GOOGLE_MANAGMENT_ID}
+        NEXT_PUBLIC_GOOGLE_AD_ID: ${NEXT_PUBLIC_GOOGLE_AD_ID}
     ports:
       - '3000:3000'
     volumes:

@@ -16,9 +16,13 @@ RUN pnpm install
 # Copy the rest of the app files
 COPY . .
 
-# API_URL is needed at build time for Next.js rewrites
-ARG API_URL
-ENV API_URL=$API_URL
+# NEXT_PUBLIC_* vars must be present at build time so Next.js can inline them
+ARG NEXT_PUBLIC_API_URL
+ENV NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL
+ARG NEXT_PUBLIC_GOOGLE_MANAGMENT_ID
+ENV NEXT_PUBLIC_GOOGLE_MANAGMENT_ID=$NEXT_PUBLIC_GOOGLE_MANAGMENT_ID
+ARG NEXT_PUBLIC_GOOGLE_AD_ID
+ENV NEXT_PUBLIC_GOOGLE_AD_ID=$NEXT_PUBLIC_GOOGLE_AD_ID
 
 # Build the app
 RUN pnpm run build
