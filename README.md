@@ -8,7 +8,6 @@ The web client for [RankMatrix](https://rankmatrix.in) — a free, no-signup JoS
 - **UI:** [Material UI v6](https://mui.com/) with a custom theme + dark mode
 - **State / Data:** [Redux Toolkit](https://redux-toolkit.js.org/) + RTK Query
 - **Animations:** Framer Motion, Lottie
-- **Monitoring:** Sentry
 - **Tooling:** ESLint 9 (flat config), Prettier, Husky, lint-staged, commitlint
 - **Package manager:** pnpm
 - **Hosting:** [Vercel](https://vercel.com/)
@@ -48,10 +47,9 @@ cp .example.env .env
 
 | Variable                          | Description                                                 |
 | --------------------------------- | ----------------------------------------------------------- |
-| `NEXT_PUBLIC_API_URL`             | Base URL of the RankMatrix backend API                      |
-| `NEXT_PUBLIC_GOOGLE_MANAGMENT_ID` | Google Analytics / Tag Manager ID                           |
-| `NEXT_PUBLIC_GOOGLE_AD_ID`        | Google AdSense client ID                                    |
-| `SENTRY_AUTH_TOKEN`               | Sentry auth token (used during build to upload source maps) |
+| `NEXT_PUBLIC_API_URL`             | Base URL of the RankMatrix backend API |
+| `NEXT_PUBLIC_GOOGLE_MANAGMENT_ID` | Google Analytics / Tag Manager ID      |
+| `NEXT_PUBLIC_GOOGLE_AD_ID`        | Google AdSense client ID               |
 
 ### 3. Run the dev server
 

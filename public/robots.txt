@@ -3,126 +3,108 @@ User-agent: *
 Allow: /
 Disallow: /api
 Disallow: /admin
-Disallow: /monitoring
 
 # GPTBot
 User-agent: GPTBot
 Allow: /
 Disallow: /api
 Disallow: /admin
-Disallow: /monitoring
 
 # ChatGPT-User
 User-agent: ChatGPT-User
 Allow: /
 Disallow: /api
 Disallow: /admin
-Disallow: /monitoring
 
 # OAI-SearchBot
 User-agent: OAI-SearchBot
 Allow: /
 Disallow: /api
 Disallow: /admin
-Disallow: /monitoring
 
 # ClaudeBot
 User-agent: ClaudeBot
 Allow: /
 Disallow: /api
 Disallow: /admin
-Disallow: /monitoring
 
 # Claude-Web
 User-agent: Claude-Web
 Allow: /
 Disallow: /api
 Disallow: /admin
-Disallow: /monitoring
 
 # anthropic-ai
 User-agent: anthropic-ai
 Allow: /
 Disallow: /api
 Disallow: /admin
-Disallow: /monitoring
 
 # PerplexityBot
 User-agent: PerplexityBot
 Allow: /
 Disallow: /api
 Disallow: /admin
-Disallow: /monitoring
 
 # Perplexity-User
 User-agent: Perplexity-User
 Allow: /
 Disallow: /api
 Disallow: /admin
-Disallow: /monitoring
 
 # Google-Extended
 User-agent: Google-Extended
 Allow: /
 Disallow: /api
 Disallow: /admin
-Disallow: /monitoring
 
 # Googlebot
 User-agent: Googlebot
 Allow: /
 Disallow: /api
 Disallow: /admin
-Disallow: /monitoring
 
 # Bingbot
 User-agent: Bingbot
 Allow: /
 Disallow: /api
 Disallow: /admin
-Disallow: /monitoring
 
 # DuckDuckBot
 User-agent: DuckDuckBot
 Allow: /
 Disallow: /api
 Disallow: /admin
-Disallow: /monitoring
 
 # Applebot
 User-agent: Applebot
 Allow: /
 Disallow: /api
 Disallow: /admin
-Disallow: /monitoring
 
 # Applebot-Extended
 User-agent: Applebot-Extended
 Allow: /
 Disallow: /api
 Disallow: /admin
-Disallow: /monitoring
 
 # CCBot
 User-agent: CCBot
 Allow: /
 Disallow: /api
 Disallow: /admin
-Disallow: /monitoring
 
 # YouBot
 User-agent: YouBot
 Allow: /
 Disallow: /api
 Disallow: /admin
-Disallow: /monitoring
 
 # MistralAI-User
 User-agent: MistralAI-User
 Allow: /
 Disallow: /api
 Disallow: /admin
-Disallow: /monitoring
 
 # Host
 Host: https://rankmatrix.in

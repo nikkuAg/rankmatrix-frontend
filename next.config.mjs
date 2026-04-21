@@ -1,5 +1,4 @@
 import withBundleAnalyzer from '@next/bundle-analyzer';
-import { withSentryConfig } from '@sentry/nextjs';
 
 const bundleAnalyzer = withBundleAnalyzer({ enabled: process.env.ANALYZE === 'true' });
 
@@ -19,9 +18,9 @@ const nextConfig = {
       '@mui/material',
       '@mui/icons-material',
       '@mui/system',
+      '@mui/x-date-pickers',
       'react-icons',
       'date-fns',
-      'lottie-react',
       '@reduxjs/toolkit',
       'react-redux',
     ],
@@ -30,7 +29,6 @@ const nextConfig = {
   async headers() {
     return [
       {
-        // Long-cache for JSON-LD, OG image assets, and font payloads served by Next
         source: '/:path*.(svg|ico|png|jpg|jpeg|webp|avif|woff|woff2|ttf)',
         headers: [
           {
@@ -60,17 +58,4 @@ const nextConfig = {
   },
 };
 
-export default withSentryConfig(bundleAnalyzer(nextConfig), {
-  org: 'rankmatrix',
-  project: 'rankmatrix-frontend',
-  silent: !process.env.CI,
-  widenClientFileUpload: true,
-  reactComponentAnnotation: { enabled: true },
-  tunnelRoute: '/monitoring',
-  hideSourceMaps: true,
-  disableLogger: true,
-  automaticVercelMonitors: true,
-  sourcemaps: {
-    deleteSourcemapsAfterUpload: true,
-  },
-});
+export default bundleAnalyzer(nextConfig);
