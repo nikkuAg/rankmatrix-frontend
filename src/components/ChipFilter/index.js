@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Chip, Stack, useTheme } from '@mui/material';
 import { useDebounce } from '@/utils/debounceHook';
 
@@ -14,6 +14,13 @@ export const ChipFilter = ({
   const debouncedFilterValues = useDebounce(filterValues, 500);
   const theme = useTheme();
 
+  // Parent may recreate onChange every render. Route through a ref so the
+  // notify effect depends only on the debounced value and doesn't loop.
+  const onChangeRef = useRef(onChange);
+  useEffect(() => {
+    onChangeRef.current = onChange;
+  }, [onChange]);
+
   const handleClick = (filter) => {
     setFilterValues((prev) => {
       if (prev.includes(filter)) {
@@ -24,8 +31,8 @@ export const ChipFilter = ({
   };
 
   useEffect(() => {
-    onChange(debouncedFilterValues);
-  }, [debouncedFilterValues, onChange]);
+    onChangeRef.current(debouncedFilterValues);
+  }, [debouncedFilterValues]);
 
   return (
     <Stack direction={flexDirection} spacing={0.8}>

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Search } from '@mui/icons-material';
 import { InputAdornment, TextField, useTheme } from '@mui/material';
 import { useDebounce } from '@/utils/debounceHook';
@@ -10,9 +10,16 @@ export const SearchBox = ({ onChange, width = '100%' }) => {
   const debouncedSearchValue = useDebounce(searchValue, 500);
   const theme = useTheme();
 
+  // Parent may recreate onChange every render. Route through a ref so the
+  // notify effect depends only on the debounced value and doesn't loop.
+  const onChangeRef = useRef(onChange);
   useEffect(() => {
-    onChange(debouncedSearchValue);
-  }, [debouncedSearchValue, onChange]);
+    onChangeRef.current = onChange;
+  }, [onChange]);
+
+  useEffect(() => {
+    onChangeRef.current(debouncedSearchValue);
+  }, [debouncedSearchValue]);
 
   return (
     <TextField
