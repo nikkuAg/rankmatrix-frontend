@@ -6,17 +6,12 @@ import { InputAdornment, TextField, useTheme } from '@mui/material';
 import { useDebounce } from '@/utils/debounceHook';
 
 export const SearchBox = ({ onChange, width = '100%' }) => {
-  const [searchValue, setSearchValue] = useState(null);
+  const [searchValue, setSearchValue] = useState('');
   const debouncedSearchValue = useDebounce(searchValue, 500);
   const theme = useTheme();
 
   useEffect(() => {
-    if (debouncedSearchValue != null) {
-      onChange(debouncedSearchValue);
-      if (debouncedSearchValue === '') {
-        setSearchValue(null);
-      }
-    }
+    onChange(debouncedSearchValue);
   }, [debouncedSearchValue, onChange]);
 
   return (

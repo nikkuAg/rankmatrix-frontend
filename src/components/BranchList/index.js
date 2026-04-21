@@ -46,7 +46,7 @@ export const BranchList = () => {
   } = useGetBranchFiltersQuery();
   const branchReqData = useSelector((state) => state.branch);
   const dispatch = useDispatch();
-  const [isLoading, setIsLoading] = useState(true);
+  const isLoading = isBranchFetching || isFiltersFetching || isBranchLoading || isFiltersLoading;
   const [sortField, setSortField] = useState(null);
   const [sortOrder, setSortOrder] = useState(null);
 
@@ -77,14 +77,6 @@ export const BranchList = () => {
       dispatch(updateOrdering(null));
     }
   }, [sortField, sortOrder, dispatch]);
-
-  useEffect(() => {
-    if (!isBranchFetching && !isFiltersFetching && !isBranchLoading && !isFiltersLoading) {
-      setIsLoading(false);
-    } else {
-      setIsLoading(true);
-    }
-  }, [isBranchFetching, isFiltersFetching, isBranchLoading, isFiltersLoading]);
 
   const handleCollegeTypeChange = (filterValues) => {
     dispatch(updateFilters({ institute__type: filterValues }));

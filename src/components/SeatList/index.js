@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import {
   Box,
   Stack,
@@ -48,9 +48,8 @@ export const SeatList = () => {
     useSelector((state) => state.seat),
     50,
   );
-  const [tabValue, setTabValue] = useState();
+  const [selectedTab, setSelectedTab] = useState(null);
   const [increaseBtnSelected, setIncreaseBtnSelected] = useState(false);
-  const [increaseTabBtnText, setIncreaseTabBtnText] = useState(null);
   const [sortField, setSortField] = useState(null);
   const [sortOrder, setSortOrder] = useState(null);
 
@@ -63,26 +62,24 @@ export const SeatList = () => {
   const [getSeatData, { data: seatData, isLoading: isSeatsLoading, isFetching: isSeatsFetching }] =
     useLazyGetSeatDataQuery();
 
-  useEffect(() => {
-    if (filterData?.years?.length > 0) {
-      setTabValue(filterData.years[0]);
-      setIncreaseTabBtnText(
-        `Seat change from JoSAA ${filterData.years[0] - 1} to JoSAA ${filterData.years[0]}`,
-      );
-    }
-  }, [filterData]);
+  const defaultYear = filterData?.years?.[0];
+  const tabValue = selectedTab ?? defaultYear ?? null;
+
+  const increaseTabBtnText = useMemo(() => {
+    if (!defaultYear) return null;
+    return `Seat change from JoSAA ${defaultYear - 1} to JoSAA ${defaultYear}`;
+  }, [defaultYear]);
 
   useEffect(() => {
-    if (tabValue || increaseBtnSelected) {
-      if (increaseBtnSelected) {
-        dispatch(setIncreaseFilter(filterData.years[0]));
-        dispatch(removeFilters('year'));
-      } else {
-        dispatch(updateFilters({ year: tabValue }));
-        dispatch(removeIncreaseFilter());
-      }
+    if (!tabValue && !increaseBtnSelected) return;
+    if (increaseBtnSelected) {
+      if (defaultYear) dispatch(setIncreaseFilter(defaultYear));
+      dispatch(removeFilters('year'));
+    } else {
+      dispatch(updateFilters({ year: tabValue }));
+      dispatch(removeIncreaseFilter());
     }
-  }, [tabValue, increaseBtnSelected, dispatch]);
+  }, [tabValue, increaseBtnSelected, defaultYear, dispatch]);
 
   useEffect(() => {
     if (sortField) {
@@ -132,7 +129,7 @@ export const SeatList = () => {
 
   const handleTabChange = (value) => {
     if (value === INCREASE) {
-      setTabValue(null);
+      setSelectedTab(null);
       setIncreaseBtnSelected(true);
       sendAnalyticsEvent({
         action: 'tab_increase_clicked',
@@ -141,7 +138,7 @@ export const SeatList = () => {
         value: value,
       });
     } else {
-      setTabValue(value);
+      setSelectedTab(value);
       setIncreaseBtnSelected(false);
       sendAnalyticsEvent({
         action: 'tab_clicked',

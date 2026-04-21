@@ -17,11 +17,6 @@ const eslintConfig = [
         'warn',
         { vars: 'all', varsIgnorePattern: '^_', args: 'after-used', argsIgnorePattern: '^_' },
       ],
-      // New strict rule in eslint-plugin-react-hooks v7 (pulled by Next 16).
-      // Existing effects follow legitimate external-state-sync patterns; downgrade
-      // to warn so it surfaces without blocking commits. Revisit with a targeted
-      // refactor pass.
-      'react-hooks/set-state-in-effect': 'warn',
     },
   },
 ];

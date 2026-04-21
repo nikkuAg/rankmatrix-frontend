@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { KeyboardArrowLeft, KeyboardArrowRight } from '@mui/icons-material';
 import {
   Box,
@@ -41,10 +41,14 @@ export const CollegeList = () => {
   const theme = useTheme();
   const isMobile650 = useIsMobile(650);
   const dispatch = useDispatch();
-  const [nirfYears, setNirfYears] = useState([]);
   const [expandedNirf, setExpandedNirf] = useState(false);
   const [sortField, setSortField] = useState(null);
   const [sortOrder, setSortOrder] = useState(null);
+
+  const nirfYears = useMemo(() => {
+    if (!data?.data?.length) return [];
+    return data.data[0].nirfRanks.map((rank) => rank.year);
+  }, [data]);
 
   useEffect(() => {
     getCollegeData(collegeReqData);
@@ -55,13 +59,6 @@ export const CollegeList = () => {
       dispatch(stopLoading());
     }
   }, [dispatch, isLoading]);
-
-  useEffect(() => {
-    if (data?.data?.length > 0) {
-      const nirfRanks = data?.data[0].nirfRanks;
-      setNirfYears(nirfRanks.map((rank) => rank.year));
-    }
-  }, [data]);
 
   useEffect(() => {
     if (sortField) {
