@@ -1,8 +1,11 @@
 'use client';
 
-import 'react-calendar/dist/Calendar.css';
-import React, { useEffect, useState } from 'react';
-import { Grid2, Stack, Typography, useTheme } from '@mui/material';
+import React, { useMemo, useState } from 'react';
+import { Box, Stack, Typography, useTheme } from '@mui/material';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { PickersDay } from '@mui/x-date-pickers/PickersDay';
 import {
   eachDayOfInterval,
   endOfMonth,
@@ -12,230 +15,178 @@ import {
   startOfDay,
   startOfMonth,
 } from 'date-fns';
-import Calendar from 'react-calendar';
 import { useSiteContent } from '@/store/selectors/siteContent';
-import { useIsMobile } from '../../../utils/screenSizeHook';
+
+const EventDay = ({ eventDates, day, outsideCurrentMonth, ...other }) => {
+  const theme = useTheme();
+  const isEventDay = !outsideCurrentMonth && eventDates?.has(day.toDateString());
+  const isDark = theme.palette.mode === 'dark';
+
+  return (
+    <PickersDay
+      {...other}
+      day={day}
+      outsideCurrentMonth={outsideCurrentMonth}
+      sx={{
+        fontWeight: isEventDay ? 600 : 400,
+        ...(isEventDay && {
+          backgroundColor: isDark
+            ? `${theme.palette.primary.light}40`
+            : theme.palette.primary.light,
+          color: isDark ? theme.palette.primary.light : theme.palette.primary.main,
+          '&:hover': {
+            backgroundColor: isDark
+              ? `${theme.palette.primary.light}66`
+              : theme.palette.primary.light,
+          },
+          '&:focus': {
+            backgroundColor: isDark
+              ? `${theme.palette.primary.light}66`
+              : theme.palette.primary.light,
+          },
+        }),
+      }}
+    />
+  );
+};
 
 export const EventCalendar = () => {
   const events = useSiteContent()?.event;
   const theme = useTheme();
-  const isMobile = useIsMobile(800);
-  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [referenceDate, setReferenceDate] = useState(() => startOfDay(new Date()));
   const [selectedDay, setSelectedDay] = useState(null);
-  const [filteredEvents, setFilteredEvents] = useState([]);
-  const [eventsToShow, setEventsToShow] = useState([]);
 
-  useEffect(() => {
-    if (events) {
-      const startMonth = startOfMonth(selectedDate);
-      const endMonth = endOfMonth(selectedDate);
-
-      const monthEvents = events.filter((event) => {
-        const start = startOfDay(new Date(event.startDate));
-        const end = event.endDate ? startOfDay(new Date(event.endDate)) : start;
-        return (
-          isWithinInterval(start, { start: startMonth, end: endMonth }) ||
-          isWithinInterval(end, { start: startMonth, end: endMonth })
-        );
-      });
-      setEventsToShow(monthEvents);
-      setFilteredEvents(monthEvents);
-    }
-  }, [events, selectedDate]);
-
-  useEffect(() => {
-    if (selectedDay) {
-      const dayEvents = events.filter((event) => {
-        const start = startOfDay(new Date(event.startDate));
-        const end = event.endDate ? startOfDay(new Date(event.endDate)) : start;
-        return isWithinInterval(selectedDay, { start, end });
-      });
-      setEventsToShow(dayEvents);
-    } else {
-      setEventsToShow(filteredEvents);
-    }
-  }, [selectedDay, filteredEvents, events]);
-
-  const eventDates = new Set();
-  filteredEvents.forEach((event) => {
-    const start = new Date(event.startDate);
-    const end = event.endDate ? new Date(event.endDate) : start;
-
-    eachDayOfInterval({ start, end }).forEach((date) => {
-      eventDates.add(date.toDateString());
+  const eventDates = useMemo(() => {
+    const set = new Set();
+    (events ?? []).forEach((event) => {
+      const start = new Date(event.startDate);
+      const end = event.endDate ? new Date(event.endDate) : start;
+      eachDayOfInterval({ start, end }).forEach((d) => set.add(d.toDateString()));
     });
-  });
+    return set;
+  }, [events]);
 
-  const highlightDates = ({ date }) => {
-    const isToday = isSameDay(date, new Date());
-    const isSelected = selectedDate && isSameDay(date, selectedDate);
-    const isEventDate = eventDates.has(date.toDateString());
+  const monthEvents = useMemo(() => {
+    if (!events?.length) return [];
+    const start = startOfMonth(referenceDate);
+    const end = endOfMonth(referenceDate);
+    return events.filter((event) => {
+      const s = startOfDay(new Date(event.startDate));
+      const e = event.endDate ? startOfDay(new Date(event.endDate)) : s;
+      return isWithinInterval(s, { start, end }) || isWithinInterval(e, { start, end });
+    });
+  }, [events, referenceDate]);
 
-    if (isEventDate) {
-      if (!(isToday && isSelected)) {
-        return <div className="rankmatrix-event-date"></div>;
-      }
-    }
-    return '';
+  const eventsToShow = useMemo(() => {
+    if (!selectedDay) return monthEvents;
+    return monthEvents.filter((event) => {
+      const s = startOfDay(new Date(event.startDate));
+      const e = event.endDate ? startOfDay(new Date(event.endDate)) : s;
+      return isWithinInterval(selectedDay, { start: s, end: e });
+    });
+  }, [selectedDay, monthEvents]);
+
+  const handleChange = (date) => {
+    if (!date) return;
+    const day = startOfDay(date);
+    setSelectedDay((prev) => (prev && isSameDay(prev, day) ? null : day));
   };
 
-  const handleDateClick = (date) => {
-    setSelectedDay((prev) => (isSameDay(prev, date) ? null : startOfDay(date)));
-    setSelectedDate(startOfDay(date));
+  const handleViewChange = (date) => {
+    setReferenceDate(date);
+    setSelectedDay(null);
   };
+
+  const dayColor =
+    theme.palette.mode === 'dark' ? theme.palette.text.light : theme.palette.text.dark;
 
   return (
     <Stack
       width="100%"
-      height={isMobile ? '100%' : '90%'}
-      px={'1rem'}
-      py={'1.5rem'}
+      height="100%"
+      px="1rem"
+      py="1.5rem"
       gap={1}
       sx={{
         backgroundColor: theme.background.dark,
         borderRadius: '12px',
         boxShadow: `0px 0px 15px -6px ${theme.palette.shadow.main}`,
         color: theme.palette.text.main,
-        '& .rankmatrix-event-date': {
-          backgroundColor: `${theme.palette.mode === 'dark' ? theme.palette.primary.light : `${theme.palette.primary.main}`}20`,
-          color:
-            theme.palette.mode === 'dark' ? theme.palette.text.light : theme.palette.primary.main,
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          width: '100%',
-          height: '100%',
-        },
-        '& .react-calendar': {
-          width: '100%',
-          background: theme.background.main,
-          borderRadius: '6px',
-          borderColor: 'transparent',
-          fontFamily: theme.typography.fontFamily,
-          maxHeight: '100%',
-        },
-        '& .react-calendar__navigation': {
-          marginBottom: '0.2rem',
-        },
-        '& .react-calendar__navigation button': {
-          color: theme.palette.mode === 'dark' ? theme.palette.text.light : theme.palette.text.dark,
-          '&:hover': {
-            backgroundColor: `${theme.palette.mode === 'dark' ? theme.palette.primary.light : theme.palette.primary.main}20 !important`,
-            color:
-              theme.palette.mode === 'dark'
-                ? theme.palette.primary.light
-                : theme.palette.primary.main,
-          },
-          '&:focus': {
-            backgroundColor: `${theme.palette.primary.main}26 !important`,
-            color:
-              theme.palette.mode === 'dark'
-                ? theme.palette.primary.light
-                : theme.palette.primary.main,
-          },
-          '&.react-calendar__navigation__label': {
-            fontWeight: '600',
-          },
-        },
-        '& .react-calendar__month-view__weekdays__weekday': {
-          fontWeight: '400',
-          opacity: 0.5,
-          color: theme.palette.mode === 'dark' ? theme.palette.text.light : theme.palette.text.dark,
-          '& abbr': {
-            textDecoration: 'none',
-          },
-        },
-        '& .react-calendar__month-view__days__day--weekend': {
-          color: theme.palette.mode === 'dark' ? theme.palette.text.light : theme.palette.text.dark,
-        },
-        '& .react-calendar__tile': {
-          textAlign: 'center',
-          borderRadius: '50%',
-          position: 'relative',
-          color: theme.palette.mode === 'dark' ? theme.palette.text.light : theme.palette.text.dark,
-          '&:hover': {
-            backgroundColor: `${theme.palette.primary.main}${theme.palette.mode === 'dark' ? '' : '26'} !important`,
-            color:
-              theme.palette.mode === 'dark'
-                ? theme.palette.primary.light
-                : theme.palette.primary.main,
-          },
-          '&:focus': {
-            backgroundColor: `${theme.palette.primary.main}${theme.palette.mode === 'dark' ? '' : '26'} !important`,
-            color:
-              theme.palette.mode === 'dark'
-                ? theme.palette.primary.light
-                : theme.palette.primary.main,
-          },
-        },
-        '& .react-calendar__tile--now': {
-          backgroundColor: 'transparent',
-          color:
-            theme.palette.mode === 'dark'
-              ? theme.palette.primary.light
-              : theme.palette.primary.dark,
-          border: '2px solid ' + theme.palette.primary.main,
-          padding: 0,
-          '&.react-calendar__tile--active': {
-            backgroundColor: theme.palette.primary.main + ' !important',
-            color: theme.palette.text.light,
-          },
-        },
-        '& .react-calendar__tile--active': {
-          backgroundColor: theme.palette.primary.main + ' !important',
-          color: theme.palette.text.light,
-          '&:focus:enabled': {
-            backgroundColor: theme.palette.primary.main + ' !important',
-            color: theme.palette.text.light,
-          },
-        },
-        '& .react-calendar__month-view__days__day--neighboringMonth': {
-          color: theme.palette.mode === 'dark' ? theme.palette.text.main : theme.palette.text.dark,
-          opacity: 0.2,
-        },
       }}
     >
-      <Typography fontWeight={'500'} fontSize={'1.2rem'}>
+      <Typography fontWeight={500} fontSize="1.2rem">
         Important Dates
       </Typography>
-      <Calendar
-        onActiveStartDateChange={({ activeStartDate }) => setSelectedDate(activeStartDate)}
-        tileClassName={highlightDates}
-        onClickDay={handleDateClick}
-        onClickMonth={() => setSelectedDay(null)}
-        onClickYear={() => setSelectedDay(null)}
-        tileContent={highlightDates}
-        value={selectedDay}
-      />
-      <Stack gap={1} pt={1} maxHeight={'45%'} sx={{ overflowY: 'auto' }}>
+      <LocalizationProvider dateAdapter={AdapterDateFns}>
+        <DateCalendar
+          value={selectedDay}
+          referenceDate={referenceDate}
+          onChange={handleChange}
+          onMonthChange={handleViewChange}
+          onYearChange={handleViewChange}
+          slots={{ day: EventDay }}
+          slotProps={{ day: { eventDates } }}
+          sx={{
+            width: '100%',
+            height: 'auto',
+            margin: 0,
+            '& .MuiPickersCalendarHeader-root': { mt: 0, mb: 0.5, pl: 1, pr: 1 },
+            '& .MuiPickersCalendarHeader-label': { fontWeight: 600 },
+            '& .MuiDayCalendar-weekDayLabel': {
+              color: dayColor,
+              opacity: 0.5,
+              fontWeight: 400,
+            },
+            '& .MuiPickersDay-root': {
+              color: dayColor,
+              '&.MuiPickersDay-today': {
+                border: `2px solid ${theme.palette.primary.main}`,
+                backgroundColor: 'transparent',
+                color: theme.palette.primary.main,
+              },
+              '&.Mui-selected, &.Mui-selected.MuiPickersDay-today': {
+                backgroundColor: `${theme.palette.primary.main} !important`,
+                color: theme.palette.text.light,
+                '&:hover, &:focus': {
+                  backgroundColor: `${theme.palette.primary.main} !important`,
+                },
+              },
+              '&.MuiPickersDay-dayOutsideMonth': {
+                color: dayColor,
+                opacity: 0.25,
+              },
+            },
+          }}
+        />
+      </LocalizationProvider>
+      <Stack gap={1} pt={1} maxHeight="45%" sx={{ overflowY: 'auto' }}>
         {eventsToShow.map((event, index) => (
-          <Grid2
-            gridTemplateColumns={'1.2fr 3fr'}
+          <Box
+            key={`${event.title}-${index}`}
+            display="grid"
+            gridTemplateColumns="1.2fr 3fr"
             columnGap={2}
-            display={'grid'}
-            alignItems={'center'}
-            key={index}
+            alignItems="center"
           >
-            <Stack direction={'row'} alignItems={'center'} gap={0.5}>
+            <Stack direction="row" alignItems="center" gap={0.5}>
               <Typography
-                fontSize={'1rem'}
-                width={'fit-content'}
-                padding={'0.2rem 0.5rem'}
-                borderRadius={'50%'}
+                component="span"
+                fontSize="1rem"
+                padding="0.2rem 0.5rem"
+                borderRadius="50%"
                 bgcolor={theme.palette.primary.main}
                 color={theme.palette.text.light}
               >
                 {format(new Date(event.startDate), 'dd')}
               </Typography>
-
               {event.endDate && (
                 <>
                   {' - '}
                   <Typography
-                    fontSize={'1rem'}
-                    width={'fit-content'}
-                    padding={'0.2rem 0.5rem'}
-                    borderRadius={'50%'}
+                    component="span"
+                    fontSize="1rem"
+                    padding="0.2rem 0.5rem"
+                    borderRadius="50%"
                     bgcolor={theme.palette.primary.main}
                     color={theme.palette.text.light}
                   >
@@ -244,10 +195,10 @@ export const EventCalendar = () => {
                 </>
               )}
             </Stack>
-            <Typography fontSize={'1rem'} flexGrow={1} flexWrap={'wrap'} component={'div'}>
+            <Typography fontSize="1rem" component="div">
               {event.title}
             </Typography>
-          </Grid2>
+          </Box>
         ))}
       </Stack>
     </Stack>
