@@ -3,6 +3,7 @@ import { GoogleAnalytics } from '@next/third-parties/google';
 import { Poppins } from 'next/font/google';
 import Script from 'next/script';
 import { RankMatrixLayout } from '@/components/RankMatrixLayout';
+import { ADSENSE_CLIENT_ID } from '@/constants';
 import StoreProvider from '@/store/provider';
 import { ThemeProviderWrapper } from '@/theme/ThemeContext';
 
@@ -74,7 +75,7 @@ export const metadata = {
     },
   },
   other: {
-    'google-adsense-account': 'ca-pub-9885608075288305',
+    'google-adsense-account': ADSENSE_CLIENT_ID,
   },
 };
 
@@ -147,15 +148,13 @@ export default function RootLayout({ children }) {
           </StoreProvider>
         </AppRouterCacheProvider>
         {process.env.NEXT_PUBLIC_GA_ID && <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />}
-        {process.env.NEXT_PUBLIC_GOOGLE_AD_ID && (
-          <Script
-            id="google-adsense"
-            strategy="afterInteractive"
-            async
-            src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${process.env.NEXT_PUBLIC_GOOGLE_AD_ID}`}
-            crossOrigin="anonymous"
-          />
-        )}
+        <Script
+          id="google-adsense"
+          strategy="afterInteractive"
+          async
+          src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_CLIENT_ID}`}
+          crossOrigin="anonymous"
+        />
       </body>
     </html>
   );
