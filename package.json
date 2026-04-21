@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev --webpack",
     "build": "next build --webpack",
+    "analyze": "ANALYZE=true next build --webpack",
     "start": "next start",
     "lint": "eslint \"src/**/*.{js,jsx,mjs}\"",
     "format": "prettier --write .",
@@ -39,6 +40,7 @@
     "@eslint/compat": "^2.0.5",
     "@eslint/eslintrc": "^3.2.0",
     "@ianvs/prettier-plugin-sort-imports": "^4.4.1",
+    "@next/bundle-analyzer": "^16.2.4",
     "@next/eslint-plugin-next": "^15.1.7",
     "eslint": "^9.19.0",
     "eslint-config-next": "^16.2.4",

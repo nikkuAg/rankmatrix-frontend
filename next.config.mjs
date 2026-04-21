@@ -1,4 +1,7 @@
+import withBundleAnalyzer from '@next/bundle-analyzer';
 import { withSentryConfig } from '@sentry/nextjs';
+
+const bundleAnalyzer = withBundleAnalyzer({ enabled: process.env.ANALYZE === 'true' });
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -57,7 +60,7 @@ const nextConfig = {
   },
 };
 
-export default withSentryConfig(nextConfig, {
+export default withSentryConfig(bundleAnalyzer(nextConfig), {
   org: 'rankmatrix',
   project: 'rankmatrix-frontend',
   silent: !process.env.CI,
