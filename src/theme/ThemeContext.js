@@ -12,30 +12,34 @@ const ThemeContext = createContext();
 export const useThemeContext = () => useContext(ThemeContext);
 
 export const ThemeProviderWrapper = ({ children }) => {
+  // SSR renders 'light' to match the server-rendered HTML; the first
+  // client-only effect reconciles from localStorage / prefers-color-scheme.
   const [mode, setMode] = useState('light');
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const savedTheme = localStorage.getItem('theme');
-      if (savedTheme) {
-        setMode(savedTheme);
-      } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        setMode('dark');
-      }
+    // Reconciling from localStorage / prefers-color-scheme after hydration is
+    // what setState-in-effect is actually for — we can't read these APIs
+    // during SSR without a hydration mismatch.
+    /* eslint-disable react-hooks/set-state-in-effect */
+    const saved = localStorage.getItem('theme');
+    if (saved === 'dark' || saved === 'light') {
+      setMode(saved);
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      setMode('dark');
     }
+    setMounted(true);
+    /* eslint-enable react-hooks/set-state-in-effect */
   }, []);
 
   const toggleTheme = () => {
-    let newMode = '';
-    setMode((prevMode) => {
-      newMode = prevMode === 'light' ? 'dark' : 'light';
-      if (typeof window !== 'undefined') {
-        localStorage.setItem('theme', newMode);
-      }
-      return newMode;
-    });
+    const newMode = mode === 'light' ? 'dark' : 'light';
+    setMode(newMode);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('theme', newMode);
+    }
     sendAnalyticsEvent({
-      action: `theme_changed`,
+      action: 'theme_changed',
       category: 'dashboard',
       label: 'Theme changed',
       value: newMode,
@@ -67,15 +71,9 @@ export const ThemeProviderWrapper = ({ children }) => {
   const globalStyles = (
     <GlobalStyles
       styles={{
-        body: {
-          backgroundColor: theme.background.main,
-        },
-        a: {
-          color: `${theme.palette.text.link} !important`,
-        },
-        p: {
-          margin: 0,
-        },
+        body: { backgroundColor: theme.background.main },
+        a: { color: `${theme.palette.text.link} !important` },
+        p: { margin: 0 },
         th: {
           borderBottom: `1px solid ${theme.palette.gray.light} !important`,
           borderRight: `1px solid ${theme.palette.gray.light} !important`,
@@ -86,9 +84,7 @@ export const ThemeProviderWrapper = ({ children }) => {
         },
         tr: {
           '&:hover': {
-            '& td': {
-              borderRight: `1px solid ${theme.palette.gray.dark} !important`,
-            },
+            '& td': { borderRight: `1px solid ${theme.palette.gray.dark} !important` },
           },
         },
       }}
@@ -96,7 +92,7 @@ export const ThemeProviderWrapper = ({ children }) => {
   );
 
   return (
-    <ThemeContext.Provider value={{ mode, toggleTheme }}>
+    <ThemeContext.Provider value={{ mode, toggleTheme, mounted }}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
         {globalStyles}

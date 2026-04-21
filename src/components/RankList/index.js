@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import {
   Box,
   Stack,
@@ -44,13 +44,6 @@ export const RankList = () => {
     useSelector((state) => state.rank),
     50,
   );
-  const [yearList, setYearList] = useState([]);
-  const [roundList, setRoundList] = useState([]);
-  const [rangeValues, setRangeValues] = useState([]);
-  const [rangeDefaultValues, setRangeDefaultValues] = useState({
-    openingRank: null,
-    closingRank: null,
-  });
   const [sortField, setSortField] = useState('opening_rank');
   const [sortOrder, setSortOrder] = useState(SORT_ORDER.ASC);
 
@@ -63,36 +56,53 @@ export const RankList = () => {
   const [getRankData, { data: rankData, isLoading: isRanksLoading, isFetching: isRanksFetching }] =
     useLazyGetRankDataQuery();
 
+  const yearList = useMemo(() => {
+    if (!filterData?.length) return [];
+    return filterData.map((data) => ({ label: data.year, value: data.year }));
+  }, [filterData]);
+
+  const yearData = useMemo(() => {
+    if (!rankReqData.year || !filterData?.length) return null;
+    return filterData.find((data) => data.year === rankReqData.year) ?? null;
+  }, [rankReqData.year, filterData]);
+
+  const roundList = useMemo(() => {
+    if (!yearData?.round) return [];
+    return yearData.round.map((round) => ({ label: `Round ${round}`, value: round }));
+  }, [yearData]);
+
+  const rangeValues = useMemo(() => {
+    if (!yearData) return [];
+    return [yearData.min, yearData.max];
+  }, [yearData]);
+
+  const rangeDefaultValues = useMemo(() => {
+    const result = { openingRank: null, closingRank: null };
+    if (rankReqData.filters?.opening_rank) {
+      result.openingRank = [
+        rankReqData.filters.opening_rank.gte,
+        rankReqData.filters.opening_rank.lte,
+      ];
+    }
+    if (rankReqData.filters?.closing_rank) {
+      result.closingRank = [
+        rankReqData.filters.closing_rank.gte,
+        rankReqData.filters.closing_rank.lte,
+      ];
+    }
+    return result;
+  }, [rankReqData.filters]);
+
   useEffect(() => {
     if (filterData?.length > 0) {
-      setYearList(
-        filterData.map((data) => ({
-          label: data.year,
-          value: data.year,
-        })),
-      );
-      dispatch(updateYear(filterData[filterData.length - 1].year));
-      if (filterData.some((data) => data.year === filterData[filterData.length - 1].year)) {
-        const rounds = filterData.filter(
-          (data) => data.year === filterData[filterData.length - 1].year,
-        )[0].round;
+      const lastYearData = filterData[filterData.length - 1];
+      dispatch(updateYear(lastYearData.year));
+      const rounds = lastYearData.round;
+      if (rounds?.length) {
         dispatch(updateFilters({ round: rounds[rounds.length - 1] }));
       }
     }
   }, [filterData, dispatch]);
-
-  useEffect(() => {
-    if (rankReqData.year && filterData.some((data) => data.year === rankReqData.year)) {
-      const yearData = filterData.filter((data) => data.year === rankReqData.year)[0];
-      setRoundList(
-        yearData.round?.map((round) => ({
-          label: `Round ${round}`,
-          value: round,
-        })),
-      );
-      setRangeValues([yearData.min, yearData.max]);
-    }
-  }, [rankReqData.year, filterData]);
 
   useEffect(() => {
     if (sortField) {
@@ -117,23 +127,6 @@ export const RankList = () => {
       getRankData(rankReqData);
     }
   }, [rankReqData, getRankData, isFiltersFetching, isFiltersLoading]);
-
-  useEffect(() => {
-    if (rankReqData.filters) {
-      if (rankReqData.filters.opening_rank) {
-        setRangeDefaultValues((prev) => ({
-          ...prev,
-          openingRank: [rankReqData.filters.opening_rank.gte, rankReqData.filters.opening_rank.lte],
-        }));
-      }
-      if (rankReqData.filters.closing_rank) {
-        setRangeDefaultValues((prev) => ({
-          ...prev,
-          closingRank: [rankReqData.filters.closing_rank.gte, rankReqData.filters.closing_rank.lte],
-        }));
-      }
-    }
-  }, [rankReqData.filters]);
 
   const handleCollegeTypeChange = (filterValues) => {
     dispatch(updateFilters({ institute__type: filterValues }));

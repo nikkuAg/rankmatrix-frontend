@@ -1,21 +1,15 @@
 'use client';
 
 import React from 'react';
-import { Box, useTheme } from '@mui/material';
-import dynamic from 'next/dynamic';
-import animationDataDark from './loader_dark.json';
-import animationData from './loader.json';
+import { Box, CircularProgress } from '@mui/material';
 
-const Lottie = dynamic(() => import('lottie-react'), { ssr: false });
-
-export const Spinner = ({ sx }) => {
-  const theme = useTheme();
+export const Spinner = ({ sx, size }) => {
+  // The existing call-sites pass sx={{ width: '6rem' }} to set the visual
+  // footprint. Mirror that by defaulting the CircularProgress size to 6rem
+  // and letting sx still override the outer Box for layout tweaks.
   return (
-    <Box sx={sx}>
-      <Lottie
-        animationData={theme.palette.mode === 'dark' ? animationDataDark : animationData}
-        loop={true}
-      />
+    <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', py: 4, ...sx }}>
+      <CircularProgress color="primary" size={size ?? '6rem'} thickness={4} />
     </Box>
   );
 };

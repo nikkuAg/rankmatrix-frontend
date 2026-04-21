@@ -1,6 +1,9 @@
+import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
+import { GoogleAnalytics } from '@next/third-parties/google';
 import { Poppins } from 'next/font/google';
 import Script from 'next/script';
 import { RankMatrixLayout } from '@/components/RankMatrixLayout';
+import { ADSENSE_CLIENT_ID } from '@/constants';
 import StoreProvider from '@/store/provider';
 import { ThemeProviderWrapper } from '@/theme/ThemeContext';
 
@@ -12,63 +15,146 @@ const poppins = Poppins({
   display: 'swap',
 });
 
+const SITE_URL = 'https://rankmatrix.in';
+const SITE_NAME = 'RankMatrix';
+const SITE_TAGLINE = 'Free JEE college predictor with official JoSAA data';
+const SITE_DESCRIPTION =
+  'Free JEE Main & Advanced college predictor for JoSAA counselling. Explore opening and closing ranks, seat matrix, participating colleges and branches using official JoSAA data. No signup, no phone number, no email, and zero marketing spam — ever.';
+
 export const metadata = {
-  title: 'RankMatrix Dashboard – Your Gateway to JoSAA Insights',
-  description:
-    'Navigate through colleges, branches, rank trends, seat matrix, and get personalized college predictions based on your JEE Mains/Advanced rank.',
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: `${SITE_NAME} — ${SITE_TAGLINE}`,
+    template: '%s | RankMatrix',
+  },
+  description: SITE_DESCRIPTION,
+  applicationName: SITE_NAME,
+  authors: [{ name: 'Divyansh Agarwal' }],
+  creator: 'Divyansh Agarwal',
+  publisher: 'RankMatrix',
+  keywords: [
+    'JoSAA counselling',
+    'JEE Main college predictor',
+    'JEE Advanced college predictor',
+    'JoSAA cutoff',
+    'JoSAA opening closing rank',
+    'JoSAA seat matrix',
+    'Free JEE rank predictor',
+    'IIT NIT IIIT GFTI counselling',
+    'Engineering admission India',
+    'JEE rank to college',
+    'RankMatrix',
+  ],
+  category: 'education',
+  alternates: {
+    canonical: '/',
+  },
   openGraph: {
-    title: 'RankMatrix Dashboard – Explore Colleges & Predict Your Future',
-    description:
-      'Explore JoSAA participating institutes, rank trends, and use our prediction tool to find the best college and branch for you.',
-    url: 'https://rankmatrix.in/dashboard',
     type: 'website',
+    url: SITE_URL,
+    siteName: SITE_NAME,
+    title: `${SITE_NAME} — ${SITE_TAGLINE}`,
+    description: SITE_DESCRIPTION,
+    locale: 'en_IN',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'RankMatrix Dashboard',
-    description: 'Explore JoSAA data and find your dream college with our JEE Main rank predictor.',
+    creator: '@rankmatrix',
+    title: `${SITE_NAME} — ${SITE_TAGLINE}`,
+    description: SITE_DESCRIPTION,
   },
-  keywords: [
-    'JoSAA',
-    'JOSAA counselling',
-    'JEE College Predictor',
-    'Seat Matrix',
-    'Opening and Closing Rank',
-    'Participating Colleges',
-    'Engineering Admission',
-    'Rank Trends',
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+      'max-video-preview': -1,
+    },
+  },
+  other: {
+    'google-adsense-account': ADSENSE_CLIENT_ID,
+  },
+};
+
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: '#ffffff' },
+    { media: '(prefers-color-scheme: dark)', color: '#0a0a0a' },
   ],
 };
+
+const organizationJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: SITE_NAME,
+  url: SITE_URL,
+  logo: `${SITE_URL}/logo.svg`,
+  description: SITE_DESCRIPTION,
+  founder: { '@type': 'Person', name: 'Divyansh Agarwal' },
+  foundingDate: '2025',
+  areaServed: 'IN',
+  knowsAbout: [
+    'JoSAA counselling',
+    'JEE Main',
+    'JEE Advanced',
+    'Engineering admissions in India',
+    'IIT admissions',
+    'NIT admissions',
+    'IIIT admissions',
+    'GFTI admissions',
+  ],
+};
+
+const websiteJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: SITE_NAME,
+  url: SITE_URL,
+  description: SITE_DESCRIPTION,
+  inLanguage: 'en-IN',
+  publisher: { '@type': 'Organization', name: SITE_NAME, url: SITE_URL },
+  potentialAction: {
+    '@type': 'SearchAction',
+    target: {
+      '@type': 'EntryPoint',
+      urlTemplate: `${SITE_URL}/colleges?search={search_term_string}`,
+    },
+    'query-input': 'required name=search_term_string',
+  },
+};
+
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <Script
-        src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_MANAGMENT_ID}`}
-        strategy="afterInteractive"
-      />
-      <Script id="google-analytics" strategy="afterInteractive">
-        {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', '${process.env.NEXT_PUBLIC_GOOGLE_MANAGMENT_ID}');
-          `}
-      </Script>
-      <Script
-        strategy="afterInteractive"
-        async
-        src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${process.env.NEXT_PUBLIC_GOOGLE_AD_ID}`}
-        crossOrigin="anonymous"
-      />
-      <head>
-        <meta name="google-adsense-account" content="ca-pub-9885608075288305" />
-      </head>
-      <body className={`${poppins.variable}`}>
-        <StoreProvider>
-          <ThemeProviderWrapper>
-            <RankMatrixLayout>{children}</RankMatrixLayout>
-          </ThemeProviderWrapper>
-        </StoreProvider>
+      <body className={poppins.variable}>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
+        />
+        <AppRouterCacheProvider options={{ enableCssLayer: false, key: 'mui' }}>
+          <StoreProvider>
+            <ThemeProviderWrapper>
+              <RankMatrixLayout>{children}</RankMatrixLayout>
+            </ThemeProviderWrapper>
+          </StoreProvider>
+        </AppRouterCacheProvider>
+        {process.env.NEXT_PUBLIC_GA_ID && <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />}
+        <Script
+          id="google-adsense"
+          strategy="afterInteractive"
+          async
+          src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_CLIENT_ID}`}
+          crossOrigin="anonymous"
+        />
       </body>
     </html>
   );

@@ -4,6 +4,108 @@ Allow: /
 Disallow: /api
 Disallow: /admin
 
+# GPTBot
+User-agent: GPTBot
+Allow: /
+Disallow: /api
+Disallow: /admin
+
+# ChatGPT-User
+User-agent: ChatGPT-User
+Allow: /
+Disallow: /api
+Disallow: /admin
+
+# OAI-SearchBot
+User-agent: OAI-SearchBot
+Allow: /
+Disallow: /api
+Disallow: /admin
+
+# ClaudeBot
+User-agent: ClaudeBot
+Allow: /
+Disallow: /api
+Disallow: /admin
+
+# Claude-Web
+User-agent: Claude-Web
+Allow: /
+Disallow: /api
+Disallow: /admin
+
+# anthropic-ai
+User-agent: anthropic-ai
+Allow: /
+Disallow: /api
+Disallow: /admin
+
+# PerplexityBot
+User-agent: PerplexityBot
+Allow: /
+Disallow: /api
+Disallow: /admin
+
+# Perplexity-User
+User-agent: Perplexity-User
+Allow: /
+Disallow: /api
+Disallow: /admin
+
+# Google-Extended
+User-agent: Google-Extended
+Allow: /
+Disallow: /api
+Disallow: /admin
+
+# Googlebot
+User-agent: Googlebot
+Allow: /
+Disallow: /api
+Disallow: /admin
+
+# Bingbot
+User-agent: Bingbot
+Allow: /
+Disallow: /api
+Disallow: /admin
+
+# DuckDuckBot
+User-agent: DuckDuckBot
+Allow: /
+Disallow: /api
+Disallow: /admin
+
+# Applebot
+User-agent: Applebot
+Allow: /
+Disallow: /api
+Disallow: /admin
+
+# Applebot-Extended
+User-agent: Applebot-Extended
+Allow: /
+Disallow: /api
+Disallow: /admin
+
+# CCBot
+User-agent: CCBot
+Allow: /
+Disallow: /api
+Disallow: /admin
+
+# YouBot
+User-agent: YouBot
+Allow: /
+Disallow: /api
+Disallow: /admin
+
+# MistralAI-User
+User-agent: MistralAI-User
+Allow: /
+Disallow: /api
+Disallow: /admin
+
 # Host
 Host: https://rankmatrix.in
 

@@ -2,29 +2,33 @@ import React from 'react';
 import { RankList } from '@/components/RankList';
 import { FeatureLayout } from '@/components/RankMatrixLayout/FeatureLayout';
 
+const PAGE_URL = '/ranks';
+const DESCRIPTION =
+  'JoSAA opening and closing ranks for every college, branch, category, and seat pool — year-wise and round-wise. Plan your JoSAA choices with real historical cutoffs sourced from the official JoSAA website. Free, no signup.';
+
 export const metadata = {
-  title: 'Opening and Closing Ranks for JoSAA | Year & Round Wise | RankMatrix',
-  description:
-    'Explore opening and closing ranks for all branches and colleges in JoSAA from multiple years and rounds.',
+  title: 'JoSAA Opening & Closing Ranks — Year & Round Wise',
+  description: DESCRIPTION,
+  alternates: { canonical: PAGE_URL },
+  keywords: [
+    'JoSAA opening rank',
+    'JoSAA closing rank',
+    'JEE Main cutoff rank',
+    'JoSAA round wise ranks',
+    'JEE Advanced cutoff',
+    'JoSAA previous year cutoff',
+  ],
   openGraph: {
-    title: 'JoSAA Cutoff Ranks – Year & Round Wise Trends',
-    description:
-      'Visualize cutoff trends and plan your JoSAA choices smartly using past opening and closing ranks.',
-    url: 'https://rankmatrix.in/ranks',
     type: 'website',
+    url: PAGE_URL,
+    title: 'JoSAA Opening & Closing Ranks — Historical Cutoff Trends',
+    description: DESCRIPTION,
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'JoSAA Cutoff Rank Trends',
-    description: 'Get historical data of opening and closing ranks for JoSAA counselling.',
+    title: 'JoSAA Opening & Closing Ranks | RankMatrix',
+    description: DESCRIPTION,
   },
-  keywords: [
-    'JoSAA Opening Rank',
-    'JoSAA Closing Rank',
-    'Cutoff Rank JEE Main',
-    'JoSAA Round Wise Ranks',
-    'JEE Advanced Cutoff',
-  ],
 };
 
 const Ranks = () => {

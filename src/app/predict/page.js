@@ -2,29 +2,34 @@ import React from 'react';
 import { FeatureLayout } from '@/components/RankMatrixLayout/FeatureLayout';
 import { CollegePredictor } from '../../components/CollegePredictor';
 
+const PAGE_URL = '/predict';
+const DESCRIPTION =
+  'Free JEE Main & Advanced college predictor. Enter your rank, category, and home state — we cross-reference your score with historical JoSAA opening and closing ranks and return the colleges and branches you are likely to get. No signup, no phone number, no email, no marketing spam.';
+
 export const metadata = {
-  title: 'Predict Your Best College & Branch – JEE Main College Predictor | RankMatrix',
-  description:
-    'Use our JEE Main college predictor tool to get personalized suggestions of colleges and branches based on your rank, category, and state.',
+  title: 'JEE Main College Predictor — Free JoSAA Rank Predictor',
+  description: DESCRIPTION,
+  alternates: { canonical: PAGE_URL },
+  keywords: [
+    'JEE Main college predictor',
+    'JEE Advanced college predictor',
+    'JoSAA college prediction tool',
+    'best college for my rank',
+    'free JEE rank predictor',
+    'JoSAA predictor without signup',
+    'rank to college mapper',
+  ],
   openGraph: {
-    title: 'JEE Main College Predictor – Find Your Best Fit',
-    description:
-      "Enter your rank and details to get the list of colleges and branches you're eligible for through JoSAA counselling.",
-    url: 'https://rankmatrix.in/predict',
     type: 'website',
+    url: PAGE_URL,
+    title: 'JEE Main College Predictor — Free, No Signup',
+    description: DESCRIPTION,
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'RankMatrix College Predictor',
-    description: 'Personalized college prediction tool for JEE Mains aspirants using JoSAA data.',
+    title: 'JEE College Predictor | RankMatrix',
+    description: DESCRIPTION,
   },
-  keywords: [
-    'JEE Main College Predictor',
-    'JoSAA College Prediction Tool',
-    'Best College for My Rank',
-    'Engineering Admission Prediction',
-    'Rank to College Mapper',
-  ],
 };
 
 const Predict = () => {

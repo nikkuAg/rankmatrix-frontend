@@ -2,29 +2,32 @@ import React from 'react';
 import { CollegeList } from '@/components/CollegeList';
 import { FeatureLayout } from '@/components/RankMatrixLayout/FeatureLayout';
 
+const PAGE_URL = '/colleges';
+const DESCRIPTION =
+  'Full list of JoSAA participating colleges — IITs, NITs, IIITs, and GFTIs — with filters, search, and NIRF rankings. Built on official JoSAA data. Free, no signup required, and we never ask for your phone number or email.';
+
 export const metadata = {
-  title: 'List of JoSAA Participating Colleges – RankMatrix',
-  description:
-    'Browse the complete list of colleges participating in JoSAA counselling including IITs, NITs, IIITs, and GFTIs.',
+  title: 'JoSAA Participating Colleges — IITs, NITs, IIITs & GFTIs',
+  description: DESCRIPTION,
+  alternates: { canonical: PAGE_URL },
+  keywords: [
+    'JoSAA participating colleges',
+    'IIT NIT IIIT GFTI list',
+    'JoSAA colleges 2025',
+    'engineering colleges JEE Main',
+    'JoSAA counselling colleges',
+  ],
   openGraph: {
-    title: 'JoSAA Participating Colleges – Explore All Institutes',
-    description:
-      'Get the full list of institutes available through JoSAA based on JEE Main and JEE Advanced.',
-    url: 'https://rankmatrix.in/colleges',
     type: 'website',
+    url: PAGE_URL,
+    title: 'JoSAA Participating Colleges — Explore Every Institute',
+    description: DESCRIPTION,
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'JoSAA Participating Institutes – RankMatrix',
-    description:
-      'Find all JoSAA colleges including IITs, NITs, IIITs, GFTIs based on your preferences.',
+    title: 'JoSAA Participating Colleges | RankMatrix',
+    description: DESCRIPTION,
   },
-  keywords: [
-    'JoSAA Participating Colleges',
-    'IITs NITs IIITs GFTIs List',
-    'JOSAA',
-    'Engineering Colleges JEE Main',
-  ],
 };
 
 const College = () => {

@@ -81,7 +81,7 @@ export const FormModal = ({ open, setOpen, setFormData, getPredictionData, defau
             fullWidth
             variant="standard"
             color={theme.palette.mode === 'dark' ? 'text' : 'primary'}
-            defaultValue={defaultValues && defaultValues['mainsRank']}
+            defaultValue={defaultValues?.mainsRank ?? ''}
           />
           <TextField
             margin="dense"
@@ -91,7 +91,7 @@ export const FormModal = ({ open, setOpen, setFormData, getPredictionData, defau
             fullWidth
             variant="standard"
             color={theme.palette.mode === 'dark' ? 'text' : 'primary'}
-            defaultValue={defaultValues && defaultValues['advRank']}
+            defaultValue={defaultValues?.advRank ?? ''}
           />
         </Stack>
         <Stack direction={'row'} gap={2}>
@@ -104,7 +104,7 @@ export const FormModal = ({ open, setOpen, setFormData, getPredictionData, defau
             fullWidth
             variant="standard"
             color={theme.palette.mode === 'dark' ? 'text' : 'primary'}
-            defaultValue={defaultValues && defaultValues['category']}
+            defaultValue={defaultValues?.category ?? ''}
           >
             {Object.keys(CATEGORIES).map((option) => (
               <MenuItem key={option} value={CATEGORIES[option]}>
@@ -121,7 +121,7 @@ export const FormModal = ({ open, setOpen, setFormData, getPredictionData, defau
             fullWidth
             variant="standard"
             color={theme.palette.mode === 'dark' ? 'text' : 'primary'}
-            defaultValue={defaultValues && defaultValues['seatPool']}
+            defaultValue={defaultValues?.seatPool ?? ''}
           >
             {Object.keys(SEAT_POOLS).map((option) => (
               <MenuItem key={option} value={SEAT_POOLS[option]}>
@@ -138,7 +138,7 @@ export const FormModal = ({ open, setOpen, setFormData, getPredictionData, defau
             fullWidth
             variant="standard"
             color={theme.palette.mode === 'dark' ? 'text' : 'primary'}
-            defaultValue={defaultValues && defaultValues['state']}
+            defaultValue={defaultValues?.state ?? ''}
           >
             {STATES.map((option) => (
               <MenuItem key={option} value={option}>

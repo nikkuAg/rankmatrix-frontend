@@ -2,28 +2,32 @@ import React from 'react';
 import { FeatureLayout } from '@/components/RankMatrixLayout/FeatureLayout';
 import { SeatList } from '@/components/SeatList';
 
+const PAGE_URL = '/seat-matrix';
+const DESCRIPTION =
+  'JoSAA seat matrix for every year — how many seats each college and branch offers across categories and seat pools (Open, OBC-NCL, SC, ST, EWS, Female-only). Official JoSAA data, free to explore, no signup needed.';
+
 export const metadata = {
-  title: 'JoSAA Seat Matrix – Compare Seats Across Years | RankMatrix',
-  description:
-    'Analyze seat availability across institutes and branches over different years in JoSAA counselling.',
+  title: 'JoSAA Seat Matrix — Year-wise Seat Availability',
+  description: DESCRIPTION,
+  alternates: { canonical: PAGE_URL },
+  keywords: [
+    'JoSAA seat matrix',
+    'JoSAA seats year wise',
+    'college seat availability',
+    'JEE engineering admission seats',
+    'JoSAA category wise seats',
+  ],
   openGraph: {
-    title: 'JoSAA Seat Matrix – Year-wise Seat Availability',
-    description:
-      'Check seat distribution across IITs, NITs, IIITs, and GFTIs from past JoSAA counselling rounds.',
-    url: 'https://rankmatrix.in/seat-matrix',
     type: 'website',
+    url: PAGE_URL,
+    title: 'JoSAA Seat Matrix — Year-wise Seat Availability',
+    description: DESCRIPTION,
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'JoSAA Seat Matrix Data',
-    description: 'Get detailed seat availability data for each college and branch in JoSAA.',
+    title: 'JoSAA Seat Matrix | RankMatrix',
+    description: DESCRIPTION,
   },
-  keywords: [
-    'JoSAA Seat Matrix',
-    'JoSAA Seats Year Wise',
-    'College Seat Availability',
-    'Engineering Admission Stats',
-  ],
 };
 
 const SeatMatrix = () => {

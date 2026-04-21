@@ -1,0 +1,17 @@
+node_modules
+.next
+.vercel
+coverage
+dist
+build
+out
+
+# Lockfiles
+pnpm-lock.yaml
+package-lock.json
+yarn.lock
+
+# Generated
+public/sitemap*.xml
+public/robots.txt
+next-env.d.ts

@@ -1,17 +1,16 @@
 # RankMatrix Frontend
 
-The web client for [RankMatrix](https://rankmatrix.in) — your gateway to JoSAA insights. Browse participating colleges and branches, explore seat matrix and opening/closing rank trends, and predict colleges based on your JEE Mains/Advanced rank.
+The web client for [RankMatrix](https://rankmatrix.in) — a free, no-signup JoSAA / JEE counselling companion. Browse participating colleges and branches, explore seat matrix and opening/closing rank trends, and get personalized college predictions based on your JEE Main / Advanced rank. Built on official JoSAA data, no phone number or email required, no marketing spam — ever.
 
 ## Tech Stack
 
-- **Framework:** [Next.js 15](https://nextjs.org/) (App Router) + React 19
+- **Framework:** [Next.js 16](https://nextjs.org/) (App Router) + React 19
 - **UI:** [Material UI v6](https://mui.com/) with a custom theme + dark mode
 - **State / Data:** [Redux Toolkit](https://redux-toolkit.js.org/) + RTK Query
 - **Animations:** Framer Motion, Lottie
-- **Monitoring:** Sentry
 - **Tooling:** ESLint 9 (flat config), Prettier, Husky, lint-staged, commitlint
 - **Package manager:** pnpm
-- **Containerization:** Docker + docker-compose
+- **Hosting:** [Vercel](https://vercel.com/)
 
 ## Project Structure
 
@@ -31,7 +30,6 @@ src/
 
 - Node.js 22+
 - pnpm 10+
-- Docker (optional, for containerized dev)
 
 ### 1. Install dependencies
 
@@ -47,14 +45,10 @@ Copy the example file and fill in the values:
 cp .example.env .env
 ```
 
-| Variable | Description |
-| --- | --- |
-| `NEXT_PUBLIC_API_URL` | Base URL of the RankMatrix backend API |
-| `NEXT_PUBLIC_GOOGLE_MANAGMENT_ID` | Google Analytics / Tag Manager ID |
-| `NEXT_PUBLIC_GOOGLE_AD_ID` | Google AdSense client ID |
-| `SENTRY_AUTH_TOKEN` | Sentry auth token (used during build to upload source maps) |
-
-> `NEXT_PUBLIC_*` variables are inlined into the client bundle at **build time**. When deploying, they must be passed as **build arguments**, not runtime env vars.
+| Variable              | Description                                             |
+| --------------------- | ------------------------------------------------------- |
+| `NEXT_PUBLIC_API_URL` | Base URL of the RankMatrix backend API                  |
+| `NEXT_PUBLIC_GA_ID`   | Google Analytics 4 Measurement ID (e.g. `G-XXXXXXXXXX`) |
 
 ### 3. Run the dev server
 
@@ -66,31 +60,19 @@ Open [http://localhost:3000](http://localhost:3000).
 
 ## Available Scripts
 
-| Command | Description |
-| --- | --- |
-| `pnpm dev` | Start the dev server with hot reload |
-| `pnpm build` | Production build (also generates the sitemap via `postbuild`) |
-| `pnpm start` | Start the production server (after `build`) |
-| `pnpm lint` | Run ESLint |
-| `pnpm format` | Format the codebase with Prettier |
-
-## Docker
-
-Run the app locally in a container:
-
-```bash
-docker compose up --build
-```
-
-The compose file mounts the source for hot reload and reads env vars from `.env`. `NEXT_PUBLIC_*` values are forwarded as Docker build arguments so they get baked into the bundle.
+| Command       | Description                                                   |
+| ------------- | ------------------------------------------------------------- |
+| `pnpm dev`    | Start the dev server with hot reload                          |
+| `pnpm build`  | Production build (also generates the sitemap via `postbuild`) |
+| `pnpm start`  | Start the production server (after `build`)                   |
+| `pnpm lint`   | Run ESLint                                                    |
+| `pnpm format` | Format the codebase with Prettier                             |
 
 ## Deployment
 
-The app is deployed on [Northflank](https://northflank.com/) using the included `Dockerfile`.
+The app is deployed on [Vercel](https://vercel.com/). Pushes to `main` trigger an automatic production build; feature branches get preview deployments.
 
-Because Next.js inlines `NEXT_PUBLIC_*` variables at build time, on Northflank they must be configured under **Build settings → Build arguments**, not as runtime environment variables. Runtime env vars (e.g. `SENTRY_AUTH_TOKEN`) can stay in the regular environment section.
-
-After updating any `NEXT_PUBLIC_*` value, trigger a fresh build (clearing the build cache if needed) for the change to take effect.
+Environment variables are configured in the Vercel project settings under **Settings → Environment Variables**. `NEXT_PUBLIC_*` variables are inlined into the client bundle at build time — after updating any of them, trigger a fresh production deploy for the change to take effect.
 
 ## Code Style & Commits
 
