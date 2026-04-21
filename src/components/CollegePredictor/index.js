@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Download } from '@mui/icons-material';
 import {
   Box,
@@ -16,6 +16,7 @@ import {
 import { useLazyGetpredictionDataQuery } from '../../store/queries/prediction';
 import { sendAnalyticsEvent } from '../../utils/analyticEvent';
 import { downloadCSV } from '../../utils/downloadCSV';
+import { loadPredictorFormData, savePredictorFormData } from '../../utils/formStorage';
 import { NoDataComponent } from '../NoData';
 import { Spinner } from '../Spinner';
 import { TableLayout } from '../TableLayout';
@@ -26,10 +27,24 @@ export const CollegePredictor = () => {
   const theme = useTheme();
   const [open, setOpen] = useState(true);
   const [formData, setFormData] = useState(null);
+  // undefined = localStorage not yet inspected (hold modal render to avoid
+  // rendering FormModal with empty defaults before the read resolves).
+  // After mount we set it to either the stored values or null.
+  const [savedDefaults, setSavedDefaults] = useState(undefined);
   const [
     getPredictionData,
     { data: rankData, isLoading: isRanksLoading, isFetching: isRanksFetching },
   ] = useLazyGetpredictionDataQuery();
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- one-shot hydration-safe localStorage read
+    setSavedDefaults(loadPredictorFormData());
+  }, []);
+
+  const handleFormSubmit = (data) => {
+    setFormData(data);
+    savePredictorFormData(data);
+  };
 
   const handleOpenForm = () => {
     setOpen(true);
@@ -68,13 +83,15 @@ export const CollegePredictor = () => {
 
   return (
     <>
-      <FormModal
-        open={open}
-        setOpen={setOpen}
-        setFormData={setFormData}
-        getPredictionData={getPredictionData}
-        defaultValues={formData}
-      />
+      {savedDefaults !== undefined && (
+        <FormModal
+          open={open}
+          setOpen={setOpen}
+          setFormData={handleFormSubmit}
+          getPredictionData={getPredictionData}
+          defaultValues={formData ?? savedDefaults}
+        />
+      )}
       <Box width={'100%'} height={'100%'} py={2}>
         <Stack spacing={2} height={'100%'}>
           <Stack direction={'row'} justifyContent={'space-between'}>
