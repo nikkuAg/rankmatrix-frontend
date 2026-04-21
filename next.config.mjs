@@ -23,6 +23,7 @@ const nextConfig = {
       'date-fns',
       '@reduxjs/toolkit',
       'react-redux',
+      'framer-motion',
     ],
   },
 
