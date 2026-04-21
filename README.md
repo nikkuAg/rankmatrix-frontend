@@ -46,12 +46,12 @@ Copy the example file and fill in the values:
 cp .example.env .env
 ```
 
-| Variable | Description |
-| --- | --- |
-| `NEXT_PUBLIC_API_URL` | Base URL of the RankMatrix backend API |
-| `NEXT_PUBLIC_GOOGLE_MANAGMENT_ID` | Google Analytics / Tag Manager ID |
-| `NEXT_PUBLIC_GOOGLE_AD_ID` | Google AdSense client ID |
-| `SENTRY_AUTH_TOKEN` | Sentry auth token (used during build to upload source maps) |
+| Variable                          | Description                                                 |
+| --------------------------------- | ----------------------------------------------------------- |
+| `NEXT_PUBLIC_API_URL`             | Base URL of the RankMatrix backend API                      |
+| `NEXT_PUBLIC_GOOGLE_MANAGMENT_ID` | Google Analytics / Tag Manager ID                           |
+| `NEXT_PUBLIC_GOOGLE_AD_ID`        | Google AdSense client ID                                    |
+| `SENTRY_AUTH_TOKEN`               | Sentry auth token (used during build to upload source maps) |
 
 ### 3. Run the dev server
 
@@ -63,13 +63,13 @@ Open [http://localhost:3000](http://localhost:3000).
 
 ## Available Scripts
 
-| Command | Description |
-| --- | --- |
-| `pnpm dev` | Start the dev server with hot reload |
-| `pnpm build` | Production build (also generates the sitemap via `postbuild`) |
-| `pnpm start` | Start the production server (after `build`) |
-| `pnpm lint` | Run ESLint |
-| `pnpm format` | Format the codebase with Prettier |
+| Command       | Description                                                   |
+| ------------- | ------------------------------------------------------------- |
+| `pnpm dev`    | Start the dev server with hot reload                          |
+| `pnpm build`  | Production build (also generates the sitemap via `postbuild`) |
+| `pnpm start`  | Start the production server (after `build`)                   |
+| `pnpm lint`   | Run ESLint                                                    |
+| `pnpm format` | Format the codebase with Prettier                             |
 
 ## Deployment
 

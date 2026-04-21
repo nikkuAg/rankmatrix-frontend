@@ -2,26 +2,31 @@ import React from 'react';
 import { BranchList } from '@/components/BranchList';
 import { FeatureLayout } from '@/components/RankMatrixLayout/FeatureLayout';
 
+const PAGE_URL = '/branches';
+const DESCRIPTION =
+  'Every engineering branch offered through JoSAA counselling — CSE, ECE, EE, ME, CE and more — across IITs, NITs, IIITs, and GFTIs. Built on official JoSAA data. Free, no signup, no marketing spam.';
+
 export const metadata = {
-  title: 'List of Engineering Branches in JoSAA – RankMatrix',
-  description:
-    'Explore all engineering branches offered through JoSAA counselling across various institutions.',
+  title: 'JoSAA Engineering Branches — Full List',
+  description: DESCRIPTION,
+  alternates: { canonical: PAGE_URL },
+  keywords: [
+    'JoSAA engineering branches',
+    'CSE ECE ME CE branch list',
+    'branches offered in JoSAA',
+    'JEE counselling branches',
+  ],
   openGraph: {
-    title: 'JoSAA Branches – Complete List of Programs',
-    description: 'Discover all branches like CSE, ECE, ME, CE, EE offered via JoSAA counselling.',
-    url: 'https://rankmatrix.in/branches',
     type: 'website',
+    url: PAGE_URL,
+    title: 'JoSAA Engineering Branches — Every Program',
+    description: DESCRIPTION,
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Engineering Branches – JoSAA Programs',
-    description: 'Explore all available engineering streams in JoSAA participating institutes.',
+    title: 'JoSAA Engineering Branches | RankMatrix',
+    description: DESCRIPTION,
   },
-  keywords: [
-    'JoSAA Engineering Branches',
-    'CSE ECE ME CE Branch List',
-    'Branches Offered in JoSAA',
-  ],
 };
 
 const Branch = () => {
