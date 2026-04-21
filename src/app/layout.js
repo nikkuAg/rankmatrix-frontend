@@ -146,9 +146,7 @@ export default function RootLayout({ children }) {
             </ThemeProviderWrapper>
           </StoreProvider>
         </AppRouterCacheProvider>
-        {process.env.NEXT_PUBLIC_GOOGLE_MANAGMENT_ID && (
-          <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GOOGLE_MANAGMENT_ID} />
-        )}
+        {process.env.NEXT_PUBLIC_GA_ID && <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />}
         {process.env.NEXT_PUBLIC_GOOGLE_AD_ID && (
           <Script
             id="google-adsense"

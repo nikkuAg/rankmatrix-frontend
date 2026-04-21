@@ -48,7 +48,7 @@ cp .example.env .env
 | Variable                          | Description                            |
 | --------------------------------- | -------------------------------------- |
 | `NEXT_PUBLIC_API_URL`             | Base URL of the RankMatrix backend API |
-| `NEXT_PUBLIC_GOOGLE_MANAGMENT_ID` | Google Analytics / Tag Manager ID      |
+| `NEXT_PUBLIC_GA_ID`               | Google Analytics 4 Measurement ID (e.g. `G-XXXXXXXXXX`) |
 | `NEXT_PUBLIC_GOOGLE_AD_ID`        | Google AdSense client ID               |
 
 ### 3. Run the dev server
