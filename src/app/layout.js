@@ -1,3 +1,4 @@
+import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
 import { GoogleAnalytics } from '@next/third-parties/google';
 import { Poppins } from 'next/font/google';
 import Script from 'next/script';
@@ -138,11 +139,13 @@ export default function RootLayout({ children }) {
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
         />
-        <StoreProvider>
-          <ThemeProviderWrapper>
-            <RankMatrixLayout>{children}</RankMatrixLayout>
-          </ThemeProviderWrapper>
-        </StoreProvider>
+        <AppRouterCacheProvider options={{ enableCssLayer: false, key: 'mui' }}>
+          <StoreProvider>
+            <ThemeProviderWrapper>
+              <RankMatrixLayout>{children}</RankMatrixLayout>
+            </ThemeProviderWrapper>
+          </StoreProvider>
+        </AppRouterCacheProvider>
         {process.env.NEXT_PUBLIC_GOOGLE_MANAGMENT_ID && (
           <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GOOGLE_MANAGMENT_ID} />
         )}
