@@ -86,7 +86,6 @@ export const Footer = () => {
         mt: 8,
         backgroundColor: surface,
         color: foreground,
-        borderTop: `2px solid ${theme.palette.primary.main}`,
       }}
     >
       <Box sx={{ maxWidth: 1280, mx: 'auto', px: { xs: 3, md: 6 }, pt: { xs: 6, md: 8 }, pb: 4 }}>
