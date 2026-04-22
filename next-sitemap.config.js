@@ -2,19 +2,19 @@
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 async function fetchSeoSlugs() {
-  if (!API_URL) {
-    return { institutes: [], branches: [] };
-  }
+  const empty = { institutes: [], branches: [], cutoffs: [] };
+  if (!API_URL) return empty;
   try {
     const res = await fetch(`${API_URL}/api/seo/slugs`);
-    if (!res.ok) return { institutes: [], branches: [] };
+    if (!res.ok) return empty;
     const json = await res.json();
     return {
       institutes: json.institutes || [],
       branches: json.branches || [],
+      cutoffs: json.cutoffs || [],
     };
   } catch {
-    return { institutes: [], branches: [] };
+    return empty;
   }
 }
 
@@ -34,7 +34,7 @@ module.exports = {
     '/sitemap*.xml',
   ],
   additionalPaths: async (config) => {
-    const { institutes, branches } = await fetchSeoSlugs();
+    const { institutes, branches, cutoffs } = await fetchSeoSlugs();
     const lastmod = new Date().toISOString();
     const paths = [];
     institutes.forEach((institute) => {
@@ -57,10 +57,22 @@ module.exports = {
         alternateRefs: config.alternateRefs ?? [],
       });
     });
-    // Institute × branch combinations are generated on demand (ISR) and
-    // can number in the thousands; skip them from the initial sitemap to
-    // keep it under the 50k URL cap and let Google discover them via
-    // internal links from the institute/branch pages.
+    // Deep institute × branch combination pages. Emitted explicitly so
+    // Google can queue them all for crawl without waiting to follow
+    // internal links. sitemapSize (5000) will split these into multiple
+    // sitemap files automatically if the count exceeds one file.
+    cutoffs.forEach((combo) => {
+      const instituteSlug = combo.instituteSlug ?? combo.institute_slug;
+      const branchSlug = combo.branchSlug ?? combo.branch_slug;
+      if (!instituteSlug || !branchSlug) return;
+      paths.push({
+        loc: `/colleges/${instituteSlug}/${branchSlug}`,
+        changefreq: 'monthly',
+        priority: 0.65,
+        lastmod,
+        alternateRefs: config.alternateRefs ?? [],
+      });
+    });
     return paths;
   },
   transform: async (config, path) => {
