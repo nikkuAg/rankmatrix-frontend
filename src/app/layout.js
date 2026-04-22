@@ -88,6 +88,13 @@ export const viewport = {
   ],
 };
 
+const FOUNDER = {
+  '@type': 'Person',
+  name: 'Divyansh Agarwal',
+  url: 'https://www.linkedin.com/in/ag-divyansh/',
+  sameAs: ['https://github.com/nikkuAg', 'https://www.linkedin.com/in/ag-divyansh/'],
+};
+
 const organizationJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'Organization',
@@ -95,7 +102,7 @@ const organizationJsonLd = {
   url: SITE_URL,
   logo: `${SITE_URL}/logo.svg`,
   description: SITE_DESCRIPTION,
-  founder: { '@type': 'Person', name: 'Divyansh Agarwal' },
+  founder: FOUNDER,
   foundingDate: '2025',
   areaServed: 'IN',
   knowsAbout: [
