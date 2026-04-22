@@ -21,4 +21,10 @@ export const apis = {
   prediction: {
     college: '/api/predictions/institute',
   },
+  seo: {
+    slugs: '/api/seo/slugs',
+    institute: (slug) => `/api/seo/institutes/${slug}`,
+    branch: (slug) => `/api/seo/branches/${slug}`,
+    cutoffs: (instituteSlug, branchSlug) => `/api/seo/cutoffs/${instituteSlug}/${branchSlug}`,
+  },
 };

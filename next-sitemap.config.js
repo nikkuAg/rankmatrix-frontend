@@ -1,11 +1,29 @@
 /** @type {import('next-sitemap').IConfig} */
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
+async function fetchSeoSlugs() {
+  if (!API_URL) {
+    return { institutes: [], branches: [] };
+  }
+  try {
+    const res = await fetch(`${API_URL}/api/seo/slugs`);
+    if (!res.ok) return { institutes: [], branches: [] };
+    const json = await res.json();
+    return {
+      institutes: json.institutes || [],
+      branches: json.branches || [],
+    };
+  } catch {
+    return { institutes: [], branches: [] };
+  }
+}
+
 module.exports = {
   siteUrl: 'https://rankmatrix.in',
   generateRobotsTxt: true,
   autoLastmod: true,
   generateIndexSitemap: true,
   sitemapSize: 5000,
-  // Next.js metadata routes and Sentry's tunnel are not user-facing pages.
   exclude: [
     '/opengraph-image*',
     '/twitter-image*',
@@ -15,8 +33,37 @@ module.exports = {
     '/robots.txt',
     '/sitemap*.xml',
   ],
+  additionalPaths: async (config) => {
+    const { institutes, branches } = await fetchSeoSlugs();
+    const lastmod = new Date().toISOString();
+    const paths = [];
+    institutes.forEach((institute) => {
+      if (!institute.slug) return;
+      paths.push({
+        loc: `/colleges/${institute.slug}`,
+        changefreq: 'weekly',
+        priority: 0.8,
+        lastmod,
+        alternateRefs: config.alternateRefs ?? [],
+      });
+    });
+    branches.forEach((branch) => {
+      if (!branch.slug) return;
+      paths.push({
+        loc: `/branches/${branch.slug}`,
+        changefreq: 'weekly',
+        priority: 0.75,
+        lastmod,
+        alternateRefs: config.alternateRefs ?? [],
+      });
+    });
+    // Institute × branch combinations are generated on demand (ISR) and
+    // can number in the thousands; skip them from the initial sitemap to
+    // keep it under the 50k URL cap and let Google discover them via
+    // internal links from the institute/branch pages.
+    return paths;
+  },
   transform: async (config, path) => {
-    // Per-route priority/changefreq tuned for how often the underlying data moves.
     const priorityMap = {
       '/': 1.0,
       '/predict': 0.95,
@@ -24,6 +71,7 @@ module.exports = {
       '/seat-matrix': 0.9,
       '/colleges': 0.85,
       '/branches': 0.85,
+      '/guides': 0.8,
       '/documents': 0.5,
       '/matrix': 0.4,
       '/test-choices': 0.4,
@@ -35,24 +83,33 @@ module.exports = {
       '/seat-matrix': 'weekly',
       '/colleges': 'weekly',
       '/branches': 'weekly',
+      '/guides': 'weekly',
       '/documents': 'monthly',
       '/matrix': 'monthly',
       '/test-choices': 'monthly',
     };
+    let priority = priorityMap[path];
+    let changefreq = changefreqMap[path];
+    if (priority === undefined) {
+      if (path.startsWith('/guides/')) {
+        priority = 0.75;
+        changefreq = 'monthly';
+      } else {
+        priority = 0.7;
+        changefreq = 'weekly';
+      }
+    }
     return {
       loc: path,
-      changefreq: changefreqMap[path] ?? 'weekly',
-      priority: priorityMap[path] ?? 0.7,
+      changefreq,
+      priority,
       lastmod: new Date().toISOString(),
       alternateRefs: config.alternateRefs ?? [],
     };
   },
   robotsTxtOptions: {
     policies: [
-      // Baseline: allow everything, block only backend-style routes.
       { userAgent: '*', allow: '/', disallow: ['/api', '/admin'] },
-      // Explicit allow for well-behaved AI crawlers so RankMatrix shows up in
-      // answer-engine results. Disallow the Sentry tunnel route.
       { userAgent: 'GPTBot', allow: '/', disallow: ['/api', '/admin'] },
       { userAgent: 'ChatGPT-User', allow: '/', disallow: ['/api', '/admin'] },
       { userAgent: 'OAI-SearchBot', allow: '/', disallow: ['/api', '/admin'] },

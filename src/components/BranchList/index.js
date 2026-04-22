@@ -12,6 +12,7 @@ import {
   useTheme,
 } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
+import { AppLink } from '@/components/AppLink';
 import { ChipFilter } from '@/components/ChipFilter';
 import { NoDataComponent } from '@/components/NoData';
 import { PaginationBox } from '@/components/PaginationBox';
@@ -231,7 +232,13 @@ export const BranchList = () => {
                         }}
                       >
                         <TableCell>{branch.code}</TableCell>
-                        <TableCell>{branch.name}</TableCell>
+                        <TableCell>
+                          {branch.slug ? (
+                            <AppLink href={`/branches/${branch.slug}`}>{branch.name}</AppLink>
+                          ) : (
+                            branch.name
+                          )}
+                        </TableCell>
                         <TableCell>{branch.degree}</TableCell>
                         <TableCell sx={{ borderRight: '0px !important' }}>
                           {branch.courseDuration} years
