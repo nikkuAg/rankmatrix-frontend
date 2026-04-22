@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { GitHub, LinkedIn } from '@mui/icons-material';
-import { Box, Link as MuiLink, Stack, Typography, useTheme } from '@mui/material';
+import { Avatar, Box, Link as MuiLink, Stack, Typography, useTheme } from '@mui/material';
 import Link from 'next/link';
 
 const TOOL_LINKS = [
@@ -30,29 +30,9 @@ const REFERENCE_LINKS = [
   { label: 'CSAB', href: 'https://csab.nic.in' },
 ];
 
-const SECTION_HEADING_SX = {
-  fontSize: '0.72rem',
-  fontWeight: 700,
-  letterSpacing: '0.12em',
-  textTransform: 'uppercase',
-  opacity: 0.55,
-  mb: 2,
-};
-
-const linkSx = {
-  color: 'inherit',
-  opacity: 0.72,
-  fontSize: '0.95rem',
-  lineHeight: 1.4,
-  textDecoration: 'none',
-  transition: 'opacity 150ms ease',
-  '&:hover': { opacity: 1, textDecoration: 'none' },
-  '&:focus-visible': { opacity: 1, outline: '2px solid currentColor', outlineOffset: 3 },
-};
-
-const NavList = ({ ariaLabel, heading, children }) => (
+const NavList = ({ ariaLabel, heading, children, headingSx }) => (
   <Box component="nav" aria-label={ariaLabel}>
-    <Typography component="h2" sx={SECTION_HEADING_SX}>
+    <Typography component="h2" sx={headingSx}>
       {heading}
     </Typography>
     <Box component="ul" sx={{ listStyle: 'none', p: 0, m: 0, display: 'grid', gap: 1.25 }}>
@@ -64,8 +44,40 @@ const NavList = ({ ariaLabel, heading, children }) => (
 export const Footer = () => {
   const theme = useTheme();
   const isDark = theme.palette.mode === 'dark';
-  const surface = isDark ? theme.palette.primary.dark : theme.palette.text.main;
-  const hairline = 'rgba(255, 255, 255, 0.1)';
+
+  // Theme-aware palette — follow the page, don't fight it.
+  const surface = isDark ? theme.palette.primary.dark : theme.background.dark;
+  const foreground = isDark ? theme.palette.text.light : theme.palette.text.main;
+  const mutedForeground = isDark ? 'rgba(255, 255, 255, 0.72)' : 'rgba(0, 41, 66, 0.72)';
+  const subtleForeground = isDark ? 'rgba(255, 255, 255, 0.55)' : 'rgba(0, 41, 66, 0.6)';
+  const hairline = isDark ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 41, 66, 0.1)';
+  const logoSrc = isDark ? '/logo_dark.svg' : '/logo.svg';
+
+  const sectionHeadingSx = {
+    fontSize: '0.72rem',
+    fontWeight: 700,
+    letterSpacing: '0.12em',
+    textTransform: 'uppercase',
+    color: subtleForeground,
+    mb: 2,
+  };
+
+  // !important beats the global `a { color: text.link !important }` rule in
+  // ThemeContext's GlobalStyles so footer links render as readable text, not
+  // a third blue.
+  const linkSx = {
+    color: `${mutedForeground} !important`,
+    fontSize: '0.95rem',
+    lineHeight: 1.4,
+    textDecoration: 'none',
+    transition: 'color 150ms ease',
+    '&:hover': { color: `${foreground} !important`, textDecoration: 'none' },
+    '&:focus-visible': {
+      color: `${foreground} !important`,
+      outline: `2px solid ${theme.palette.primary.main}`,
+      outlineOffset: 3,
+    },
+  };
 
   return (
     <Box
@@ -73,7 +85,7 @@ export const Footer = () => {
       sx={{
         mt: 8,
         backgroundColor: surface,
-        color: theme.palette.text.light,
+        color: foreground,
         borderTop: `2px solid ${theme.palette.primary.main}`,
       }}
     >
@@ -90,28 +102,21 @@ export const Footer = () => {
           }}
         >
           <Stack gap={2.5}>
-            <Stack direction="row" alignItems="center" gap={1.25}>
-              <Box
-                aria-hidden
-                sx={{
-                  width: 34,
-                  height: 34,
-                  borderRadius: '10px',
-                  background: theme.palette.primary.main,
-                  color: theme.palette.text.light,
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  fontWeight: 800,
-                  fontSize: '1.05rem',
-                  letterSpacing: '-0.02em',
-                }}
-              >
-                R
-              </Box>
+            <Stack direction="row" alignItems="center" gap={1.5}>
+              <Avatar
+                alt="RankMatrix"
+                src={logoSrc}
+                variant="square"
+                sx={{ width: 40, height: 40 }}
+              />
               <Typography
                 component="span"
-                sx={{ fontWeight: 700, fontSize: '1.1rem', letterSpacing: '-0.01em' }}
+                sx={{
+                  fontWeight: 500,
+                  fontSize: '1.4rem',
+                  letterSpacing: '-0.01em',
+                  color: foreground,
+                }}
               >
                 RankMatrix
               </Typography>
@@ -120,7 +125,7 @@ export const Footer = () => {
               sx={{
                 fontSize: '0.95rem',
                 lineHeight: 1.65,
-                opacity: 0.72,
+                color: mutedForeground,
                 maxWidth: 320,
               }}
             >
@@ -137,7 +142,6 @@ export const Footer = () => {
                   ...linkSx,
                   display: 'inline-flex',
                   alignItems: 'center',
-                  color: 'inherit',
                   '& svg': { fontSize: 22 },
                 }}
               >
@@ -152,7 +156,6 @@ export const Footer = () => {
                   ...linkSx,
                   display: 'inline-flex',
                   alignItems: 'center',
-                  color: 'inherit',
                   '& svg': { fontSize: 22 },
                 }}
               >
@@ -161,7 +164,7 @@ export const Footer = () => {
             </Stack>
           </Stack>
 
-          <NavList ariaLabel="Tools" heading="Tools">
+          <NavList ariaLabel="Tools" heading="Tools" headingSx={sectionHeadingSx}>
             {TOOL_LINKS.map((link) => (
               <li key={link.href}>
                 <MuiLink component={Link} href={link.href} sx={linkSx}>
@@ -171,7 +174,7 @@ export const Footer = () => {
             ))}
           </NavList>
 
-          <NavList ariaLabel="Guides" heading="Guides">
+          <NavList ariaLabel="Guides" heading="Guides" headingSx={sectionHeadingSx}>
             {GUIDE_LINKS.map((link) => (
               <li key={link.href}>
                 <MuiLink component={Link} href={link.href} sx={linkSx}>
@@ -181,7 +184,7 @@ export const Footer = () => {
             ))}
           </NavList>
 
-          <NavList ariaLabel="Reference" heading="Reference">
+          <NavList ariaLabel="Reference" heading="Reference" headingSx={sectionHeadingSx}>
             {REFERENCE_LINKS.map((link) => (
               <li key={link.href}>
                 <MuiLink href={link.href} target="_blank" rel="noopener noreferrer" sx={linkSx}>
@@ -204,13 +207,18 @@ export const Footer = () => {
             alignItems: { xs: 'flex-start', md: 'flex-end' },
           }}
         >
-          <Typography sx={{ fontSize: '0.8rem', opacity: 0.55, lineHeight: 1.5 }}>
+          <Typography sx={{ fontSize: '0.8rem', color: subtleForeground, lineHeight: 1.5 }}>
             © {new Date().getFullYear()} RankMatrix · Built by{' '}
             <MuiLink
               href="https://www.linkedin.com/in/ag-divyansh/"
               target="_blank"
               rel="noopener noreferrer author"
-              sx={{ color: 'inherit', textDecoration: 'underline', textUnderlineOffset: 3 }}
+              sx={{
+                color: `${subtleForeground} !important`,
+                textDecoration: 'underline',
+                textUnderlineOffset: 3,
+                '&:hover': { color: `${foreground} !important` },
+              }}
             >
               Divyansh Agarwal
             </MuiLink>
@@ -218,7 +226,7 @@ export const Footer = () => {
           <Typography
             sx={{
               fontSize: '0.75rem',
-              opacity: 0.5,
+              color: subtleForeground,
               lineHeight: 1.55,
               maxWidth: 720,
               textAlign: { xs: 'left', md: 'right' },
