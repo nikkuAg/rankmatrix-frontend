@@ -15,6 +15,7 @@ import {
   useTheme,
 } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
+import { AppLink } from '@/components/AppLink';
 import { ChipFilter } from '@/components/ChipFilter';
 import { NoDataComponent } from '@/components/NoData';
 import { PaginationBox } from '@/components/PaginationBox';
@@ -248,7 +249,13 @@ export const CollegeList = () => {
                         }}
                       >
                         <TableCell>{college.code}</TableCell>
-                        <TableCell>{college.name}</TableCell>
+                        <TableCell>
+                          {college.slug ? (
+                            <AppLink href={`/colleges/${college.slug}`}>{college.name}</AppLink>
+                          ) : (
+                            college.name
+                          )}
+                        </TableCell>
                         <TableCell>{college.type}</TableCell>
                         <TableCell>{college.state}</TableCell>
                         {!expandedNirf && (
