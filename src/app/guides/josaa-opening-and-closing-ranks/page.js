@@ -270,8 +270,8 @@ export default function JoSAAOpeningAndClosingRanksGuide() {
             year/round/category/quota/pool filterable view.
           </li>
           <li>
-            <AppLink href="/predict">College predictor</AppLink> — match your rank against all
-            institute-branch cutoffs at once.
+            <AppLink href="/predict">College &amp; Branch Predictor</AppLink> — match your rank
+            against all institute-branch cutoffs at once.
           </li>
           <li>
             <AppLink href="/guides/josaa-seat-matrix">

@@ -4,19 +4,19 @@ import { GuideLayout } from '@/components/GuideLayout';
 import { articleJsonLd, breadcrumbJsonLd, faqJsonLd } from '@/utils/jsonLd';
 
 const PAGE_URL = '/guides/jee-main-college-predictor';
-const TITLE = 'JEE Main college predictor: how it works';
+const TITLE = 'JEE college & branch predictor: how it works';
 const DESCRIPTION =
-  'What a JEE Main / JoSAA college predictor actually does under the hood, what inputs matter, what it cannot tell you, and how to read its results without being misled.';
+  'What a JEE college and branch predictor actually does under the hood, which inputs matter (JEE Main or JEE Advanced rank, category, home state), what it cannot tell you, and how to read its results without being misled.';
 const PUBLISHED = '2026-04-23';
 
 const FAQS = [
   {
-    question: 'How accurate is a JEE Main college predictor?',
+    question: 'How accurate is a JEE college & branch predictor?',
     answer:
-      'A predictor is only as accurate as the historical data and the model used to project it forward. A good predictor uses multiple past years of official JoSAA opening and closing ranks and applies a delta to account for year-over-year cutoff movement. It cannot guarantee an outcome — actual cutoffs can move by several hundred ranks from one year to the next based on exam difficulty, seat-matrix changes, and how other candidates fill their preferences. Treat it as a ranked shortlist to plan around, not a guarantee.',
+      'A predictor is only as accurate as the historical data and the model used to project it forward. A good predictor uses multiple past years of official JoSAA opening and closing ranks and applies a delta to account for year-over-year cutoff movement. It cannot guarantee an outcome — actual cutoffs can move by several hundred ranks from one year to the next based on exam difficulty, seat-matrix changes, and how other candidates fill their preferences. Treat it as a ranked shortlist of likely colleges and branches to plan around, not a guarantee.',
   },
   {
-    question: 'What inputs do I need to use the RankMatrix college predictor?',
+    question: 'What inputs do I need to use the RankMatrix JEE college & branch predictor?',
     answer:
       'Your JEE Main rank, your category (General, EWS, OBC-NCL, SC, ST, with PwD sub-category if applicable), your home state, and optionally your JEE Advanced rank if you qualified. If you want more options, you can also set how wide a cutoff delta to include and how many results to show. That is the complete input set.',
   },
@@ -36,7 +36,7 @@ const FAQS = [
       'Not blindly. The predictor orders by rank proximity, not by your preferences. Your actual JoSAA choice list should be ordered by what you most want to attend, top to bottom — because JoSAA will always try to give you your #1 before your #2. Use the predictor to assemble a shortlist, then manually reorder that shortlist by personal preference.',
   },
   {
-    question: 'Can a college predictor replace JoSAA counselling?',
+    question: 'Can a JEE college & branch predictor replace JoSAA counselling?',
     answer:
       'No. The predictor is a planning aid. Actual admission only happens through the official JoSAA portal — you still need to register, fill the choice list, participate in rounds, and respond to allocations within the JoSAA windows. No third-party tool can grant you a seat.',
   },
@@ -47,12 +47,16 @@ export const metadata = {
   description: DESCRIPTION,
   alternates: { canonical: PAGE_URL },
   keywords: [
+    'JEE college & branch predictor',
+    'JEE college and branch predictor',
+    'JEE college predictor',
+    'JEE branch predictor',
+    'JoSAA college predictor',
+    'how JEE college predictor works',
     'JEE Main college predictor',
     'JEE Advanced college predictor',
-    'JoSAA college predictor',
-    'how college predictor works',
-    'free JEE rank predictor',
     'best JEE college predictor',
+    'free JEE predictor no signup',
   ],
   openGraph: {
     type: 'article',
@@ -101,15 +105,15 @@ export default function JeeMainCollegePredictorGuide() {
         breadcrumbs={[
           { name: 'Home', path: '/' },
           { name: 'Guides', path: '/guides' },
-          { name: 'JEE Main college predictor', path: PAGE_URL },
+          { name: 'JEE college & branch predictor', path: PAGE_URL },
         ]}
       >
-        <h2>What a college predictor is</h2>
+        <h2>What a JEE college &amp; branch predictor is</h2>
         <p>
-          A JEE Main college predictor is a tool that answers a single question:{' '}
+          A JEE college and branch predictor is a tool that answers a single question:{' '}
           <em>
-            given my rank, my category, and my home state, which JoSAA colleges and branches am I
-            likely to be admitted to?
+            given my JEE Main or JEE Advanced rank, my category, and my home state, which JoSAA
+            colleges and branches am I likely to be admitted to?
           </em>{' '}
           It does not grant seats. It does not run the JoSAA allocation. It just lines up what the
           JoSAA allocation <em>would</em> have looked like for your profile based on past trends, so

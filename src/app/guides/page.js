@@ -6,7 +6,7 @@ import { breadcrumbJsonLd } from '@/utils/jsonLd';
 
 const PAGE_URL = '/guides';
 const DESCRIPTION =
-  'Plain-English guides to JoSAA counselling, JEE Main and JEE Advanced admissions, opening and closing ranks, the seat matrix, and using the RankMatrix college predictor. Free, no signup, no spam — built by a student, for students.';
+  'Plain-English guides to JoSAA counselling, JEE Main and JEE Advanced admissions, opening and closing ranks, the seat matrix, and using the RankMatrix JEE college & branch predictor. Free, no signup, no spam — built by a student, for students.';
 
 export const metadata = {
   title: 'JoSAA & JEE Counselling Guides',
@@ -18,6 +18,8 @@ export const metadata = {
     'JEE Advanced counselling',
     'JoSAA rounds explained',
     'JoSAA seat matrix guide',
+    'JEE college & branch predictor',
+    'JEE college and branch predictor',
     'JEE college predictor how it works',
   ],
   openGraph: {
@@ -43,9 +45,9 @@ const GUIDES = [
   },
   {
     slug: 'jee-main-college-predictor',
-    title: 'JEE Main college predictor: how it works',
+    title: 'JEE college & branch predictor: how it works',
     summary:
-      'What a college predictor actually does, how it uses opening and closing ranks, what it can and cannot tell you, and how to read the results sensibly.',
+      'What a JEE college and branch predictor actually does, how it uses JoSAA opening and closing ranks, what it can and cannot tell you, and how to read the results sensibly.',
     readingTimeMinutes: 6,
   },
   {

@@ -84,7 +84,7 @@ const buildFaqs = (data, summaryRow) => {
     },
     {
       question: `Will my JEE rank qualify for ${data.branch.name} at ${data.institute.name}?`,
-      answer: `Compare your rank against the closing ranks below from the most recent two to three years. Closing ranks can drift 5–10% year-over-year — if you are within the last year's closing rank, you have a reasonable chance. Use the RankMatrix College Predictor for a rank-based shortlist across all JoSAA colleges.`,
+      answer: `Compare your rank against the closing ranks below from the most recent two to three years. Closing ranks can drift 5–10% year-over-year — if you are within the last year's closing rank, you have a reasonable chance. Use the RankMatrix College & Branch Predictor for a rank-based shortlist across all JoSAA colleges.`,
     },
   ];
 };
@@ -270,7 +270,7 @@ export default async function InstituteBranchPage({ params }) {
         <ul>
           <li>
             For your rank&apos;s full shortlist across JoSAA, use the{' '}
-            <AppLink href="/predict">College Predictor</AppLink>.
+            <AppLink href="/predict">College &amp; Branch Predictor</AppLink>.
           </li>
           <li>
             To compare {data.branch.name} at other institutes, see{' '}

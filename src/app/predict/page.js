@@ -5,11 +5,11 @@ import { CollegePredictor } from '../../components/CollegePredictor';
 
 const PAGE_URL = '/predict';
 const DESCRIPTION =
-  'Free JEE Main & Advanced college predictor. Enter your rank, category, and home state — we cross-reference your score with historical JoSAA opening and closing ranks and return the colleges and branches you are likely to get. No signup, no phone number, no email, no marketing spam.';
+  'Free JEE college & branch predictor for JoSAA counselling. Enter your JEE Main or JEE Advanced rank, category, and home state — we return the exact colleges and branches you are likely to get, based on official JoSAA opening and closing ranks. No signup, no phone number, no email, no marketing spam.';
 
 const FAQS = [
   {
-    question: 'Is the RankMatrix JEE Main college predictor free?',
+    question: 'Is the RankMatrix JEE college & branch predictor free?',
     answer:
       'Yes. The predictor is entirely free, with no paid tier, no paywall, and no premium counselling upsell. It never asks for payment, now or later.',
   },
@@ -41,27 +41,35 @@ const FAQS = [
 ];
 
 export const metadata = {
-  title: 'JEE Main College Predictor — Free JoSAA Rank Predictor',
+  title: 'JEE College & Branch Predictor — Free JoSAA Tool, No Signup',
   description: DESCRIPTION,
   alternates: { canonical: PAGE_URL },
   keywords: [
+    'JEE college & branch predictor',
+    'JEE college and branch predictor',
+    'JEE college predictor',
+    'JEE branch predictor',
+    'JoSAA college predictor',
+    'JoSAA college and branch predictor',
     'JEE Main college predictor',
     'JEE Advanced college predictor',
-    'JoSAA college prediction tool',
-    'best college for my rank',
-    'free JEE rank predictor',
-    'JoSAA predictor without signup',
-    'rank to college mapper',
+    'IIT college predictor',
+    'NIT college predictor',
+    'IIIT college predictor',
+    'GFTI college predictor',
+    'free JEE college predictor',
+    'JEE predictor without signup',
+    'best college and branch for my JEE rank',
   ],
   openGraph: {
     type: 'website',
     url: PAGE_URL,
-    title: 'JEE Main College Predictor — Free, No Signup',
+    title: 'JEE College & Branch Predictor — Free, No Signup',
     description: DESCRIPTION,
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'JEE College Predictor | RankMatrix',
+    title: 'JEE College & Branch Predictor | RankMatrix',
     description: DESCRIPTION,
   },
 };

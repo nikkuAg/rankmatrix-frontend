@@ -17,9 +17,9 @@ const poppins = Poppins({
 
 const SITE_URL = 'https://rankmatrix.in';
 const SITE_NAME = 'RankMatrix';
-const SITE_TAGLINE = 'Free JEE college predictor with official JoSAA data';
+const SITE_TAGLINE = 'Free JEE college & branch predictor with official JoSAA data';
 const SITE_DESCRIPTION =
-  'Free JEE Main & Advanced college predictor for JoSAA counselling. Explore opening and closing ranks, seat matrix, participating colleges and branches using official JoSAA data. No signup, no phone number, no email, and zero marketing spam — ever.';
+  'Free JEE college and branch predictor for JoSAA counselling — works with both JEE Main and JEE Advanced ranks. Explore opening and closing ranks, seat matrix, and participating colleges and branches from official JoSAA data. No signup, no phone number, no email, and zero marketing spam — ever.';
 
 export const metadata = {
   metadataBase: new URL(SITE_URL),
@@ -33,16 +33,20 @@ export const metadata = {
   creator: 'Divyansh Agarwal',
   publisher: 'RankMatrix',
   keywords: [
-    'JoSAA counselling',
+    'JEE college & branch predictor',
+    'JEE college and branch predictor',
+    'JEE college predictor',
+    'JEE branch predictor',
+    'JoSAA college predictor',
+    'JoSAA college and branch predictor',
     'JEE Main college predictor',
     'JEE Advanced college predictor',
+    'JoSAA counselling',
     'JoSAA cutoff',
     'JoSAA opening closing rank',
     'JoSAA seat matrix',
-    'Free JEE rank predictor',
     'IIT NIT IIIT GFTI counselling',
     'Engineering admission India',
-    'JEE rank to college',
     'RankMatrix',
   ],
   category: 'education',

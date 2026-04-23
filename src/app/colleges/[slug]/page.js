@@ -99,7 +99,7 @@ const buildFaqs = (data) => {
     },
     {
       question: `How do I know if my JEE rank qualifies for ${data.name}?`,
-      answer: `Use the RankMatrix College Predictor and compare your JEE Main or JEE Advanced rank with the historical closing ranks listed on this page for each branch. Closing ranks shift year-over-year, so it is best to compare against the most recent two to three years.`,
+      answer: `Use the RankMatrix College & Branch Predictor and compare your JEE Main or JEE Advanced rank with the historical closing ranks listed on this page for each branch. Closing ranks shift year-over-year, so it is best to compare against the most recent two to three years.`,
     },
   ];
 };
@@ -275,7 +275,7 @@ export default async function InstitutePage({ params }) {
         <ul>
           <li>
             To predict which colleges and branches your rank qualifies for across JoSAA, use the{' '}
-            <AppLink href="/predict">College Predictor</AppLink>.
+            <AppLink href="/predict">College &amp; Branch Predictor</AppLink>.
           </li>
           <li>
             To browse all JoSAA participating colleges, head to{' '}

@@ -1,6 +1,6 @@
 import { ImageResponse } from 'next/og';
 
-export const alt = 'RankMatrix — Free JEE college predictor with official JoSAA data';
+export const alt = 'RankMatrix — Free JEE college & branch predictor with official JoSAA data';
 export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';
 
@@ -49,7 +49,7 @@ export default async function OpengraphImage() {
               maxWidth: 1000,
             }}
           >
-            Free JEE college predictor.
+            Free JEE college &amp; branch predictor.
           </div>
           <div
             style={{

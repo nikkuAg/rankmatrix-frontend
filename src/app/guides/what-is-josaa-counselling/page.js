@@ -273,7 +273,7 @@ export default function WhatIsJoSAACounselling() {
           </li>
           <li>
             <strong>Rank-to-college prediction</strong> before you finalise the preference order —{' '}
-            <AppLink href="/predict">JEE Main College Predictor</AppLink>.
+            <AppLink href="/predict">JEE College &amp; Branch Predictor</AppLink>.
           </li>
         </ul>
 

@@ -288,8 +288,8 @@ export default function JoSAACounsellingRoundsGuide() {
             quota, and seat pool means.
           </li>
           <li>
-            <AppLink href="/predict">College predictor</AppLink> — the planning tool you will want
-            before choice filling.
+            <AppLink href="/predict">College &amp; Branch Predictor</AppLink> — the planning tool
+            you will want before choice filling.
           </li>
         </ul>
 

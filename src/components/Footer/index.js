@@ -6,7 +6,7 @@ import { Avatar, Box, Link as MuiLink, Stack, Typography, useTheme } from '@mui/
 import Link from 'next/link';
 
 const TOOL_LINKS = [
-  { label: 'College Predictor', href: '/predict' },
+  { label: 'College & Branch Predictor', href: '/predict' },
   { label: 'Opening & Closing Ranks', href: '/ranks' },
   { label: 'Seat Matrix', href: '/seat-matrix' },
   { label: 'Participating Colleges', href: '/colleges' },
@@ -16,7 +16,7 @@ const TOOL_LINKS = [
 const GUIDE_LINKS = [
   { label: 'All guides', href: '/guides' },
   { label: 'What is JoSAA counselling', href: '/guides/what-is-josaa-counselling' },
-  { label: 'JEE Main college predictor', href: '/guides/jee-main-college-predictor' },
+  { label: 'JEE college & branch predictor', href: '/guides/jee-main-college-predictor' },
   { label: 'Opening & closing ranks', href: '/guides/josaa-opening-and-closing-ranks' },
   { label: 'JEE Main vs Advanced vs JoSAA', href: '/guides/jee-main-vs-advanced-vs-josaa' },
   { label: 'Seat matrix explained', href: '/guides/josaa-seat-matrix' },

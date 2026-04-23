@@ -79,7 +79,7 @@ const buildFaqs = (data) => {
     },
     {
       question: `Which rank do I need for ${data.name} at the top colleges?`,
-      answer: `Cutoffs vary dramatically by institute. The table below shows the latest Open category, Gender-Neutral closing rank per institute. For a rank-based shortlist across all colleges and branches, use the RankMatrix College Predictor.`,
+      answer: `Cutoffs vary dramatically by institute. The table below shows the latest Open category, Gender-Neutral closing rank per institute. For a rank-based shortlist across all colleges and branches, use the RankMatrix College & Branch Predictor.`,
     },
     {
       question: `Do I need JEE Advanced for ${data.name}?`,
@@ -219,7 +219,7 @@ export default async function BranchPage({ params }) {
         <ul>
           <li>
             To predict which colleges and branches your rank qualifies for across JoSAA, use the{' '}
-            <AppLink href="/predict">College Predictor</AppLink>.
+            <AppLink href="/predict">College &amp; Branch Predictor</AppLink>.
           </li>
           <li>
             To browse all engineering branches offered through JoSAA, head to{' '}
