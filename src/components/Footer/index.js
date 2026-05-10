@@ -30,6 +30,14 @@ const REFERENCE_LINKS = [
   { label: 'CSAB', href: 'https://csab.nic.in' },
 ];
 
+const SITE_LINKS = [
+  { label: 'About', href: '/about' },
+  { label: 'Methodology', href: '/methodology' },
+  { label: 'Contact', href: '/contact' },
+  { label: 'Privacy', href: '/privacy' },
+  { label: 'Terms of use', href: '/terms' },
+];
+
 const NavList = ({ ariaLabel, heading, children, headingSx }) => (
   <Box component="nav" aria-label={ariaLabel}>
     <Typography component="h2" sx={headingSx}>
@@ -95,9 +103,9 @@ export const Footer = () => {
             gridTemplateColumns: {
               xs: '1fr',
               sm: '1fr 1fr',
-              md: '1.4fr 1fr 1.3fr 1fr',
+              md: '1.4fr 1fr 1.3fr 1fr 1fr',
             },
-            gap: { xs: 5, md: 6 },
+            gap: { xs: 5, md: 5 },
           }}
         >
           <Stack gap={2.5}>
@@ -187,6 +195,16 @@ export const Footer = () => {
             {REFERENCE_LINKS.map((link) => (
               <li key={link.href}>
                 <MuiLink href={link.href} target="_blank" rel="noopener noreferrer" sx={linkSx}>
+                  {link.label}
+                </MuiLink>
+              </li>
+            ))}
+          </NavList>
+
+          <NavList ariaLabel="Site" heading="Site" headingSx={sectionHeadingSx}>
+            {SITE_LINKS.map((link) => (
+              <li key={link.href}>
+                <MuiLink component={Link} href={link.href} sx={linkSx}>
                   {link.label}
                 </MuiLink>
               </li>
