@@ -84,9 +84,11 @@ module.exports = {
       '/colleges': 0.85,
       '/branches': 0.85,
       '/guides': 0.8,
-      '/documents': 0.5,
-      '/matrix': 0.4,
-      '/test-choices': 0.4,
+      '/methodology': 0.7,
+      '/about': 0.6,
+      '/contact': 0.4,
+      '/privacy': 0.3,
+      '/terms': 0.3,
     };
     const changefreqMap = {
       '/': 'weekly',
@@ -96,9 +98,11 @@ module.exports = {
       '/colleges': 'weekly',
       '/branches': 'weekly',
       '/guides': 'weekly',
-      '/documents': 'monthly',
-      '/matrix': 'monthly',
-      '/test-choices': 'monthly',
+      '/methodology': 'monthly',
+      '/about': 'monthly',
+      '/contact': 'yearly',
+      '/privacy': 'yearly',
+      '/terms': 'yearly',
     };
     let priority = priorityMap[path];
     let changefreq = changefreqMap[path];
