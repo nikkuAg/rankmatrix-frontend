@@ -20,7 +20,7 @@ import { ChipFilter } from '@/components/ChipFilter';
 import { NoDataComponent } from '@/components/NoData';
 import { PaginationBox } from '@/components/PaginationBox';
 import { SearchBox } from '@/components/SearchBox';
-import { Spinner } from '@/components/Spinner';
+import { TableSkeleton } from '@/components/Spinner/TableSkeleton';
 import { TableSortCell } from '@/components/TableSortCell';
 import { SORT_ORDER } from '@/constants';
 import { COLLEGE_TYPES } from '@/constants/josaa';
@@ -31,7 +31,6 @@ import {
   updatePageNumber,
   updateSearchValue,
 } from '@/store/slices/college';
-import { stopLoading } from '@/store/slices/loader';
 import { sendAnalyticsEvent } from '../../utils/analyticEvent';
 import { useIsMobile } from '../../utils/screenSizeHook';
 import { TableLayout } from '../TableLayout';
@@ -54,12 +53,6 @@ export const CollegeList = () => {
   useEffect(() => {
     getCollegeData(collegeReqData);
   }, [collegeReqData, getCollegeData]);
-
-  useEffect(() => {
-    if (!isLoading) {
-      dispatch(stopLoading());
-    }
-  }, [dispatch, isLoading]);
 
   useEffect(() => {
     if (sortField) {
@@ -162,7 +155,7 @@ export const CollegeList = () => {
           />
         )}
         {isLoading || isFetching ? (
-          <Spinner sx={{ width: '6rem' }} />
+          <TableSkeleton rows={10} columns={5} />
         ) : (
           <Stack flexGrow={1}>
             {!sortField && (

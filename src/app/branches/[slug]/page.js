@@ -40,6 +40,11 @@ export async function generateMetadata({ params }) {
     title,
     description,
     alternates: { canonical: canonicalPath },
+    robots: {
+      index: false,
+      follow: true,
+      googleBot: { index: false, follow: true },
+    },
     keywords: [
       data.name,
       `${data.name} colleges`,

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
   Card,
   CardActionArea,
@@ -14,8 +14,6 @@ import {
 import { sendGTMEvent } from '@next/third-parties/google';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { useDispatch } from 'react-redux';
-import { startLoading, stopLoading } from '@/store/slices/loader';
 import { useIsMobile } from '../../../utils/screenSizeHook';
 
 const features = [
@@ -74,15 +72,6 @@ const FeatureCard = ({ title, image, link }) => {
   const theme = useTheme();
   const isMobile550 = useIsMobile(550);
   const router = useRouter();
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    if (isLoading) {
-      dispatch(startLoading());
-    } else {
-      dispatch(stopLoading());
-    }
-  }, [dispatch, isLoading]);
 
   return (
     <Card

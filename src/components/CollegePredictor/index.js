@@ -18,7 +18,7 @@ import { sendAnalyticsEvent } from '../../utils/analyticEvent';
 import { downloadCSV } from '../../utils/downloadCSV';
 import { loadPredictorFormData, savePredictorFormData } from '../../utils/formStorage';
 import { NoDataComponent } from '../NoData';
-import { Spinner } from '../Spinner';
+import { TableSkeleton } from '../Spinner/TableSkeleton';
 import { TableLayout } from '../TableLayout';
 import { TableSortCell } from '../TableSortCell';
 import { FormModal } from './formModal';
@@ -147,7 +147,7 @@ export const CollegePredictor = () => {
           {formData != null && (
             <>
               {isRanksFetching || isRanksLoading ? (
-                <Spinner sx={{ width: '6rem' }} />
+                <TableSkeleton rows={10} columns={7} />
               ) : (
                 <Stack flexGrow={1}>
                   <TableLayout showTable={rankData?.length > 0}>

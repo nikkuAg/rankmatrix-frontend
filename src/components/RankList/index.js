@@ -31,7 +31,7 @@ import { Dropdown } from '../Dropdown';
 import { NoDataComponent } from '../NoData';
 import { PaginationBox } from '../PaginationBox';
 import { SearchBox } from '../SearchBox';
-import { Spinner } from '../Spinner';
+import { TableSkeleton } from '../Spinner/TableSkeleton';
 import { TableLayout } from '../TableLayout';
 import { TableSortCell } from '../TableSortCell';
 
@@ -249,7 +249,7 @@ export const RankList = () => {
           <SearchBox onChange={handleSearchChange} width={isMobile650 ? '100%' : '35%'} />
         </Stack>
         {isFiltersFetching || isFiltersLoading ? (
-          <Spinner sx={{ width: '6rem' }} />
+          <TableSkeleton rows={10} columns={6} />
         ) : (
           <>
             <Stack direction={'row'} gap={2} alignItems={'center'}>
@@ -283,7 +283,7 @@ export const RankList = () => {
             )}
             {rankReqData.filters?.round ? (
               isRanksFetching || isRanksLoading ? (
-                <Spinner sx={{ width: '6rem' }} />
+                <TableSkeleton rows={10} columns={6} />
               ) : (
                 <Stack flexGrow={1}>
                   <TableLayout showTable={rankData?.data?.length > 0}>

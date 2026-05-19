@@ -8,7 +8,6 @@ import { seatApi } from './queries/seats';
 import { siteContentApi } from './queries/siteContent';
 import branchReducer from './slices/branch';
 import collegeReducer from './slices/college';
-import loaderReducer from './slices/loader';
 import rankReducer from './slices/rank';
 import seatReducer from './slices/seats';
 import toastReducer from './slices/toast';
@@ -23,7 +22,6 @@ const store = configureStore({
     [rankApi.reducerPath]: rankApi.reducer,
     [predictionApi.reducerPath]: predictionApi.reducer,
     toast: toastReducer,
-    loader: loaderReducer,
     college: collegeReducer,
     branch: branchReducer,
     seat: seatReducer,

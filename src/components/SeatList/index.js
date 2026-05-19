@@ -33,7 +33,7 @@ import { ChipFilter } from '../ChipFilter';
 import { NoDataComponent } from '../NoData';
 import { PaginationBox } from '../PaginationBox';
 import { SearchBox } from '../SearchBox';
-import { Spinner } from '../Spinner';
+import { TableSkeleton } from '../Spinner/TableSkeleton';
 import { TableLayout } from '../TableLayout';
 import { TableSortCell } from '../TableSortCell';
 
@@ -210,7 +210,7 @@ export const SeatList = () => {
           <SearchBox onChange={handleSearchChange} width={isMobile650 ? '100%' : '35%'} />
         </Stack>
         {isFiltersFetching || isFiltersLoading ? (
-          <Spinner sx={{ width: '6rem' }} />
+          <TableSkeleton rows={10} columns={6} />
         ) : (
           <>
             <Stack direction={'row'} justifyContent={'space-between'} width={'100%'}>
@@ -277,7 +277,7 @@ export const SeatList = () => {
               />
             )}
             {isSeatsFetching || isSeatsLoading ? (
-              <Spinner sx={{ width: '6rem' }} />
+              <TableSkeleton rows={10} columns={7} />
             ) : (
               <Stack flexGrow={1}>
                 <TableLayout showTable={seatData?.data?.length > 0}>
