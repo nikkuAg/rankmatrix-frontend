@@ -1,14 +1,12 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Box, Grid2, Stack, useTheme } from '@mui/material';
-import { useDispatch } from 'react-redux';
 import { AppLink } from '@/components/AppLink';
 import { EventCalendar } from '@/components/DashboardSections/Calendar';
 import { FeatureBox } from '@/components/DashboardSections/FeatureBox';
 import { Updates } from '@/components/DashboardSections/Updates';
 import { useGetSiteContentsQuery } from '@/store/queries/siteContent';
-import { startLoading, stopLoading } from '@/store/slices/loader';
 import { useIsMobile } from '@/utils/screenSizeHook';
 
 const HomeIntro = () => {
@@ -122,20 +120,11 @@ const Home = () => {
   const isMobile800 = useIsMobile(800);
   const isMobile485 = useIsMobile(485);
 
-  const { isLoading, isSuccess } = useGetSiteContentsQuery();
-
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    if (isLoading) {
-      dispatch(startLoading());
-    } else {
-      dispatch(stopLoading());
-    }
-  }, [dispatch, isLoading]);
+  const { isSuccess } = useGetSiteContentsQuery();
 
   return (
     <Stack width="100%">
+      <HomeIntro />
       <Grid2
         container
         columns={isMobile485 ? 1 : isMobile800 ? 2 : { xs: 2, sm: 7, md: 8, lg: 10 }}
@@ -171,7 +160,6 @@ const Home = () => {
           </>
         )}
       </Grid2>
-      <HomeIntro />
     </Stack>
   );
 };

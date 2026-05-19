@@ -5,7 +5,6 @@ import { Box, Stack, useTheme } from '@mui/material';
 import { Footer } from '@/components/Footer';
 import { Navbar } from '@/components/Navbar';
 import { SnackBar } from '@/components/Snackbar';
-import { FullPageSpinner } from '@/components/Spinner/FullPage';
 
 export const RankMatrixLayout = ({ children }) => {
   const theme = useTheme();
@@ -26,7 +25,6 @@ export const RankMatrixLayout = ({ children }) => {
         </Box>
         <Footer />
         <SnackBar />
-        <FullPageSpinner />
       </Stack>
     </Box>
   );

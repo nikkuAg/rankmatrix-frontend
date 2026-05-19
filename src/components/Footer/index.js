@@ -21,6 +21,8 @@ const GUIDE_LINKS = [
   { label: 'JEE Main vs Advanced vs JoSAA', href: '/guides/jee-main-vs-advanced-vs-josaa' },
   { label: 'Seat matrix explained', href: '/guides/josaa-seat-matrix' },
   { label: 'JoSAA counselling rounds', href: '/guides/josaa-counselling-rounds' },
+  { label: 'Reservation categories', href: '/guides/josaa-reservation-categories' },
+  { label: 'Choice filling strategy', href: '/guides/josaa-choice-filling-strategy' },
 ];
 
 const REFERENCE_LINKS = [

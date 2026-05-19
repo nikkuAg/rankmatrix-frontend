@@ -2,6 +2,7 @@ import React from 'react';
 import { FeatureLayout } from '@/components/RankMatrixLayout/FeatureLayout';
 import { faqJsonLd } from '@/utils/jsonLd';
 import { CollegePredictor } from '../../components/CollegePredictor';
+import { PredictPageContent } from './content';
 
 const PAGE_URL = '/predict';
 const DESCRIPTION =
@@ -84,6 +85,7 @@ const Predict = () => {
       <FeatureLayout title={'Predict Your College'}>
         <CollegePredictor />
       </FeatureLayout>
+      <PredictPageContent faqs={FAQS} />
     </>
   );
 };

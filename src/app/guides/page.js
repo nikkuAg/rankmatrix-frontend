@@ -78,6 +78,20 @@ const GUIDES = [
       'Choice filling, mock allocations, regular rounds, freeze/float/slide, and the withdrawal and reporting cycle — laid out in order.',
     readingTimeMinutes: 7,
   },
+  {
+    slug: 'josaa-reservation-categories',
+    title: 'JoSAA reservation categories explained',
+    summary:
+      'GE, OBC-NCL, SC, ST, EWS, PwD — what each pool means, how home-state and other-state quotas overlay on top, and how the algorithm uses your category in each round.',
+    readingTimeMinutes: 8,
+  },
+  {
+    slug: 'josaa-choice-filling-strategy',
+    title: 'JoSAA choice filling strategy',
+    summary:
+      'A practical, opinionated guide to ordering your preference list — stretch / target / floor buckets, freeze vs float vs slide, and the mistakes that cost candidates real seats.',
+    readingTimeMinutes: 9,
+  },
 ];
 
 const breadcrumbs = breadcrumbJsonLd([

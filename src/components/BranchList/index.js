@@ -17,7 +17,7 @@ import { ChipFilter } from '@/components/ChipFilter';
 import { NoDataComponent } from '@/components/NoData';
 import { PaginationBox } from '@/components/PaginationBox';
 import { SearchBox } from '@/components/SearchBox';
-import { Spinner } from '@/components/Spinner';
+import { TableSkeleton } from '@/components/Spinner/TableSkeleton';
 import { TableSortCell } from '@/components/TableSortCell';
 import { SORT_ORDER } from '@/constants';
 import { COLLEGE_TYPES } from '@/constants/josaa';
@@ -29,7 +29,6 @@ import {
   updatePageNumber,
   updateSearchValue,
 } from '@/store/slices/branch';
-import { stopLoading } from '@/store/slices/loader';
 import { sendAnalyticsEvent } from '../../utils/analyticEvent';
 import { useIsMobile } from '../../utils/screenSizeHook';
 import { TableLayout } from '../TableLayout';
@@ -54,12 +53,6 @@ export const BranchList = () => {
   useEffect(() => {
     getBranchData(branchReqData);
   }, [branchReqData, getBranchData]);
-
-  useEffect(() => {
-    if (!isLoading) {
-      dispatch(stopLoading());
-    }
-  }, [dispatch, isLoading]);
 
   useEffect(() => {
     if (sortField) {
@@ -172,7 +165,7 @@ export const BranchList = () => {
           />
         )}
         {isLoading ? (
-          <Spinner sx={{ width: '6rem' }} />
+          <TableSkeleton rows={10} columns={5} />
         ) : (
           <Stack flexGrow={1}>
             <TableLayout>

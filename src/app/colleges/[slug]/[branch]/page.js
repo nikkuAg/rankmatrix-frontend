@@ -36,6 +36,11 @@ export async function generateMetadata({ params }) {
     title,
     description,
     alternates: { canonical: canonicalPath },
+    robots: {
+      index: false,
+      follow: true,
+      googleBot: { index: false, follow: true },
+    },
     keywords: [
       `${data.institute.name} ${data.branch.name}`,
       `${data.institute.name} ${data.branch.name} cutoff`,

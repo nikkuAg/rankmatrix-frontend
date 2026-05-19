@@ -34,7 +34,7 @@ module.exports = {
     '/sitemap*.xml',
   ],
   additionalPaths: async (config) => {
-    const { institutes, branches, cutoffs } = await fetchSeoSlugs();
+    const { institutes } = await fetchSeoSlugs();
     const lastmod = new Date().toISOString();
     const paths = [];
     institutes.forEach((institute) => {
@@ -47,35 +47,19 @@ module.exports = {
         alternateRefs: config.alternateRefs ?? [],
       });
     });
-    branches.forEach((branch) => {
-      if (!branch.slug) return;
-      paths.push({
-        loc: `/branches/${branch.slug}`,
-        changefreq: 'weekly',
-        priority: 0.75,
-        lastmod,
-        alternateRefs: config.alternateRefs ?? [],
-      });
-    });
-    // Deep institute × branch combination pages. Emitted explicitly so
-    // Google can queue them all for crawl without waiting to follow
-    // internal links. sitemapSize (5000) will split these into multiple
-    // sitemap files automatically if the count exceeds one file.
-    cutoffs.forEach((combo) => {
-      const instituteSlug = combo.instituteSlug ?? combo.institute_slug;
-      const branchSlug = combo.branchSlug ?? combo.branch_slug;
-      if (!instituteSlug || !branchSlug) return;
-      paths.push({
-        loc: `/colleges/${instituteSlug}/${branchSlug}`,
-        changefreq: 'monthly',
-        priority: 0.65,
-        lastmod,
-        alternateRefs: config.alternateRefs ?? [],
-      });
-    });
+    // /branches/[slug] and /colleges/[slug]/[branch] are intentionally
+    // omitted: those pages are noindex'd (templated shape risks reading as
+    // doorway content to AdSense / Google quality reviewers). They remain
+    // reachable for users via in-page links and follow=true semantics.
     return paths;
   },
   transform: async (config, path) => {
+    // Drop templated detail pages from the sitemap. The page metadata also
+    // sets robots: noindex, but excluding from sitemap is the cleaner signal
+    // to Google — avoids advertising thousands of URLs we are simultaneously
+    // telling crawlers to skip.
+    if (path.startsWith('/branches/') && path !== '/branches') return null;
+    if (path.match(/^\/colleges\/[^/]+\/[^/]+/)) return null;
     const priorityMap = {
       '/': 1.0,
       '/predict': 0.95,
