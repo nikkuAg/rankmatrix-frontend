@@ -124,7 +124,6 @@ const Home = () => {
 
   return (
     <Stack width="100%">
-      <HomeIntro />
       <Grid2
         container
         columns={isMobile485 ? 1 : isMobile800 ? 2 : { xs: 2, sm: 7, md: 8, lg: 10 }}
@@ -160,6 +159,7 @@ const Home = () => {
           </>
         )}
       </Grid2>
+      <HomeIntro />
     </Stack>
   );
 };
