@@ -159,7 +159,7 @@ export const EventCalendar = () => {
           }}
         />
       </LocalizationProvider>
-      <Stack gap={1} pt={1} maxHeight="45%" sx={{ overflowY: 'auto' }}>
+      <Stack gap={1} pt={1} sx={{ maxHeight: { xs: 'none', sm: 300 }, overflowY: 'auto', pr: 0.5 }}>
         {eventsToShow.map((event, index) => (
           <Box
             key={`${event.title}-${index}`}

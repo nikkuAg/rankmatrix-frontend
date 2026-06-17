@@ -20,8 +20,18 @@ export const Updates = () => {
         color: theme.palette.text.main,
       }}
     >
-      <ContentListCard height={'43%'} title={'Updates'} contentType={SITE_CONTENT.UPDATES} />
-      <ContentListCard height={'60%'} title={'Important Links'} contentType={SITE_CONTENT.LINKS} />
+      <ContentListCard
+        height={'43%'}
+        maxHeight={260}
+        title={'Updates'}
+        contentType={SITE_CONTENT.UPDATES}
+      />
+      <ContentListCard
+        height={'60%'}
+        maxHeight={260}
+        title={'Important Links'}
+        contentType={SITE_CONTENT.LINKS}
+      />
     </Box>
   );
 };

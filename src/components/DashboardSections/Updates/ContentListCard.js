@@ -6,14 +6,17 @@ import { Box, Link, Stack, Typography } from '@mui/material';
 import { SITE_CONTENT } from '@/constants/siteContent';
 import { useSiteContent } from '@/store/selectors/siteContent';
 
-export const ContentListCard = ({ title, contentType, height }) => {
+export const ContentListCard = ({ title, contentType, height, maxHeight }) => {
   const contentList = useSiteContent();
   return (
     <Stack gap={1.5} px={'1rem'} py={'1.5rem'} height={height}>
       <Typography fontWeight={'500'} fontSize={'1.2rem'}>
         {title}
       </Typography>
-      <Box flexGrow={1} overflow={'auto'}>
+      <Box
+        flexGrow={1}
+        sx={{ maxHeight: { xs: 'none', sm: maxHeight }, overflowY: 'auto', pr: 0.5 }}
+      >
         {contentType === SITE_CONTENT.UPDATES && (
           <Stack gap={1}>
             {contentList[SITE_CONTENT.UPDATES].map((content, index) => (
