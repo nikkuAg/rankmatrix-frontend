@@ -1,35 +1,25 @@
 import React from 'react';
 import { Link as MuiLink } from '@mui/material';
 import { GuideLayout } from '@/components/GuideLayout';
-import { breadcrumbJsonLd } from '@/utils/jsonLd';
+import { breadcrumbJsonLd, serializeJsonLd } from '@/utils/jsonLd';
+import { buildMetadata } from '@/utils/metadata.mjs';
 
 const PAGE_URL = '/contact';
 const TITLE = 'Contact';
 const DESCRIPTION =
-  'Get in touch with the maker of RankMatrix — for bug reports, data corrections, feedback, and feature requests.';
+  'Report a bug, flag a JoSAA data error or suggest a feature. Find contact details for the developer of RankMatrix.';
 const CONTACT_EMAIL = 'a.divyansh.25@gmail.com';
 
-export const metadata = {
-  title: TITLE,
+export const metadata = buildMetadata({
+  path: PAGE_URL,
+  title: 'Contact RankMatrix: Feedback & Data Corrections',
   description: DESCRIPTION,
-  alternates: { canonical: PAGE_URL },
-  openGraph: {
-    type: 'website',
-    url: PAGE_URL,
-    title: `${TITLE} | RankMatrix`,
-    description: DESCRIPTION,
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: `${TITLE} | RankMatrix`,
-    description: DESCRIPTION,
-  },
-};
+});
 
 const contactJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'ContactPage',
-  url: `https://rankmatrix.in${PAGE_URL}`,
+  url: `https://www.rankmatrix.in${PAGE_URL}`,
   name: TITLE,
   description: DESCRIPTION,
 };
@@ -49,7 +39,7 @@ export default function Contact() {
         <script
           key={i}
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(obj) }}
+          dangerouslySetInnerHTML={{ __html: serializeJsonLd(obj) }}
         />
       ))}
       <GuideLayout

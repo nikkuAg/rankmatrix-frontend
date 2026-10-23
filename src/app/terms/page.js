@@ -2,31 +2,21 @@ import React from 'react';
 import { Link as MuiLink } from '@mui/material';
 import { AppLink } from '@/components/AppLink';
 import { GuideLayout } from '@/components/GuideLayout';
-import { breadcrumbJsonLd } from '@/utils/jsonLd';
+import { breadcrumbJsonLd, serializeJsonLd } from '@/utils/jsonLd';
+import { buildMetadata } from '@/utils/metadata.mjs';
 
 const PAGE_URL = '/terms';
 const TITLE = 'Terms of Use';
 const DESCRIPTION =
-  'Plain-English terms for using RankMatrix — including the unofficial-data disclaimer, no-warranty notice, and limitation of liability.';
+  'Read the terms for using RankMatrix, including data sources, prediction limitations, the independent-service disclaimer and liability notices.';
 const EFFECTIVE_DATE = 'May 10, 2026';
 const CONTACT_EMAIL = 'a.divyansh.25@gmail.com';
 
-export const metadata = {
-  title: TITLE,
+export const metadata = buildMetadata({
+  path: PAGE_URL,
+  title: 'Terms of Use',
   description: DESCRIPTION,
-  alternates: { canonical: PAGE_URL },
-  openGraph: {
-    type: 'website',
-    url: PAGE_URL,
-    title: `${TITLE} | RankMatrix`,
-    description: DESCRIPTION,
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: `${TITLE} | RankMatrix`,
-    description: DESCRIPTION,
-  },
-};
+});
 
 const jsonLd = [
   breadcrumbJsonLd([
@@ -42,7 +32,7 @@ export default function Terms() {
         <script
           key={i}
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(obj) }}
+          dangerouslySetInnerHTML={{ __html: serializeJsonLd(obj) }}
         />
       ))}
       <GuideLayout

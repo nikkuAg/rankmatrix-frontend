@@ -1,22 +1,26 @@
 import React from 'react';
 import { CollegeList } from '@/components/CollegeList';
 import { FeatureLayout } from '@/components/RankMatrixLayout/FeatureLayout';
-import { faqJsonLd } from '@/utils/jsonLd';
+import { SeoDirectory } from '@/components/SeoDirectory';
+import { apis } from '@/constants/apis';
+import { faqJsonLd, serializeJsonLd } from '@/utils/jsonLd';
+import { buildMetadata } from '@/utils/metadata.mjs';
+import { fetchInitialCatalogue } from '@/utils/seoApi';
 
 const PAGE_URL = '/colleges';
 const DESCRIPTION =
-  'Full list of JoSAA participating colleges — IITs, NITs, IIITs, and GFTIs — with filters, search, and NIRF rankings. Built on official JoSAA data. Free, no signup required, and we never ask for your phone number or email.';
+  'Browse JoSAA participating IITs, NITs, IIITs and GFTIs. Compare branches, published cutoffs, seats and NIRF ranks to build your college shortlist.';
 
 const FAQS = [
   {
     question: 'Which colleges participate in JoSAA counselling?',
     answer:
-      'JoSAA allocates seats at all Indian Institutes of Technology (IITs), all National Institutes of Technology (NITs), the centrally funded Indian Institutes of Information Technology (IIITs), and a set of Government Funded Technical Institutes (GFTIs) including IIEST Shibpur, SPA Delhi, and several central universities.',
+      'JoSAA allocates seats at participating IITs, NITs, IIEST Shibpur, IIITs and other participating Government Funded Technical Institutes. Membership and programmes can change by year. Browse the directory below and verify the current official participating-institute list before filling choices.',
   },
   {
     question: 'Are state engineering colleges included in JoSAA?',
     answer:
-      'No. State engineering colleges are filled through state-level counselling (WBJEE, MHT-CET, KCET, TNEA, and similar), not JoSAA. JoSAA covers only centrally funded institutes.',
+      'JoSAA covers its published participating-institute list, not every engineering college in India. Many state and private colleges use separate counselling or admission processes. Check the admission route published by the institute you are considering.',
   },
   {
     question: 'What is NIRF and why is it shown here?',
@@ -30,40 +34,24 @@ const FAQS = [
   },
 ];
 
-export const metadata = {
-  title: 'JoSAA Participating Colleges — IITs, NITs, IIITs & GFTIs',
+export const metadata = buildMetadata({
+  path: PAGE_URL,
+  title: 'JoSAA Colleges: IIT, NIT, IIIT & GFTI List',
   description: DESCRIPTION,
-  alternates: { canonical: PAGE_URL },
-  keywords: [
-    'JoSAA participating colleges',
-    'IIT NIT IIIT GFTI list',
-    'JoSAA colleges 2025',
-    'engineering colleges JEE Main',
-    'JoSAA counselling colleges',
-  ],
-  openGraph: {
-    type: 'website',
-    url: PAGE_URL,
-    title: 'JoSAA Participating Colleges — Explore Every Institute',
-    description: DESCRIPTION,
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'JoSAA Participating Colleges | RankMatrix',
-    description: DESCRIPTION,
-  },
-};
+});
 
-const College = () => {
+const College = async () => {
+  const initialData = await fetchInitialCatalogue(apis.college.search);
   return (
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd(FAQS)) }}
+        dangerouslySetInnerHTML={{ __html: serializeJsonLd(faqJsonLd(FAQS)) }}
       />
       <FeatureLayout title={'Participating Colleges'} maxWidth={'xl'}>
-        <CollegeList />
+        <CollegeList initialData={initialData} />
       </FeatureLayout>
+      <SeoDirectory kind="institutes" faqs={FAQS} />
     </>
   );
 };

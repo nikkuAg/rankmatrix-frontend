@@ -51,7 +51,7 @@ const darkTheme = {
     main: '#E1E7FD',
     dark: '#000000',
     light: '#FFFFFF',
-    link: '#3245EB',
+    link: '#A9C7FF',
   },
   shadow: {
     main: 'rgba(0, 25, 71, 0.05)',

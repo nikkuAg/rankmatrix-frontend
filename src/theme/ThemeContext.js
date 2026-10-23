@@ -72,7 +72,11 @@ export const ThemeProviderWrapper = ({ children }) => {
     <GlobalStyles
       styles={{
         body: { backgroundColor: theme.background.main },
-        a: { color: `${theme.palette.text.link} !important` },
+        a: {
+          color: `${theme.palette.text.link} !important`,
+          overflowWrap: 'anywhere',
+          textUnderlineOffset: '3px',
+        },
         p: { margin: 0 },
         th: {
           borderBottom: `1px solid ${theme.palette.gray.light} !important`,

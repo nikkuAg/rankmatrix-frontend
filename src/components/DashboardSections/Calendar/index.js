@@ -142,7 +142,7 @@ export const EventCalendar = () => {
               '&.MuiPickersDay-today': {
                 border: `2px solid ${theme.palette.primary.main}`,
                 backgroundColor: 'transparent',
-                color: theme.palette.primary.main,
+                color: dayColor,
               },
               '&.Mui-selected, &.Mui-selected.MuiPickersDay-today': {
                 backgroundColor: `${theme.palette.primary.main} !important`,

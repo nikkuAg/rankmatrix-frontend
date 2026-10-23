@@ -3,7 +3,8 @@ import { Box } from '@mui/material';
 import { notFound } from 'next/navigation';
 import { AppLink } from '@/components/AppLink';
 import { DataPageLayout } from '@/components/DataPageLayout';
-import { articleJsonLd, breadcrumbJsonLd, faqJsonLd } from '@/utils/jsonLd';
+import { breadcrumbJsonLd, faqJsonLd, serializeJsonLd } from '@/utils/jsonLd';
+import { buildMetadata, instituteTitleName } from '@/utils/metadata.mjs';
 import { fetchInstituteBranchSeo } from '@/utils/seoApi';
 
 export const revalidate = 86400;
@@ -15,51 +16,24 @@ export async function generateStaticParams() {
   return [];
 }
 
-const SITE_URL = 'https://rankmatrix.in';
+const SITE_URL = 'https://www.rankmatrix.in';
 
 async function loadData(instituteSlug, branchSlug) {
-  try {
-    return await fetchInstituteBranchSeo(instituteSlug, branchSlug);
-  } catch {
-    return null;
-  }
+  return fetchInstituteBranchSeo(instituteSlug, branchSlug);
 }
 
 export async function generateMetadata({ params }) {
   const { slug, branch } = await params;
   const data = await loadData(slug, branch);
-  if (!data) return { title: 'Page not found' };
-  const title = `${data.institute.name} · ${data.branch.name} — JoSAA Cutoffs & Seat Matrix`;
-  const description = `Year-wise opening and closing ranks and seat matrix for ${data.branch.name} (${data.branch.degree}) at ${data.institute.name}, based on official JoSAA data.`;
-  const canonicalPath = `/colleges/${slug}/${branch}`;
-  return {
-    title,
-    description,
-    alternates: { canonical: canonicalPath },
-    robots: {
-      index: false,
-      follow: true,
-      googleBot: { index: false, follow: true },
-    },
-    keywords: [
-      `${data.institute.name} ${data.branch.name}`,
-      `${data.institute.name} ${data.branch.name} cutoff`,
-      `${data.institute.name} ${data.branch.name} closing rank`,
-      `${data.institute.name} seat matrix`,
-      `${data.branch.name} ${data.institute.type}`,
-    ],
-    openGraph: {
-      type: 'article',
-      url: canonicalPath,
-      title,
-      description,
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title,
-      description,
-    },
-  };
+  if (!data) notFound();
+  const name = instituteTitleName(data.institute);
+  const year = data.yearsAvailable?.[0] ? ` ${data.yearsAvailable[0]}` : '';
+  return buildMetadata({
+    path: `/colleges/${slug}/${branch}`,
+    title: `${name} ${data.branch.name} Cutoffs${year}`,
+    description: `${name} ${data.branch.name}: compare JoSAA opening and closing ranks by year, round, category and quota, plus published seat data.`,
+    index: Boolean(data.cutoffs?.length),
+  });
 }
 
 const formatRank = (value) => (value == null ? '—' : value.toLocaleString('en-IN'));
@@ -70,7 +44,7 @@ const buildFaqs = (data, summaryRow) => {
     {
       question: `What was the ${data.branch.name} closing rank at ${data.institute.name}?`,
       answer: summaryRow
-        ? `In JoSAA ${summaryRow.year}, Round ${summaryRow.round}, Open category, Gender-Neutral seat pool, the closing rank for ${data.branch.name} at ${data.institute.name} was ${formatRank(summaryRow.closingRank)} and the opening rank was ${formatRank(summaryRow.openingRank)}. Older and category-specific cutoffs are in the table on this page.`
+        ? `In JoSAA ${summaryRow.year}, Round ${summaryRow.round}, Open category, Gender-Neutral seat pool, ${summaryRow.quota} quota, the closing rank for ${data.branch.name} at ${data.institute.name} was ${formatRank(summaryRow.closingRank)} and the opening rank was ${formatRank(summaryRow.openingRank)}. Older and category-specific cutoffs are in the table on this page.`
         : `No published cutoff data exists for this combination in the latest JoSAA cycle. Check the full cutoffs table for any earlier years.`,
     },
     {
@@ -83,13 +57,11 @@ const buildFaqs = (data, summaryRow) => {
     {
       question: `How do home state and other state quotas work at this institute?`,
       answer:
-        data.institute.type === 'NIT'
-          ? `NITs split each branch's seats between Home State (HS) and Other State (OS) quotas. You'll see separate cutoffs for each in the table below. Home state is determined by the board that issued your class-12 certificate.`
-          : `${data.institute.type}s use the All India (AI) quota — seats are not split by state. Every candidate competes in the same pool regardless of home state.`,
+        'Use the quota column in each row: AI means All India, HS means Home State and OS means Other State. Other institute-specific quotas may also appear. State-code eligibility follows the applicable JoSAA business rules; do not infer it from the school board or your current address.',
     },
     {
       question: `Will my JEE rank qualify for ${data.branch.name} at ${data.institute.name}?`,
-      answer: `Compare your rank against the closing ranks below from the most recent two to three years. Closing ranks can drift 5–10% year-over-year — if you are within the last year's closing rank, you have a reasonable chance. Use the RankMatrix College & Branch Predictor for a rank-based shortlist across all JoSAA colleges.`,
+      answer: `Compare your rank against the closing ranks below from the most recent two to three years. Use the same exam, rank list, category, quota and seat pool for the comparison. Historical closing ranks do not guarantee admission or quantify your probability. Use the RankMatrix College & Branch Predictor for a rank-based shortlist across all JoSAA colleges.`,
     },
   ];
 };
@@ -139,14 +111,8 @@ export default async function InstituteBranchPage({ params }) {
         url: 'https://www.linkedin.com/in/ag-divyansh/',
       },
       isAccessibleForFree: true,
-      license: 'https://rankmatrix.in',
+      isBasedOn: 'https://josaa.nic.in/or-cr/',
     },
-    articleJsonLd({
-      path: canonicalPath,
-      title: `${data.institute.name} · ${data.branch.name} — JoSAA Cutoffs & Seat Matrix`,
-      description: `Year-wise opening and closing ranks and seat matrix for ${data.branch.name} at ${data.institute.name}.`,
-      datePublished: '2026-04-23',
-    }),
     breadcrumbJsonLd([
       { name: 'Home', path: '/' },
       { name: 'Colleges', path: '/colleges' },
@@ -162,7 +128,7 @@ export default async function InstituteBranchPage({ params }) {
         <script
           key={i}
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(obj) }}
+          dangerouslySetInnerHTML={{ __html: serializeJsonLd(obj) }}
         />
       ))}
       <DataPageLayout
@@ -195,9 +161,9 @@ export default async function InstituteBranchPage({ params }) {
             {data.branch.name} at {data.institute.name} had an{' '}
             <strong>opening rank of {formatRank(summaryRow.openingRank)}</strong> and a{' '}
             <strong>closing rank of {formatRank(summaryRow.closingRank)}</strong> for the Open
-            category under the Gender-Neutral seat pool. The tables below show the full round-wise,
-            category-wise breakdown across the last few JoSAA cycles, followed by the latest
-            year&apos;s seat matrix.
+            category under the Gender-Neutral seat pool, {summaryRow.quota} quota. The tables below
+            show the full round-wise, category-wise breakdown across the last few JoSAA cycles,
+            followed by the latest year&apos;s seat matrix.
           </p>
         ) : (
           <p>
@@ -271,6 +237,17 @@ export default async function InstituteBranchPage({ params }) {
           <p>No published seat matrix available for this combination in the latest year.</p>
         )}
 
+        <h2>Source and rank-list interpretation</h2>
+        <p>
+          Source:{' '}
+          <a href="https://josaa.nic.in/or-cr/" target="_blank" rel="noopener noreferrer">
+            official JoSAA opening and closing ranks
+          </a>
+          . IIT cutoffs use JEE Advanced ranks; NIT+ cutoffs use the applicable JEE Main rank list.
+          Compare OPEN rows with CRL and reserved-category rows with the corresponding category
+          rank. Match the year, round, quota and seat pool before comparing. RankMatrix reproduces
+          historical data; the current JoSAA rules and published results remain authoritative.
+        </p>
         <h2>Using this data</h2>
         <ul>
           <li>

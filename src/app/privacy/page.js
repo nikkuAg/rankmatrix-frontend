@@ -2,31 +2,21 @@ import React from 'react';
 import { Link as MuiLink } from '@mui/material';
 import { AppLink } from '@/components/AppLink';
 import { GuideLayout } from '@/components/GuideLayout';
-import { breadcrumbJsonLd } from '@/utils/jsonLd';
+import { breadcrumbJsonLd, serializeJsonLd } from '@/utils/jsonLd';
+import { buildMetadata } from '@/utils/metadata.mjs';
 
 const PAGE_URL = '/privacy';
 const TITLE = 'Privacy Policy';
 const DESCRIPTION =
-  'How RankMatrix handles your data — what is collected, what is not, and what is stored only on your own device. Plain-English privacy policy.';
+  'Read how RankMatrix handles browser storage, analytics, advertising and technical request data, and how to contact us about privacy.';
 const EFFECTIVE_DATE = 'May 10, 2026';
 const CONTACT_EMAIL = 'a.divyansh.25@gmail.com';
 
-export const metadata = {
-  title: TITLE,
+export const metadata = buildMetadata({
+  path: PAGE_URL,
+  title: 'Privacy Policy',
   description: DESCRIPTION,
-  alternates: { canonical: PAGE_URL },
-  openGraph: {
-    type: 'website',
-    url: PAGE_URL,
-    title: `${TITLE} | RankMatrix`,
-    description: DESCRIPTION,
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: `${TITLE} | RankMatrix`,
-    description: DESCRIPTION,
-  },
-};
+});
 
 const jsonLd = [
   breadcrumbJsonLd([
@@ -42,7 +32,7 @@ export default function Privacy() {
         <script
           key={i}
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(obj) }}
+          dangerouslySetInnerHTML={{ __html: serializeJsonLd(obj) }}
         />
       ))}
       <GuideLayout
@@ -86,7 +76,7 @@ export default function Privacy() {
         <h2>Who this policy applies to</h2>
         <p>
           This policy applies to{' '}
-          <MuiLink href="https://rankmatrix.in" target="_blank" rel="noopener noreferrer">
+          <MuiLink href="https://www.rankmatrix.in" target="_blank" rel="noopener noreferrer">
             rankmatrix.in
           </MuiLink>{' '}
           (&ldquo;RankMatrix&rdquo;, &ldquo;the site&rdquo;, &ldquo;we&rdquo;), an independent

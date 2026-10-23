@@ -107,7 +107,7 @@ Disallow: /api
 Disallow: /admin
 
 # Host
-Host: https://rankmatrix.in
+Host: https://www.rankmatrix.in
 
 # Sitemaps
-Sitemap: https://rankmatrix.in/sitemap.xml
+Sitemap: https://www.rankmatrix.in/sitemap.xml

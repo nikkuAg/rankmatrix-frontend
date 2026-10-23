@@ -1,8 +1,15 @@
-const SITE_URL = 'https://rankmatrix.in';
+const SITE_URL = 'https://www.rankmatrix.in';
 const SITE_NAME = 'RankMatrix';
-const AUTHOR = { '@type': 'Person', name: 'Divyansh Agarwal' };
+// Database text must never be able to close an inline script element.
+export const serializeJsonLd = (value) => JSON.stringify(value).replace(/</g, '\\u003c');
+const AUTHOR = {
+  '@type': 'Person',
+  name: 'Divyansh Agarwal',
+  url: 'https://www.linkedin.com/in/ag-divyansh/',
+};
 const PUBLISHER = {
   '@type': 'Organization',
+  '@id': `${SITE_URL}/#organization`,
   name: SITE_NAME,
   url: SITE_URL,
   logo: { '@type': 'ImageObject', url: `${SITE_URL}/logo.svg` },

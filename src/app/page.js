@@ -3,11 +3,9 @@
 import React from 'react';
 import { Box, Grid2, Stack, useTheme } from '@mui/material';
 import { AppLink } from '@/components/AppLink';
-import { EventCalendar } from '@/components/DashboardSections/Calendar';
+import { DeferredCalendar } from '@/components/DashboardSections/Calendar/DeferredCalendar';
 import { FeatureBox } from '@/components/DashboardSections/FeatureBox';
 import { Updates } from '@/components/DashboardSections/Updates';
-import { useGetSiteContentsQuery } from '@/store/queries/siteContent';
-import { useIsMobile } from '@/utils/screenSizeHook';
 
 const HomeIntro = () => {
   const theme = useTheme();
@@ -29,7 +27,7 @@ const HomeIntro = () => {
           maxWidth: 820,
           mx: 'auto',
           color: theme.palette.text.main,
-          '& h2': {
+          '& h1, & h2': {
             fontSize: { xs: '1.4rem', md: '1.65rem' },
             fontWeight: 700,
             mt: 4,
@@ -46,7 +44,7 @@ const HomeIntro = () => {
           },
         }}
       >
-        <h2>A free JEE college and branch predictor, built on official JoSAA data</h2>
+        <h2>Plan your JoSAA choices with published rank and seat data</h2>
         <p>
           RankMatrix turns a JEE Main or JEE Advanced rank into a clear, ordered list of realistic
           college-and-branch options for JoSAA counselling. It covers every IIT, NIT, IIIT, and GFTI
@@ -68,8 +66,8 @@ const HomeIntro = () => {
             every JoSAA branch and institute.
           </li>
           <li>
-            Check the live <AppLink href="/seat-matrix">seat matrix</AppLink> to see how many seats
-            your category actually has at a given institute.
+            Check the published <AppLink href="/seat-matrix">seat matrix</AppLink> to see how many
+            seats your category actually has at a given institute.
           </li>
           <li>
             Browse <AppLink href="/colleges">participating colleges</AppLink> and{' '}
@@ -85,9 +83,9 @@ const HomeIntro = () => {
         <p>
           Every number on RankMatrix originates from JoSAA&apos;s public publications: historical
           opening and closing ranks per institute-branch-category-round, the official seat matrix,
-          and the canonical participating-institute list. Data is re-ingested when JoSAA releases
-          updates and pages are revalidated within a day. For the full walkthrough of how the
-          predictor turns this data into projections — and where its assumptions can break — see the{' '}
+          and the canonical participating-institute list. The year and round shown with each result
+          identify the historical data being used. For the full walkthrough of how the predictor
+          turns this data into projections — and where its assumptions can break — see the{' '}
           <AppLink href="/methodology">methodology page</AppLink>.
         </p>
 
@@ -116,52 +114,31 @@ const HomeIntro = () => {
   );
 };
 
-const Home = () => {
-  const isMobile800 = useIsMobile(800);
-  const isMobile485 = useIsMobile(485);
-
-  const { isSuccess } = useGetSiteContentsQuery();
-
-  return (
-    <Stack width="100%">
-      <Grid2
-        container
-        columns={isMobile485 ? 1 : isMobile800 ? 2 : { xs: 2, sm: 7, md: 8, lg: 10 }}
-        rowSpacing={1}
-        columnSpacing={1}
-        p={2}
-      >
-        {isSuccess && (
-          <>
-            {!isMobile485 && (
-              <Grid2 size={isMobile800 ? 1 : { xs: 1, sm: 2, lg: 2.25 }}>
-                <Updates />
-              </Grid2>
-            )}
-            {!isMobile800 && (
-              <Grid2 size={{ sm: 3, md: 4, lg: 5.5 }}>
-                <FeatureBox />
-              </Grid2>
-            )}
-            <Grid2 size={isMobile485 || isMobile800 ? 1 : { xs: 1, sm: 2, lg: 2.25 }}>
-              <EventCalendar />
-            </Grid2>
-            {isMobile800 && (
-              <Grid2 size={2}>
-                <FeatureBox />
-              </Grid2>
-            )}
-            {isMobile485 && (
-              <Grid2 size={1}>
-                <Updates />
-              </Grid2>
-            )}
-          </>
-        )}
+const Home = () => (
+  <Stack width="100%">
+    <Box component="header" sx={{ px: { xs: 3, md: 6 }, py: { xs: 3, md: 4 } }}>
+      <Box component="h1" sx={{ m: 0, fontSize: { xs: '1.8rem', md: '2.4rem' }, lineHeight: 1.2 }}>
+        Free JEE Main &amp; Advanced College Predictor and JoSAA Cutoffs
+      </Box>
+      <p>
+        Use your JEE rank to explore college and branch options. Compare published JoSAA cutoffs and
+        seat data without signing up.
+      </p>
+      <AppLink href="/predict">Find colleges for my rank</AppLink>
+    </Box>
+    <Grid2 container columns={12} spacing={2} sx={{ p: 2, alignItems: 'start' }}>
+      <Grid2 size={{ xs: 12, md: 3 }} sx={{ order: { xs: 2, md: 1 } }}>
+        <Updates />
       </Grid2>
-      <HomeIntro />
-    </Stack>
-  );
-};
+      <Grid2 size={{ xs: 12, md: 6 }} sx={{ order: { xs: 1, md: 2 } }}>
+        <FeatureBox />
+      </Grid2>
+      <Grid2 size={{ xs: 12, md: 3 }} sx={{ order: 3, minHeight: 450 }}>
+        <DeferredCalendar />
+      </Grid2>
+    </Grid2>
+    <HomeIntro />
+  </Stack>
+);
 
 export default Home;

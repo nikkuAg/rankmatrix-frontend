@@ -22,7 +22,7 @@ export const DataPageLayout = ({
 }) => {
   const theme = useTheme();
   return (
-    <Box component="main" width="100%" sx={{ backgroundColor: theme.background.main }}>
+    <Box component="article" width="100%" sx={{ backgroundColor: theme.background.main }}>
       <Box
         component="header"
         px={{ xs: 3, md: 6 }}
@@ -102,7 +102,7 @@ export const DataPageLayout = ({
               fontSize: '0.85rem',
             }}
           >
-            Last updated {lastUpdated} · By{' '}
+            Data coverage: {lastUpdated} · By{' '}
             <MuiLink
               href="https://www.linkedin.com/in/ag-divyansh/"
               target="_blank"

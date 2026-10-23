@@ -23,6 +23,7 @@ export const GuideLayout = ({
   description,
   lastUpdated,
   readingTimeMinutes,
+  headingLevel = 'h1',
   breadcrumbs = [
     { name: 'Home', path: '/' },
     { name: 'Guides', path: '/guides' },
@@ -60,7 +61,7 @@ export const GuideLayout = ({
           )}
         </Breadcrumbs>
         <Typography
-          component="h1"
+          component={headingLevel}
           sx={{
             fontSize: { xs: '1.9rem', md: '2.5rem' },
             fontWeight: 700,
@@ -161,6 +162,9 @@ export const GuideLayout = ({
             backgroundColor: theme.background.dark,
           },
           '& table': {
+            display: 'block',
+            overflowX: 'auto',
+            maxWidth: '100%',
             width: '100%',
             borderCollapse: 'collapse',
             my: 3,

@@ -1,0 +1,49 @@
+const assert = require('node:assert/strict');
+const { test } = require('node:test');
+const config = require('../next-sitemap.config.js');
+
+test('sitemap includes each catalogue URL family and deduplicates URLs', async () => {
+  const originalFetch = global.fetch;
+  global.fetch = async () => ({
+    ok: true,
+    json: async () => ({
+      institutes: [{ slug: 'iit-example' }, { slug: 'iit-example' }, { slug: '' }],
+      branches: [{ slug: 'computer-science' }],
+      cutoffs: [{ institute_slug: 'iit-example', branch_slug: 'computer-science' }],
+    }),
+  });
+  try {
+    const paths = await config.additionalPaths(config);
+    assert.deepEqual(
+      paths.map((entry) => entry.loc),
+      [
+        '/colleges/iit-example',
+        '/branches/computer-science',
+        '/colleges/iit-example/computer-science',
+      ],
+    );
+    assert(paths.every((entry) => !entry.lastmod));
+    assert.equal(config.siteUrl, 'https://www.rankmatrix.in');
+    assert.equal(config.autoLastmod, false);
+  } finally {
+    global.fetch = originalFetch;
+  }
+});
+
+test('API failure cannot silently publish a sitemap missing the catalogue', async () => {
+  const originalFetch = global.fetch;
+  global.fetch = async () => ({ ok: false, status: 503 });
+  try {
+    await assert.rejects(config.additionalPaths(config), /503/);
+  } finally {
+    global.fetch = originalFetch;
+  }
+});
+
+test('dynamic data pages are allowed in sitemap transforms without false freshness', async () => {
+  for (const path of ['/branches/computer-science', '/colleges/iit-example/computer-science']) {
+    const result = await config.transform(config, path);
+    assert.equal(result.loc, path);
+    assert.equal(result.lastmod, undefined);
+  }
+});

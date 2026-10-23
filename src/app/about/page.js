@@ -2,34 +2,24 @@ import React from 'react';
 import { Link as MuiLink } from '@mui/material';
 import { AppLink } from '@/components/AppLink';
 import { GuideLayout } from '@/components/GuideLayout';
-import { breadcrumbJsonLd } from '@/utils/jsonLd';
+import { breadcrumbJsonLd, serializeJsonLd } from '@/utils/jsonLd';
+import { buildMetadata } from '@/utils/metadata.mjs';
 
 const PAGE_URL = '/about';
 const TITLE = 'About RankMatrix';
 const DESCRIPTION =
-  'RankMatrix is a free JEE college and branch predictor for JoSAA counselling, built by an IIT Roorkee alumnus who went through the same process. No signup, no phone number, no marketing spam.';
+  'Meet the maker of RankMatrix and learn why it offers free JEE college predictions, JoSAA cutoffs and seat data without requiring signup.';
 
-export const metadata = {
-  title: TITLE,
+export const metadata = buildMetadata({
+  path: PAGE_URL,
+  title: 'About RankMatrix: Data, Purpose & Founder',
   description: DESCRIPTION,
-  alternates: { canonical: PAGE_URL },
-  openGraph: {
-    type: 'website',
-    url: PAGE_URL,
-    title: TITLE,
-    description: DESCRIPTION,
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: `${TITLE} | RankMatrix`,
-    description: DESCRIPTION,
-  },
-};
+});
 
 const aboutJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'AboutPage',
-  url: `https://rankmatrix.in${PAGE_URL}`,
+  url: `https://www.rankmatrix.in${PAGE_URL}`,
   name: TITLE,
   description: DESCRIPTION,
   mainEntity: {
@@ -59,7 +49,7 @@ export default function About() {
         <script
           key={i}
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(obj) }}
+          dangerouslySetInnerHTML={{ __html: serializeJsonLd(obj) }}
         />
       ))}
       <GuideLayout

@@ -3,68 +3,34 @@ import { Box } from '@mui/material';
 import { notFound } from 'next/navigation';
 import { AppLink } from '@/components/AppLink';
 import { DataPageLayout } from '@/components/DataPageLayout';
-import { articleJsonLd, breadcrumbJsonLd, faqJsonLd } from '@/utils/jsonLd';
-import { fetchBranchSeo, fetchSeoSlugs } from '@/utils/seoApi';
+import { breadcrumbJsonLd, faqJsonLd, serializeJsonLd } from '@/utils/jsonLd';
+import { buildMetadata } from '@/utils/metadata.mjs';
+import { fetchBranchSeo } from '@/utils/seoApi';
 
 export const revalidate = 86400;
 export const dynamicParams = true;
 
-const SITE_URL = 'https://rankmatrix.in';
+const SITE_URL = 'https://www.rankmatrix.in';
 
 export async function generateStaticParams() {
-  try {
-    const data = await fetchSeoSlugs();
-    if (!data?.branches) return [];
-    return data.branches.map((branch) => ({ slug: branch.slug }));
-  } catch {
-    return [];
-  }
+  // Render and cache on first request; avoid hundreds of DB-heavy build requests.
+  return [];
 }
 
 async function loadBranch(slug) {
-  try {
-    return await fetchBranchSeo(slug);
-  } catch {
-    return null;
-  }
+  return fetchBranchSeo(slug);
 }
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
   const data = await loadBranch(slug);
-  if (!data) return { title: 'Branch not found' };
-  const title = `${data.name} (${data.degree}) — JoSAA Colleges, Cutoffs & Seats`;
-  const description = `Every JoSAA participating college offering ${data.name} through ${data.degree} (${data.courseDuration}-year programme), with opening and closing ranks from the latest counselling year. Built on official JoSAA data.`;
-  const canonicalPath = `/branches/${slug}`;
-  return {
-    title,
-    description,
-    alternates: { canonical: canonicalPath },
-    robots: {
-      index: false,
-      follow: true,
-      googleBot: { index: false, follow: true },
-    },
-    keywords: [
-      data.name,
-      `${data.name} colleges`,
-      `${data.name} cutoff`,
-      `${data.name} JoSAA`,
-      `${data.degree} ${data.name}`,
-      `JEE Main ${data.name} colleges`,
-    ],
-    openGraph: {
-      type: 'article',
-      url: canonicalPath,
-      title,
-      description,
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title,
-      description,
-    },
-  };
+  if (!data) notFound();
+  return buildMetadata({
+    path: `/branches/${slug}`,
+    title: `${data.name} (${data.degree}): Colleges & JoSAA Cutoffs`,
+    description: `Compare ${data.institutes?.length ?? 0} JoSAA colleges offering ${data.name} (${data.degree}, ${data.courseDuration} years). Explore published cutoffs and institute details.`,
+    index: Boolean(data.institutes?.length),
+  });
 }
 
 const formatRank = (value) => (value == null ? '—' : value.toLocaleString('en-IN'));
@@ -114,23 +80,12 @@ export default async function BranchPage({ params }) {
   const jsonLd = [
     {
       '@context': 'https://schema.org',
-      '@type': 'Course',
-      name: data.name,
-      description: `${data.name} (${data.degree}, ${data.courseDuration} years) offered through JoSAA counselling at Indian centrally funded technical institutes.`,
-      provider: {
-        '@type': 'Organization',
-        name: 'JoSAA participating institutes',
-        url: 'https://josaa.nic.in',
-      },
+      '@type': 'CollectionPage',
+      name: `${data.name}: participating colleges and JoSAA cutoffs`,
+      description: `Compare ${data.degree} programmes in ${data.name} across participating institutes.`,
       url: canonicalUrl,
       inLanguage: 'en-IN',
     },
-    articleJsonLd({
-      path: canonicalPath,
-      title: `${data.name} — JoSAA Colleges, Cutoffs & Seats`,
-      description: `Colleges offering ${data.name} through JoSAA, with opening and closing ranks.`,
-      datePublished: '2026-04-23',
-    }),
     breadcrumbJsonLd([
       { name: 'Home', path: '/' },
       { name: 'Branches', path: '/branches' },
@@ -145,7 +100,7 @@ export default async function BranchPage({ params }) {
         <script
           key={i}
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(obj) }}
+          dangerouslySetInnerHTML={{ __html: serializeJsonLd(obj) }}
         />
       ))}
       <DataPageLayout
@@ -190,6 +145,7 @@ export default async function BranchPage({ params }) {
                   <th>Type</th>
                   <th>State</th>
                   <th>NIRF rank</th>
+                  <th>Quota / round</th>
                   <th>Opening rank</th>
                   <th>Closing rank</th>
                   <th>Deep cutoffs</th>
@@ -207,6 +163,9 @@ export default async function BranchPage({ params }) {
                       {institute.latestNirfRank
                         ? `${institute.latestNirfRank} (${institute.latestNirfYear})`
                         : '—'}
+                    </td>
+                    <td>
+                      {institute.latestQuota ?? '—'} / {institute.latestRound ?? '—'}
                     </td>
                     <td>{formatRank(institute.latestOpeningRank)}</td>
                     <td>{formatRank(institute.latestClosingRank)}</td>
