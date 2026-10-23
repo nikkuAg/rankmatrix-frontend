@@ -83,9 +83,10 @@ const HomeIntro = () => {
         <p>
           Every number on RankMatrix originates from JoSAA&apos;s public publications: historical
           opening and closing ranks per institute-branch-category-round, the official seat matrix,
-          and the canonical participating-institute list. The year and round shown with each result
-          identify the historical data being used. For the full walkthrough of how the predictor
-          turns this data into projections — and where its assumptions can break — see the{' '}
+          and the canonical participating-institute list. Use the rank explorer and detail pages to
+          check the stored year and round; the predictor table does not currently display that
+          context. For the full walkthrough of how the predictor turns this data into projections —
+          and where its assumptions can break — see the{' '}
           <AppLink href="/methodology">methodology page</AppLink>.
         </p>
 

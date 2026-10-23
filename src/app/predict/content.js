@@ -59,32 +59,16 @@ export const PredictPageContent = ({ faqs }) => {
       >
         <h2>How to read the predictor output</h2>
         <p>
-          The result table is sorted from the most competitive institute-branch combinations you can
-          realistically reach down to the safer ones. Each row is an (institute, branch, category,
-          quota, seat pool) combination paired with the latest historical opening rank (OR) and
-          closing rank (CR) that JoSAA published. Your rank&apos;s relationship to those two numbers
-          tells you how reliable a target a given seat is.
+          Each row is a stored (institute, programme, category, quota, seat pool) cutoff comparison.
+          The backend selects rows using its search-window priorities and displays them by opening
+          rank. This is not an admission-probability ranking or a recommended choice order.
         </p>
-
-        <h3>The three buckets to think about</h3>
-        <ul>
-          <li>
-            <strong>Comfortable</strong> — your rank is well inside the closing rank from previous
-            cycles. These can be useful options to investigate, but there is no universally safe
-            percentage margin and no historical cutoff guarantees a seat.
-          </li>
-          <li>
-            <strong>Boundary</strong> — your rank is within striking distance of the closing rank,
-            either above it by a small margin or just below it. This is where the actual decision
-            sits: trends, branch popularity, and seat-matrix changes year-on-year decide whether the
-            seat will fall to you or just past you.
-          </li>
-          <li>
-            <strong>Stretch</strong> — your rank is past the closing rank. The seat was not
-            historically reachable for your slice, but it can still be worth listing for ambition or
-            for a late-round float.
-          </li>
-        </ul>
+        <p>
+          IIT rows use JEE Advanced ranks; other rows use the applicable JEE Main rank list. Do not
+          compare numbers from different exams or category rank lists as one competitiveness scale.
+          The requested result limit can omit other relevant options, so inspect the underlying
+          cutoff data and your genuine preferences before building a choice list.
+        </p>
 
         <h2>Which rank should I compare with a JoSAA cutoff?</h2>
         <p>
@@ -102,26 +86,23 @@ export const PredictPageContent = ({ faqs }) => {
           <AppLink href="/seat-matrix">seat matrix</AppLink> for your exact filters.
         </p>
 
-        <h2>How to actually use the list</h2>
+        <h2>How to use the list</h2>
         <ol>
+          <li>Verify the exam, rank list, category, quota and seat pool for each comparison.</li>
           <li>
-            <strong>Pick three or four floor anchors</strong> from the &ldquo;comfortable&rdquo;
-            bucket, while remembering that none is guaranteed.
+            Use <AppLink href="/ranks">Opening &amp; Closing Ranks</AppLink> or the
+            <AppLink href="/colleges"> institute directory</AppLink> to inspect the stored year,
+            round and programme details. The predictor table does not currently provide row links or
+            display its dataset year and round.
           </li>
           <li>
-            <strong>Stack your real targets in the boundary bucket</strong>, in genuine order of
-            preference — not in order of likelihood. JoSAA&apos;s algorithm only ever offers you the
-            highest-listed seat you qualify for; getting the order right is the entire game.
+            Check multiple comparable years and the published seat matrix. A historical interval is
+            not a guarantee, and the tool does not assign safe, realistic or ambitious labels.
           </li>
           <li>
-            <strong>Put a few stretch picks at the top</strong> if you would genuinely accept them.
-            They will only be offered to you if a seat opens up; if not, the algorithm moves to your
-            next choice.
-          </li>
-          <li>
-            <strong>Cross-check trends, not single numbers.</strong> Click into a row to see how the
-            closing rank moved across the last three years. A steadily-tightening seat is riskier
-            than a one-off bad year.
+            Arrange eligible choices by your genuine preferences, rather than copying the predictor
+            display order. Confirm eligibility and complete choice filling on the official JoSAA
+            portal.
           </li>
         </ol>
 
