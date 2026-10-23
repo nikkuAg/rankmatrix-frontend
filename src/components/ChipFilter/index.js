@@ -39,7 +39,7 @@ export const ChipFilter = ({
   }, [debouncedFilterValues]);
 
   return (
-    <Stack direction={flexDirection} spacing={0.8}>
+    <Stack direction={flexDirection} gap={0.8} sx={{ flexWrap: 'wrap', maxWidth: '100%' }}>
       {filterList.map((filter) => (
         <Chip
           label={labels[filter] || filter}
