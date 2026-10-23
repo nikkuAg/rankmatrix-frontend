@@ -16,7 +16,7 @@ const FAQS = [
   {
     question: 'What is the difference between opening rank and closing rank?',
     answer:
-      'The opening rank of an institute-branch in a given round is the rank of the first (best-ranked) candidate who accepted a seat in that allocation. The closing rank is the rank of the last (worst-ranked) candidate who accepted a seat. Together they define the range of ranks that actually got admitted to that combination in that round.',
+      'Opening and closing ranks describe the best and last allocated ranks for the stated institute, programme, year, round, category, quota and seat pool. Compare the same rank list; allocation does not by itself establish completed admission.',
   },
   {
     question: 'Is my JEE Main rank the same as the JoSAA rank used in these tables?',
@@ -26,7 +26,7 @@ const FAQS = [
   {
     question: 'Why do closing ranks change from round to round?',
     answer:
-      'Because candidates keep moving. In each round, some candidates freeze their seat (remove themselves from the pool), some float or slide (stay in the pool hoping for a better allocation), some withdraw entirely, and some who were not allocated earlier now get allocated as vacancies open. As the higher-priority seats get locked in, the closing rank of each institute-branch drifts toward a later (higher-numbered) candidate. That drift is why Round 1 and Round 6 closing ranks are not the same number.',
+      'Because candidates keep moving. In each round, some candidates freeze their seat (remove themselves from the pool), some float or slide (stay in the pool hoping for a better allocation), some withdraw entirely, and some who were not allocated earlier now get allocated as vacancies open. The direction and size of changes must be checked in the published rows; a later round does not guarantee a higher closing-rank number.',
   },
   {
     question: "Which round's closing rank should I use when planning my JoSAA choices?",
@@ -89,11 +89,11 @@ export default function JoSAAOpeningAndClosingRanksGuide() {
         <OfficialRuleNotes />
         <h2>The short definition</h2>
         <p>
-          At the end of every JoSAA round, each institute-branch-category-seat pool combination has
-          a range of ranks of candidates who actually got admitted. The best-ranked candidate in
-          that range is the <strong>opening rank</strong>. The worst-ranked candidate is the{' '}
-          <strong>closing rank</strong>. JoSAA publishes both, for every combination, for every
-          round. That is the canonical dataset every JEE aspirant plans against.
+          At the end of every JoSAA round, each institute-branch-category-quota-seat pool
+          combination has a range of ranks of candidates who actually got admitted. The best-ranked
+          candidate in that range is the <strong>opening rank</strong>. The worst-ranked candidate
+          is the <strong>closing rank</strong>. JoSAA publishes both, for every combination, for
+          every round. That is the canonical dataset every JEE aspirant plans against.
         </p>
         <p>
           On RankMatrix, the full year-wise and round-wise table is at{' '}
@@ -130,34 +130,16 @@ export default function JoSAAOpeningAndClosingRanksGuide() {
           </li>
         </ul>
         <p>
-          You also pick a year and a round, because a given combination has six cutoffs in a year —
-          one for each round JoSAA runs.
+          Select the year and an actually recorded round. The number of rounds and available slices
+          can vary.
         </p>
 
-        <h2>A quick worked example</h2>
+        <h2>A hypothetical comparison</h2>
         <p>
-          Suppose your JEE Main CRL is 8,500, you are Open category, and your home state is
-          Maharashtra. You want to know whether you can get CSE at NIT Surathkal.
-        </p>
-        <ul>
-          <li>
-            Pull the Open-category, AI-quota, Gender-Neutral seat pool row for{' '}
-            <em>NIT Surathkal &times; CSE</em> across the last two years.
-          </li>
-          <li>
-            If the closing rank is around 700–1000 in Round 6, you are well outside. If it is around
-            8000–9000, you are on the edge. If it is around 12,000+, you are comfortably inside.
-          </li>
-          <li>
-            Now repeat for HS-quota if Maharashtra were the home state of the institute (it is not
-            for NIT Surathkal, which is in Karnataka) — for NIT Surathkal you would look at OS-quota
-            as a Maharashtra candidate.
-          </li>
-        </ul>
-        <p>
-          The <AppLink href="/predict">predictor</AppLink> does this walk for every institute-branch
-          combination at once; the <AppLink href="/ranks">ranks table</AppLink> is where you go to
-          study one combination in depth.
+          If a row records opening rank 8,000 and closing rank 10,000, rank 9,000 in the same rank
+          list lies inside that historical interval. Rank 11,000 lies outside it. These invented
+          figures describe no institute and predict no future allocation. Match the year, round,
+          quota, category and pool before comparing.
         </p>
 
         <h2>Why closing ranks drift between rounds</h2>
@@ -170,7 +152,8 @@ export default function JoSAAOpeningAndClosingRanksGuide() {
           <li>
             <strong>Upgrades.</strong> A candidate allocated their #3 choice in Round 1 may float or
             slide into their #1 in Round 3 if those seats open up. Their Round 1 seat then goes to
-            the next-in-rank candidate, pushing that branch&apos;s closing rank higher.
+            another eligible candidate; check the recorded cutoff rather than assuming its
+            direction.
           </li>
           <li>
             <strong>Freezes and withdrawals.</strong> Withdrawals can release seats. Freezing
@@ -186,18 +169,12 @@ export default function JoSAAOpeningAndClosingRanksGuide() {
           the same category, quota and pool, and check the current allocation rules.
         </p>
 
-        <h2>HS vs OS vs AI — the quota that trips everyone up</h2>
+        <h2>Quota cutoffs: compare the exact label</h2>
         <p>
-          At NITs, the seat matrix is split between <strong>Home State (HS)</strong> and{' '}
-          <strong>Other State (OS)</strong> quotas: roughly half of each branch is reserved for
-          candidates whose home state matches the NIT&apos;s state. This is why the same branch at
-          the same NIT often has two different closing ranks — one for HS candidates, one for OS
-          candidates — and the HS closing rank is usually later (a better chance for you).
-        </p>
-        <p>
-          IITs, IIITs, and GFTIs generally do not split on state; they use the{' '}
-          <strong>All India (AI)</strong> quota. Read the cutoff against the quota that will
-          actually apply to you.
+          HS, OS and AI mean Home State, Other State and All India. Stored rows can also include GO,
+          LA, JK and AP. Availability and eligibility vary by institute and year. Neither code order
+          nor a larger closing rank establishes eligibility or an admission chance. Check the
+          official rules linked above.
         </p>
 
         <h2>Seat-pool cutoffs: Gender-Neutral and Female-only</h2>
@@ -237,8 +214,8 @@ export default function JoSAAOpeningAndClosingRanksGuide() {
         <h2>Where these numbers come from</h2>
         <p>
           RankMatrix sources opening and closing ranks from the public JoSAA publications released
-          at the end of each round. The data is cleaned and structured but not altered — the
-          underlying numbers are exactly what JoSAA published. For the official archive go to{' '}
+          at the end of each round. Imports may be incomplete or contain errors; verify important
+          figures against the official source. For the official archive go to{' '}
           <MuiLink href="https://josaa.nic.in" target="_blank" rel="noopener noreferrer">
             josaa.nic.in
           </MuiLink>

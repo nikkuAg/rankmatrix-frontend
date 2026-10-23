@@ -24,7 +24,7 @@ const FAQS = [
   {
     question: 'What is the difference between freeze, float, and slide?',
     answer:
-      'After a seat is allocated, freeze accepts it as final (you stop participating in later rounds). Float keeps you in the running for any higher preference in your list. Slide keeps you in the running for any higher branch at the same institute. The most defensive choice is freeze; the most ambitious is float; slide is a middle ground.',
+      'After a seat is allocated, freeze accepts it as final (you stop participating in later rounds). Float keeps you in the running for any higher preference in your list. Slide keeps you in the running for any higher branch at the same institute. These are upgrade choices, not risk or admission-probability labels. Availability and seat retention depend on the current rules and completion of reporting.',
   },
   {
     question: 'Should I fill choices outside my comfort zone?',
@@ -34,7 +34,7 @@ const FAQS = [
   {
     question: 'Can I edit my choices after locking?',
     answer:
-      'No. Once you lock your choices in the JoSAA portal, the list is final for the entire counselling cycle. You can edit freely until the locking deadline; after that, the only adjustments come from float, slide, freeze, and withdrawal during reporting.',
+      'The 2026 rules allow an unlock request before the choice-filling deadline. After that deadline, choices cannot be edited. Use the official portal and current rules for the exact procedure.',
   },
 ];
 
@@ -97,86 +97,32 @@ export default function JoSAAChoiceFillingStrategy() {
           considered.
         </p>
 
-        <h2>The three buckets to populate</h2>
+        <h2>Build one list in your genuine preference order</h2>
         <p>
-          A good preference list is built from three buckets, layered top to bottom. The layering is
-          the strategy; the bucket assignment comes from the{' '}
-          <AppLink href="/predict">predictor</AppLink> output.
+          Use historical cutoffs to explore programmes you would accept. RankMatrix returns a
+          limited shortlist, not a comprehensive list or stretch/target/floor labels. A cutoff
+          margin is not an admission probability.
         </p>
-
-        <h3>1. Stretch picks (top of the list)</h3>
-        <p>
-          (Institute, branch) combinations where your rank is past the closing rank by a small
-          margin in the historical data. No fixed percentage represents an admission probability.
-          These are seats you would happily take if a late-round opening surfaces them. Putting them
-          at the top costs you nothing if you do not get them and rewards you handsomely if you do.
-        </p>
-        <p>
-          <strong>Check:</strong> include a programme only if you are eligible and would accept it.
-          There is no validated cutoff percentage beyond which a future allocation is impossible.
-        </p>
-
-        <h3>2. Target picks (the boundary, middle of the list)</h3>
-        <p>
-          The actual decision space. Combinations where your rank is within striking distance of the
-          closing rank — slightly below it or just above. This is where you put the institute-branch
-          combinations you genuinely want, in genuine order of preference. Round-over-round churn
-          will decide which of these you end up with.
-        </p>
-        <p>
-          <strong>Limit:</strong> 15-50 entries depending on rank. Higher ranks have fewer boundary
-          options; lower ranks have more.
-        </p>
-
-        <h3>3. Floor anchors (bottom of the list)</h3>
-        <p>
-          These are acceptable programmes whose historical closing ranks leave a larger margin
-          relative to your matching rank list. They broaden your options but do not guarantee an
-          allocation. Order the entire list by genuine preference, regardless of the bucket.
-        </p>
-        <p>
-          <strong>Limit:</strong> 5-20 entries. Make sure at least the bottom 3-5 are entries you
-          can genuinely accept if everything else falls through.
-        </p>
-
-        <h2>How to actually build the list</h2>
         <ol>
+          <li>Compare the same exam, rank list, year, round, category, quota and seat pool.</li>
+          <li>Check programme restrictions and the current official seat matrix.</li>
+          <li>Include only eligible programmes you would attend.</li>
           <li>
-            <strong>Run the predictor.</strong> Get the comprehensive list of seats segmented by
-            stretch / boundary / comfortable for your category, gender pool, and quota.
-          </li>
-          <li>
-            <strong>Filter ruthlessly.</strong> Drop entries you would never accept — wrong city,
-            wrong programme type, branch you cannot stomach. JoSAA does not know what you would
-            refuse; you have to leave it off the list.
-          </li>
-          <li>
-            <strong>Order each bucket by genuine preference.</strong> Within stretch, list the seat
-            you would most love at the top. Within target, list seats in the order you would
-            actually want them. Within floor, list the least-bad acceptable seat at the very bottom.
-          </li>
-          <li>
-            <strong>Concatenate: stretch → target → floor.</strong> The whole list, top to bottom,
-            should read as a single sequence in descending preference. The algorithm will respect
-            that order.
-          </li>
-          <li>
-            <strong>Sanity-check the bottom.</strong> The very last entry should be an option you
-            would still report to. If it is not, drop it; otherwise you may end up locked into
-            something you cannot accept.
+            Order the entire list by your preferences; do not concatenate probability buckets or
+            copy predictor result order.
           </li>
         </ol>
 
         <h2>Freeze, float, slide — the round-by-round decision</h2>
         <p>
-          After every round in which you are allocated a seat, JoSAA asks you what to do with it.
-          The three options are:
+          When accepting a seat, choose an option available under the current rules. Float and slide
+          are not available in every situation or round. The options mean:
         </p>
         <ul>
           <li>
             <strong>Freeze.</strong> Accept this seat as final. You stop participating in further
-            rounds. Choose this when the allocation is good enough and you do not want to risk
-            something worse.
+            rounds. Choose this when you do not want further upgrades; complete the required
+            reporting and verification.
           </li>
           <li>
             <strong>Float.</strong> Hold the seat as a fallback and keep participating; the
@@ -204,9 +150,9 @@ export default function JoSAAChoiceFillingStrategy() {
           </li>
           <li>
             <strong>Filling too few choices.</strong> A short list is fine if all of them are seats
-            you would accept and at least the last few are safely inside your cutoff range. A short
-            list with only ambitious entries can result in no allocation at all, forcing you into
-            CSAB later or out of central counselling entirely.
+            you would accept. Historical cutoffs cannot make a choice safe. A short list with only
+            ambitious entries can result in no allocation at all, forcing you into CSAB later or out
+            of central counselling entirely.
           </li>
           <li>
             <strong>Filling too many marginal choices.</strong> Padding the list with seats you
@@ -241,8 +187,8 @@ export default function JoSAAChoiceFillingStrategy() {
           </li>
           <li>
             <strong>Round 1 allocation</strong> — the first real allocation. From here on, each
-            round you decide freeze / float / slide on the offer, or skip (which is treated as
-            float).
+            round you decide freeze / float / slide on the offer, and complete the required
+            acceptance steps. Do not treat inaction as float.
           </li>
           <li>
             <strong>Reporting and payment</strong> — within the window JoSAA specifies, you complete
@@ -260,8 +206,8 @@ export default function JoSAAChoiceFillingStrategy() {
         <h2>Related guides and tools</h2>
         <ul>
           <li>
-            <AppLink href="/predict">JEE college &amp; branch predictor</AppLink> — generates the
-            stretch / target / floor segmentation for your rank.
+            <AppLink href="/predict">JEE college &amp; branch predictor</AppLink> — generates a
+            historical cutoff shortlist for your inputs.
           </li>
           <li>
             <AppLink href="/guides/josaa-counselling-rounds">JoSAA counselling rounds</AppLink> —
@@ -271,7 +217,7 @@ export default function JoSAAChoiceFillingStrategy() {
             <AppLink href="/guides/josaa-opening-and-closing-ranks">
               Opening and closing ranks explained
             </AppLink>{' '}
-            — what the numbers behind your bucketing actually mean.
+            — how to compare the stored rank rows.
           </li>
           <li>
             <AppLink href="/guides/josaa-reservation-categories">

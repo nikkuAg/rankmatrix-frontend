@@ -69,7 +69,7 @@ const GUIDES = [
     slug: 'josaa-choice-filling-strategy',
     title: 'JoSAA choice filling strategy',
     summary:
-      'A practical, opinionated guide to ordering your preference list — stretch / target / floor buckets, freeze vs float vs slide, and the mistakes that cost candidates real seats.',
+      'A practical, opinionated guide to ordering your preference list — matching historical data, checking eligibility, freeze/float/slide and reporting.',
     readingTimeMinutes: 9,
   },
 ];

@@ -146,48 +146,24 @@ export default function JoSAAReservationCategories() {
           allotment.
         </p>
 
-        <h2>Quota: home state vs other state vs all-India</h2>
+        <h2>Quotas and seat pools</h2>
         <p>
-          On top of category, NIT seats are split by quota — Home State (HS), Other State (OS), and
-          All-India (AI) for some special categories.
-        </p>
-        <ul>
-          <li>
-            Use the state-code eligibility rule in the official-source note above, including its
-            exceptions.
-          </li>
-          <li>
-            <strong>OS</strong>: the remaining 50% of NIT seats go to candidates whose home state
-            does not match.
-          </li>
-          <li>
-            <strong>AI</strong>: IITs, IIITs (centrally funded), and most GFTIs do not have an HS/OS
-            split — they allocate purely on all-India rank within each category pool.
-          </li>
-        </ul>
-        <p>
-          Use the state-code eligibility rule in the official-source note above, including its
-          exceptions.
-        </p>
-
-        <h2>Female-only supernumerary seats (IITs)</h2>
-        <p>
-          To improve gender diversity, IITs run a supernumerary female-only seat pool. These seats
-          are over and above the regular seat matrix and are allocated only to female candidates.
-          The pool is reported alongside the regular seat matrix as a Female (F) sub-pool against
-          the Gender-Neutral (GN) sub-pool. Allocation happens in the same JoSAA rounds.
+          Category, quota and seat pool are separate dimensions. RankMatrix stores AI, HS, OS, GO,
+          LA, JK and AP quota codes. Read the exact programme matrix and the official state-code
+          rules; do not assume a uniform HS/OS split across institutes.
         </p>
         <p>
-          Check the programme-specific category and seat-pool counts in the official matrix; the
-          note above links to the governing rules.
+          Gender-Neutral and Female-only are seat pools. Female-only pools can include supernumerary
+          seats in multiple institute groups. Check the actual counts and eligibility in the
+          official sources above.
         </p>
 
         <h2>How the algorithm uses all this</h2>
         <p>
           In each round, for every (institute, branch) combination on your preference list, the
           algorithm checks each pool you are eligible for — your category pool, your gender pool,
-          your quota (HS / OS / AI) — and looks at whether your rank clears the cutoff for any of
-          them. You are offered the highest-ranked preference where any pool clears.
+          your exact quota — and looks at whether your rank clears the cutoff for any of them. You
+          are offered the highest-ranked preference where any pool clears.
         </p>
         <p>
           That is why two candidates with the same JEE rank but different categories can be offered
@@ -227,11 +203,11 @@ export default function JoSAAReservationCategories() {
             how the algorithm runs each round.
           </li>
           <li>
-            <AppLink href="/seat-matrix">Live JoSAA seat matrix</AppLink> on RankMatrix.
+            <AppLink href="/seat-matrix">Stored JoSAA seat matrix</AppLink> on RankMatrix.
           </li>
           <li>
             <AppLink href="/predict">JEE college &amp; branch predictor</AppLink> — uses category
-            and quota to filter your eligible seats.
+            and quota in historical cutoff comparisons; it does not certify eligibility.
           </li>
         </ul>
 

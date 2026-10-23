@@ -64,8 +64,8 @@ const buildFaqs = (data) => {
     {
       question: `What is the NIRF rank of ${data.name}?`,
       answer: latestNirf
-        ? `${data.name} was ranked ${latestNirf.rank} in the NIRF Engineering rankings for ${latestNirf.year}. Full NIRF history is shown below.`
-        : `${data.name} does not have a recent NIRF Engineering ranking published on RankMatrix. Check the official NIRF site for the latest.`,
+        ? `${data.name} was ranked ${latestNirf.rank} in the stored NIRF rankings for ${latestNirf.year}. Full NIRF history is shown below.`
+        : `${data.name} does not have a recent stored NIRF ranking published on RankMatrix. Check the official NIRF site for the latest.`,
     },
     {
       question: `How do I know if my JEE rank qualifies for ${data.name}?`,
@@ -79,7 +79,7 @@ const relatedTypeCopy = (type) => {
     case 'IIT':
       return 'Indian Institutes of Technology (IITs) admit students through JEE Advanced. Other IITs can be compared side by side from the Participating Colleges table.';
     case 'NIT':
-      return 'National Institutes of Technology (NITs) admit through JEE Main and use a split of Home State and Other State quota for each branch. Compare other NITs in the Participating Colleges table.';
+      return 'National Institutes of Technology (NITs) admit through JEE Main and use a programme-specific quota structure, which can include Home State, Other State and additional codes. Compare other NITs in the Participating Colleges table.';
     case 'IIIT':
       return 'Indian Institutes of Information Technology (IIITs) focus on computing and adjacent disciplines. Admission uses JEE Main ranks through JoSAA.';
     case 'GFTI':
@@ -151,7 +151,11 @@ export default async function InstitutePage({ params }) {
           { label: data.state },
           ...(latestNirf ? [{ label: `NIRF ${latestNirf.rank} (${latestNirf.year})` }] : []),
           ...(data.totalSeats
-            ? [{ label: `${data.totalSeats.toLocaleString('en-IN')} seats` }]
+            ? [
+                {
+                  label: `${data.totalSeats.toLocaleString('en-IN')} stored active-programme seats`,
+                },
+              ]
             : []),
         ]}
         lastUpdated={data.latestYear ? `JoSAA ${data.latestYear}` : 'Year not available'}
@@ -159,9 +163,9 @@ export default async function InstitutePage({ params }) {
         <h2>About {data.name}</h2>
         <p>
           {data.name} ({data.displayCode}) is a {typeLabel} located in {data.city}, {data.state}. It
-          participates in JoSAA counselling every year and allocates its undergraduate engineering
-          seats through the common JoSAA seat-allocation process based on JEE Main or JEE Advanced
-          ranks.
+          is listed as participating in the stored catalogue and allocates its undergraduate
+          engineering seats through the common JoSAA seat-allocation process based on JEE Main or
+          JEE Advanced ranks.
         </p>
         {relatedCopy && <p>{relatedCopy}</p>}
         <p>
@@ -173,13 +177,13 @@ export default async function InstitutePage({ params }) {
 
         {sortedNirf.length > 0 && (
           <>
-            <h2>NIRF Engineering rank history</h2>
+            <h2>stored NIRF rank history</h2>
             <Box className="table-scroll">
               <table>
                 <thead>
                   <tr>
                     <th>Year</th>
-                    <th>NIRF Engineering rank</th>
+                    <th>stored NIRF rank</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -197,10 +201,12 @@ export default async function InstitutePage({ params }) {
 
         <h2>Branches offered at {data.name}</h2>
         <p>
-          Headline closing ranks below are from the latest JoSAA counselling year, Open category,
+          Headline closing ranks below are from the latest stored JoSAA year, Open category,
           Gender-Neutral seat pool, at the latest available allocation round, with each available
           quota shown separately. Click any branch name to open a deep page with year-wise,
-          category-wise cutoff trends and the latest seat matrix for that branch.
+          category-wise cutoff trends and the stored seat matrix for that branch. Programme seat
+          totals include all categories, quotas and pools and are repeated for context; they are not
+          seats in the quota row.
         </p>
         {sortedBranches.length === 0 ? (
           <p>No active branches listed for this institute in the latest cycle.</p>
@@ -215,7 +221,7 @@ export default async function InstitutePage({ params }) {
                   <th>Quota / round</th>
                   <th>Opening rank</th>
                   <th>Closing rank</th>
-                  <th>Seats</th>
+                  <th>Programme seats (all quotas and pools)</th>
                 </tr>
               </thead>
               <tbody>
