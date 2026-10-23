@@ -1,6 +1,5 @@
 'use client';
 
-import { instituteType } from '@/utils/instituteIdentity.mjs';
 import React, { useEffect, useMemo, useState } from 'react';
 import { KeyboardArrowLeft, KeyboardArrowRight } from '@mui/icons-material';
 import {
@@ -17,7 +16,6 @@ import {
 } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppLink } from '@/components/AppLink';
-import { COLLEGE_FILTER_LABELS } from '@/utils/instituteIdentity.mjs';
 import { ChipFilter } from '@/components/ChipFilter';
 import { NoDataComponent } from '@/components/NoData';
 import { PaginationBox } from '@/components/PaginationBox';
@@ -34,6 +32,7 @@ import {
   updateSearchValue,
 } from '@/store/slices/college';
 import { catalogueState } from '@/utils/catalogue.mjs';
+import { COLLEGE_FILTER_LABELS, instituteType } from '@/utils/instituteIdentity.mjs';
 import { sendAnalyticsEvent } from '../../utils/analyticEvent';
 import { TableLayout } from '../TableLayout';
 
@@ -176,7 +175,22 @@ export const CollegeList = ({ initialData }) => {
               </Typography>
             )}
             <TableLayout>
-              <Table aria-label="Participating colleges" sx={{ minWidth: 680 }}>
+              <Table
+                aria-label="Participating colleges"
+                sx={{
+                  minWidth: 680,
+                  // Body cells share one table-level rule instead of resolving
+                  // Emotion styles and MUI contexts for every data value.
+                  '& tbody td': {
+                    ...theme.typography.body2,
+                    color: theme.palette.text.primary,
+                    p: 2,
+                    textAlign: 'left',
+                    verticalAlign: 'inherit',
+                  },
+                  '& tbody td:last-child': { borderRight: '0px !important' },
+                }}
+              >
                 <TableHead>
                   <TableRow>
                     <TableCell>College Code</TableCell>
@@ -248,42 +262,27 @@ export const CollegeList = ({ initialData }) => {
                           }),
                         }}
                       >
-                        <TableCell>{college.code}</TableCell>
-                        <TableCell>
+                        <td>{college.code}</td>
+                        <td>
                           {college.slug ? (
                             <AppLink href={`/colleges/${college.slug}`}>{college.name}</AppLink>
                           ) : (
                             college.name
                           )}
-                        </TableCell>
-                        <TableCell>{instituteType(college)}</TableCell>
-                        <TableCell>{college.state}</TableCell>
+                        </td>
+                        <td>{instituteType(college)}</td>
+                        <td>{college.state}</td>
                         {!expandedNirf && (
-                          <TableCell
-                            sx={{
-                              borderRight: '0px !important',
-                              transition: 'all 0.3s ease',
-                              ...(expandedNirf && {
-                                colSpan: nirfYears.length,
-                              }),
-                            }}
-                          >
+                          <td style={{ transition: 'all 0.3s ease' }}>
                             {college.nirfRanks.find((rank) => rank.year === nirfYears[0])?.rank ||
                               '-'}
-                          </TableCell>
+                          </td>
                         )}
                         {expandedNirf &&
-                          nirfYears.map((year, i) => (
-                            <TableCell
-                              key={year}
-                              sx={
-                                i === nirfYears.length - 1 && {
-                                  borderRight: '0px !important',
-                                }
-                              }
-                            >
+                          nirfYears.map((year) => (
+                            <td key={year}>
                               {college.nirfRanks.find((rank) => rank.year === year)?.rank || '-'}
-                            </TableCell>
+                            </td>
                           ))}
                       </TableRow>
                     ))
