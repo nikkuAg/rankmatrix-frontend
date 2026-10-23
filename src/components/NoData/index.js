@@ -5,9 +5,12 @@ import { Box, TableCell, Typography, useTheme } from '@mui/material';
 
 export const NoDataComponent = ({ colSpan, text = 'No results match the selected filters.' }) => {
   const theme = useTheme();
+  // Only table-row callers supply colSpan. A td outside a tr is repaired by
+  // the HTML parser before hydration, so the client tree cannot match it.
+  const Container = colSpan === undefined ? Box : TableCell;
   return (
-    <TableCell
-      colSpan={colSpan}
+    <Container
+      {...(colSpan === undefined ? {} : { colSpan })}
       sx={{ borderRight: '0px !important', borderBottom: '0px !important' }}
     >
       <Box
@@ -31,6 +34,6 @@ export const NoDataComponent = ({ colSpan, text = 'No results match the selected
           {text}
         </Typography>
       </Box>
-    </TableCell>
+    </Container>
   );
 };
