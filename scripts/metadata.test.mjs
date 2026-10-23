@@ -2,10 +2,26 @@ import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import { buildMetadata, instituteTitleName } from '../src/utils/metadata.mjs';
 
-test('institute titles retain the IIT/NIT/IIIT identity when displayCode is a city', () => {
-  assert.equal(instituteTitleName({ displayCode: 'Bhubaneswar', type: 'IIT' }), 'IIT Bhubaneswar');
-  assert.equal(instituteTitleName({ displayCode: 'NIT Trichy', type: 'NIT' }), 'NIT Trichy');
+test('institute titles preserve supplied identity without guessing from city or type', () => {
+  assert.equal(
+    instituteTitleName({
+      name: 'National Institute of Technology Goa',
+      displayCode: 'Cuncolim',
+      type: 'NIT',
+    }),
+    'National Institute of Technology Goa',
+  );
+  assert.equal(
+    instituteTitleName({
+      name: 'Indian Institute of Science, Bengaluru',
+      displayCode: 'Bengaluru',
+      type: 'IIT',
+    }),
+    'Indian Institute of Science, Bengaluru',
+  );
   assert.equal(instituteTitleName({ name: 'Official name', type: 'GFTI' }), 'Official name');
+  assert.equal(instituteTitleName({ displayCode: 'Stored name' }), 'Stored name');
+  assert.throws(() => instituteTitleName({ type: 'IIT' }), /institution name/);
 });
 
 test('search and social previews describe the same page on the canonical host', () => {

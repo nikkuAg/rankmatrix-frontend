@@ -12,16 +12,11 @@ const PREVIEW_IMAGE = {
 };
 
 export function instituteTitleName(institute) {
-  const shortName = institute.displayCode?.trim();
-  if (!shortName) return institute.name;
-  // displayCode can be only a city (e.g. "Bhubaneswar"), not an acronym.
-  if (
-    ['IIT', 'NIT', 'IIIT'].includes(institute.type) &&
-    !new RegExp(`\\b${institute.type}\\b`, 'i').test(shortName)
-  ) {
-    return `${institute.type} ${shortName}`;
-  }
-  return shortName;
+  // A display code can be a campus city or a stored type can be approximate.
+  // Use the supplied institution name rather than manufacturing an acronym.
+  const name = institute.name?.trim() || institute.displayCode?.trim();
+  if (!name) throw new Error('Institute metadata requires an institution name');
+  return name;
 }
 
 /** Keep search and social metadata aligned, independent of layout inheritance. */
