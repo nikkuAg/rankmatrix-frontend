@@ -110,13 +110,15 @@ export default function RootLayout({ children }) {
           </StoreProvider>
         </AppRouterCacheProvider>
         {process.env.NEXT_PUBLIC_GA_ID && <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />}
-        <Script
-          id="google-adsense"
-          strategy="afterInteractive"
-          async
-          src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_CLIENT_ID}`}
-          crossOrigin="anonymous"
-        />
+        {process.env.NEXT_PUBLIC_ENABLE_ADSENSE === 'true' && (
+          <Script
+            id="google-adsense"
+            strategy="afterInteractive"
+            async
+            src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_CLIENT_ID}`}
+            crossOrigin="anonymous"
+          />
+        )}
       </body>
     </html>
   );
