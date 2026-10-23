@@ -25,17 +25,17 @@ const FAQS = [
   {
     question: 'Do I need to enter my phone number or email?',
     answer:
-      'No. RankMatrix never asks for your phone number, email, name, or any identifying information to run a prediction. You type your rank, you get a prediction, Contact details are not required; the privacy policy explains analytics, advertising and technical request data.',
+      'No. RankMatrix never asks for your phone number, email, name, or any identifying information to run a prediction. Contact details are not required; the privacy policy explains analytics, advertising and technical request data.',
   },
   {
     question: 'Why does the predictor show colleges where the closing rank is above mine?',
     answer:
-      'The tool deliberately spreads results above and below your rank by a configurable "delta" percentage. Showing some colleges where last year you would have been a few ranks short is useful because next-year cutoffs may be slightly looser, or because less-popular branches at those colleges may still be in reach. The results are your shortlist of "safe", "realistic", and "ambitious" options, not a pass/fail list.',
+      'The configurable "delta" percentage controls a search window around your rank; selection tiers and the result limit determine which rows appear. Showing some colleges where last year you would have been a few ranks short is useful because next-year cutoffs may be slightly looser, or because less-popular branches at those colleges may still be in reach. The delta is a search window, not an admission-probability label or a pass/fail decision.',
   },
   {
     question: 'Should I fill my JoSAA preference list in the same order the predictor shows?',
     answer:
-      'Not blindly. The predictor orders by rank proximity, not by your preferences. Your actual JoSAA choice list should be ordered by what you most want to attend, top to bottom — because JoSAA will always try to give you your #1 before your #2. Use the predictor to assemble a shortlist, then manually reorder that shortlist by personal preference.',
+      'Not blindly. The backend selects rows using its search-window priorities and displays them by opening rank, not by your preferences. Your actual JoSAA choice list should be ordered by what you most want to attend, top to bottom — because JoSAA will always try to give you your #1 before your #2. Use the predictor to assemble a shortlist, then manually reorder that shortlist by personal preference.',
   },
   {
     question: 'Can a JEE college & branch predictor replace JoSAA counselling?',
@@ -158,34 +158,24 @@ export default function JeeMainCollegePredictorGuide() {
             those.
           </li>
           <li>
-            <strong>It cannot account for late seat-matrix changes.</strong> JoSAA publishes the
-            final seat matrix for a given year only in May/June of that year. Predictors project
-            from previous-year seat counts; if the matrix changes materially, the projection moves.
+            <strong>It cannot account for late seat-matrix changes.</strong> The predictor uses
+            stored rank rows and does not automatically cross-check each option against the current
+            seat matrix. Verify the current official release and programme restrictions separately.
           </li>
         </ul>
 
         <h2>How to read the results</h2>
-        <p>Group the predictor output into three buckets in your head as you scan it:</p>
-        <ul>
-          <li>
-            <strong>Safe</strong> — colleges where your rank is comfortably inside last year&apos;s
-            closing rank with room to spare. This is a historical comparison, not a measured
-            admission probability.
-          </li>
-          <li>
-            <strong>Realistic</strong> — colleges where your rank is within a small delta of last
-            year&apos;s closing rank. Future cutoffs and eligibility checks can change the result.
-          </li>
-          <li>
-            <strong>Ambitious</strong> — colleges where last year you would have been a few ranks
-            short. Worth putting on the list in case cutoffs loosen this year or seats open up in
-            later rounds.
-          </li>
-        </ul>
         <p>
-          Your JoSAA choice list should include a spread of all three. A list composed entirely of
-          ambitious choices risks leaving you unallocated; a list composed entirely of safe choices
-          may lock you in below your actual ceiling.
+          Compare each row with the same exam, rank list, category, quota and seat pool. Review the
+          year and round in the rank explorer or institute detail pages: the predictor table does
+          not currently show that provenance or offer clickable rows. A lower numerical rank is not
+          a comparison across JEE Main and JEE Advanced.
+        </p>
+        <p>
+          The tool does not assign safe, realistic or ambitious labels. Its result count and
+          selection priorities can leave out relevant alternatives. Investigate the underlying
+          historical data, check current eligibility and seat releases, then arrange choices by your
+          own preferences. No historical cutoff guarantees an allocation.
         </p>
 
         <h2>The right mental model</h2>
