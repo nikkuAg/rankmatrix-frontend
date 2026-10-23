@@ -5,7 +5,7 @@ import { AppLink } from '@/components/AppLink';
 import { DataPageLayout } from '@/components/DataPageLayout';
 import { cutoffSummaries } from '@/utils/cutoffSummaries.mjs';
 import { breadcrumbJsonLd, faqJsonLd, serializeJsonLd } from '@/utils/jsonLd';
-import { buildMetadata, instituteTitleName } from '@/utils/metadata.mjs';
+import { buildMetadata, instituteTitleName, programmeTitleName } from '@/utils/metadata.mjs';
 import { fetchInstituteBranchSeo } from '@/utils/seoApi';
 
 export const revalidate = 86400;
@@ -31,8 +31,8 @@ export async function generateMetadata({ params }) {
   const year = data.yearsAvailable?.[0] ? ` ${data.yearsAvailable[0]}` : '';
   return buildMetadata({
     path: `/colleges/${slug}/${branch}`,
-    title: `${name} ${data.branch.name} Cutoffs${year}`,
-    description: `${name} ${data.branch.name}: compare JoSAA opening and closing ranks by year, round, category and quota, plus published seat data.`,
+    title: `${name} ${programmeTitleName(data.branch)} Cutoffs${year}`,
+    description: `${name} ${programmeTitleName(data.branch)}: compare JoSAA opening and closing ranks by year, round, category and quota, plus published seat data.`,
     index: Boolean(data.cutoffs?.length),
   });
 }
@@ -140,6 +140,7 @@ export default async function InstituteBranchPage({ params }) {
         subtitle={`${data.branch.degree} · ${data.branch.courseDuration}-year programme · JoSAA counselling`}
         badges={[
           { label: data.institute.type },
+          { label: `Programme code ${data.branch.code}` },
           { label: data.institute.state },
           { label: `${data.yearsAvailable?.length || 0} years of data` },
         ]}

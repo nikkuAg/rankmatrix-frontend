@@ -6,7 +6,7 @@ import { DataPageLayout } from '@/components/DataPageLayout';
 import { summaryRows } from '@/utils/cutoffSummaries.mjs';
 import { groupInstitutesByExam } from '@/utils/examGroups.mjs';
 import { breadcrumbJsonLd, faqJsonLd, serializeJsonLd } from '@/utils/jsonLd';
-import { buildMetadata } from '@/utils/metadata.mjs';
+import { buildMetadata, programmeTitleName } from '@/utils/metadata.mjs';
 import { fetchBranchSeo } from '@/utils/seoApi';
 
 export const revalidate = 86400;
@@ -29,7 +29,7 @@ export async function generateMetadata({ params }) {
   if (!data) notFound();
   return buildMetadata({
     path: `/branches/${slug}`,
-    title: `${data.name} (${data.degree}): Colleges & JoSAA Cutoffs`,
+    title: `${programmeTitleName(data)}: Colleges & JoSAA Cutoffs`,
     description: `Compare ${data.institutes?.length ?? 0} JoSAA colleges offering ${data.name} (${data.degree}, ${data.courseDuration} years). Explore published cutoffs and institute details.`,
     index: Boolean(data.institutes?.length),
   });
@@ -107,6 +107,7 @@ export default async function BranchPage({ params }) {
         subtitle={`${data.degree} · ${data.courseDuration}-year programme`}
         badges={[
           { label: data.degree },
+          { label: `Programme code ${data.code}` },
           { label: `${data.courseDuration} years` },
           { label: `${data.institutes?.length ?? 0} colleges` },
         ]}
