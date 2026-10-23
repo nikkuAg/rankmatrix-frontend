@@ -1,5 +1,7 @@
 const assert = require('node:assert/strict');
 const { test } = require('node:test');
+// Fetches are mocked: the suite must not rely on a developer's local .env.
+process.env.NEXT_PUBLIC_API_URL = 'https://example.invalid';
 const config = require('../next-sitemap.config.js');
 
 test('sitemap includes each catalogue URL family and deduplicates URLs', async () => {
@@ -45,5 +47,22 @@ test('dynamic data pages are allowed in sitemap transforms without false freshne
     const result = await config.transform(config, path);
     assert.equal(result.loc, path);
     assert.equal(result.lastmod, undefined);
+  }
+});
+
+test('a successful HTTP response with a malformed catalogue fails generation', async () => {
+  const originalFetch = global.fetch;
+  try {
+    for (const payload of [
+      null,
+      {},
+      { institutes: [], branches: {}, cutoffs: [] },
+      { institutes: [null], branches: [], cutoffs: [] },
+    ]) {
+      global.fetch = async () => ({ ok: true, json: async () => payload });
+      await assert.rejects(config.additionalPaths(config), /catalogue response/);
+    }
+  } finally {
+    global.fetch = originalFetch;
   }
 });
