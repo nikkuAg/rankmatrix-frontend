@@ -85,7 +85,7 @@ export const DataPageLayout = ({
                 size="small"
                 sx={{
                   backgroundColor: `${theme.palette.primary.main}20`,
-                  color: theme.palette.primary.main,
+                  color: theme.palette.text.main,
                   fontWeight: 500,
                   border: `1px solid ${theme.palette.primary.main}40`,
                 }}
@@ -192,7 +192,7 @@ export const DataPageLayout = ({
             href="https://josaa.nic.in"
             target="_blank"
             rel="noopener noreferrer"
-            sx={{ color: `${theme.palette.primary.main} !important` }}
+            sx={{ color: `${theme.palette.text.link} !important` }}
           >
             JoSAA website
           </MuiLink>{' '}
