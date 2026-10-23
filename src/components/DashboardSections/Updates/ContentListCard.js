@@ -19,7 +19,7 @@ export const ContentListCard = ({ title, contentType, height, maxHeight }) => {
       >
         {contentType === SITE_CONTENT.UPDATES && (
           <Stack gap={1}>
-            {contentList[SITE_CONTENT.UPDATES].map((content, index) => (
+            {(contentList[SITE_CONTENT.UPDATES] ?? []).map((content, index) => (
               <Stack key={index} gap={1} flexDirection={'row'} alignItems={'center'}>
                 <CircleIcon sx={{ fontSize: '0.5rem' }} />
                 <Typography
@@ -36,7 +36,7 @@ export const ContentListCard = ({ title, contentType, height, maxHeight }) => {
         )}
         {contentType === SITE_CONTENT.LINKS && (
           <Stack gap={1}>
-            {contentList[SITE_CONTENT.LINKS].map((content, index) => (
+            {(contentList[SITE_CONTENT.LINKS] ?? []).map((content, index) => (
               <Stack
                 key={index}
                 gap={1}

@@ -12,7 +12,10 @@ async function seoFetch(path, { revalidate = DEFAULT_REVALIDATE_SECONDS } = {}) 
     // let the caller surface a 404.
     return null;
   }
-  const res = await fetch(`${base}${path}`, { next: { revalidate } });
+  const res = await fetch(`${base}${path}`, {
+    next: { revalidate },
+    signal: AbortSignal.timeout(30000),
+  });
   if (res.status === 404) return null;
   if (!res.ok) {
     throw new Error(`SEO API ${path} failed with ${res.status}`);
@@ -32,3 +35,16 @@ export const fetchBranchSeo = (slug, opts) => seoFetch(apis.seo.branch(slug), op
 
 export const fetchInstituteBranchSeo = (instituteSlug, branchSlug, opts) =>
   seoFetch(apis.seo.cutoffs(instituteSlug, branchSlug), opts);
+
+export async function fetchInitialCatalogue(path) {
+  if (!apis.BASE_URL) throw new Error('Backend API URL is required for catalogue rendering');
+  const res = await fetch(`${apis.BASE_URL}${path}`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ search: '', filters: {}, page_size: 25, page: 1, ordering: null }),
+    next: { revalidate: DEFAULT_REVALIDATE_SECONDS },
+    signal: AbortSignal.timeout(30000),
+  });
+  if (!res.ok) throw new Error(`Initial catalogue request failed with ${res.status}`);
+  return camelizeKeys(await res.json());
+}

@@ -3,8 +3,9 @@ import { Box } from '@mui/material';
 import { notFound } from 'next/navigation';
 import { AppLink } from '@/components/AppLink';
 import { DataPageLayout } from '@/components/DataPageLayout';
-import { articleJsonLd, breadcrumbJsonLd, faqJsonLd } from '@/utils/jsonLd';
-import { fetchInstituteSeo, fetchSeoSlugs } from '@/utils/seoApi';
+import { breadcrumbJsonLd, faqJsonLd, serializeJsonLd } from '@/utils/jsonLd';
+import { buildMetadata, instituteTitleName } from '@/utils/metadata.mjs';
+import { fetchInstituteSeo } from '@/utils/seoApi';
 
 // Rebuild a given page at most once per day (86400 s); cheap for low-change data.
 export const revalidate = 86400;
@@ -12,7 +13,7 @@ export const revalidate = 86400;
 // generated on first request and then cached.
 export const dynamicParams = true;
 
-const SITE_URL = 'https://rankmatrix.in';
+const SITE_URL = 'https://www.rankmatrix.in';
 const INSTITUTE_TYPE_LABEL = {
   IIT: 'Indian Institute of Technology',
   NIT: 'National Institute of Technology',
@@ -21,57 +22,25 @@ const INSTITUTE_TYPE_LABEL = {
 };
 
 export async function generateStaticParams() {
-  try {
-    const data = await fetchSeoSlugs();
-    if (!data?.institutes) return [];
-    return data.institutes.map((institute) => ({ slug: institute.slug }));
-  } catch {
-    return [];
-  }
+  // Render and cache on first request; avoid hundreds of DB-heavy build requests.
+  return [];
 }
 
 async function loadInstitute(slug) {
-  try {
-    return await fetchInstituteSeo(slug);
-  } catch {
-    return null;
-  }
+  return fetchInstituteSeo(slug);
 }
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
   const data = await loadInstitute(slug);
-  if (!data) {
-    return { title: 'Institute not found' };
-  }
-  const typeLabel = INSTITUTE_TYPE_LABEL[data.type] || data.type;
-  const title = `${data.name} — ${typeLabel} | JoSAA Cutoffs, Branches & Seats`;
-  const description = `${data.name} (${data.displayCode}) is a ${typeLabel} located in ${data.city}, ${data.state}. Explore JoSAA opening and closing ranks, branch list, and seat matrix for ${data.name} — sourced from official JoSAA data.`;
-  const canonicalPath = `/colleges/${slug}`;
-  return {
-    title,
-    description,
-    alternates: { canonical: canonicalPath },
-    keywords: [
-      data.name,
-      `${data.name} cutoff`,
-      `${data.name} JoSAA`,
-      `${data.name} branches`,
-      `${data.name} closing rank`,
-      `${typeLabel} ${data.state}`,
-    ],
-    openGraph: {
-      type: 'article',
-      url: canonicalPath,
-      title,
-      description,
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title,
-      description,
-    },
-  };
+  if (!data) notFound();
+  const name = instituteTitleName(data);
+  const year = data.latestYear ? ` ${data.latestYear}` : '';
+  return buildMetadata({
+    path: `/colleges/${slug}`,
+    title: `${name} JoSAA Cutoffs${year}, Branches & Seats`,
+    description: `Compare ${name} JoSAA cutoffs${year}, branches, seats and NIRF rank history. Explore opening and closing ranks before filling your counselling choices.`,
+  });
 }
 
 const formatRank = (value) => (value == null ? '—' : value.toLocaleString('en-IN'));
@@ -149,12 +118,6 @@ export default async function InstitutePage({ params }) {
       },
       description: `${data.name} is a ${typeLabel} in ${data.city}, ${data.state}, participating in JoSAA counselling.`,
     },
-    articleJsonLd({
-      path: canonicalPath,
-      title: `${data.name} — JoSAA Cutoffs, Branches & Seats`,
-      description: `JoSAA opening/closing ranks, branch list, and seat matrix for ${data.name}, built on official JoSAA data.`,
-      datePublished: '2026-04-23',
-    }),
     breadcrumbJsonLd([
       { name: 'Home', path: '/' },
       { name: 'Colleges', path: '/colleges' },
@@ -171,7 +134,7 @@ export default async function InstitutePage({ params }) {
         <script
           key={i}
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(obj) }}
+          dangerouslySetInnerHTML={{ __html: serializeJsonLd(obj) }}
         />
       ))}
       <DataPageLayout
@@ -234,9 +197,9 @@ export default async function InstitutePage({ params }) {
         <h2>Branches offered at {data.name}</h2>
         <p>
           Headline closing ranks below are from the latest JoSAA counselling year, Open category,
-          Gender-Neutral seat pool, at the final allocation round. Click any branch name to open a
-          deep page with year-wise, category-wise cutoff trends and the latest seat matrix for that
-          branch.
+          Gender-Neutral seat pool, at the latest available allocation round, using AI or OS quota
+          as labelled. Click any branch name to open a deep page with year-wise, category-wise
+          cutoff trends and the latest seat matrix for that branch.
         </p>
         {sortedBranches.length === 0 ? (
           <p>No active branches listed for this institute in the latest cycle.</p>
@@ -248,6 +211,7 @@ export default async function InstitutePage({ params }) {
                   <th>Branch</th>
                   <th>Degree</th>
                   <th>Duration</th>
+                  <th>Quota / round</th>
                   <th>Opening rank</th>
                   <th>Closing rank</th>
                   <th>Seats</th>
@@ -261,6 +225,9 @@ export default async function InstitutePage({ params }) {
                     </td>
                     <td>{branch.degree}</td>
                     <td>{branch.courseDuration}y</td>
+                    <td>
+                      {branch.latestQuota ?? '—'} / {branch.latestRound ?? '—'}
+                    </td>
                     <td>{formatRank(branch.latestOpeningRank)}</td>
                     <td>{formatRank(branch.latestClosingRank)}</td>
                     <td>{branch.totalSeatsLatestYear ?? '—'}</td>

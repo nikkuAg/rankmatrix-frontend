@@ -29,24 +29,31 @@ import {
   updatePageNumber,
   updateSearchValue,
 } from '@/store/slices/branch';
+import { isInitialCatalogueRequest } from '@/utils/catalogue.mjs';
 import { sendAnalyticsEvent } from '../../utils/analyticEvent';
-import { useIsMobile } from '../../utils/screenSizeHook';
 import { TableLayout } from '../TableLayout';
 
-export const BranchList = () => {
+export const BranchList = ({ initialData }) => {
   const theme = useTheme();
-  const isMobile650 = useIsMobile(650);
 
-  const [getBranchData, { data, isLoading: isBranchLoading, isFetching: isBranchFetching }] =
-    useLazyGetBranchDataQuery();
+  const [
+    getBranchData,
+    { data: queryData, isLoading: isBranchLoading, isFetching: isBranchFetching, isUninitialized },
+  ] = useLazyGetBranchDataQuery();
   const {
     data: filtersData,
     isLoading: isFiltersLoading,
     isFetching: isFiltersFetching,
   } = useGetBranchFiltersQuery();
   const branchReqData = useSelector((state) => state.branch);
+  const data =
+    queryData ??
+    (isInitialCatalogueRequest(branchReqData) && (isUninitialized || isBranchLoading)
+      ? initialData
+      : undefined);
   const dispatch = useDispatch();
-  const isLoading = isBranchFetching || isFiltersFetching || isBranchLoading || isFiltersLoading;
+  const isLoading =
+    (isBranchFetching || isFiltersFetching || isBranchLoading || isFiltersLoading) && !data;
   const [sortField, setSortField] = useState(null);
   const [sortOrder, setSortOrder] = useState(null);
 
@@ -142,17 +149,17 @@ export const BranchList = () => {
     <Box width={'100%'} height={'100%'} py={2}>
       <Stack spacing={2} height={'100%'}>
         <Stack
-          direction={isMobile650 ? 'column' : 'row'}
+          direction={{ xs: 'column', sm: 'row' }}
           justifyContent={'space-between'}
           gap={2}
-          alignItems={isMobile650 ? 'flex-start' : 'center'}
+          alignItems={{ xs: 'flex-start', sm: 'center' }}
         >
           <ChipFilter
             filterList={Object.keys(COLLEGE_TYPES)}
             onChange={handleCollegeTypeChange}
             defaultSelected={Object.keys(COLLEGE_TYPES)}
           />
-          <SearchBox onChange={handleSearchChange} width={isMobile650 ? '100%' : '35%'} />
+          <SearchBox onChange={handleSearchChange} width={{ xs: '100%', sm: '35%' }} />
         </Stack>
         {!isLoading && data?.totalPages > 1 && (
           <PaginationBox
@@ -169,7 +176,7 @@ export const BranchList = () => {
         ) : (
           <Stack flexGrow={1}>
             <TableLayout>
-              <Table aria-label="college-table">
+              <Table aria-label="Participating programmes" sx={{ minWidth: 680 }}>
                 <TableHead>
                   <TableRow>
                     <TableCell>Branch Code</TableCell>

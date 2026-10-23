@@ -31,15 +31,20 @@ import {
   updatePageNumber,
   updateSearchValue,
 } from '@/store/slices/college';
+import { isInitialCatalogueRequest } from '@/utils/catalogue.mjs';
 import { sendAnalyticsEvent } from '../../utils/analyticEvent';
-import { useIsMobile } from '../../utils/screenSizeHook';
 import { TableLayout } from '../TableLayout';
 
-export const CollegeList = () => {
-  const [getCollegeData, { data, isLoading, isFetching }] = useLazyGetCollegeDataQuery();
+export const CollegeList = ({ initialData }) => {
+  const [getCollegeData, { data: queryData, isLoading, isFetching, isUninitialized }] =
+    useLazyGetCollegeDataQuery();
   const collegeReqData = useSelector((state) => state.college);
+  const data =
+    queryData ??
+    (isInitialCatalogueRequest(collegeReqData) && (isUninitialized || isLoading)
+      ? initialData
+      : undefined);
   const theme = useTheme();
-  const isMobile650 = useIsMobile(650);
   const dispatch = useDispatch();
   const [expandedNirf, setExpandedNirf] = useState(false);
   const [sortField, setSortField] = useState(null);
@@ -47,7 +52,11 @@ export const CollegeList = () => {
 
   const nirfYears = useMemo(() => {
     if (!data?.data?.length) return [];
-    return data.data[0].nirfRanks.map((rank) => rank.year);
+    return [
+      ...new Set(
+        data.data.flatMap((college) => (college.nirfRanks || []).map((rank) => rank.year)),
+      ),
+    ].sort((a, b) => b - a);
   }, [data]);
 
   useEffect(() => {
@@ -132,17 +141,17 @@ export const CollegeList = () => {
     <Box width={'100%'} height={'100%'} py={2}>
       <Stack spacing={2} height={'100%'}>
         <Stack
-          direction={isMobile650 ? 'column' : 'row'}
+          direction={{ xs: 'column', sm: 'row' }}
           justifyContent={'space-between'}
           gap={2}
-          alignItems={isMobile650 ? 'flex-start' : 'center'}
+          alignItems={{ xs: 'flex-start', sm: 'center' }}
         >
           <ChipFilter
             filterList={Object.keys(COLLEGE_TYPES)}
             onChange={handleCollegeTypeChange}
             defaultSelected={Object.keys(COLLEGE_TYPES)}
           />
-          <SearchBox onChange={handleSearchChange} width={isMobile650 ? '100%' : '35%'} />
+          <SearchBox onChange={handleSearchChange} width={{ xs: '100%', sm: '35%' }} />
         </Stack>
         {!isLoading && !isFetching && data?.totalPages > 1 && (
           <PaginationBox
@@ -154,7 +163,7 @@ export const CollegeList = () => {
             totalItems={data.totalItems}
           />
         )}
-        {isLoading || isFetching ? (
+        {(isLoading || isFetching) && !data ? (
           <TableSkeleton rows={10} columns={5} />
         ) : (
           <Stack flexGrow={1}>
@@ -169,7 +178,7 @@ export const CollegeList = () => {
               </Typography>
             )}
             <TableLayout>
-              <Table aria-label="college-table">
+              <Table aria-label="Participating colleges" sx={{ minWidth: 680 }}>
                 <TableHead>
                   <TableRow>
                     <TableCell>College Code</TableCell>
@@ -202,7 +211,7 @@ export const CollegeList = () => {
                         color="inherit"
                         sx={{ textTransform: 'none' }}
                       >
-                        NIRF Rank{expandedNirf ? 's' : ` (${nirfYears[0]})`}
+                        NIRF Rank{expandedNirf ? 's' : nirfYears[0] ? ` (${nirfYears[0]})` : ''}
                         {expandedNirf ? <KeyboardArrowLeft /> : <KeyboardArrowRight />}
                       </Button>
                     </TableCell>

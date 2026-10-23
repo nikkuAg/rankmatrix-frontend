@@ -1,27 +1,20 @@
 /** @type {import('next-sitemap').IConfig} */
+const { createRequire } = require('node:module');
+const requireFromNext = createRequire(require.resolve('next/package.json'));
+requireFromNext('@next/env').loadEnvConfig(process.cwd());
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 async function fetchSeoSlugs() {
-  const empty = { institutes: [], branches: [], cutoffs: [] };
-  if (!API_URL) return empty;
-  try {
-    const res = await fetch(`${API_URL}/api/seo/slugs`);
-    if (!res.ok) return empty;
-    const json = await res.json();
-    return {
-      institutes: json.institutes || [],
-      branches: json.branches || [],
-      cutoffs: json.cutoffs || [],
-    };
-  } catch {
-    return empty;
-  }
+  if (!API_URL) throw new Error('NEXT_PUBLIC_API_URL is required to generate the full sitemap');
+  const res = await fetch(`${API_URL}/api/seo/slugs`, { signal: AbortSignal.timeout(30000) });
+  if (!res.ok) throw new Error(`Sitemap catalogue request failed: ${res.status}`);
+  return res.json();
 }
 
 module.exports = {
-  siteUrl: 'https://rankmatrix.in',
+  siteUrl: 'https://www.rankmatrix.in',
   generateRobotsTxt: true,
-  autoLastmod: true,
+  autoLastmod: false,
   generateIndexSitemap: true,
   sitemapSize: 5000,
   exclude: [
@@ -34,32 +27,20 @@ module.exports = {
     '/sitemap*.xml',
   ],
   additionalPaths: async (config) => {
-    const { institutes } = await fetchSeoSlugs();
-    const lastmod = new Date().toISOString();
-    const paths = [];
-    institutes.forEach((institute) => {
-      if (!institute.slug) return;
-      paths.push({
-        loc: `/colleges/${institute.slug}`,
-        changefreq: 'weekly',
-        priority: 0.8,
-        lastmod,
-        alternateRefs: config.alternateRefs ?? [],
-      });
-    });
-    // /branches/[slug] and /colleges/[slug]/[branch] are intentionally
-    // omitted: those pages are noindex'd (templated shape risks reading as
-    // doorway content to AdSense / Google quality reviewers). They remain
-    // reachable for users via in-page links and follow=true semantics.
-    return paths;
+    const { institutes = [], branches = [], cutoffs = [] } = await fetchSeoSlugs();
+    const paths = [
+      ...institutes.filter((i) => i.slug).map((i) => `/colleges/${i.slug}`),
+      ...branches.filter((b) => b.slug).map((b) => `/branches/${b.slug}`),
+      ...cutoffs
+        .filter((c) => (c.institute_slug || c.instituteSlug) && (c.branch_slug || c.branchSlug))
+        .map(
+          (c) =>
+            `/colleges/${c.institute_slug || c.instituteSlug}/${c.branch_slug || c.branchSlug}`,
+        ),
+    ];
+    return [...new Set(paths)].map((loc) => ({ loc, alternateRefs: config.alternateRefs ?? [] }));
   },
   transform: async (config, path) => {
-    // Drop templated detail pages from the sitemap. The page metadata also
-    // sets robots: noindex, but excluding from sitemap is the cleaner signal
-    // to Google — avoids advertising thousands of URLs we are simultaneously
-    // telling crawlers to skip.
-    if (path.startsWith('/branches/') && path !== '/branches') return null;
-    if (path.match(/^\/colleges\/[^/]+\/[^/]+/)) return null;
     const priorityMap = {
       '/': 1.0,
       '/predict': 0.95,
@@ -103,7 +84,6 @@ module.exports = {
       loc: path,
       changefreq,
       priority,
-      lastmod: new Date().toISOString(),
       alternateRefs: config.alternateRefs ?? [],
     };
   },

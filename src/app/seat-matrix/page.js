@@ -1,11 +1,13 @@
 import React from 'react';
 import { FeatureLayout } from '@/components/RankMatrixLayout/FeatureLayout';
 import { SeatList } from '@/components/SeatList';
-import { faqJsonLd } from '@/utils/jsonLd';
+import { ToolAnswers } from '@/components/ToolAnswers';
+import { faqJsonLd, serializeJsonLd } from '@/utils/jsonLd';
+import { buildMetadata } from '@/utils/metadata.mjs';
 
 const PAGE_URL = '/seat-matrix';
 const DESCRIPTION =
-  'JoSAA seat matrix for every year — how many seats each college and branch offers across categories and seat pools (Open, OBC-NCL, SC, ST, EWS, Female-only). Official JoSAA data, free to explore, no signup needed.';
+  'Explore JoSAA seats by college, branch, year, category, quota and seat pool. Compare seat availability alongside historical admission cutoffs.';
 
 const FAQS = [
   {
@@ -21,12 +23,12 @@ const FAQS = [
   {
     question: 'What are supernumerary seats?',
     answer:
-      'Supernumerary seats are reservations added on top of the regular seat matrix rather than carved out of it. EWS reservation and the Female-only pool at IITs are both supernumerary — they expand the total seat count instead of reducing the Open pool.',
+      'Supernumerary seats are additional seats beyond a specified base intake. The female-only pool can include supernumerary seats. Read the current official seat matrix and business rules for the exact programme and category; do not assume every reserved seat is supernumerary.',
   },
   {
     question: 'Does the seat matrix change during JoSAA counselling?',
     answer:
-      'No. Once counselling begins, the total seat count per cell is fixed for that year. What changes between rounds is the number of vacant seats in each cell as candidates freeze, float, slide, or withdraw. This is why closing ranks move round-over-round even though the seat count does not.',
+      'The published matrix is the starting reference for seat availability. JoSAA may issue updates or corrections, so check the latest official publication. Vacancies and allocations also change between rounds; a historical matrix is not a live vacancy count.',
   },
   {
     question: 'What does the "change in seats" view show?',
@@ -35,40 +37,27 @@ const FAQS = [
   },
 ];
 
-export const metadata = {
-  title: 'JoSAA Seat Matrix — Year-wise Seat Availability',
+export const metadata = buildMetadata({
+  path: PAGE_URL,
+  title: 'JoSAA Seat Matrix: College & Category-wise Seats',
   description: DESCRIPTION,
-  alternates: { canonical: PAGE_URL },
-  keywords: [
-    'JoSAA seat matrix',
-    'JoSAA seats year wise',
-    'college seat availability',
-    'JEE engineering admission seats',
-    'JoSAA category wise seats',
-  ],
-  openGraph: {
-    type: 'website',
-    url: PAGE_URL,
-    title: 'JoSAA Seat Matrix — Year-wise Seat Availability',
-    description: DESCRIPTION,
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'JoSAA Seat Matrix | RankMatrix',
-    description: DESCRIPTION,
-  },
-};
+});
 
 const SeatMatrix = () => {
   return (
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd(FAQS)) }}
+        dangerouslySetInnerHTML={{ __html: serializeJsonLd(faqJsonLd(FAQS)) }}
       />
       <FeatureLayout title={'Seat Matrix'}>
         <SeatList />
       </FeatureLayout>
+      <ToolAnswers
+        title="How to use the JoSAA seat matrix"
+        description="The seat matrix records available seats by institute, programme, category, quota and seat pool. Use it alongside historical cutoffs when preparing your choices."
+        faqs={FAQS}
+      />
     </>
   );
 };

@@ -1,11 +1,13 @@
 import React from 'react';
 import { RankList } from '@/components/RankList';
 import { FeatureLayout } from '@/components/RankMatrixLayout/FeatureLayout';
-import { faqJsonLd } from '@/utils/jsonLd';
+import { ToolAnswers } from '@/components/ToolAnswers';
+import { faqJsonLd, serializeJsonLd } from '@/utils/jsonLd';
+import { buildMetadata } from '@/utils/metadata.mjs';
 
 const PAGE_URL = '/ranks';
 const DESCRIPTION =
-  'JoSAA opening and closing ranks for every college, branch, category, and seat pool — year-wise and round-wise. Plan your JoSAA choices with real historical cutoffs sourced from the official JoSAA website. Free, no signup.';
+  'Compare JoSAA opening and closing ranks by college, branch, year, round, category and quota. Explore historical IIT, NIT, IIIT and GFTI cutoffs.';
 
 const FAQS = [
   {
@@ -16,12 +18,12 @@ const FAQS = [
   {
     question: 'What is the difference between HS, OS, and AI quota?',
     answer:
-      "HS (Home State) quota applies to NIT seats reserved for candidates whose home state matches the NIT's state. OS (Other State) quota applies to NIT seats for candidates from other states. AI (All India) quota applies to IITs, IIITs, and GFTIs, where seats are not split by state and every candidate competes in the same pool.",
+      'HS means Home State, OS means Other State and AI means All India. Quota availability and state-code eligibility depend on the institute and the applicable JoSAA rules. Match the exact quota shown in the cutoff row; some institutes have additional quota codes.',
   },
   {
     question: 'Why do closing ranks change between rounds?',
     answer:
-      "Because candidates keep moving. Each round, some freeze their seat, some float or slide for a better allocation, some withdraw, and some previously unallocated candidates now get allocated. As higher-priority seats lock in, each institute-branch's closing rank drifts toward a later (higher-numbered) candidate.",
+      'Because candidates keep moving. Each round, some freeze their seat, some float or slide for a better allocation, some withdraw, and some previously unallocated candidates now get allocated. The resulting cutoff can change, but a later round does not guarantee a more favourable closing rank for every seat type.',
   },
   {
     question: 'What are Gender-Neutral and Female-only seat pools?',
@@ -35,41 +37,27 @@ const FAQS = [
   },
 ];
 
-export const metadata = {
-  title: 'JoSAA Opening & Closing Ranks — Year & Round Wise',
+export const metadata = buildMetadata({
+  path: PAGE_URL,
+  title: 'JoSAA Opening & Closing Ranks by Year and Round',
   description: DESCRIPTION,
-  alternates: { canonical: PAGE_URL },
-  keywords: [
-    'JoSAA opening rank',
-    'JoSAA closing rank',
-    'JEE Main cutoff rank',
-    'JoSAA round wise ranks',
-    'JEE Advanced cutoff',
-    'JoSAA previous year cutoff',
-  ],
-  openGraph: {
-    type: 'website',
-    url: PAGE_URL,
-    title: 'JoSAA Opening & Closing Ranks — Historical Cutoff Trends',
-    description: DESCRIPTION,
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'JoSAA Opening & Closing Ranks | RankMatrix',
-    description: DESCRIPTION,
-  },
-};
+});
 
 const Ranks = () => {
   return (
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd(FAQS)) }}
+        dangerouslySetInnerHTML={{ __html: serializeJsonLd(faqJsonLd(FAQS)) }}
       />
       <FeatureLayout title={'Opening & Closing Ranks'}>
         <RankList />
       </FeatureLayout>
+      <ToolAnswers
+        title="How to compare JoSAA opening and closing ranks"
+        description="Opening rank is the first admitted rank and closing rank the last admitted rank within the exact allocation slice shown. Compare like-for-like rank lists, quotas and categories."
+        faqs={FAQS}
+      />
     </>
   );
 };

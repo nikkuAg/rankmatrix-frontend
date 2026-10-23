@@ -1,11 +1,15 @@
 import React from 'react';
 import { BranchList } from '@/components/BranchList';
 import { FeatureLayout } from '@/components/RankMatrixLayout/FeatureLayout';
-import { faqJsonLd } from '@/utils/jsonLd';
+import { SeoDirectory } from '@/components/SeoDirectory';
+import { apis } from '@/constants/apis';
+import { faqJsonLd, serializeJsonLd } from '@/utils/jsonLd';
+import { buildMetadata } from '@/utils/metadata.mjs';
+import { fetchInitialCatalogue } from '@/utils/seoApi';
 
 const PAGE_URL = '/branches';
 const DESCRIPTION =
-  'Every engineering branch offered through JoSAA counselling — CSE, ECE, EE, ME, CE and more — across IITs, NITs, IIITs, and GFTIs. Built on official JoSAA data. Free, no signup, no marketing spam.';
+  'Find engineering programmes offered through JoSAA. Compare colleges, degrees, course duration and branch-wise opening and closing ranks.';
 
 const FAQS = [
   {
@@ -25,39 +29,24 @@ const FAQS = [
   },
 ];
 
-export const metadata = {
-  title: 'JoSAA Engineering Branches — Full List',
+export const metadata = buildMetadata({
+  path: PAGE_URL,
+  title: 'Engineering Branches & JoSAA College Cutoffs',
   description: DESCRIPTION,
-  alternates: { canonical: PAGE_URL },
-  keywords: [
-    'JoSAA engineering branches',
-    'CSE ECE ME CE branch list',
-    'branches offered in JoSAA',
-    'JEE counselling branches',
-  ],
-  openGraph: {
-    type: 'website',
-    url: PAGE_URL,
-    title: 'JoSAA Engineering Branches — Every Program',
-    description: DESCRIPTION,
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'JoSAA Engineering Branches | RankMatrix',
-    description: DESCRIPTION,
-  },
-};
+});
 
-const Branch = () => {
+const Branch = async () => {
+  const initialData = await fetchInitialCatalogue(apis.branch.search);
   return (
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd(FAQS)) }}
+        dangerouslySetInnerHTML={{ __html: serializeJsonLd(faqJsonLd(FAQS)) }}
       />
       <FeatureLayout title={'Participating Branches'}>
-        <BranchList />
+        <BranchList initialData={initialData} />
       </FeatureLayout>
+      <SeoDirectory kind="branches" faqs={FAQS} />
     </>
   );
 };

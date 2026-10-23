@@ -13,6 +13,7 @@ export const ChipFilter = ({
   const [filterValues, setFilterValues] = useState(defaultSelected);
   const debouncedFilterValues = useDebounce(filterValues, 500);
   const theme = useTheme();
+  const initialFilterValues = useRef(filterValues);
 
   // Parent may recreate onChange every render. Route through a ref so the
   // notify effect depends only on the debounced value and doesn't loop.
@@ -31,6 +32,8 @@ export const ChipFilter = ({
   };
 
   useEffect(() => {
+    // Defaults already describe the initial query. Do not refetch on hydration.
+    if (debouncedFilterValues === initialFilterValues.current) return;
     onChangeRef.current(debouncedFilterValues);
   }, [debouncedFilterValues]);
 

@@ -11,7 +11,6 @@ export const RankMatrixLayout = ({ children }) => {
 
   return (
     <Box
-      component="main"
       sx={{
         backgroundColor: theme.background.main,
         width: '100%',
@@ -19,8 +18,19 @@ export const RankMatrixLayout = ({ children }) => {
       }}
     >
       <Stack minHeight="100dvh" width="100%">
+        <Box
+          component="a"
+          href="#main-content"
+          sx={{
+            position: 'absolute',
+            left: -10000,
+            '&:focus': { left: 16, top: 8, zIndex: 1500, p: 2, bgcolor: 'background.paper' },
+          }}
+        >
+          Skip to content
+        </Box>
         <Navbar />
-        <Box component="section" flexGrow={1}>
+        <Box component="main" id="main-content" tabIndex={-1} flexGrow={1}>
           {children}
         </Box>
         <Footer />

@@ -11,10 +11,9 @@ import {
   Typography,
   useTheme,
 } from '@mui/material';
-import { sendGTMEvent } from '@next/third-parties/google';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
-import { useIsMobile } from '../../../utils/screenSizeHook';
+import Link from 'next/link';
+import { sendAnalyticsEvent } from '@/utils/analyticEvent';
 
 const features = [
   {
@@ -70,13 +69,11 @@ const features = [
 const FeatureCard = ({ title, image, link }) => {
   const [isLoading, setIsLoading] = useState(true);
   const theme = useTheme();
-  const isMobile550 = useIsMobile(550);
-  const router = useRouter();
 
   return (
     <Card
       sx={{
-        width: isMobile550 ? '100%' : '16rem',
+        width: { xs: '100%', sm: '16rem' },
         height: '13rem',
         boxShadow: `0px 0px 55px 6px ${theme.palette.shadow.main}`,
         p: 1,
@@ -85,10 +82,17 @@ const FeatureCard = ({ title, image, link }) => {
       }}
     >
       <CardActionArea
+        component={Link}
+        href={link}
+        prefetch={false}
         sx={{ width: '100%', height: '100%' }}
         onClick={() => {
-          router.push(link);
-          sendGTMEvent({ event: `buttonClicked${title}`, value: 'xyz' });
+          sendAnalyticsEvent({
+            action: 'tool_opened',
+            category: 'navigation',
+            label: title,
+            value: 1,
+          });
         }}
       >
         <CardMedia
@@ -99,16 +103,25 @@ const FeatureCard = ({ title, image, link }) => {
             display: 'flex',
             justifyContent: 'center',
             borderRadius: 2,
+            position: 'relative',
+            overflow: 'hidden',
           }}
         >
-          {isLoading && <Skeleton variant="rounded" width={'100%'} height={'100%'} />}
+          {isLoading && (
+            <Skeleton
+              variant="rounded"
+              sx={{ position: 'absolute', inset: 0 }}
+              width={'100%'}
+              height={'100%'}
+            />
+          )}
           <Image
             src={image}
             alt={title}
-            width={10}
-            height={10}
+            width={180}
+            height={144}
             onLoad={() => setIsLoading(false)}
-            style={{ width: 'auto', height: '100%' }}
+            style={{ width: '100%', height: '100%', objectFit: 'contain' }}
           />
         </CardMedia>
         <CardContent>

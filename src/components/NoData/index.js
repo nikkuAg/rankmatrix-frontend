@@ -3,10 +3,7 @@
 import React from 'react';
 import { Box, TableCell, Typography, useTheme } from '@mui/material';
 
-export const NoDataComponent = ({
-  colSpan,
-  text = 'Data for the applied filters does not exists',
-}) => {
+export const NoDataComponent = ({ colSpan, text = 'No results match the selected filters.' }) => {
   const theme = useTheme();
   return (
     <TableCell
