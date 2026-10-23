@@ -1,3 +1,4 @@
+import { instituteType } from '@/utils/instituteIdentity.mjs';
 import React from 'react';
 import { Box } from '@mui/material';
 import { notFound } from 'next/navigation';
@@ -139,7 +140,7 @@ export default async function InstituteBranchPage({ params }) {
         title={`${data.branch.name} at ${data.institute.name}`}
         subtitle={`${data.branch.degree} · ${data.branch.courseDuration}-year programme · JoSAA counselling`}
         badges={[
-          { label: data.institute.type },
+          { label: instituteType(data.institute) },
           { label: `Programme code ${data.branch.code}` },
           { label: data.institute.state },
           { label: `${data.yearsAvailable?.length || 0} years of data` },
@@ -256,7 +257,7 @@ export default async function InstituteBranchPage({ params }) {
           <a href="https://josaa.nic.in/or-cr/" target="_blank" rel="noopener noreferrer">
             official JoSAA opening and closing ranks
           </a>
-          . IIT cutoffs use JEE Advanced ranks; NIT+ cutoffs use the applicable JEE Main rank list.
+          . IIT and IISc cutoffs use JEE Advanced ranks; NIT+ cutoffs use the applicable JEE Main rank list.
           Compare OPEN rows with CRL and reserved-category rows with the corresponding category
           rank. Match the year, round, quota and seat pool before comparing. RankMatrix reproduces
           historical data; the current JoSAA rules and published results remain authoritative.

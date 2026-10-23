@@ -13,6 +13,7 @@ import {
 } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppLink } from '@/components/AppLink';
+import { COLLEGE_FILTER_LABELS } from '@/utils/instituteIdentity.mjs';
 import { ChipFilter } from '@/components/ChipFilter';
 import { NoDataComponent } from '@/components/NoData';
 import { PaginationBox } from '@/components/PaginationBox';
@@ -143,6 +144,7 @@ export const BranchList = ({ initialData }) => {
         >
           <ChipFilter
             filterList={Object.keys(COLLEGE_TYPES)}
+            labels={COLLEGE_FILTER_LABELS}
             onChange={handleCollegeTypeChange}
             defaultSelected={Object.keys(COLLEGE_TYPES)}
           />

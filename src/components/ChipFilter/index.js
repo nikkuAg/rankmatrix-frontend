@@ -6,6 +6,7 @@ import { useDebounce } from '@/utils/debounceHook';
 
 export const ChipFilter = ({
   filterList,
+  labels = {},
   flexDirection = 'row',
   onChange,
   defaultSelected = [],
@@ -41,7 +42,7 @@ export const ChipFilter = ({
     <Stack direction={flexDirection} spacing={0.8}>
       {filterList.map((filter) => (
         <Chip
-          label={filter}
+          label={labels[filter] || filter}
           key={filter}
           onClick={() => handleClick(filter)}
           sx={{

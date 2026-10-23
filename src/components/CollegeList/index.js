@@ -1,5 +1,6 @@
 'use client';
 
+import { instituteType } from '@/utils/instituteIdentity.mjs';
 import React, { useEffect, useMemo, useState } from 'react';
 import { KeyboardArrowLeft, KeyboardArrowRight } from '@mui/icons-material';
 import {
@@ -16,6 +17,7 @@ import {
 } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppLink } from '@/components/AppLink';
+import { COLLEGE_FILTER_LABELS } from '@/utils/instituteIdentity.mjs';
 import { ChipFilter } from '@/components/ChipFilter';
 import { NoDataComponent } from '@/components/NoData';
 import { PaginationBox } from '@/components/PaginationBox';
@@ -143,6 +145,7 @@ export const CollegeList = ({ initialData }) => {
         >
           <ChipFilter
             filterList={Object.keys(COLLEGE_TYPES)}
+            labels={COLLEGE_FILTER_LABELS}
             onChange={handleCollegeTypeChange}
             defaultSelected={Object.keys(COLLEGE_TYPES)}
           />
@@ -253,7 +256,7 @@ export const CollegeList = ({ initialData }) => {
                             college.name
                           )}
                         </TableCell>
-                        <TableCell>{college.type}</TableCell>
+                        <TableCell>{instituteType(college)}</TableCell>
                         <TableCell>{college.state}</TableCell>
                         {!expandedNirf && (
                           <TableCell
