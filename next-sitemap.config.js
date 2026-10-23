@@ -8,7 +8,18 @@ async function fetchSeoSlugs() {
   if (!API_URL) throw new Error('NEXT_PUBLIC_API_URL is required to generate the full sitemap');
   const res = await fetch(`${API_URL}/api/seo/slugs`, { signal: AbortSignal.timeout(30000) });
   if (!res.ok) throw new Error(`Sitemap catalogue request failed: ${res.status}`);
-  return res.json();
+  const catalogue = await res.json();
+  if (
+    !catalogue ||
+    !['institutes', 'branches', 'cutoffs'].every(
+      (key) =>
+        Array.isArray(catalogue[key]) &&
+        catalogue[key].every((row) => row && typeof row === 'object'),
+    )
+  ) {
+    throw new Error('Sitemap catalogue response must contain institute, branch and cutoff arrays');
+  }
+  return catalogue;
 }
 
 module.exports = {
