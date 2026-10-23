@@ -1,5 +1,7 @@
 # Expanded SEO / AEO technical review
 
+> Historical snapshot: see [24 October PR review and remaining findings](SEO-PR-LINE-REVIEW.md) for later quota, metadata, content, contract and performance corrections. Earlier test counts and implementation descriptions are not the final release state.
+
 Review date: 23 October 2026. This covers the code, public deployed responses and an updated local production build. It does not replace Google Search Console, Bing Webmaster Tools or real-user Core Web Vitals data.
 
 The deeper [search visibility research and product comparison](SEO-AEO-RESEARCH.md) adds 114 checks, current provider guidance, fresh public response evidence and a prioritized follow-up backlog. It supersedes earlier FAQ rich-result eligibility framing: Google retired that feature in May 2026. It also documents the current Search Console generative AI inclusion control and performance report, which require account-level verification.

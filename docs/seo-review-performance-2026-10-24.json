@@ -1,0 +1,473 @@
+{
+  "quota-performance-before": [
+    {
+      "version": "before_quota_change",
+      "endpoint": "institute",
+      "seconds": 1.343,
+      "queries": 14,
+      "bytes": 1946,
+      "status": 200
+    },
+    {
+      "version": "before_quota_change",
+      "endpoint": "programme",
+      "seconds": 6.74,
+      "queries": 72,
+      "bytes": 24622,
+      "status": 200
+    },
+    {
+      "version": "all_quotas",
+      "endpoint": "institute",
+      "seconds": 1.207,
+      "queries": 14,
+      "bytes": 3391,
+      "status": 200
+    },
+    {
+      "version": "all_quotas",
+      "endpoint": "programme",
+      "seconds": 6.711,
+      "queries": 72,
+      "bytes": 35378,
+      "status": 200
+    }
+  ],
+  "quota-performance-batched": [
+    {
+      "version": "per_pair_queries",
+      "endpoint": "institute",
+      "seconds": 1.146,
+      "queries": 14,
+      "bytes": 3391,
+      "status": 200
+    },
+    {
+      "version": "per_pair_queries",
+      "endpoint": "programme",
+      "seconds": 7.212,
+      "queries": 72,
+      "bytes": 35378,
+      "status": 200
+    },
+    {
+      "version": "batched",
+      "endpoint": "institute",
+      "seconds": 0.531,
+      "queries": 6,
+      "bytes": 3391,
+      "status": 200
+    },
+    {
+      "version": "batched",
+      "endpoint": "programme",
+      "seconds": 0.5,
+      "queries": 5,
+      "bytes": 35378,
+      "status": 200
+    }
+  ],
+  "page-timing-24": [
+    {
+      "path": "/",
+      "samples": [
+        {
+          "run": 1,
+          "ttfbMs": 11,
+          "totalMs": 11,
+          "transferBytes": 12200,
+          "encoding": "gzip",
+          "nextCache": "HIT",
+          "status": 200
+        },
+        {
+          "run": 2,
+          "ttfbMs": 12,
+          "totalMs": 12,
+          "transferBytes": 12200,
+          "encoding": "gzip",
+          "nextCache": "HIT",
+          "status": 200
+        }
+      ]
+    },
+    {
+      "path": "/colleges",
+      "samples": [
+        {
+          "run": 1,
+          "ttfbMs": 6,
+          "totalMs": 7,
+          "transferBytes": 27446,
+          "encoding": "gzip",
+          "nextCache": "HIT",
+          "status": 200
+        },
+        {
+          "run": 2,
+          "ttfbMs": 22,
+          "totalMs": 23,
+          "transferBytes": 27446,
+          "encoding": "gzip",
+          "nextCache": "HIT",
+          "status": 200
+        }
+      ]
+    },
+    {
+      "path": "/branches",
+      "samples": [
+        {
+          "run": 1,
+          "ttfbMs": 15,
+          "totalMs": 16,
+          "transferBytes": 30315,
+          "encoding": "gzip",
+          "nextCache": "HIT",
+          "status": 200
+        },
+        {
+          "run": 2,
+          "ttfbMs": 6,
+          "totalMs": 7,
+          "transferBytes": 30315,
+          "encoding": "gzip",
+          "nextCache": "HIT",
+          "status": 200
+        }
+      ]
+    },
+    {
+      "path": "/colleges/national-institute-of-technology-goa",
+      "samples": [
+        {
+          "run": 1,
+          "ttfbMs": 4,
+          "totalMs": 4,
+          "transferBytes": 14834,
+          "encoding": "gzip",
+          "nextCache": "HIT",
+          "status": 200
+        },
+        {
+          "run": 2,
+          "ttfbMs": 4,
+          "totalMs": 4,
+          "transferBytes": 14834,
+          "encoding": "gzip",
+          "nextCache": "HIT",
+          "status": 200
+        }
+      ]
+    },
+    {
+      "path": "/branches/civil-engineering",
+      "samples": [
+        {
+          "run": 1,
+          "ttfbMs": 9,
+          "totalMs": 9,
+          "transferBytes": 24792,
+          "encoding": "gzip",
+          "nextCache": "HIT",
+          "status": 200
+        },
+        {
+          "run": 2,
+          "ttfbMs": 26,
+          "totalMs": 27,
+          "transferBytes": 24792,
+          "encoding": "gzip",
+          "nextCache": "HIT",
+          "status": 200
+        }
+      ]
+    },
+    {
+      "path": "/colleges/national-institute-of-technology-goa/civil-engineering",
+      "samples": [
+        {
+          "run": 1,
+          "ttfbMs": 34,
+          "totalMs": 35,
+          "transferBytes": 30279,
+          "encoding": "gzip",
+          "nextCache": "HIT",
+          "status": 200
+        },
+        {
+          "run": 2,
+          "ttfbMs": 8,
+          "totalMs": 9,
+          "transferBytes": 30279,
+          "encoding": "gzip",
+          "nextCache": "HIT",
+          "status": 200
+        }
+      ]
+    }
+  ],
+  "page-first-render-24": [
+    {
+      "path": "/colleges/indian-institute-of-technology-delhi",
+      "run": 1,
+      "ttfbMs": 1940,
+      "totalMs": 1941,
+      "bytes": 15600,
+      "nextCache": "MISS"
+    },
+    {
+      "path": "/colleges/indian-institute-of-technology-delhi",
+      "run": 2,
+      "ttfbMs": 5,
+      "totalMs": 5,
+      "bytes": 15600,
+      "nextCache": "HIT"
+    },
+    {
+      "path": "/branches/abu-dhabi-campus-chemical-engineering",
+      "run": 1,
+      "ttfbMs": 776,
+      "totalMs": 776,
+      "bytes": 13106,
+      "nextCache": "MISS"
+    },
+    {
+      "path": "/branches/abu-dhabi-campus-chemical-engineering",
+      "run": 2,
+      "ttfbMs": 5,
+      "totalMs": 5,
+      "bytes": 13106,
+      "nextCache": "HIT"
+    },
+    {
+      "path": "/colleges/indian-institute-of-technology-delhi/abu-dhabi-campus-chemical-engineering",
+      "run": 1,
+      "ttfbMs": 1422,
+      "totalMs": 1423,
+      "bytes": 15720,
+      "nextCache": "MISS"
+    },
+    {
+      "path": "/colleges/indian-institute-of-technology-delhi/abu-dhabi-campus-chemical-engineering",
+      "run": 2,
+      "ttfbMs": 5,
+      "totalMs": 5,
+      "bytes": 15720,
+      "nextCache": "HIT"
+    }
+  ],
+  "quota-validation": [
+    {
+      "institute": "indian-institute-of-technology-bhubaneswar",
+      "programme": "civil-engineering",
+      "quotas": [
+        "AI"
+      ],
+      "renderedPages": 3
+    },
+    {
+      "institute": "indian-institute-of-technology-goa",
+      "programme": "computer-science-and-engineering",
+      "quotas": [
+        "AI"
+      ],
+      "renderedPages": 3
+    },
+    {
+      "institute": "national-institute-of-technology-goa",
+      "programme": "civil-engineering",
+      "quotas": [
+        "GO",
+        "HS",
+        "OS"
+      ],
+      "renderedPages": 3
+    },
+    {
+      "institute": "national-institute-of-technology-srinagar",
+      "programme": "chemical-engineering",
+      "quotas": [
+        "JK",
+        "LA",
+        "OS"
+      ],
+      "renderedPages": 3
+    },
+    {
+      "institute": "national-institute-of-technology-warangal",
+      "programme": "bio-technology",
+      "quotas": [
+        "HS",
+        "OS"
+      ],
+      "renderedPages": 3
+    },
+    {
+      "institute": "international-institute-of-information-technology-bhubaneswar",
+      "programme": "computer-science-and-engineering",
+      "quotas": [
+        "AI"
+      ],
+      "renderedPages": 3
+    },
+    {
+      "institute": "national-institute-of-electronics-and-information-technology-srinagar",
+      "programme": "btech-in-cse-ai-and-ml",
+      "quotas": [
+        "AI"
+      ],
+      "renderedPages": 3
+    }
+  ],
+  "lighthouse": [
+    {
+      "source": "lighthouse-colleges-24.json",
+      "url": "http://127.0.0.1:3005/colleges",
+      "version": "13.5.0",
+      "scores": {
+        "performance": 88,
+        "accessibility": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "largest-contentful-paint": {
+          "value": 3326.3619,
+          "display": "3.3\u00a0s"
+        },
+        "cumulative-layout-shift": {
+          "value": 0,
+          "display": "0"
+        },
+        "total-blocking-time": {
+          "value": 240.88757499999974,
+          "display": "240\u00a0ms"
+        }
+      }
+    },
+    {
+      "source": "lighthouse-colleges-final-24.json",
+      "url": "http://127.0.0.1:3007/colleges",
+      "version": "13.5.0",
+      "scores": {
+        "performance": 85,
+        "accessibility": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "largest-contentful-paint": {
+          "value": 3735.1916,
+          "display": "3.7\u00a0s"
+        },
+        "cumulative-layout-shift": {
+          "value": 0,
+          "display": "0"
+        },
+        "total-blocking-time": {
+          "value": 240,
+          "display": "240\u00a0ms"
+        }
+      }
+    },
+    {
+      "source": "lighthouse-deep-final-24.json",
+      "url": "http://127.0.0.1:3007/colleges/national-institute-of-technology-goa/civil-engineering",
+      "version": "13.5.0",
+      "scores": {
+        "performance": 91,
+        "accessibility": 96,
+        "seo": 100
+      },
+      "metrics": {
+        "largest-contentful-paint": {
+          "value": 2949.9007499999993,
+          "display": "2.9\u00a0s"
+        },
+        "cumulative-layout-shift": {
+          "value": 0,
+          "display": "0"
+        },
+        "total-blocking-time": {
+          "value": 210.5000000000009,
+          "display": "210\u00a0ms"
+        }
+      }
+    },
+    {
+      "source": "lighthouse-home-24.json",
+      "url": "http://127.0.0.1:3005/",
+      "version": "13.5.0",
+      "scores": {
+        "performance": 92,
+        "accessibility": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "largest-contentful-paint": {
+          "value": 1614.8718,
+          "display": "1.6\u00a0s"
+        },
+        "cumulative-layout-shift": {
+          "value": 0,
+          "display": "0"
+        },
+        "total-blocking-time": {
+          "value": 318.5,
+          "display": "320\u00a0ms"
+        }
+      }
+    },
+    {
+      "source": "lighthouse-home-final-24.json",
+      "url": "http://127.0.0.1:3007/",
+      "version": "13.5.0",
+      "scores": {
+        "performance": 89,
+        "accessibility": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "largest-contentful-paint": {
+          "value": 2803.42,
+          "display": "2.8\u00a0s"
+        },
+        "cumulative-layout-shift": {
+          "value": 0,
+          "display": "0"
+        },
+        "total-blocking-time": {
+          "value": 295,
+          "display": "300\u00a0ms"
+        }
+      }
+    }
+  ],
+  "rankConstraintObservation": {
+    "concreteModel": "JoSAARank2026",
+    "uniqueTogether": [],
+    "databaseUniqueColumns": [
+      [
+        "id"
+      ]
+    ],
+    "duplicateCurrentSummarySliceGroups": 0,
+    "scope": "Read-only introspection and one General/Gender-Neutral/nonpreparatory aggregate; no migrations or cleanup."
+  },
+  "titleIdentityValidation": {
+    "routes": 1464,
+    "collisionGroups": 0,
+    "method": "All stored dynamic identity templates using current helpers; YEAR placeholder. Not a full HTTP crawl."
+  },
+  "finalBuild": {
+    "frontend": "45da153ab6546f5b03031dafee4513d2faa7660f",
+    "backend": "d745d13428b369cbd40d52b3d799eed191f0d160",
+    "tests": {
+      "frontend": 26,
+      "backend": 4,
+      "metadataRoutes": 23,
+      "titleIdentityTemplates": 1464
+    },
+    "preview": "http://127.0.0.1:3008",
+    "limitations": "Lighthouse source runs predate the metadata-only #98 change; not production field measurements."
+  }
+}

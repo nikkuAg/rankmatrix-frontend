@@ -1,5 +1,7 @@
 # RankMatrix search visibility research and product comparison
 
+> Historical snapshot: see [24 October PR review and remaining findings](SEO-PR-LINE-REVIEW.md) for later quota, metadata, content, contract and performance corrections. Earlier test counts and implementation descriptions are not the final release state.
+
 Research date: 23 October 2026.
 
 RankMatrix's largest immediate opportunity is to publish the rendering, indexing and metadata work already in review. After that, the strongest product opportunities are trustworthy data releases, correct comparisons, useful answers derived from the data, and evidence that students actually reach their answers. Small presentation improvements matter, but their expected value differs greatly from removing an indexing barrier.

@@ -1,0 +1,1140 @@
+[
+  {
+    "pr": 24,
+    "sha": "d8d8debf449c1a98a6bc58ed4b7eb63709625e71",
+    "files": [
+      {
+        "path": "next-sitemap.config.js",
+        "hunks": [
+          "-1,27 +1,20",
+          "-34,32 +27,20",
+          "-103,7 +84,6"
+        ],
+        "binary": false
+      },
+      {
+        "path": "next.config.mjs",
+        "hunks": [
+          "-34,7 +34,7"
+        ],
+        "binary": false
+      },
+      {
+        "path": "public/llms.txt",
+        "hunks": [
+          "-1,63 +1,28"
+        ],
+        "binary": false
+      },
+      {
+        "path": "public/robots.txt",
+        "hunks": [
+          "-107,7 +107,7"
+        ],
+        "binary": false
+      },
+      {
+        "path": "public/sitemap-0.xml",
+        "hunks": [
+          "-1,151 +1,1487"
+        ],
+        "binary": false
+      },
+      {
+        "path": "public/sitemap.xml",
+        "hunks": [
+          "-1,4 +1,4"
+        ],
+        "binary": false
+      },
+      {
+        "path": "scripts/metadata.test.mjs",
+        "hunks": [
+          "-0,0 +1,69"
+        ],
+        "binary": false
+      },
+      {
+        "path": "scripts/rendering.test.mjs",
+        "hunks": [
+          "-0,0 +1,25"
+        ],
+        "binary": false
+      },
+      {
+        "path": "scripts/seo.test.cjs",
+        "hunks": [
+          "-0,0 +1,49"
+        ],
+        "binary": false
+      },
+      {
+        "path": "src/app/about/page.js",
+        "hunks": [
+          "-2,34 +2,24",
+          "-59,7 +49,7"
+        ],
+        "binary": false
+      },
+      {
+        "path": "src/app/branches/[slug]/page.js",
+        "hunks": [
+          "-3,68 +3,34",
+          "-114,23 +80,12",
+          "-145,7 +100,7",
+          "-190,6 +145,7",
+          "-208,6 +164,9"
+        ],
+        "binary": false
+      },
+      {
+        "path": "src/app/branches/page.js",
+        "hunks": [
+          "-1,11 +1,15",
+          "-25,39 +29,24"
+        ],
+        "binary": false
+      },
+      {
+        "path": "src/app/colleges/[slug]/[branch]/page.js",
+        "hunks": [
+          "-3,7 +3,8",
+          "-15,51 +16,24",
+          "-70,7 +44,7",
+          "-83,13 +57,11",
+          "-139,14 +111,8",
+          "-162,7 +128,7",
+          "-195,9 +161,9",
+          "-271,6 +237,17"
+        ],
+        "binary": false
+      },
+      {
+        "path": "src/app/colleges/[slug]/page.js",
+        "hunks": [
+          "-3,8 +3,9",
+          "-12,7 +13,7",
+          "-21,57 +22,25",
+          "-149,12 +118,6",
+          "-171,7 +134,7",
+          "-234,9 +197,9",
+          "-248,6 +211,7",
+          "-261,6 +225,9"
+        ],
+        "binary": false
+      },
+      {
+        "path": "src/app/colleges/page.js",
+        "hunks": [
+          "-1,22 +1,26",
+          "-30,40 +34,24"
+        ],
+        "binary": false
+      },
+      {
+        "path": "src/app/contact/page.js",
+        "hunks": [
+          "-1,35 +1,25",
+          "-49,7 +39,7"
+        ],
+        "binary": false
+      },
+      {
+        "path": "src/app/layout.js",
+        "hunks": [
+          "-6,81 +6,38",
+          "-102,6 +59,7",
+          "-124,19 +82,12",
+          "-145,11 +96,11"
+        ],
+        "binary": false
+      },
+      {
+        "path": "src/app/not-found.js",
+        "hunks": [
+          "-0,0 +1,37"
+        ],
+        "binary": false
+      },
+      {
+        "path": "src/app/page.js",
+        "hunks": [
+          "-3,11 +3,9",
+          "-29,7 +27,7",
+          "-46,7 +44,7",
+          "-68,8 +66,8",
+          "-85,9 +83,9",
+          "-116,52 +114,31"
+        ],
+        "binary": false
+      },
+      {
+        "path": "src/app/privacy/page.js",
+        "hunks": [
+          "-2,31 +2,21",
+          "-42,7 +32,7",
+          "-86,7 +76,7"
+        ],
+        "binary": false
+      },
+      {
+        "path": "src/app/ranks/page.js",
+        "hunks": [
+          "-1,11 +1,13",
+          "-16,12 +18,12",
+          "-35,41 +37,27"
+        ],
+        "binary": false
+      },
+      {
+        "path": "src/app/seat-matrix/page.js",
+        "hunks": [
+          "-1,11 +1,13",
+          "-21,12 +23,12",
+          "-35,40 +37,27"
+        ],
+        "binary": false
+      },
+      {
+        "path": "src/app/terms/page.js",
+        "hunks": [
+          "-2,31 +2,21",
+          "-42,7 +32,7"
+        ],
+        "binary": false
+      },
+      {
+        "path": "src/components/AppLink/index.js",
+        "hunks": [
+          "-6,7 +6,7"
+        ],
+        "binary": false
+      },
+      {
+        "path": "src/components/BranchList/index.js",
+        "hunks": [
+          "-29,24 +29,31",
+          "-142,17 +149,17",
+          "-169,7 +176,7"
+        ],
+        "binary": false
+      },
+      {
+        "path": "src/components/ChipFilter/index.js",
+        "hunks": [
+          "-13,6 +13,7",
+          "-31,6 +32,8"
+        ],
+        "binary": false
+      },
+      {
+        "path": "src/components/CollegeList/index.js",
+        "hunks": [
+          "-31,15 +31,20",
+          "-47,7 +52,11",
+          "-132,17 +141,17",
+          "-154,7 +163,7",
+          "-169,7 +178,7",
+          "-202,7 +211,7"
+        ],
+        "binary": false
+      },
+      {
+        "path": "src/components/DashboardSections/Calendar/DeferredCalendar.js",
+        "hunks": [
+          "-0,0 +1,41"
+        ],
+        "binary": false
+      },
+      {
+        "path": "src/components/DashboardSections/Calendar/index.js",
+        "hunks": [
+          "-142,7 +142,7"
+        ],
+        "binary": false
+      },
+      {
+        "path": "src/components/DashboardSections/FeatureBox/index.js",
+        "hunks": [
+          "-11,10 +11,9",
+          "-70,13 +69,11",
+          "-85,10 +82,17",
+          "-99,16 +103,25"
+        ],
+        "binary": false
+      },
+      {
+        "path": "src/components/DashboardSections/Updates/ContentListCard.js",
+        "hunks": [
+          "-19,7 +19,7",
+          "-36,7 +36,7"
+        ],
+        "binary": false
+      },
+      {
+        "path": "src/components/DataPageLayout/index.js",
+        "hunks": [
+          "-22,7 +22,7",
+          "-102,7 +102,7"
+        ],
+        "binary": false
+      },
+      {
+        "path": "src/components/GuideLayout/index.js",
+        "hunks": [
+          "-23,6 +23,7",
+          "-60,7 +61,7",
+          "-161,6 +162,9"
+        ],
+        "binary": false
+      },
+      {
+        "path": "src/components/Navbar/index.js",
+        "hunks": [
+          "-3,22 +3,24",
+          "-26,9 +28,10",
+          "-37,10 +40,37"
+        ],
+        "binary": false
+      },
+      {
+        "path": "src/components/NoData/index.js",
+        "hunks": [
+          "-3,10 +3,7"
+        ],
+        "binary": false
+      },
+      {
+        "path": "src/components/PaginationBox/index.js",
+        "hunks": [
+          "-2,7 +2,6",
+          "-13,12 +12,11"
+        ],
+        "binary": false
+      },
+      {
+        "path": "src/components/RankMatrixLayout/FeatureLayout.js",
+        "hunks": [
+          "-2,11 +2,9",
+          "-16,11 +14,11"
+        ],
+        "binary": false
+      },
+      {
+        "path": "src/components/RankMatrixLayout/index.js",
+        "hunks": [
+          "-11,7 +11,6",
+          "-19,8 +18,19"
+        ],
+        "binary": false
+      },
+      {
+        "path": "src/components/SeoDirectory/index.js",
+        "hunks": [
+          "-0,0 +1,65"
+        ],
+        "binary": false
+      },
+      {
+        "path": "src/components/ToolAnswers/index.js",
+        "hunks": [
+          "-0,0 +1,27"
+        ],
+        "binary": false
+      },
+      {
+        "path": "src/constants/themes.js",
+        "hunks": [
+          "-51,7 +51,7"
+        ],
+        "binary": false
+      },
+      {
+        "path": "src/store/selectors/siteContent.js",
+        "hunks": [
+          "-1,9 +1,6"
+        ],
+        "binary": false
+      },
+      {
+        "path": "src/theme/ThemeContext.js",
+        "hunks": [
+          "-72,7 +72,11"
+        ],
+        "binary": false
+      },
+      {
+        "path": "src/utils/catalogue.mjs",
+        "hunks": [
+          "-0,0 +1,9"
+        ],
+        "binary": false
+      },
+      {
+        "path": "src/utils/jsonLd.js",
+        "hunks": [
+          "-1,8 +1,15"
+        ],
+        "binary": false
+      },
+      {
+        "path": "src/utils/metadata.mjs",
+        "hunks": [
+          "-0,0 +1,78"
+        ],
+        "binary": false
+      },
+      {
+        "path": "src/utils/seoApi.js",
+        "hunks": [
+          "-12,7 +12,10",
+          "-32,3 +35,16"
+        ],
+        "binary": false
+      }
+    ]
+  },
+  {
+    "pr": 25,
+    "sha": "d35970c2285b7c8696c5ccb0ca32e4e85a6f5be3",
+    "files": [
+      {
+        "path": "src/app/guides/jee-main-college-predictor/page.js",
+        "hunks": [
+          "-1,19 +1,21",
+          "-23,7 +25,7",
+          "-42,35 +44,14",
+          "-78,6 +59,7",
+          "-94,13 +76,13",
+          "-108,6 +90,7",
+          "-115,9 +98,8",
+          "-134,32 +116,23",
+          "-196,11 +169,12",
+          "-228,8 +202,8"
+        ],
+        "binary": false
+      },
+      {
+        "path": "src/app/guides/jee-main-vs-advanced-vs-josaa/page.js",
+        "hunks": [
+          "-1,12 +1,13",
+          "-42,31 +43,14",
+          "-74,6 +58,7",
+          "-90,13 +75,13",
+          "-182,8 +167,8"
+        ],
+        "binary": false
+      },
+      {
+        "path": "src/app/guides/josaa-choice-filling-strategy/page.js",
+        "hunks": [
+          "-1,19 +1,20",
+          "-37,32 +38,14",
+          "-70,6 +53,7",
+          "-86,13 +70,13",
+          "-123,13 +107,13",
+          "-146,9 +130,9",
+          "-206,18 +190,17"
+        ],
+        "binary": false
+      },
+      {
+        "path": "src/app/guides/josaa-counselling-rounds/page.js",
+        "hunks": [
+          "-1,12 +1,13",
+          "-18,7 +19,7",
+          "-38,35 +39,18",
+          "-74,6 +58,7",
+          "-90,13 +75,13"
+        ],
+        "binary": false
+      },
+      {
+        "path": "src/app/guides/josaa-opening-and-closing-ranks/page.js",
+        "hunks": [
+          "-2,12 +2,14",
+          "-29,41 +31,23",
+          "-71,6 +55,7",
+          "-87,13 +72,13",
+          "-101,6 +86,7",
+          "-118,7 +104,7",
+          "-176,9 +162,9",
+          "-187,9 +173,8",
+          "-197,9 +182,8",
+          "-219,11 +203,9",
+          "-233,8 +215,8",
+          "-246,9 +228,9"
+        ],
+        "binary": false
+      },
+      {
+        "path": "src/app/guides/josaa-reservation-categories/page.js",
+        "hunks": [
+          "-1,12 +1,14",
+          "-28,7 +30,7",
+          "-37,33 +39,14",
+          "-71,6 +54,7",
+          "-87,13 +71,13",
+          "-101,6 +85,7",
+          "-168,9 +153,8",
+          "-182,9 +166,8",
+          "-195,9 +178,8",
+          "-215,11 +197,9"
+        ],
+        "binary": false
+      },
+      {
+        "path": "src/app/guides/josaa-seat-matrix/page.js",
+        "hunks": [
+          "-1,12 +1,14",
+          "-18,51 +20,33",
+          "-70,6 +54,7",
+          "-86,13 +71,13",
+          "-100,6 +85,7",
+          "-160,8 +146,8",
+          "-178,10 +164,8",
+          "-245,7 +229,8",
+          "-260,13 +245,10"
+        ],
+        "binary": false
+      },
+      {
+        "path": "src/app/guides/page.js",
+        "hunks": [
+          "-2,38 +2,18",
+          "-104,7 +84,7"
+        ],
+        "binary": false
+      },
+      {
+        "path": "src/app/guides/what-is-josaa-counselling/page.js",
+        "hunks": [
+          "-1,12 +1,14",
+          "-37,31 +39,14",
+          "-69,6 +54,7",
+          "-85,13 +71,13",
+          "-99,6 +85,7",
+          "-251,9 +238,8"
+        ],
+        "binary": false
+      },
+      {
+        "path": "src/app/methodology/page.js",
+        "hunks": [
+          "-2,38 +2,23",
+          "-41,6 +26,7",
+          "-55,198 +41,100"
+        ],
+        "binary": false
+      },
+      {
+        "path": "src/app/predict/content.js",
+        "hunks": [
+          "-70,8 +70,8",
+          "-86,45 +86,27"
+        ],
+        "binary": false
+      },
+      {
+        "path": "src/app/predict/page.js",
+        "hunks": [
+          "-1,14 +1,25",
+          "-17,7 +28,7",
+          "-27,12 +38,12",
+          "-41,46 +52,18"
+        ],
+        "binary": false
+      },
+      {
+        "path": "src/components/OfficialRuleNotes/index.js",
+        "hunks": [
+          "-0,0 +1,22"
+        ],
+        "binary": false
+      }
+    ]
+  },
+  {
+    "pr": 26,
+    "sha": "74cb7d81b47c3102c5a870373e01d93df82be626",
+    "files": [
+      {
+        "path": "scripts/analytics.test.mjs",
+        "hunks": [
+          "-0,0 +1,22"
+        ],
+        "binary": false
+      },
+      {
+        "path": "src/components/CollegePredictor/formModal.js",
+        "hunks": [
+          "-39,15 +39,24"
+        ],
+        "binary": false
+      },
+      {
+        "path": "src/utils/analyticEvent.js",
+        "hunks": [
+          "-1,10 +1,7"
+        ],
+        "binary": false
+      },
+      {
+        "path": "src/utils/analyticsPayload.mjs",
+        "hunks": [
+          "-0,0 +1,8"
+        ],
+        "binary": false
+      }
+    ]
+  },
+  {
+    "pr": 27,
+    "sha": "d68ea70e9fc7ccd03b55896b76bd2969a1ac3de2",
+    "files": [
+      {
+        "path": "docs/SEO-AEO-AUDIT.md",
+        "hunks": [
+          "-0,0 +1,79"
+        ],
+        "binary": false
+      },
+      {
+        "path": "docs/SEO-TECHNICAL-CHECKLIST.md",
+        "hunks": [
+          "-0,0 +1,84"
+        ],
+        "binary": false
+      },
+      {
+        "path": "docs/metadata-preview.json",
+        "hunks": [
+          "-0,0 +1,117"
+        ],
+        "binary": false
+      },
+      {
+        "path": "docs/performance-results.json",
+        "hunks": [
+          "-0,0 +1,131"
+        ],
+        "binary": false
+      },
+      {
+        "path": "scripts/audit-rendered.py",
+        "hunks": [
+          "-0,0 +1,47"
+        ],
+        "binary": false
+      }
+    ]
+  },
+  {
+    "pr": 28,
+    "sha": "3e83a0b34a5758e03e6756cce32a81857f37b05b",
+    "files": [
+      {
+        "path": "docs/SEO-AEO-RESEARCH.md",
+        "hunks": [
+          "-0,0 +1,301"
+        ],
+        "binary": false
+      },
+      {
+        "path": "docs/SEO-TECHNICAL-CHECKLIST.md",
+        "hunks": [
+          "-2,6 +2,8"
+        ],
+        "binary": false
+      },
+      {
+        "path": "docs/seo-research-evidence.json",
+        "hunks": [
+          "-0,0 +1,143"
+        ],
+        "binary": false
+      }
+    ]
+  },
+  {
+    "pr": 29,
+    "sha": "e6c7d0456c2b9cb9b3aa52032c86fcb2ac2edf3b",
+    "files": [
+      {
+        "path": "src/app/branches/[slug]/page.js",
+        "hunks": [
+          "-116,7 +116,7",
+          "-135,7 +135,7"
+        ],
+        "binary": false
+      },
+      {
+        "path": "src/app/colleges/[slug]/[branch]/page.js",
+        "hunks": [
+          "-45,14 +45,14",
+          "-152,7 +152,7",
+          "-167,14 +167,15",
+          "-234,7 +235,10"
+        ],
+        "binary": false
+      },
+      {
+        "path": "src/app/colleges/[slug]/page.js",
+        "hunks": [
+          "-153,7 +153,7"
+        ],
+        "binary": false
+      }
+    ]
+  },
+  {
+    "pr": 30,
+    "sha": "8217903e8d32db5b55a5b6b7869191c5e4ca0314",
+    "files": [
+      {
+        "path": "scripts/examGroups.test.mjs",
+        "hunks": [
+          "-0,0 +1,35"
+        ],
+        "binary": false
+      },
+      {
+        "path": "src/app/branches/[slug]/page.js",
+        "hunks": [
+          "-3,6 +3,7",
+          "-50,7 +51,7",
+          "-59,14 +60,6",
+          "-75,7 +68,7",
+          "-127,56 +120,67"
+        ],
+        "binary": false
+      },
+      {
+        "path": "src/utils/examGroups.mjs",
+        "hunks": [
+          "-0,0 +1,26"
+        ],
+        "binary": false
+      }
+    ]
+  },
+  {
+    "pr": 31,
+    "sha": "cc331ce49c5251c8a790093c31eb1299acabff96",
+    "files": [
+      {
+        "path": "public/icon.svg",
+        "hunks": [],
+        "binary": false
+      },
+      {
+        "path": "src/app/icon.png",
+        "hunks": [],
+        "binary": true
+      }
+    ]
+  },
+  {
+    "pr": 90,
+    "sha": "34a9d988f328987e8d643226a6f15d114529614c",
+    "files": [
+      {
+        "path": "next-sitemap.config.js",
+        "hunks": [
+          "-8,7 +8,18"
+        ],
+        "binary": false
+      },
+      {
+        "path": "scripts/seo.test.cjs",
+        "hunks": [
+          "-1,5 +1,7",
+          "-47,3 +49,20"
+        ],
+        "binary": false
+      },
+      {
+        "path": "scripts/seoFetch.test.mjs",
+        "hunks": [
+          "-0,0 +1,59"
+        ],
+        "binary": false
+      },
+      {
+        "path": "src/utils/seoApi.js",
+        "hunks": [
+          "-1,26 +1,17",
+          "-37,14 +28,13"
+        ],
+        "binary": false
+      },
+      {
+        "path": "src/utils/seoFetch.mjs",
+        "hunks": [
+          "-0,0 +1,15"
+        ],
+        "binary": false
+      }
+    ]
+  },
+  {
+    "pr": 91,
+    "sha": "f00e95b745b6fdb051de8b6cc2a1b9a700bf8c6f",
+    "files": [
+      {
+        "path": "scripts/catalogueState.test.mjs",
+        "hunks": [
+          "-0,0 +1,66"
+        ],
+        "binary": false
+      },
+      {
+        "path": "src/components/BranchList/index.js",
+        "hunks": [
+          "-29,31 +29,18"
+        ],
+        "binary": false
+      },
+      {
+        "path": "src/components/CollegeList/index.js",
+        "hunks": [
+          "-31,19 +31,14",
+          "-153,7 +148,7",
+          "-163,7 +158,7",
+          "-299,7 +294,7"
+        ],
+        "binary": false
+      },
+      {
+        "path": "src/utils/catalogue.mjs",
+        "hunks": [
+          "-7,3 +7,16"
+        ],
+        "binary": false
+      }
+    ]
+  },
+  {
+    "pr": 92,
+    "sha": "7a320fdd264f8e8a31e1b1992769a9141507122e",
+    "files": [
+      {
+        "path": "src/app/guides/jee-main-college-predictor/page.js",
+        "hunks": [
+          "-25,17 +25,17",
+          "-158,34 +158,24"
+        ],
+        "binary": false
+      },
+      {
+        "path": "src/app/page.js",
+        "hunks": [
+          "-83,9 +83,10"
+        ],
+        "binary": false
+      },
+      {
+        "path": "src/app/predict/content.js",
+        "hunks": [
+          "-59,32 +59,16",
+          "-102,26 +86,23"
+        ],
+        "binary": false
+      },
+      {
+        "path": "src/app/predict/page.js",
+        "hunks": [
+          "-48,7 +48,7"
+        ],
+        "binary": false
+      }
+    ]
+  },
+  {
+    "pr": 93,
+    "sha": "b56fa18c96eee4da8f1ef026a76c1f4e8d5daa63",
+    "files": [
+      {
+        "path": "scripts/cutoffSummaries.test.mjs",
+        "hunks": [
+          "-0,0 +1,38"
+        ],
+        "binary": false
+      },
+      {
+        "path": "src/app/branches/[slug]/page.js",
+        "hunks": [
+          "-3,6 +3,7",
+          "-123,8 +124,9",
+          "-152,30 +154,32"
+        ],
+        "binary": false
+      },
+      {
+        "path": "src/app/colleges/[slug]/[branch]/page.js",
+        "hunks": [
+          "-3,6 +3,7",
+          "-38,14 +39,19",
+          "-75,14 +81,6",
+          "-92,8 +90,8",
+          "-144,32 +142,42"
+        ],
+        "binary": false
+      },
+      {
+        "path": "src/app/colleges/[slug]/page.js",
+        "hunks": [
+          "-3,6 +3,7",
+          "-197,9 +198,9",
+          "-218,21 +219,23"
+        ],
+        "binary": false
+      },
+      {
+        "path": "src/utils/cutoffSummaries.mjs",
+        "hunks": [
+          "-0,0 +1,18"
+        ],
+        "binary": false
+      },
+      {
+        "path": "src/utils/seoApi.js",
+        "hunks": [
+          "-20,9 +20,11"
+        ],
+        "binary": false
+      }
+    ]
+  },
+  {
+    "pr": 94,
+    "sha": "e36578043fae43ac7709d526f53eaeb51101a4f0",
+    "files": [
+      {
+        "path": "src/app/ranks/page.js",
+        "hunks": [
+          "-13,7 +13,7",
+          "-28,12 +28,12"
+        ],
+        "binary": false
+      },
+      {
+        "path": "src/app/seat-matrix/page.js",
+        "hunks": [
+          "-13,7 +13,7",
+          "-33,7 +33,7"
+        ],
+        "binary": false
+      }
+    ]
+  },
+  {
+    "pr": 95,
+    "sha": "0c7419b9745c8009a04093c96b77ad1533a9abca",
+    "files": [
+      {
+        "path": "src/app/branches/[slug]/page.js",
+        "hunks": [
+          "-56,7 +56,7",
+          "-115,9 +115,9"
+        ],
+        "binary": false
+      },
+      {
+        "path": "src/app/colleges/[slug]/page.js",
+        "hunks": [
+          "-64,8 +64,8",
+          "-79,7 +79,7",
+          "-151,7 +151,11",
+          "-159,9 +163,9",
+          "-173,13 +177,13",
+          "-197,10 +201,12",
+          "-215,7 +221,7"
+        ],
+        "binary": false
+      },
+      {
+        "path": "src/app/colleges/page.js",
+        "hunks": [
+          "-25,12 +25,12"
+        ],
+        "binary": false
+      },
+      {
+        "path": "src/app/guides/jee-main-college-predictor/page.js",
+        "hunks": [
+          "-15,7 +15,7"
+        ],
+        "binary": false
+      },
+      {
+        "path": "src/app/guides/jee-main-vs-advanced-vs-josaa/page.js",
+        "hunks": [
+          "-19,12 +19,12",
+          "-34,7 +34,7",
+          "-119,7 +119,7",
+          "-136,7 +136,7",
+          "-171,8 +171,9",
+          "-273,9 +274,9"
+        ],
+        "binary": false
+      },
+      {
+        "path": "src/app/guides/josaa-choice-filling-strategy/page.js",
+        "hunks": [
+          "-24,7 +24,7",
+          "-34,7 +34,7",
+          "-97,86 +97,32",
+          "-204,9 +150,9",
+          "-241,8 +187,8",
+          "-260,8 +206,8",
+          "-271,7 +217,7"
+        ],
+        "binary": false
+      },
+      {
+        "path": "src/app/guides/josaa-counselling-rounds/page.js",
+        "hunks": [
+          "-92,7 +92,7",
+          "-163,7 +163,7",
+          "-176,8 +176,8",
+          "-242,8 +242,8"
+        ],
+        "binary": false
+      },
+      {
+        "path": "src/app/guides/josaa-opening-and-closing-ranks/page.js",
+        "hunks": [
+          "-16,7 +16,7",
+          "-26,7 +26,7",
+          "-89,11 +89,11",
+          "-130,34 +130,16",
+          "-170,7 +152,8",
+          "-186,18 +169,12",
+          "-237,8 +214,8"
+        ],
+        "binary": false
+      },
+      {
+        "path": "src/app/guides/josaa-reservation-categories/page.js",
+        "hunks": [
+          "-146,48 +146,24",
+          "-227,11 +203,11"
+        ],
+        "binary": false
+      },
+      {
+        "path": "src/app/guides/josaa-seat-matrix/page.js",
+        "hunks": [
+          "-15,7 +15,7",
+          "-116,8 +116,8",
+          "-162,16 +162,15",
+          "-187,52 +186,25"
+        ],
+        "binary": false
+      },
+      {
+        "path": "src/app/guides/page.js",
+        "hunks": [
+          "-69,7 +69,7"
+        ],
+        "binary": false
+      },
+      {
+        "path": "src/app/page.js",
+        "hunks": [
+          "-46,24 +46,22",
+          "-81,12 +79,12"
+        ],
+        "binary": false
+      }
+    ]
+  },
+  {
+    "pr": 96,
+    "sha": "85a8f31f8a1866a94c7ac42f7eda2c228107d468",
+    "files": [
+      {
+        "path": "scripts/metadata.test.mjs",
+        "hunks": [
+          "-2,10 +2,26"
+        ],
+        "binary": false
+      },
+      {
+        "path": "src/utils/metadata.mjs",
+        "hunks": [
+          "-12,16 +12,11"
+        ],
+        "binary": false
+      }
+    ]
+  },
+  {
+    "pr": 97,
+    "sha": "12b6aa661e7f82c43404492839a8d85a5c642311",
+    "files": [
+      {
+        "path": "scripts/seoContracts.test.mjs",
+        "hunks": [
+          "-0,0 +1,19"
+        ],
+        "binary": false
+      },
+      {
+        "path": "src/utils/seoApi.js",
+        "hunks": [
+          "-1,24 +1,32",
+          "-38,5 +46,5"
+        ],
+        "binary": false
+      },
+      {
+        "path": "src/utils/seoContracts.mjs",
+        "hunks": [
+          "-0,0 +1,25"
+        ],
+        "binary": false
+      }
+    ]
+  },
+  {
+    "pr": 98,
+    "sha": "45da153ab6546f5b03031dafee4513d2faa7660f",
+    "files": [
+      {
+        "path": "scripts/metadata.test.mjs",
+        "hunks": [
+          "-1,6 +1,6",
+          "-83,3 +83,12"
+        ],
+        "binary": false
+      },
+      {
+        "path": "src/app/branches/[slug]/page.js",
+        "hunks": [
+          "-6,7 +6,7",
+          "-29,7 +29,7",
+          "-107,6 +107,7"
+        ],
+        "binary": false
+      },
+      {
+        "path": "src/app/colleges/[slug]/[branch]/page.js",
+        "hunks": [
+          "-5,7 +5,7",
+          "-31,8 +31,8",
+          "-140,6 +140,7"
+        ],
+        "binary": false
+      },
+      {
+        "path": "src/utils/metadata.mjs",
+        "hunks": [
+          "-19,6 +19,15"
+        ],
+        "binary": false
+      }
+    ]
+  }
+]

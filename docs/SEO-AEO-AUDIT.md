@@ -1,5 +1,7 @@
 # SEO and answer-engine audit — 23 October 2026
 
+> Historical snapshot: see [24 October PR review and remaining findings](SEO-PR-LINE-REVIEW.md) for later quota, metadata, content, contract and performance corrections. Earlier test counts and implementation descriptions are not the final release state.
+
 ## Project context
 
 RankMatrix is a free, no-signup JoSAA exploration tool. The frontend is Next.js 16 / React 19 with MUI and RTK Query. Interactive tools search colleges, programmes, historical opening/closing ranks, seats and prediction shortlists. Django REST Framework serves PostgreSQL data, with Redis caching. Server-rendered institute, branch and institute–branch pages use dedicated SEO endpoints and daily ISR. Eight counselling guides, methodology, author/about and policy pages already exist. AdSense is already referenced in the root layout and public ads.txt; this change does not claim AdSense approval or alter the ad account.
