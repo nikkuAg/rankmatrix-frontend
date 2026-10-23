@@ -20,9 +20,11 @@ async function seoFetch(path, { revalidate = DEFAULT_REVALIDATE_SECONDS } = {}) 
 
 export const fetchSeoSlugs = (opts) => seoFetch(apis.seo.slugs, opts);
 
-export const fetchInstituteSeo = (slug, opts) => seoFetch(apis.seo.institute(slug), opts);
+export const fetchInstituteSeo = (slug, opts) =>
+  seoFetch(`${apis.seo.institute(slug)}?summary=quotas-v1`, opts);
 
-export const fetchBranchSeo = (slug, opts) => seoFetch(apis.seo.branch(slug), opts);
+export const fetchBranchSeo = (slug, opts) =>
+  seoFetch(`${apis.seo.branch(slug)}?summary=quotas-v1`, opts);
 
 export const fetchInstituteBranchSeo = (instituteSlug, branchSlug, opts) =>
   seoFetch(apis.seo.cutoffs(instituteSlug, branchSlug), opts);

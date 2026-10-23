@@ -3,6 +3,7 @@ import { Box } from '@mui/material';
 import { notFound } from 'next/navigation';
 import { AppLink } from '@/components/AppLink';
 import { DataPageLayout } from '@/components/DataPageLayout';
+import { summaryRows } from '@/utils/cutoffSummaries.mjs';
 import { groupInstitutesByExam } from '@/utils/examGroups.mjs';
 import { breadcrumbJsonLd, faqJsonLd, serializeJsonLd } from '@/utils/jsonLd';
 import { buildMetadata } from '@/utils/metadata.mjs';
@@ -123,8 +124,9 @@ export default async function BranchPage({ params }) {
           The tables show the latest stored JoSAA year&apos;s Open category, Gender-Neutral cutoffs,
           grouped by admission exam and listed alphabetically within each group. JEE Advanced and
           JEE Main ranks are different scales and must not be compared numerically. Even within one
-          exam, match the year, rank list, quota and round before comparing. A lower closing rank
-          does not by itself establish that a college is better.
+          exam, match the year, rank list, quota and round before comparing. Each quota shows its
+          own latest available round. A lower closing rank does not by itself establish that a
+          college is better.
         </p>
 
         <h2>Colleges offering {data.name}</h2>
@@ -152,30 +154,32 @@ export default async function BranchPage({ params }) {
                     </tr>
                   </thead>
                   <tbody>
-                    {group.institutes.map((institute) => (
-                      <tr key={institute.code}>
-                        <td>
-                          <AppLink href={`/colleges/${institute.slug}`}>{institute.name}</AppLink>
-                        </td>
-                        <td>{institute.type}</td>
-                        <td>{institute.state}</td>
-                        <td>
-                          {institute.latestNirfRank
-                            ? `${institute.latestNirfRank} (${institute.latestNirfYear})`
-                            : '—'}
-                        </td>
-                        <td>
-                          {institute.latestQuota ?? '—'} / {institute.latestRound ?? '—'}
-                        </td>
-                        <td>{formatRank(institute.latestOpeningRank)}</td>
-                        <td>{formatRank(institute.latestClosingRank)}</td>
-                        <td>
-                          <AppLink href={`/colleges/${institute.slug}/${slug}`}>
-                            Cutoffs at {institute.displayCode || institute.name}
-                          </AppLink>
-                        </td>
-                      </tr>
-                    ))}
+                    {group.institutes.flatMap((institute) =>
+                      summaryRows(institute).map((summary) => (
+                        <tr key={`${institute.code}-${summary?.quota ?? 'missing'}`}>
+                          <td>
+                            <AppLink href={`/colleges/${institute.slug}`}>{institute.name}</AppLink>
+                          </td>
+                          <td>{institute.type}</td>
+                          <td>{institute.state}</td>
+                          <td>
+                            {institute.latestNirfRank
+                              ? `${institute.latestNirfRank} (${institute.latestNirfYear})`
+                              : '—'}
+                          </td>
+                          <td>
+                            {summary?.quota ?? '—'} / {summary?.round ?? '—'}
+                          </td>
+                          <td>{formatRank(summary?.openingRank)}</td>
+                          <td>{formatRank(summary?.closingRank)}</td>
+                          <td>
+                            <AppLink href={`/colleges/${institute.slug}/${slug}`}>
+                              Cutoffs at {institute.displayCode || institute.name}
+                            </AppLink>
+                          </td>
+                        </tr>
+                      )),
+                    )}
                   </tbody>
                 </table>
               </Box>
