@@ -48,7 +48,7 @@ const FAQS = [
   {
     question: 'Does it work for JEE Advanced ranks and IIT admission?',
     answer:
-      'Yes. If you enter your JEE Advanced rank along with your JEE Main rank, the search can match IIT rows against the JEE Advanced rank and NIT / IIIT / GFTI rows against the JEE Main rank. Selection priorities and the requested result count determine which options actually appear; every institute group is not guaranteed a place in the shortlist.',
+      'Yes. If you enter your JEE Advanced rank along with your JEE Main rank, the search can match participating IIT and IISc programme rows against the JEE Advanced rank and NIT / IIIT / GFTI rows against the JEE Main rank. Selection priorities and the requested result count determine which options actually appear; every institute group is not guaranteed a place in the shortlist.',
   },
 ];
 

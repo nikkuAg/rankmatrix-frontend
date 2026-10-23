@@ -87,7 +87,9 @@ export default function Methodology() {
             Match category, seat pool and the maximum stored round; exclude preparatory-course rows.
           </li>
           <li>
-            Use the Advanced-rank window for IIT rows and the Main-rank window for other rows.
+            Use the Advanced-rank window for participating IIT and IISc programme rows and the
+            Main-rank window for other rows. IISc is stored in the backend&apos;s IIT filter bucket;
+            it is labelled separately in the interface.
           </li>
           <li>
             Identify home-quota institutes using stored institute-state and quota relationships.

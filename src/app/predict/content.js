@@ -64,18 +64,20 @@ export const PredictPageContent = ({ faqs }) => {
           rank. This is not an admission-probability ranking or a recommended choice order.
         </p>
         <p>
-          IIT rows use JEE Advanced ranks; other rows use the applicable JEE Main rank list. Do not
-          compare numbers from different exams or category rank lists as one competitiveness scale.
-          The requested result limit can omit other relevant options, so inspect the underlying
-          cutoff data and your genuine preferences before building a choice list.
+          IIT and participating IISc programme rows use JEE Advanced ranks; other rows use the
+          applicable JEE Main rank list. Do not compare numbers from different exams or category
+          rank lists as one competitiveness scale. The requested result limit can omit other
+          relevant options, so inspect the underlying cutoff data and your genuine preferences
+          before building a choice list.
         </p>
 
         <h2>Which rank should I compare with a JoSAA cutoff?</h2>
         <p>
-          First match the exam and rank list: IIT seats use JEE Advanced; NIT, IIIT and other NIT+
-          seats use JEE Main. OPEN cutoffs refer to the Common Rank List (CRL); reserved categories
-          use their corresponding category ranks. Match the category, PwD status, quota, seat pool,
-          year and round shown in the row. A percentile is not a rank.
+          First match the exam and rank list: participating IIT and IISc programmes use JEE
+          Advanced; NIT, IIIT and other NIT+ seats use JEE Main. OPEN cutoffs refer to the Common
+          Rank List (CRL); reserved categories use their corresponding category ranks. Match the
+          category, PwD status, quota, seat pool, year and round shown in the row. A percentile is
+          not a rank.
         </p>
         <h2>A hypothetical cutoff comparison</h2>
         <p>
