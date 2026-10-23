@@ -36,7 +36,7 @@ const FAQS = [
   {
     question: 'Can closing ranks go up dramatically year-over-year?',
     answer:
-      'Yes, though it is uncommon. Large moves usually happen when something structural changes: seat matrix reshuffle at a given institute, a new branch created or merged, a reservation rule update, or a big swing in exam difficulty that shifts the overall rank distribution. The size and direction of movement must be checked in the published data; there is no universal percentage bound.',
+      'Cutoffs can change substantially. Possible influences include seat matrix reshuffle at a given institute, a new branch created or merged, a reservation rule update, or a big swing in exam difficulty that shifts the overall rank distribution. The size and direction of movement must be checked in the published data; there is no universal percentage bound.',
   },
 ];
 
@@ -229,8 +229,8 @@ export default function JoSAAOpeningAndClosingRanksGuide() {
             year/round/category/quota/pool filterable view.
           </li>
           <li>
-            <AppLink href="/predict">College &amp; Branch Predictor</AppLink> — match your rank
-            against all institute-branch cutoffs at once.
+            <AppLink href="/predict">College &amp; Branch Predictor</AppLink> — match your rank with
+            a limited set of historical institute-programme rows.
           </li>
           <li>
             <AppLink href="/guides/josaa-seat-matrix">

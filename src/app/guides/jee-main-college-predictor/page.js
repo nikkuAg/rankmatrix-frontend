@@ -13,34 +13,34 @@ const PUBLISHED = '2026-04-23';
 
 const FAQS = [
   {
-    question: 'How accurate is a JEE college & branch predictor?',
+    question: 'Is this an admission probability?',
     answer:
-      'A predictor depends on the stored data and its comparison rules. RankMatrix currently compares its configured latest-year rows using a delta search window; older years can be explored separately. It cannot guarantee an outcome — actual cutoffs can move by several hundred ranks from one year to the next based on exam difficulty, seat-matrix changes, and how other candidates fill their preferences. Treat it as a limited historical shortlist, not an admission probability or guarantee.',
+      'No. Delta defines a search window, not a probability or safe/risky threshold. The endpoint compares historical rows; it does not reproduce official allocation, average earlier years or predict other candidates.',
   },
   {
-    question: 'What inputs do I need to use the RankMatrix JEE college & branch predictor?',
+    question: 'What does the endpoint actually query?',
     answer:
-      'Your JEE Main rank, your category (General, EWS, OBC-NCL, SC, ST, with PwD sub-category if applicable), your home state, and optionally your JEE Advanced rank if you qualified. If you want more options, you can also set how wide a cutoff delta to include and how many results to show. That is the complete input set.',
+      'The configured latest-year model and its global latest round are used, with preparatory rows excluded. Category and pool are exact filters. The backend IIT bucket includes IISc and uses Advanced bounds; other rows use Main bounds. Selected rows are displayed by opening rank after selection tiers and the result cap.',
   },
   {
-    question: 'Do I need to enter my phone number or email?',
+    question: 'What inputs should I provide?',
     answer:
-      'No. RankMatrix never asks for your phone number, email, name, or any identifying information to run a prediction. Contact details are not required; the privacy policy explains analytics, advertising and technical request data.',
+      'The form sends Main rank, optional Advanced rank, category, seat pool, state, delta and result limit. Use the rank list matching the selected category. It does not accept separate CRL/category ranks or separate architecture/planning paper ranks.',
   },
   {
-    question: 'Why does the predictor show colleges where the closing rank is above mine?',
+    question: 'Will Advanced display all matching IIT and IISc programmes?',
     answer:
-      'The configurable "delta" percentage controls a search window around your rank; selection tiers and the result limit determine which rows appear. Showing some colleges where last year you would have been a few ranks short is useful because next-year cutoffs may be slightly looser, or because less-popular branches at those colleges may still be in reach. The delta is a search window, not an admission-probability label or a pass/fail decision.',
+      'No. The limit and selection tiers can omit alternatives, including an exam group. Adding a rank enables that historical comparison; it is not a completeness or eligibility guarantee. Main and Advanced numerical ranks are not a cross-exam quality ranking.',
   },
   {
-    question: 'Should I fill my JoSAA preference list in the same order the predictor shows?',
+    question: 'What are the quota and pool limitations?',
     answer:
-      'Not blindly. The backend selects rows using its search-window priorities and displays them by opening rank, not by your preferences. Your actual JoSAA choice list should be ordered by what you most want to attend, top to bottom — because JoSAA will always try to give you your #1 before your #2. Use the predictor to assemble a shortlist, then manually reorder that shortlist by personal preference.',
+      'A selected female-only pool does not automatically include Gender-Neutral rows. Exact state matching does not encode every Union Territory mapping or special quota. Missing rows can reflect stored data or filtering, not official nonpublication.',
   },
   {
-    question: 'Can a JEE college & branch predictor replace JoSAA counselling?',
+    question: 'How should I use the results?',
     answer:
-      'No. The predictor is a planning aid. Actual admission only happens through the official JoSAA portal — you still need to register, fill the choice list, participate in rounds, and respond to allocations within the JoSAA windows. No third-party tool can grant you a seat.',
+      'Use the shortlist for research. Inspect matching year, round, quota, category and pool in detailed tables; verify current programme restrictions, documents and seats at official sources. Historical cutoff movement has no universal safe margin.',
   },
 ];
 
@@ -50,7 +50,7 @@ export const metadata = buildMetadata({
   description: DESCRIPTION,
   type: 'article',
   publishedTime: PUBLISHED,
-  modifiedTime: '2026-10-23',
+  modifiedTime: '2026-10-24',
 });
 
 const jsonLd = [
@@ -59,7 +59,7 @@ const jsonLd = [
     title: TITLE,
     description: DESCRIPTION,
     datePublished: PUBLISHED,
-    dateModified: '2026-10-23',
+    dateModified: '2026-10-24',
   }),
   faqJsonLd(FAQS),
   breadcrumbJsonLd([
@@ -82,8 +82,8 @@ export default function JeeMainCollegePredictorGuide() {
       <GuideLayout
         title={TITLE}
         description={DESCRIPTION}
-        lastUpdated="23 October 2026"
-        readingTimeMinutes={6}
+        lastUpdated="24 October 2026"
+        readingTimeMinutes={4}
         breadcrumbs={[
           { name: 'Home', path: '/' },
           { name: 'Guides', path: '/guides' },
@@ -91,147 +91,57 @@ export default function JeeMainCollegePredictorGuide() {
         ]}
       >
         <OfficialRuleNotes />
-        <h2>What a JEE college &amp; branch predictor is</h2>
+        <h2>Is this an admission probability?</h2>
         <p>
-          A JEE college and branch predictor is a tool that answers a single question:{' '}
-          <em>
-            given my JEE Main or JEE Advanced rank, my category, and my home state, which JoSAA
-            colleges and branches am I likely to be admitted to?
-          </em>{' '}
-          It does not grant seats. It does not run the JoSAA allocation. It provides historical
-          comparisons rather than a simulation of the full allocation algorithm.
+          No. Delta defines a search window, not a probability or safe/risky threshold. The endpoint
+          compares historical rows; it does not reproduce official allocation, average earlier years
+          or predict other candidates.
+        </p>
+        <h2>What does the endpoint actually query?</h2>
+        <p>
+          The configured latest-year model and its global latest round are used, with preparatory
+          rows excluded. Category and pool are exact filters. The backend IIT bucket includes IISc
+          and uses Advanced bounds; other rows use Main bounds. Selected rows are displayed by
+          opening rank after selection tiers and the result cap.
+        </p>
+        <h2>What inputs should I provide?</h2>
+        <p>
+          The form sends Main rank, optional Advanced rank, category, seat pool, state, delta and
+          result limit. Use the rank list matching the selected category. It does not accept
+          separate CRL/category ranks or separate architecture/planning paper ranks.
+        </p>
+        <h2>Will Advanced display all matching IIT and IISc programmes?</h2>
+        <p>
+          No. The limit and selection tiers can omit alternatives, including an exam group. Adding a
+          rank enables that historical comparison; it is not a completeness or eligibility
+          guarantee. Main and Advanced numerical ranks are not a cross-exam quality ranking.
+        </p>
+        <h2>What are the quota and pool limitations?</h2>
+        <p>
+          A selected female-only pool does not automatically include Gender-Neutral rows. Exact
+          state matching does not encode every Union Territory mapping or special quota. Missing
+          rows can reflect stored data or filtering, not official nonpublication.
+        </p>
+        <h2>How should I use the results?</h2>
+        <p>
+          Use the shortlist for research. Inspect matching year, round, quota, category and pool in
+          detailed tables; verify current programme restrictions, documents and seats at official
+          sources. Historical cutoff movement has no universal safe margin.
+        </p>
+        <h2>Official sources and related tools</h2>
+        <p>
+          Use the <a href="https://josaa.nic.in/information-bulletin/">2026 JoSAA business rules</a>
+          for rank-list definitions, allocation sequence, registration, verification and acceptance
+          options. Check the <a href="https://josaa.nic.in/">
+            official schedule and notices
+          </a> and <a href="https://jeeadv.ac.in/foreign.html">Advanced nationality requirements</a>
+          . This page&apos;s review date is not a dataset import date.
         </p>
         <p>
-          If you want to try ours, <AppLink href="/predict">the RankMatrix predictor</AppLink> is on
-          the site already — no signup, no spam, no phone number.
+          Explore <AppLink href="/ranks">stored cutoffs</AppLink>,{' '}
+          <AppLink href="/seat-matrix">seat data</AppLink> and{' '}
+          <AppLink href="/guides/what-is-josaa-counselling">the counselling overview</AppLink>.
         </p>
-
-        <h2>What data it uses</h2>
-        <p>
-          Every competent predictor is built on the same foundation: the{' '}
-          <strong>official JoSAA opening and closing ranks</strong> published after each round of
-          counselling. Those files are the ground truth. For every institute, every branch, every
-          category, every seat pool, and every quota, JoSAA publishes the rank of the first
-          candidate admitted (opening) and the last candidate admitted (closing) in each round.
-        </p>
-        <p>
-          RankMatrix ingests multiple recent years of that data and stores it structured so it can
-          be queried and compared with your inputs. You can explore the raw underlying numbers in{' '}
-          <AppLink href="/ranks">Opening &amp; Closing Ranks</AppLink>.
-        </p>
-
-        <h2>What happens when you hit Predict</h2>
-        <p>
-          The current endpoint uses its configured latest JoSAA rank model and maximum stored round.
-          It matches your category and seat pool, calculates a delta window around your input ranks
-          and applies institute/quota selection tiers. IIT rows use the Advanced-rank window; other
-          rows use the Main-rank window. The selected rows are displayed by opening rank.
-        </p>
-        <p>
-          Delta controls the search window, not an admission probability. The endpoint does not
-          average earlier years, guarantee document eligibility or automatically cross-check the
-          current seat matrix. Read the{' '}
-          <AppLink href="/methodology">implementation and limits</AppLink> before treating any
-          shortlist as a counselling decision.
-        </p>
-
-        <h2>What a predictor cannot tell you</h2>
-        <p>
-          Every predictor, ours included, has hard limits. Knowing them keeps you from being
-          surprised later.
-        </p>
-        <ul>
-          <li>
-            <strong>It cannot predict this year&apos;s cutoffs exactly.</strong> Cutoffs shift based
-            on exam difficulty, the number of candidates, changes in the seat matrix (new branches
-            added, seats redistributed), and JoSAA business rules that can change year to year. A
-            shift of a few hundred ranks on a given branch is normal.
-          </li>
-          <li>
-            <strong>It does not know your preference order.</strong> Only you know whether you would
-            rather take CSE at a moderately ranked NIT or Electrical at a top-5 NIT. The tool gives
-            you the shortlist; you order it.
-          </li>
-          <li>
-            <strong>It does not know subjective factors</strong> — campus life, hostel conditions,
-            location, placements by branch, personal fit. Talk to alumni and current students for
-            those.
-          </li>
-          <li>
-            <strong>It cannot account for late seat-matrix changes.</strong> The predictor uses
-            stored rank rows and does not automatically cross-check each option against the current
-            seat matrix. Verify the current official release and programme restrictions separately.
-          </li>
-        </ul>
-
-        <h2>How to read the results</h2>
-        <p>
-          Compare each row with the same exam, rank list, category, quota and seat pool. Review the
-          year and round in the rank explorer or institute detail pages: the predictor table does
-          not currently show that provenance or offer clickable rows. A lower numerical rank is not
-          a comparison across JEE Main and JEE Advanced.
-        </p>
-        <p>
-          The tool does not assign safe, realistic or ambitious labels. Its result count and
-          selection priorities can leave out relevant alternatives. Investigate the underlying
-          historical data, check current eligibility and seat releases, then arrange choices by your
-          own preferences. No historical cutoff guarantees an allocation.
-        </p>
-
-        <h2>The right mental model</h2>
-        <p>
-          The cleanest way to think about a college predictor is as a <em>market map</em>. It tells
-          you where seats were priced (in rank terms) last year. It does not tell you where they
-          will be priced next year — no one knows that until JoSAA publishes the results — but it
-          narrows your attention to a reasonable range. Use that range, layer your personal
-          preferences on top, and use the official JoSAA portal to do the actual application.
-        </p>
-
-        <h2>Before you run the predictor — a checklist</h2>
-        <ul>
-          <li>Have your JEE Main rank ready (category rank if you qualify for reservation).</li>
-          <li>Know your category exactly as declared in your JEE Main application.</li>
-          <li>
-            Use the state-code eligibility rule in the official-source note above, including its
-            exceptions.
-          </li>
-          <li>
-            Have a rough idea of a few branches you are open to. &quot;I&apos;ll take anything&quot;
-            leaves you optimising for nothing; &quot;only CSE at IIT Bombay&quot; leaves you
-            optimising for luck.
-          </li>
-          <li>
-            If you have a JEE Advanced rank, keep it handy too — it opens the IIT result set in
-            addition to the JEE Main set.
-          </li>
-        </ul>
-
-        <h2>Related tools on RankMatrix</h2>
-        <ul>
-          <li>
-            <AppLink href="/predict">Predict your college</AppLink> — the predictor itself.
-          </li>
-          <li>
-            <AppLink href="/ranks">Opening &amp; Closing Ranks</AppLink> — the raw historical data
-            the predictor runs on.
-          </li>
-          <li>
-            <AppLink href="/seat-matrix">Seat Matrix</AppLink> — how many seats each category
-            actually has, per institute per branch.
-          </li>
-          <li>
-            <AppLink href="/colleges">Participating Colleges</AppLink> — the full list of JoSAA
-            institutes with NIRF rankings.
-          </li>
-        </ul>
-
-        <h2>Common questions</h2>
-        {FAQS.map((faq) => (
-          <React.Fragment key={faq.question}>
-            <h3>{faq.question}</h3>
-            <p>{faq.answer}</p>
-          </React.Fragment>
-        ))}
       </GuideLayout>
     </>
   );

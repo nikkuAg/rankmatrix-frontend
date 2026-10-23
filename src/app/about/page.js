@@ -72,8 +72,8 @@ export default function About() {
         <p>
           The aim is narrow on purpose: help an aspirant turn a JEE rank into a clear, ordered list
           of realistic college-and-branch choices, without the friction that most counselling tools
-          ship with. No signup. No phone number. No email collection. No marketing calls. No spam.
-          Ever.
+          ship with. No signup or contact details are required to use the tools. Submitted inputs
+          reach the backend; see the privacy policy for storage and service-provider details.
         </p>
 
         <h2>Why this exists</h2>

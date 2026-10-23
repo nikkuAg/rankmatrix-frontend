@@ -1,10 +1,10 @@
-import { instituteType } from '@/utils/instituteIdentity.mjs';
 import React from 'react';
 import { Box } from '@mui/material';
 import { notFound } from 'next/navigation';
 import { AppLink } from '@/components/AppLink';
 import { DataPageLayout } from '@/components/DataPageLayout';
 import { cutoffSummaries } from '@/utils/cutoffSummaries.mjs';
+import { instituteType } from '@/utils/instituteIdentity.mjs';
 import { breadcrumbJsonLd, faqJsonLd, serializeJsonLd } from '@/utils/jsonLd';
 import { buildMetadata, instituteTitleName, programmeTitleName } from '@/utils/metadata.mjs';
 import { fetchInstituteBranchSeo } from '@/utils/seoApi';
@@ -105,10 +105,12 @@ export default async function InstituteBranchPage({ params }) {
       url: canonicalUrl,
       keywords: [data.institute.name, data.branch.name, 'JoSAA', 'opening rank', 'closing rank'],
       creator: {
-        '@type': 'Person',
-        name: 'Divyansh Agarwal',
-        url: 'https://www.linkedin.com/in/ag-divyansh/',
+        '@type': 'Organization',
+        name: 'Joint Seat Allocation Authority (JoSAA)',
+        url: 'https://josaa.nic.in/',
       },
+      publisher: { '@type': 'Organization', name: 'RankMatrix', url: SITE_URL },
+      creditText: 'JoSAA source observations compiled and presented by RankMatrix.',
       isAccessibleForFree: true,
       isBasedOn: 'https://josaa.nic.in/or-cr/',
     },
@@ -257,10 +259,11 @@ export default async function InstituteBranchPage({ params }) {
           <a href="https://josaa.nic.in/or-cr/" target="_blank" rel="noopener noreferrer">
             official JoSAA opening and closing ranks
           </a>
-          . IIT and IISc cutoffs use JEE Advanced ranks; NIT+ cutoffs use the applicable JEE Main rank list.
-          Compare OPEN rows with CRL and reserved-category rows with the corresponding category
-          rank. Match the year, round, quota and seat pool before comparing. RankMatrix reproduces
-          historical data; the current JoSAA rules and published results remain authoritative.
+          . IIT and IISc cutoffs use JEE Advanced ranks; NIT+ cutoffs use the applicable JEE Main
+          rank list. Compare OPEN rows with CRL and reserved-category rows with the corresponding
+          category rank. Match the year, round, quota and seat pool before comparing. RankMatrix
+          reproduces historical data; the current JoSAA rules and published results remain
+          authoritative.
         </p>
         <h2>Using this data</h2>
         <ul>

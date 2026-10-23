@@ -13,29 +13,34 @@ const PUBLISHED = '2026-05-19';
 
 const FAQS = [
   {
-    question: 'Which category should I claim in JoSAA?',
+    question: 'Is OPEN the same as the General candidate category?',
     answer:
-      'You claim the category you registered for in JEE Main or JEE Advanced — JoSAA inherits it. If you qualify for OBC-NCL, SC, ST, EWS, or PwD with valid documentation, claiming the reservation gives you both a general-pool offer and a category-pool offer in each round; JoSAA picks whichever is more favourable for you.',
+      'No. OPEN describes a seat category. Eligible candidates from reserved categories can also be considered for OPEN seats under the applicable common rank list and allocation sequence.',
   },
   {
-    question: 'What is the difference between OBC and OBC-NCL?',
+    question: 'Do reserved candidates receive two offers per round?',
     answer:
-      'JoSAA only recognises OBC-NCL, the Non-Creamy Layer subset of the central OBC list. If your family income exceeds the limit defined by the Ministry of Social Justice, you fall outside the NCL bracket and must compete in the general pool. The NCL certificate has to be from the current financial year at the time of reporting.',
+      'No. The official process considers eligible programme sections in its prescribed sequence and produces a provisional allocation. OPEN and reserved consideration do not mean two simultaneous offers to choose between.',
   },
   {
-    question: 'Does EWS reservation also apply to IITs?',
+    question: 'Does income alone establish OBC-NCL eligibility?',
     answer:
-      'Yes. EWS is a central reservation that applies across IITs, NITs, IIITs, and GFTIs in JoSAA. You need a valid EWS certificate issued in the format specified by the Ministry, dated as required by the latest JoSAA business rules — typically issued in the current financial year.',
+      'No. Central-list membership, non-creamy-layer conditions and documentation must satisfy current requirements. Do not treat a single income threshold as a complete eligibility test.',
   },
   {
-    question: 'How do female-only supernumerary seats work?',
+    question: 'Which certificates and dates are valid?',
     answer:
-      'Female-only pools can include supernumerary seats at multiple institute groups. See the official-source note and the programme seat matrix on this page.',
+      'Use the current official formats, validity requirements and verification instructions for the category and cycle. Do not assume a generic current-financial-year rule, one document format, or automatic conversion after an invalid certificate.',
   },
   {
-    question: 'Can I switch from a category-pool seat to a general-pool seat in a later round?',
+    question: 'How do category, quota and pool differ?',
     answer:
-      'JoSAA always offers you the best seat your rank qualifies for in each round, considering both general and category pools. You do not switch manually — if your general-pool eligibility for a higher preference opens up in a later round (because of category-pool churn), the algorithm moves you to it automatically.',
+      'Seat categories include OPEN, GEN-EWS, OBC-NCL, SC, ST and relevant PwD subdivisions. Gender-Neutral and Female-only are pools; AI, HS, OS and additional institute codes are quotas. Match each dimension and its rank list separately.',
+  },
+  {
+    question: 'Do the predictor filters cover every eligible pool and quota?',
+    answer:
+      'No. Eligible female candidates can be considered across applicable pools under official rules, but a single selected predictor pool does not implement that union. State matching does not encode every Union Territory or special quota mapping. Nationality and OCI/PIO status also affect eligibility.',
   },
 ];
 
@@ -45,7 +50,7 @@ export const metadata = buildMetadata({
   description: DESCRIPTION,
   type: 'article',
   publishedTime: PUBLISHED,
-  modifiedTime: '2026-10-23',
+  modifiedTime: '2026-10-24',
 });
 
 const jsonLd = [
@@ -54,7 +59,7 @@ const jsonLd = [
     title: TITLE,
     description: DESCRIPTION,
     datePublished: PUBLISHED,
-    dateModified: '2026-10-23',
+    dateModified: '2026-10-24',
   }),
   faqJsonLd(FAQS),
   breadcrumbJsonLd([
@@ -77,8 +82,8 @@ export default function JoSAAReservationCategories() {
       <GuideLayout
         title={TITLE}
         description={DESCRIPTION}
-        lastUpdated="23 October 2026"
-        readingTimeMinutes={8}
+        lastUpdated="24 October 2026"
+        readingTimeMinutes={4}
         breadcrumbs={[
           { name: 'Home', path: '/' },
           { name: 'Guides', path: '/guides' },
@@ -86,138 +91,57 @@ export default function JoSAAReservationCategories() {
         ]}
       >
         <OfficialRuleNotes />
-        <h2>The short version</h2>
+        <h2>Is OPEN the same as the General candidate category?</h2>
         <p>
-          JoSAA allocates seats from two parallel pools running side by side: a general (open) pool
-          that anyone can compete in, and category pools — OBC-NCL, SC, ST, EWS, and PwD — that
-          reserve seats for eligible candidates. Each round, the algorithm offers you the best seat
-          from <em>either</em> pool you qualify for. You never have to choose between your
-          reservation and the open list; JoSAA picks whichever is more favourable.
+          No. OPEN describes a seat category. Eligible candidates from reserved categories can also
+          be considered for OPEN seats under the applicable common rank list and allocation
+          sequence.
         </p>
-
-        <h2>The categories, one by one</h2>
-
-        <h3>GE — General / Open</h3>
+        <h2>Do reserved candidates receive two offers per round?</h2>
         <p>
-          The unreserved pool. Anyone can compete here, regardless of category. If you have no
-          reservation to claim, this is your only pool. If you have a reservation, you still compete
-          here as well — the algorithm just picks the better of your two offers each round.
+          No. The official process considers eligible programme sections in its prescribed sequence
+          and produces a provisional allocation. OPEN and reserved consideration do not mean two
+          simultaneous offers to choose between.
         </p>
-
-        <h3>OBC-NCL — Other Backward Classes, Non-Creamy Layer</h3>
+        <h2>Does income alone establish OBC-NCL eligibility?</h2>
         <p>
-          27% of central reservation. JoSAA only recognises the Non-Creamy Layer subset of the
-          central OBC list — not state OBC lists. The NCL certificate must be on the format
-          prescribed by the Ministry of Social Justice and Empowerment, issued within the window
-          specified by JoSAA business rules (typically the current financial year). State OBC
-          certificates and creamy-layer OBC certificates are not accepted; candidates with those
-          compete in the general pool.
+          No. Central-list membership, non-creamy-layer conditions and documentation must satisfy
+          current requirements. Do not treat a single income threshold as a complete eligibility
+          test.
         </p>
-
-        <h3>SC — Scheduled Caste</h3>
+        <h2>Which certificates and dates are valid?</h2>
         <p>
-          15% of central reservation. Eligibility follows the central SC list. The caste certificate
-          must be from a competent authority in the prescribed format. There is no income cap — SC
-          reservation is unconditional on income.
+          Use the current official formats, validity requirements and verification instructions for
+          the category and cycle. Do not assume a generic current-financial-year rule, one document
+          format, or automatic conversion after an invalid certificate.
         </p>
-
-        <h3>ST — Scheduled Tribe</h3>
+        <h2>How do category, quota and pool differ?</h2>
         <p>
-          7.5% of central reservation. Same structure as SC: eligibility from the central ST list,
-          no income cap, caste certificate from a competent authority.
+          Seat categories include OPEN, GEN-EWS, OBC-NCL, SC, ST and relevant PwD subdivisions.
+          Gender-Neutral and Female-only are pools; AI, HS, OS and additional institute codes are
+          quotas. Match each dimension and its rank list separately.
         </p>
-
-        <h3>EWS — Economically Weaker Sections</h3>
+        <h2>Do the predictor filters cover every eligible pool and quota?</h2>
         <p>
-          10% of central reservation, introduced from JEE 2019 onwards. EWS is for candidates who do{' '}
-          <em>not</em> already fall under OBC-NCL, SC, or ST, and whose family income and asset
-          holdings are below the limits notified by the central government. The EWS certificate must
-          be on the prescribed central format and dated within the period JoSAA accepts (typically
-          issued in the current financial year). State-issued EWS certificates not on the central
-          format are rejected.
+          No. Eligible female candidates can be considered across applicable pools under official
+          rules, but a single selected predictor pool does not implement that union. State matching
+          does not encode every Union Territory or special quota mapping. Nationality and OCI/PIO
+          status also affect eligibility.
         </p>
-
-        <h3>PwD — Persons with Disability</h3>
+        <h2>Official sources and related tools</h2>
         <p>
-          5% horizontal reservation across the other categories — meaning a PwD candidate also has
-          to be in GE, OBC-NCL, SC, ST, or EWS, and reservation applies on top. Eligibility requires
-          a disability of 40% or more, certified by a UDID-recognised authority on Form V or
-          equivalent. JoSAA verifies the certificate at reporting; any mismatch can invalidate the
-          allotment.
-        </p>
-
-        <h2>Quotas and seat pools</h2>
-        <p>
-          Category, quota and seat pool are separate dimensions. RankMatrix stores AI, HS, OS, GO,
-          LA, JK and AP quota codes. Read the exact programme matrix and the official state-code
-          rules; do not assume a uniform HS/OS split across institutes.
+          Use the <a href="https://josaa.nic.in/information-bulletin/">2026 JoSAA business rules</a>
+          for rank-list definitions, allocation sequence, registration, verification and acceptance
+          options. Check the <a href="https://josaa.nic.in/">
+            official schedule and notices
+          </a> and <a href="https://jeeadv.ac.in/foreign.html">Advanced nationality requirements</a>
+          . This page&apos;s review date is not a dataset import date.
         </p>
         <p>
-          Gender-Neutral and Female-only are seat pools. Female-only pools can include supernumerary
-          seats in multiple institute groups. Check the actual counts and eligibility in the
-          official sources above.
+          Explore <AppLink href="/ranks">stored cutoffs</AppLink>,{' '}
+          <AppLink href="/seat-matrix">seat data</AppLink> and{' '}
+          <AppLink href="/guides/what-is-josaa-counselling">the counselling overview</AppLink>.
         </p>
-
-        <h2>How the algorithm uses all this</h2>
-        <p>
-          In each round, for every (institute, branch) combination on your preference list, the
-          algorithm checks each pool you are eligible for — your category pool, your gender pool,
-          your exact quota — and looks at whether your rank clears the cutoff for any of them. You
-          are offered the highest-ranked preference where any pool clears.
-        </p>
-        <p>
-          That is why two candidates with the same JEE rank but different categories can be offered
-          very different seats in the same round. The category pool and quota effectively change the
-          rank you are competing against for any given seat.
-        </p>
-
-        <h2>Documentation: get it right at registration</h2>
-        <p>
-          Check the current category-change, certificate-validity and verification provisions on the
-          official portal. A documentation problem can affect eligibility and seat retention; do not
-          assume an automatic transfer to another category or a replacement allocation.
-        </p>
-        <ul>
-          <li>Get your OBC-NCL / EWS certificate issued in the current financial year.</li>
-          <li>Use the central format — not the state format — for OBC-NCL and EWS.</li>
-          <li>
-            For SC / ST, the caste certificate has to be from a competent authority in the
-            prescribed format.
-          </li>
-          <li>
-            For PwD, secure your UDID and Form V (or equivalent) ahead of registration; the
-            verification at reporting is strict.
-          </li>
-        </ul>
-
-        <h2>Related guides and tools</h2>
-        <ul>
-          <li>
-            <AppLink href="/guides/josaa-seat-matrix">
-              JoSAA seat matrix: categories, quotas, seat pools
-            </AppLink>{' '}
-            — the columns of the matrix in detail.
-          </li>
-          <li>
-            <AppLink href="/guides/josaa-counselling-rounds">JoSAA counselling rounds</AppLink> —
-            how the algorithm runs each round.
-          </li>
-          <li>
-            <AppLink href="/seat-matrix">Stored JoSAA seat matrix</AppLink> on RankMatrix.
-          </li>
-          <li>
-            <AppLink href="/predict">JEE college &amp; branch predictor</AppLink> — uses category
-            and quota in historical cutoff comparisons; it does not certify eligibility.
-          </li>
-        </ul>
-
-        <h2>Common questions</h2>
-        {FAQS.map((faq) => (
-          <React.Fragment key={faq.question}>
-            <h3>{faq.question}</h3>
-            <p>{faq.answer}</p>
-          </React.Fragment>
-        ))}
       </GuideLayout>
     </>
   );
