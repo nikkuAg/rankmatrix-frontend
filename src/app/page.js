@@ -46,24 +46,22 @@ const HomeIntro = () => {
       >
         <h2>Plan your JoSAA choices with published rank and seat data</h2>
         <p>
-          RankMatrix turns a JEE Main or JEE Advanced rank into a clear, ordered list of realistic
-          college-and-branch options for JoSAA counselling. It covers every IIT, NIT, IIIT, and GFTI
-          in the JoSAA pool, uses the same opening and closing ranks JoSAA itself publishes, and
-          asks for nothing personal — no signup, no phone number, no email, no marketing spam. The
-          site is built and maintained by an <AppLink href="/about">IIT Roorkee alumnus</AppLink>{' '}
-          who went through the same counselling process.
+          RankMatrix compares your inputs with stored JoSAA cutoffs to build a limited
+          college-and-branch shortlist. It does not certify eligibility or calculate admission
+          probability. Contact details and signup are not required. The site is built and maintained
+          by an <AppLink href="/about">IIT Roorkee alumnus</AppLink> who went through the same
+          counselling process.
         </p>
 
         <h2>What you can do here</h2>
         <ul>
           <li>
             Use the <AppLink href="/predict">JEE college &amp; branch predictor</AppLink> to find
-            institute-branch combinations realistically reachable for your rank, category, and
-            quota.
+            historical institute-branch comparisons for your rank, category and quota.
           </li>
           <li>
             Browse <AppLink href="/ranks">opening and closing ranks</AppLink> across rounds for
-            every JoSAA branch and institute.
+            stored JoSAA branches and institutes.
           </li>
           <li>
             Check the published <AppLink href="/seat-matrix">seat matrix</AppLink> to see how many
@@ -81,12 +79,12 @@ const HomeIntro = () => {
 
         <h2>Where the data comes from</h2>
         <p>
-          Every number on RankMatrix originates from JoSAA&apos;s public publications: historical
-          opening and closing ranks per institute-branch-category-round, the official seat matrix,
-          and the canonical participating-institute list. Use the rank explorer and detail pages to
-          check the stored year and round; the predictor table does not currently display that
-          context. For the full walkthrough of how the predictor turns this data into projections —
-          and where its assumptions can break — see the{' '}
+          Cutoff and seat records are sourced from JoSAA publications; NIRF ranks are a separate
+          dataset. Historical opening and closing ranks per institute-branch-category-round, the
+          official seat matrix, and the stored participating-institute list are available for
+          reference. Use the rank explorer and detail pages to check the stored year and round; the
+          predictor table does not currently display that context. For how the predictor compares
+          this data with your inputs — and where its assumptions can break — see the{' '}
           <AppLink href="/methodology">methodology page</AppLink>.
         </p>
 

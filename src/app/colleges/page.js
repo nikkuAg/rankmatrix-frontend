@@ -25,12 +25,12 @@ const FAQS = [
   {
     question: 'What is NIRF and why is it shown here?',
     answer:
-      'NIRF is the National Institutional Ranking Framework, published annually by the Ministry of Education. It ranks engineering institutes on research, teaching, outcomes, and other parameters. RankMatrix lists the NIRF Engineering rank next to each institute as one input into your preference ordering — higher-ranked institutes usually correlate with stronger placements and peer groups.',
+      'NIRF is the National Institutional Ranking Framework, published annually by the Ministry of Education. It ranks engineering institutes on research, teaching, outcomes, and other parameters. RankMatrix shows stored NIRF ranks and years as one reference. Verify the ranking category and source; this is not a programme-specific placement prediction.',
   },
   {
     question: 'Can I filter colleges by type?',
     answer:
-      'Yes. The filter chips at the top of the colleges table let you narrow to IITs, NITs, IIITs, or GFTIs individually or in any combination, and the search box filters by institute name or code.',
+      'Yes. The filter chips at the top of the colleges table let you narrow to IITs, NITs, IIITs, or GFTIs individually or in any combination, and the search box matches institute name, display code, state, type or city.',
   },
 ];
 

@@ -15,7 +15,7 @@ const FAQS = [
   {
     question: 'How accurate is a JEE college & branch predictor?',
     answer:
-      'A predictor is only as accurate as the historical data and the model used to project it forward. RankMatrix currently compares its configured latest-year rows using a delta search window; older years can be explored separately. It cannot guarantee an outcome — actual cutoffs can move by several hundred ranks from one year to the next based on exam difficulty, seat-matrix changes, and how other candidates fill their preferences. Treat it as a ranked shortlist of likely colleges and branches to plan around, not a guarantee.',
+      'A predictor depends on the stored data and its comparison rules. RankMatrix currently compares its configured latest-year rows using a delta search window; older years can be explored separately. It cannot guarantee an outcome — actual cutoffs can move by several hundred ranks from one year to the next based on exam difficulty, seat-matrix changes, and how other candidates fill their preferences. Treat it as a limited historical shortlist, not an admission probability or guarantee.',
   },
   {
     question: 'What inputs do I need to use the RankMatrix JEE college & branch predictor?',

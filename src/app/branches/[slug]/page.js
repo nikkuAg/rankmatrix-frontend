@@ -56,7 +56,7 @@ const buildFaqs = (data) => {
     },
     {
       question: `Do I need JEE Advanced for ${data.name}?`,
-      answer: `You need JEE Advanced only for IIT seats. NIT, IIIT, and GFTI seats for ${data.name} are allocated from the JEE Main rank list through JoSAA.`,
+      answer: `IIT and IISc programmes in JoSAA use JEE Advanced. NIT, IIIT, and GFTI seats for ${data.name} are allocated from the JEE Main rank list through JoSAA.`,
     },
   ];
 };
@@ -115,9 +115,9 @@ export default async function BranchPage({ params }) {
         <h2>About {data.name}</h2>
         <p>
           {data.name} is offered through JoSAA counselling at {data.institutes?.length ?? 0}{' '}
-          centrally funded Indian institutes. Admission is merit-based — IIT seats are allocated
-          from the JEE Advanced rank list; NIT, IIIT, and GFTI seats use JEE Main. Every institute
-          below takes the branch through the {data.degree}, {data.courseDuration}
+          participating institutes in the stored catalogue. Admission is merit-based — IIT seats are
+          allocated from the JEE Advanced rank list; NIT, IIIT, and GFTI seats use JEE Main. Every
+          institute below takes the branch through the {data.degree}, {data.courseDuration}
           -year programme.
         </p>
         <p>

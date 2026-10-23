@@ -19,12 +19,12 @@ const FAQS = [
   {
     question: 'Do I have to clear JEE Advanced to get into an NIT?',
     answer:
-      'No. NIT admission is based on your JEE Main rank, not JEE Advanced. JEE Advanced is only required for IIT seats. A JEE Main rank is sufficient for NITs, IIITs, and GFTIs through JoSAA.',
+      'No. NIT admission is based on your JEE Main rank, not JEE Advanced. JoSAA IIT and IISc programmes use JEE Advanced. A JEE Main rank is sufficient for NITs, IIITs, and GFTIs through JoSAA.',
   },
   {
     question: 'If I qualify JEE Advanced but not JEE Main, can I still join JoSAA?',
     answer:
-      'This situation is essentially impossible: JEE Advanced eligibility itself requires you to be among the top JEE Main scorers in the year you appear. If you cleared JEE Advanced you already have a JEE Main qualification. You will enter JoSAA with both ranks, and the system will consider you for IIT seats (JEE Advanced rank) and NIT/IIIT/GFTI seats (JEE Main rank) together.',
+      'JEE Main qualification is normally required for Indian candidates registering for JEE Advanced, but foreign-national and specified OCI/PIO routes have exceptions. Check the official JEE Advanced eligibility page for your route; a rank alone does not establish all admission eligibility.',
   },
   {
     question: 'Can I skip JoSAA and apply to an IIT directly?',
@@ -34,7 +34,7 @@ const FAQS = [
   {
     question: 'Do state engineering colleges participate in JoSAA?',
     answer:
-      'No. JoSAA covers only the centrally funded institutes — IITs, NITs, IIITs, and GFTIs. State engineering colleges are filled through state-level counselling (WBJEE, MHT-CET, KCET, TNEA, and similar) using separate rank lists and separate application portals.',
+      'No. JoSAA covers its published participating-institute list, including IITs, IISc and the NIT+ system. Other colleges may use state counselling or separate routes; verify the institute and programme.',
   },
   {
     question: 'Is NTA the same as JoSAA?',
@@ -119,7 +119,7 @@ export default function JeeMainVsAdvancedVsJoSAAGuide() {
             <tr>
               <td>JEE Advanced</td>
               <td>One of the IITs (rotating annually)</td>
-              <td>Entrance exam (single attempt)</td>
+              <td>Entrance examination</td>
               <td>JEE Advanced rank list (CRL + category ranks)</td>
             </tr>
             <tr>
@@ -136,7 +136,7 @@ export default function JeeMainVsAdvancedVsJoSAAGuide() {
           <li>
             Conducted by <strong>NTA</strong> twice a year (typically January and April sessions).
           </li>
-          <li>Three-hour paper-based (computer-based) exam in Physics, Chemistry, Mathematics.</li>
+          <li>Computer-based exam in Physics, Chemistry, Mathematics.</li>
           <li>
             The better of your two session scores is used to produce your final JEE Main percentile
             and rank.
@@ -171,8 +171,9 @@ export default function JeeMainVsAdvancedVsJoSAAGuide() {
             website) are eligible to register.
           </li>
           <li>
-            Your JEE Advanced rank is the <em>only</em> input JoSAA uses for IIT seat allocation.
-            JEE Main rank is irrelevant for IITs once you have a JEE Advanced rank.
+            The applicable JEE Advanced rank list is used for IIT and IISc JoSAA programmes;
+            preferences, seat availability and other eligibility rules also apply. JEE Main rank is
+            irrelevant for IITs once you have a JEE Advanced rank.
           </li>
         </ul>
 
@@ -273,9 +274,9 @@ export default function JeeMainVsAdvancedVsJoSAAGuide() {
             allocation.
           </li>
           <li>
-            <strong>&quot;I cleared JEE Advanced so I can skip JEE Main.&quot;</strong> You cannot
-            have a JEE Advanced rank without first having a qualifying JEE Main rank. If you have a
-            JEE Advanced rank, you automatically have JEE Main eligibility for JoSAA as well.
+            <strong>&quot;I cleared JEE Advanced so I can skip JEE Main.&quot;</strong> Eligibility
+            depends on nationality and the applicable admission route. Check the official JEE
+            Advanced requirements instead of assuming both ranks are always required.
           </li>
           <li>
             <strong>&quot;JoSAA will rank me based on my preference.&quot;</strong> No. Ranks come

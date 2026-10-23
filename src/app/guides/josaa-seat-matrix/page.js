@@ -15,7 +15,7 @@ const FAQS = [
   {
     question: 'What is the JoSAA seat matrix?',
     answer:
-      'The seat matrix is the official count, published by JoSAA before counselling begins, of how many seats each participating institute offers in each branch, broken down by category (Open, OBC-NCL, SC, ST, EWS, PwD), quota (HS, OS, AI), and seat pool (Gender-Neutral, Female-only). Every seat allocated during counselling comes from a specific cell of that matrix.',
+      'The seat matrix is the official count, published by JoSAA before counselling begins, of how many seats each participating institute offers in each branch, broken down by category (Open, OBC-NCL, SC, ST, EWS, PwD), quota (such as HS, OS or AI), and seat pool (Gender-Neutral, Female-only). Every seat allocated during counselling comes from a specific cell of that matrix.',
   },
   {
     question: 'What is the difference between HS, OS, and AI quota?',
@@ -116,8 +116,8 @@ export default function JoSAASeatMatrixGuide() {
             <strong>Category</strong> — Open, OBC-NCL, SC, ST, EWS, plus PwD sub-categories.
           </li>
           <li>
-            <strong>Quota</strong> — HS, OS, or AI. Determines whether your home state qualifies you
-            for the seat.
+            <strong>Quota</strong> — the exact published code. Stored rows include AI, HS, OS, GO,
+            LA, JK and AP; check eligibility in the official rules.
           </li>
           <li>
             <strong>Seat pool</strong> — Gender-Neutral or Female-only.
@@ -162,16 +162,15 @@ export default function JoSAASeatMatrixGuide() {
         </p>
 
         <h2>Quota, in detail</h2>
-        <h3>HS — Home State (NITs only)</h3>
+        <h3>HS — Home State</h3>
         <p>
           Use the state-code eligibility rule in the official-source note above, including its
           exceptions.
         </p>
-        <h3>OS — Other State (NITs only)</h3>
+        <h3>OS — Other State</h3>
         <p>
-          The other half of each NIT branch. Open to candidates from any state except the NIT&apos;s
-          home state. OS competition is nationwide, which is why OS cutoffs at good NITs are usually
-          very tight.
+          Other State eligibility follows the institute-specific rules. Do not infer a universal
+          split or cutoff relationship from this label.
         </p>
         <h3>AI — All India (IITs, IIITs, GFTIs)</h3>
         <p>
@@ -187,52 +186,25 @@ export default function JoSAASeatMatrixGuide() {
         </p>
         <h3>Female-only</h3>
         <p>
-          Supernumerary seats, created to raise female representation, particularly at IITs. These
-          are <em>added</em> on top of the Gender-Neutral matrix, not carved out of it. A female
-          candidate is considered for both pools simultaneously and gets the better outcome.
-          Female-only cutoffs are usually later (larger rank numbers) than Gender-Neutral cutoffs
-          for the same branch, which effectively expands the options available to female candidates.
+          This pool can include supernumerary seats. Eligible female candidates can be considered
+          for both pools under the applicable rules. Read the actual programme counts; do not assume
+          every Female-only seat is additional or that one pool always has a larger closing rank.
         </p>
 
         <h2>How to read a seat matrix row</h2>
         <p>
-          A single seat matrix row tells you, for a specific institute-branch-category-quota-pool
-          combination, how many seats exist. If you are planning, the numbers matter in two ways:
+          A row records seats for one year, institute, programme, category, quota and pool. It is a
+          stored count, not live vacancies or a forecast of admission.
         </p>
-        <ul>
-          <li>
-            <strong>Absolute count</strong> — branches with very few seats in your category will
-            have sharper competition; cutoffs move faster with any candidate movement. A four-seat
-            cell is more volatile than a forty-seat cell.
-          </li>
-          <li>
-            <strong>Change year-over-year</strong> — when a branch&apos;s seat count goes up,
-            cutoffs typically loosen slightly; when it goes down, cutoffs typically tighten.
-            RankMatrix shows a &quot;change in seats&quot; view in the{' '}
-            <AppLink href="/seat-matrix">Seat Matrix</AppLink> table so you can spot these shifts.
-          </li>
-        </ul>
-
-        <h2>How the matrix and the cutoff tables relate</h2>
         <p>
-          The seat matrix tells you <em>how many</em> seats exist. The{' '}
-          <AppLink href="/guides/josaa-opening-and-closing-ranks">
-            opening and closing ranks
-          </AppLink>{' '}
-          table tells you <em>which</em> ranks actually got those seats in past years. Together they
-          tell you two different things:
+          The change view subtracts the previous stored year for that same slice. A missing
+          previous-year row is treated as zero by the backend, so a positive change is not proof
+          that seats were added. Verify the source before interpreting it.
         </p>
-        <ul>
-          <li>
-            If a branch has very few seats in your category and the closing rank is tight, your
-            margin for error is small. A few points on the exam change the outcome.
-          </li>
-          <li>
-            If a branch has many seats in your category and the closing rank is well below your
-            rank, it was historically within reach for that exact rank list and allocation slice;
-            admission is still not guaranteed.
-          </li>
-        </ul>
+        <p>
+          Historical cutoffs describe allocated ranks. Compare the same rank list and allocation
+          slice; seat counts alone do not establish whether a rank will receive an offer.
+        </p>
 
         <h2>Planning your choice list using the matrix</h2>
         <ul>

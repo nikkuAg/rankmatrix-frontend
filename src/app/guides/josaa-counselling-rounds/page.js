@@ -92,7 +92,7 @@ export default function JoSAACounsellingRoundsGuide() {
         <h2>The process in one diagram-free sentence</h2>
         <p>
           You register, you fill an ordered preference list, JoSAA publishes mock allocations you
-          can react to, then JoSAA runs five to six real rounds of allocation — in each of which you
+          can react to, then JoSAA runs the scheduled rounds of allocation — in each of which you
           are offered a seat, you decide whether to freeze / float / slide / withdraw, and the next
           round adjusts for everyone&apos;s choices.
         </p>
@@ -163,7 +163,7 @@ export default function JoSAACounsellingRoundsGuide() {
 
         <h2>Stage 4 — The rounds themselves</h2>
         <p>
-          After choice filling and mocks, JoSAA runs five to six rounds of real allocation. Typical
+          After choice filling and mocks, JoSAA runs the rounds in the published schedule. Typical
           cycle per round:
         </p>
         <ol>
@@ -176,8 +176,8 @@ export default function JoSAACounsellingRoundsGuide() {
             window — typically two to three days. Without this step your allocation is cancelled.
           </li>
           <li>
-            <strong>Response window.</strong> You choose one of: <strong>freeze</strong>,{' '}
-            <strong>float</strong>, <strong>slide</strong>, or <strong>withdraw</strong>.
+            <strong>Response window.</strong> Choose an available upgrade option and complete
+            acceptance. Withdrawal is a separate procedure with its own deadline.
           </li>
           <li>
             <strong>Document upload / verification.</strong> Upload scanned documents for
@@ -242,8 +242,8 @@ export default function JoSAACounsellingRoundsGuide() {
           <li>
             <strong>CSAB special rounds.</strong> CSAB runs its own rounds to fill vacant NIT / IIIT
             / GFTI seats after JoSAA concludes. If you were not allocated through JoSAA, or if you
-            withdrew from an unattractive allocation, you can register for CSAB and try again. IIT
-            seats are not part of CSAB.
+            withdrew from an unattractive allocation, check the current CSAB eligibility and
+            seat-retention rules before registering. IIT seats are not part of CSAB.
           </li>
         </ul>
 
