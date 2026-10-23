@@ -153,7 +153,7 @@ export default async function InstitutePage({ params }) {
             ? [{ label: `${data.totalSeats.toLocaleString('en-IN')} seats` }]
             : []),
         ]}
-        lastUpdated={data.latestYear ? `JoSAA ${data.latestYear}` : 'April 2026'}
+        lastUpdated={data.latestYear ? `JoSAA ${data.latestYear}` : 'Year not available'}
       >
         <h2>About {data.name}</h2>
         <p>

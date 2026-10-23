@@ -45,14 +45,14 @@ const buildFaqs = (data, summaryRow) => {
       question: `What was the ${data.branch.name} closing rank at ${data.institute.name}?`,
       answer: summaryRow
         ? `In JoSAA ${summaryRow.year}, Round ${summaryRow.round}, Open category, Gender-Neutral seat pool, ${summaryRow.quota} quota, the closing rank for ${data.branch.name} at ${data.institute.name} was ${formatRank(summaryRow.closingRank)} and the opening rank was ${formatRank(summaryRow.openingRank)}. Older and category-specific cutoffs are in the table on this page.`
-        : `No published cutoff data exists for this combination in the latest JoSAA cycle. Check the full cutoffs table for any earlier years.`,
+        : `RankMatrix has no matching Open category, Gender-Neutral AI/OS summary on file for this combination. Other categories, quotas or years may still have rows below. This does not establish whether official data has been published.`,
     },
     {
       question: `Which JoSAA years are covered on this page?`,
       answer:
         years.length > 0
           ? `The cutoffs table below includes ${years.length} year${years.length === 1 ? '' : 's'} of data: ${years.join(', ')}. For full methodology, read the opening and closing ranks guide.`
-          : 'No cutoff data is currently available for this institute and branch combination.',
+          : 'RankMatrix currently has no cutoff rows on file for this institute and programme. Check the official JoSAA publications for available data.',
     },
     {
       question: `How do home state and other state quotas work at this institute?`,
@@ -152,7 +152,7 @@ export default async function InstituteBranchPage({ params }) {
               ]
             : []),
         ]}
-        lastUpdated={latestYear ? `JoSAA ${latestYear}` : 'April 2026'}
+        lastUpdated={latestYear ? `JoSAA ${latestYear}` : 'Year not available'}
       >
         <h2>Summary</h2>
         {summaryRow ? (
@@ -167,14 +167,15 @@ export default async function InstituteBranchPage({ params }) {
           </p>
         ) : (
           <p>
-            No recent-year cutoff data is available on file for this specific combination. Older
-            years may still be in the table below.
+            RankMatrix has no matching Open category, Gender-Neutral AI/OS summary on file for this
+            combination. Other categories, quotas or years may still have rows below. Check the
+            official source when a required slice is missing.
           </p>
         )}
 
         <h2>Opening and closing ranks by year</h2>
         {yearGroups.length === 0 ? (
-          <p>No cutoff data available.</p>
+          <p>No cutoff rows are currently on file in RankMatrix for this combination.</p>
         ) : (
           yearGroups.map(([year, rows]) => (
             <React.Fragment key={year}>
@@ -234,7 +235,10 @@ export default async function InstituteBranchPage({ params }) {
             </table>
           </Box>
         ) : (
-          <p>No published seat matrix available for this combination in the latest year.</p>
+          <p>
+            RankMatrix has no seat rows on file for this combination in the cutoff year shown. Check
+            the official seat matrix for the latest release.
+          </p>
         )}
 
         <h2>Source and rank-list interpretation</h2>
