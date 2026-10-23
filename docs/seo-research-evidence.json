@@ -1,0 +1,143 @@
+{
+  "review_date": "2026-10-23",
+  "scope": "Raw HTTP samples; not an indexing or ranking report",
+  "http_samples": [
+    {
+      "url": "https://www.rankmatrix.in/",
+      "final_url": "https://www.rankmatrix.in/",
+      "status": 200,
+      "h1": 0,
+      "table_rows": 0,
+      "robots": "index, follow",
+      "canonical": ["https://rankmatrix.in"],
+      "icons": [
+        {
+          "rel": "icon",
+          "href": "/icon.svg?icon.0pt_pym4q~db7.svg",
+          "sizes": "any",
+          "type": "image/svg+xml"
+        }
+      ],
+      "x_robots_tag": null
+    },
+    {
+      "url": "https://www.rankmatrix.in/colleges",
+      "final_url": "https://www.rankmatrix.in/colleges",
+      "status": 200,
+      "h1": 0,
+      "table_rows": 2,
+      "robots": "index, follow",
+      "canonical": ["https://rankmatrix.in/colleges"],
+      "icons": [
+        {
+          "rel": "icon",
+          "href": "/icon.svg?icon.0pt_pym4q~db7.svg",
+          "sizes": "any",
+          "type": "image/svg+xml"
+        }
+      ],
+      "x_robots_tag": null,
+      "contains_undefined": true,
+      "contains_empty_message": true
+    },
+    {
+      "url": "https://www.rankmatrix.in/branches",
+      "final_url": "https://www.rankmatrix.in/branches",
+      "status": 200,
+      "h1": 0,
+      "table_rows": 0,
+      "robots": "index, follow",
+      "canonical": ["https://rankmatrix.in/branches"],
+      "icons": [
+        {
+          "rel": "icon",
+          "href": "/icon.svg?icon.0pt_pym4q~db7.svg",
+          "sizes": "any",
+          "type": "image/svg+xml"
+        }
+      ],
+      "x_robots_tag": null
+    },
+    {
+      "url": "https://www.rankmatrix.in/robots.txt",
+      "final_url": "https://www.rankmatrix.in/robots.txt",
+      "status": 200,
+      "h1": 0,
+      "table_rows": 0,
+      "robots": null,
+      "canonical": [],
+      "icons": [],
+      "x_robots_tag": null,
+      "body": "# *\nUser-agent: *\nAllow: /\nDisallow: /api\nDisallow: /admin\n\n# GPTBot\nUser-agent: GPTBot\nAllow: /\nDisallow: /api\nDisallow: /admin\n\n# ChatGPT-User\nUser-agent: ChatGPT-User\nAllow: /\nDisallow: /api\nDisallow: /admin\n\n# OAI-SearchBot\nUser-agent: OAI-SearchBot\nAllow: /\nDisallow: /api\nDisallow: /admin\n\n# ClaudeBot\nUser-agent: ClaudeBot\nAllow: /\nDisallow: /api\nDisallow: /admin\n\n# Claude-Web\nUser-agent: Claude-Web\nAllow: /\nDisallow: /api\nDisallow: /admin\n\n# anthropic-ai\nUser-agent: anthropic-ai\nAllow: /\nDisallow: /api\nDisallow: /admin\n\n# PerplexityBot\nUser-agent: PerplexityBot\nAllow: /\nDisallow: /api\nDisallow: /admin\n\n# Perplexity-User\nUser-agent: Perplexity-User\nAllow: /\nDisallow: /api\nDisallow: /admin\n\n# Google-Extended\nUser-agent: Google-Extended\nAllow: /\nDisallow: /api\nDisallow: /admin\n\n# Googlebot\nUser-agent: Googlebot\nAllow: /\nDisallow: /api\nDisallow: /admin\n\n# Bingbot\nUser-agent: Bingbot\nAllow: /\nDisallow: /api\nDisallow: /admin\n\n# DuckDuckBot\nUser-agent: DuckDuckBot\nAllow: /\nDisallow: /api\nDisallow: /admin\n\n# Applebot\nUser-agent: Applebot\nAllow: /\nDisallow: /api\nDisallow: /admin\n\n# Applebot-Extended\nUser-agent: Applebot-Extended\nAllow: /\nDisallow: /api\nDisallow: /admin\n\n# CCBot\nUser-agent: CCBot\nAllow: /\nDisallow: /api\nDisallow: /admin\n\n# YouBot\nUser-agent: YouBot\nAllow: /\nDisallow: /api\nDisallow: /admin\n\n# MistralAI-User\nUser-agent: MistralAI-User\nAllow: /\nDisallow: /api\nDisallow: /admin\n\n# Host\nHost: https://rankmatrix.in\n\n# Sitemaps\nSitemap: https://rankmatrix.in/sitemap.xml\n"
+    },
+    {
+      "url": "https://www.rankmatrix.in/sitemap-0.xml",
+      "final_url": "https://www.rankmatrix.in/sitemap-0.xml",
+      "status": 200,
+      "h1": 0,
+      "table_rows": 0,
+      "robots": null,
+      "canonical": [],
+      "icons": [],
+      "x_robots_tag": null,
+      "xml_locations": 148
+    },
+    {
+      "url": "https://www.rankmatrix.in/icon.svg",
+      "final_url": "https://www.rankmatrix.in/icon.svg",
+      "status": 200,
+      "h1": 0,
+      "table_rows": 0,
+      "robots": null,
+      "canonical": [],
+      "icons": [],
+      "x_robots_tag": null,
+      "xml_locations": 0
+    },
+    {
+      "url": "https://www.rankmatrix.in/favicon.ico",
+      "status": 404
+    },
+    {
+      "url": "https://www.rankmatrix.in/this-page-does-not-exist",
+      "status": 404
+    },
+    {
+      "url": "http://127.0.0.1:3001/colleges",
+      "final_url": "http://127.0.0.1:3001/colleges",
+      "status": 200,
+      "h1": 1,
+      "table_rows": 26,
+      "robots": "index, follow",
+      "canonical": ["https://www.rankmatrix.in/colleges"],
+      "icons": [
+        {
+          "rel": "icon",
+          "href": "/icon.svg?icon.0xwbee0h-~tu-.svg",
+          "sizes": "any",
+          "type": "image/svg+xml"
+        }
+      ],
+      "x_robots_tag": null,
+      "contains_undefined": false,
+      "contains_empty_message": false
+    }
+  ],
+  "catalogue_counts": {
+    "institutes": 138,
+    "programmes": 288,
+    "active_pairs": 1038
+  },
+  "mixed_exam_programme_pages": 40,
+  "sample_combination": {
+    "institute": "indian-institute-of-technology-patna",
+    "programme": "btech-chemical-engineering-mba-in-hospital-and-health-care-management-iim-bodh-gaya",
+    "cutoff_years": [2026, 2025, 2024],
+    "cutoff_rows_by_year": {
+      "2026": 20,
+      "2025": 24,
+      "2024": 15
+    },
+    "seat_years": [2026]
+  }
+}
