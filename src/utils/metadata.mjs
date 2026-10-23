@@ -19,6 +19,15 @@ export function instituteTitleName(institute) {
   return name;
 }
 
+// Programme names are not unique, even with degree/duration. Keep the stored
+// code visible so separate records cannot collapse to identical metadata.
+export function programmeTitleName(programme) {
+  if (!programme.name?.trim() || !programme.code)
+    throw new Error('Programme metadata requires name and code');
+  const duration = programme.courseDuration > 0 ? `${programme.courseDuration} years, ` : '';
+  return `${programme.name.trim()} (${duration}code ${programme.code})`;
+}
+
 /** Keep search and social metadata aligned, independent of layout inheritance. */
 export function buildMetadata({
   path,

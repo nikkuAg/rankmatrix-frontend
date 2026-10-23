@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
-import { buildMetadata, instituteTitleName } from '../src/utils/metadata.mjs';
+import { buildMetadata, instituteTitleName, programmeTitleName } from '../src/utils/metadata.mjs';
 
 test('institute titles preserve supplied identity without guessing from city or type', () => {
   assert.equal(
@@ -82,4 +82,13 @@ test('article dates are included only when supplied for an article', () => {
       .publishedTime,
     '2026-04-23',
   );
+});
+
+test('programme metadata disambiguates equal names and duration without merging records', () => {
+  const a = { name: 'Chemical Engineering', code: 'A', courseDuration: 5 };
+  const b = { ...a, code: 'B' };
+  assert.notEqual(programmeTitleName(a), programmeTitleName(b));
+  assert.match(programmeTitleName(a), /5 years, code A/);
+  assert.equal(programmeTitleName({ ...a, courseDuration: 0 }), 'Chemical Engineering (code A)');
+  assert.throws(() => programmeTitleName({ name: 'Chemical Engineering' }), /name and code/);
 });
