@@ -29,31 +29,18 @@ import {
   updatePageNumber,
   updateSearchValue,
 } from '@/store/slices/branch';
-import { isInitialCatalogueRequest } from '@/utils/catalogue.mjs';
+import { catalogueState } from '@/utils/catalogue.mjs';
 import { sendAnalyticsEvent } from '../../utils/analyticEvent';
 import { TableLayout } from '../TableLayout';
 
 export const BranchList = ({ initialData }) => {
   const theme = useTheme();
 
-  const [
-    getBranchData,
-    { data: queryData, isLoading: isBranchLoading, isFetching: isBranchFetching, isUninitialized },
-  ] = useLazyGetBranchDataQuery();
-  const {
-    data: filtersData,
-    isLoading: isFiltersLoading,
-    isFetching: isFiltersFetching,
-  } = useGetBranchFiltersQuery();
+  const [getBranchData, branchQuery] = useLazyGetBranchDataQuery();
+  const { data: filtersData } = useGetBranchFiltersQuery();
   const branchReqData = useSelector((state) => state.branch);
-  const data =
-    queryData ??
-    (isInitialCatalogueRequest(branchReqData) && (isUninitialized || isBranchLoading)
-      ? initialData
-      : undefined);
+  const { data, isLoading } = catalogueState(branchReqData, branchQuery, initialData);
   const dispatch = useDispatch();
-  const isLoading =
-    (isBranchFetching || isFiltersFetching || isBranchLoading || isFiltersLoading) && !data;
   const [sortField, setSortField] = useState(null);
   const [sortOrder, setSortOrder] = useState(null);
 

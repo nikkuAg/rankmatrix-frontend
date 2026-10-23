@@ -31,19 +31,14 @@ import {
   updatePageNumber,
   updateSearchValue,
 } from '@/store/slices/college';
-import { isInitialCatalogueRequest } from '@/utils/catalogue.mjs';
+import { catalogueState } from '@/utils/catalogue.mjs';
 import { sendAnalyticsEvent } from '../../utils/analyticEvent';
 import { TableLayout } from '../TableLayout';
 
 export const CollegeList = ({ initialData }) => {
-  const [getCollegeData, { data: queryData, isLoading, isFetching, isUninitialized }] =
-    useLazyGetCollegeDataQuery();
+  const [getCollegeData, collegeQuery] = useLazyGetCollegeDataQuery();
   const collegeReqData = useSelector((state) => state.college);
-  const data =
-    queryData ??
-    (isInitialCatalogueRequest(collegeReqData) && (isUninitialized || isLoading)
-      ? initialData
-      : undefined);
+  const { data, isLoading } = catalogueState(collegeReqData, collegeQuery, initialData);
   const theme = useTheme();
   const dispatch = useDispatch();
   const [expandedNirf, setExpandedNirf] = useState(false);
@@ -153,7 +148,7 @@ export const CollegeList = ({ initialData }) => {
           />
           <SearchBox onChange={handleSearchChange} width={{ xs: '100%', sm: '35%' }} />
         </Stack>
-        {!isLoading && !isFetching && data?.totalPages > 1 && (
+        {!isLoading && data?.totalPages > 1 && (
           <PaginationBox
             currentPage={data.page}
             totalPages={data.totalPages}
@@ -163,7 +158,7 @@ export const CollegeList = ({ initialData }) => {
             totalItems={data.totalItems}
           />
         )}
-        {(isLoading || isFetching) && !data ? (
+        {isLoading ? (
           <TableSkeleton rows={10} columns={5} />
         ) : (
           <Stack flexGrow={1}>
@@ -299,7 +294,7 @@ export const CollegeList = ({ initialData }) => {
             </TableLayout>
           </Stack>
         )}
-        {!isLoading && !isFetching && data?.totalPages > 1 && (
+        {!isLoading && data?.totalPages > 1 && (
           <PaginationBox
             currentPage={data.page}
             totalPages={data.totalPages}
