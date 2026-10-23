@@ -39,15 +39,24 @@ export const FormModal = ({ open, setOpen, setFormData, getPredictionData, defau
     getPredictionData(formJson)
       .unwrap()
       .then((_) => {
+        sendAnalyticsEvent({
+          action: 'prediction_completed',
+          category: 'college_predictor',
+          label: 'Prediction results returned',
+          value: 1,
+        });
         setFormData(formJson);
         handleClose();
+      })
+      .catch(() => {
+        // The query layer displays the failure; keep the form open for retry.
       });
 
     sendAnalyticsEvent({
       action: `form_submitted`,
       category: 'college_predictor',
       label: 'College predictor form submit',
-      value: formJson,
+      value: 1,
     });
   };
 
