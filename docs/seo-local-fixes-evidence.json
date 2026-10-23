@@ -1,0 +1,72 @@
+{
+  "catalogue_before": {
+    "sha": "45da153ab6546f5b03031dafee4513d2faa7660f",
+    "url": "http://127.0.0.1:3008/colleges",
+    "fetchTime": "2026-10-23T20:04:05.099Z",
+    "performance": 82,
+    "accessibility": 100,
+    "lcp_ms": 3736,
+    "tbt_ms": 317,
+    "cls": 0,
+    "bytes": 717174,
+    "ad_requests": 4
+  },
+  "catalogue_after": {
+    "sha": "2d5c92b86377777b867bd063258895f6d65ed758",
+    "url": "http://127.0.0.1:3010/colleges",
+    "fetchTime": "2026-10-23T20:11:57.050Z",
+    "performance": 91,
+    "accessibility": 100,
+    "lcp_ms": 3334,
+    "tbt_ms": 148,
+    "cls": 0,
+    "bytes": 431058,
+    "ad_requests": 0
+  },
+  "deep_after": {
+    "sha": "09156a3e6a0105fd7f13172b5476ca34e88e8859",
+    "url": "http://127.0.0.1:3010/colleges/national-institute-of-technology-goa/civil-engineering",
+    "fetchTime": "2026-10-23T20:18:26.387Z",
+    "performance": 94,
+    "accessibility": 100,
+    "lcp_ms": 2955,
+    "tbt_ms": 127,
+    "cls": 0,
+    "bytes": 481173,
+    "ad_requests": 0
+  },
+  "backend_repeat": [
+    {
+      "version": "per_pair_queries",
+      "endpoint": "institute",
+      "seconds": 1.047,
+      "queries": 14,
+      "bytes": 3391,
+      "status": 200
+    },
+    {
+      "version": "per_pair_queries",
+      "endpoint": "programme",
+      "seconds": 5.681,
+      "queries": 72,
+      "bytes": 35378,
+      "status": 200
+    },
+    {
+      "version": "batched",
+      "endpoint": "institute",
+      "seconds": 0.499,
+      "queries": 6,
+      "bytes": 3391,
+      "status": 200
+    },
+    {
+      "version": "batched",
+      "endpoint": "programme",
+      "seconds": 0.438,
+      "queries": 5,
+      "bytes": 35378,
+      "status": 200
+    }
+  ]
+}

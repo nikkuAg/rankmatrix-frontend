@@ -1,6 +1,8 @@
 # Frontend SEO PR review and backend performance — 24 October 2026
 
-**Disposition: technical checks pass with the corrections below; this is not unconditional merge approval.** The owner should explicitly review the unresolved accuracy/data/production items in the remaining-findings register. No PR has been merged, no production deployment performed, and no migration/import/database write run.
+> **Local-fix update:** [SEO-LOCAL-FIXES.md](SEO-LOCAL-FIXES.md) supersedes the pending privacy, IISc, guide, source-attribution and sampled contrast findings below. The register remains historical review context; it is not a list of 32 owner decisions.
+
+**Historical disposition: technical checks pass with the corrections below; this is not unconditional merge approval.** The owner should explicitly review the unresolved accuracy/data/production items in the remaining-findings register. No PR has been merged, no production deployment performed, and no migration/import/database write run.
 
 ## Review scope and evidence
 
