@@ -1,3 +1,4 @@
+import { instituteType } from '@/utils/instituteIdentity.mjs';
 import Link from 'next/link';
 import { GuideLayout } from '@/components/GuideLayout';
 import { fetchSeoSlugs } from '@/utils/seoApi';
@@ -9,14 +10,14 @@ export async function SeoDirectory({ kind, faqs }) {
   const colleges = kind === 'institutes';
   const prefix = colleges ? '/colleges' : '/branches';
   const groups = colleges
-    ? ['IIT', 'NIT', 'IIIT', 'GFTI']
+    ? ['IIT', 'IISc', 'NIT', 'IIIT', 'GFTI']
         .map((type) => ({
           name: type,
-          entries: entries.filter((entry) => entry.type === type),
+          entries: entries.filter((entry) => instituteType(entry) === type),
         }))
         .concat({
           name: 'Other participating institutes',
-          entries: entries.filter((entry) => !['IIT', 'NIT', 'IIIT', 'GFTI'].includes(entry.type)),
+          entries: entries.filter((entry) => !['IIT', 'IISc', 'NIT', 'IIIT', 'GFTI'].includes(instituteType(entry))),
         })
     : [{ name: 'Programmes and cutoff comparisons', entries }];
 

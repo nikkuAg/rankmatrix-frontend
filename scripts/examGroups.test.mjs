@@ -33,3 +33,19 @@ test('unknown institute types keep their rows without assuming an exam', () => {
   ]);
   assert.deepEqual(groupInstitutesByExam([]), []);
 });
+
+
+test('legacy IISc record is labelled separately but remains in Advanced group', async () => {
+  const { instituteType } = await import('../src/utils/instituteIdentity.mjs');
+  const iisc = { name: 'Indian Institute of Science, Bangalore', type: 'IIT' };
+  const iit = { name: 'Indian Institute of Technology Bombay', type: 'IIT' };
+  assert.equal(instituteType(iisc), 'IISc');
+  assert.equal(instituteType(iit), 'IIT');
+  assert.equal(instituteType({ name: 'Indian Institute of Science Education and Research', type: 'GFTI' }), 'GFTI');
+  assert.equal(instituteType({ slug: 'indian-institute-of-science-bangalore', type: 'IIT' }), 'IISc');
+  const groups = groupInstitutesByExam([iisc, iit]);
+  assert.equal(groups.length, 1);
+  assert.equal(groups[0].id, 'advanced');
+  assert.match(groups[0].title, /IISc/);
+  assert.equal(iisc.type, 'IIT'); // Never change backend filter/predictor semantics.
+});

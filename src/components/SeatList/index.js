@@ -29,6 +29,7 @@ import {
 import { useDebounce } from '@/utils/debounceHook';
 import { sendAnalyticsEvent } from '../../utils/analyticEvent';
 import { useIsMobile } from '../../utils/screenSizeHook';
+import { COLLEGE_FILTER_LABELS } from '@/utils/instituteIdentity.mjs';
 import { ChipFilter } from '../ChipFilter';
 import { NoDataComponent } from '../NoData';
 import { PaginationBox } from '../PaginationBox';
@@ -204,6 +205,7 @@ export const SeatList = () => {
         >
           <ChipFilter
             filterList={Object.keys(COLLEGE_TYPES)}
+            labels={COLLEGE_FILTER_LABELS}
             onChange={handleCollegeTypeChange}
             defaultSelected={Object.keys(COLLEGE_TYPES)}
           />

@@ -1,3 +1,4 @@
+import { instituteType } from '@/utils/instituteIdentity.mjs';
 import React from 'react';
 import { Box } from '@mui/material';
 import { notFound } from 'next/navigation';
@@ -17,6 +18,7 @@ export const dynamicParams = true;
 const SITE_URL = 'https://www.rankmatrix.in';
 const INSTITUTE_TYPE_LABEL = {
   IIT: 'Indian Institute of Technology',
+  IISc: 'Indian Institute of Science',
   NIT: 'National Institute of Technology',
   IIIT: 'Indian Institute of Information Technology',
   GFTI: 'Government Funded Technical Institute',
@@ -47,7 +49,7 @@ export async function generateMetadata({ params }) {
 const formatRank = (value) => (value == null ? '—' : value.toLocaleString('en-IN'));
 
 const buildFaqs = (data) => {
-  const typeLabel = INSTITUTE_TYPE_LABEL[data.type] || data.type;
+  const typeLabel = INSTITUTE_TYPE_LABEL[instituteType(data)] || instituteType(data);
   const branchCount = data.branches?.length ?? 0;
   const latestNirf = data.nirfRanks?.[0];
   const latestYear = data.latestYear;
@@ -76,6 +78,8 @@ const buildFaqs = (data) => {
 
 const relatedTypeCopy = (type) => {
   switch (type) {
+    case 'IISc':
+      return 'IISc is the Indian Institute of Science, not an IIT. Its participating JoSAA programmes use JEE Advanced ranks.';
     case 'IIT':
       return 'Indian Institutes of Technology (IITs) admit students through JEE Advanced. Other IITs can be compared side by side from the Participating Colleges table.';
     case 'NIT':
@@ -83,7 +87,7 @@ const relatedTypeCopy = (type) => {
     case 'IIIT':
       return 'Indian Institutes of Information Technology (IIITs) focus on computing and adjacent disciplines. Admission uses JEE Main ranks through JoSAA.';
     case 'GFTI':
-      return 'Government Funded Technical Institutes (GFTIs) is an umbrella category for centrally funded institutes beyond the IIT / NIT / IIIT groups, each with its own focus area.';
+      return 'Government Funded Technical Institutes (GFTIs) is an umbrella category for government-funded institutes beyond the IIT / NIT / IIIT groups, each with its own focus area.';
     default:
       return null;
   }
@@ -94,7 +98,7 @@ export default async function InstitutePage({ params }) {
   const data = await loadInstitute(slug);
   if (!data) notFound();
 
-  const typeLabel = INSTITUTE_TYPE_LABEL[data.type] || data.type;
+  const typeLabel = INSTITUTE_TYPE_LABEL[instituteType(data)] || instituteType(data);
   const latestNirf = data.nirfRanks?.[0];
   const faqs = buildFaqs(data);
   const canonicalPath = `/colleges/${slug}`;
@@ -127,7 +131,7 @@ export default async function InstitutePage({ params }) {
     faqJsonLd(faqs),
   ];
 
-  const relatedCopy = relatedTypeCopy(data.type);
+  const relatedCopy = relatedTypeCopy(instituteType(data));
 
   return (
     <>

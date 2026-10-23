@@ -1,3 +1,4 @@
+import { instituteType } from '@/utils/instituteIdentity.mjs';
 import React from 'react';
 import { Box } from '@mui/material';
 import { notFound } from 'next/navigation';
@@ -39,12 +40,13 @@ const formatRank = (value) => (value == null ? '—' : value.toLocaleString('en-
 
 const buildFaqs = (data) => {
   const instituteCount = data.institutes?.length ?? 0;
-  const iitCount = data.institutes?.filter((i) => i.type === 'IIT').length ?? 0;
-  const nitCount = data.institutes?.filter((i) => i.type === 'NIT').length ?? 0;
+  const iitCount = data.institutes?.filter((i) => instituteType(i) === 'IIT').length ?? 0;
+  const iiscCount = data.institutes?.filter((i) => instituteType(i) === 'IISc').length ?? 0;
+  const nitCount = data.institutes?.filter((i) => instituteType(i) === 'NIT').length ?? 0;
   return [
     {
       question: `How many colleges offer ${data.name} through JoSAA?`,
-      answer: `${instituteCount} JoSAA participating institutes offer ${data.name} through the ${data.degree} programme${iitCount || nitCount ? ` — including ${iitCount} IIT${iitCount === 1 ? '' : 's'} and ${nitCount} NIT${nitCount === 1 ? '' : 's'}` : ''}. Full list with the latest cutoff data is on this page.`,
+      answer: `${instituteCount} JoSAA participating institutes offer ${data.name} through the ${data.degree} programme${iitCount || nitCount || iiscCount ? ` — including ${iitCount} IIT${iitCount === 1 ? '' : 's'} and ${nitCount} NIT${nitCount === 1 ? '' : 's'}${iiscCount ? ' and IISc' : ''}` : ''}. Full list with the latest cutoff data is on this page.`,
     },
     {
       question: `What is the duration of a ${data.name} programme?`,
@@ -116,7 +118,7 @@ export default async function BranchPage({ params }) {
         <h2>About {data.name}</h2>
         <p>
           {data.name} is offered through JoSAA counselling at {data.institutes?.length ?? 0}{' '}
-          participating institutes in the stored catalogue. Admission is merit-based — IIT seats are
+          participating institutes in the stored catalogue. Admission is merit-based — IIT and IISc seats are
           allocated from the JEE Advanced rank list; NIT, IIIT, and GFTI seats use JEE Main. Every
           institute below takes the branch through the {data.degree}, {data.courseDuration}
           -year programme.
@@ -161,7 +163,7 @@ export default async function BranchPage({ params }) {
                           <td>
                             <AppLink href={`/colleges/${institute.slug}`}>{institute.name}</AppLink>
                           </td>
-                          <td>{institute.type}</td>
+                          <td>{instituteType(institute)}</td>
                           <td>{institute.state}</td>
                           <td>
                             {institute.latestNirfRank

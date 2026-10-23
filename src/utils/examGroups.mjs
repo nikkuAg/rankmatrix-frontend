@@ -1,5 +1,7 @@
+import { instituteType } from './instituteIdentity.mjs';
+
 const EXAM_GROUPS = [
-  { id: 'advanced', title: 'JEE Advanced — IIT programmes', types: ['IIT'] },
+  { id: 'advanced', title: 'JEE Advanced — IIT and IISc programmes', types: ['IIT', 'IISc'] },
   { id: 'main', title: 'JEE Main — NIT, IIIT and GFTI programmes', types: ['NIT', 'IIIT', 'GFTI'] },
 ];
 
@@ -17,8 +19,8 @@ export function groupInstitutesByExam(institutes = []) {
       institutes: institutes
         .filter((institute) =>
           types
-            ? types.includes(institute.type)
-            : !EXAM_GROUPS.some((group) => group.types.includes(institute.type)),
+            ? types.includes(instituteType(institute))
+            : !EXAM_GROUPS.some((group) => group.types.includes(instituteType(institute))),
         )
         .sort((a, b) => a.name.localeCompare(b.name)),
     }))

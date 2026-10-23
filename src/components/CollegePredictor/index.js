@@ -1,5 +1,6 @@
 'use client';
 
+import { instituteType } from '@/utils/instituteIdentity.mjs';
 import React, { useEffect, useState } from 'react';
 import { Download } from '@mui/icons-material';
 import {
@@ -61,7 +62,7 @@ export const CollegePredictor = () => {
     rankData.forEach((item) => {
       data.push({
         institute: item.institute.name,
-        instituteType: item.institute.type,
+        instituteType: instituteType(item.institute),
         branch: item.branch.name,
         degree: item.branch.degree,
         duration: item.branch.courseDuration,
@@ -256,7 +257,7 @@ export const CollegePredictor = () => {
                               }}
                             >
                               <TableCell>{rank.institute.name}</TableCell>
-                              <TableCell>{rank.institute.type}</TableCell>
+                              <TableCell>{instituteType(rank.institute)}</TableCell>
                               <TableCell>{rank.branch.degree}</TableCell>
                               <TableCell>{rank.branch.name}</TableCell>
                               <TableCell>{rank.category}</TableCell>
