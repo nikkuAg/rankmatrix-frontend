@@ -13,7 +13,7 @@ const FAQS = [
   {
     question: 'What is the JoSAA seat matrix?',
     answer:
-      'The official count, published by JoSAA before counselling begins, of how many seats each participating institute offers in each branch, broken down by category, quota (HS, OS, AI), and seat pool (Gender-Neutral, Female-only). Every seat allocated during counselling comes from a specific cell of this matrix.',
+      'The official count, published by JoSAA before counselling begins, of how many seats each participating institute offers in each branch, broken down by category, quota (such as HS, OS or AI), and seat pool (Gender-Neutral, Female-only). Every seat allocated during counselling comes from a specific cell of this matrix.',
   },
   {
     question: 'How is a branch split between HS and OS quota at an NIT?',
@@ -33,7 +33,7 @@ const FAQS = [
   {
     question: 'What does the "change in seats" view show?',
     answer:
-      "It compares the current year's seat count with the previous year's seat count for each institute-branch-category combination, so you can spot branches where seats have been added, removed, or redistributed. Changes in seat count often correlate with small cutoff movements in the same direction.",
+      "It subtracts the previous year's stored seat count from the selected year's count for the same institute, branch, category, quota and seat pool. When a previous-year row is absent, the backend treats its count as zero; a positive difference can therefore reflect missing historical data rather than newly added seats. This is not a forecast of cutoff movement.",
   },
 ];
 

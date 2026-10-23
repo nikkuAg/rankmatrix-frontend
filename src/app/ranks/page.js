@@ -13,7 +13,7 @@ const FAQS = [
   {
     question: 'What is the difference between an opening rank and a closing rank?',
     answer:
-      'The opening rank is the rank of the first (best-ranked) candidate admitted to a given institute-branch-category-seat-pool in a JoSAA round. The closing rank is the last (worst-ranked) candidate admitted. Together they bound the range of ranks that got admitted that round.',
+      'The opening rank is the rank of the first (best-ranked) candidate admitted to a given institute-branch-category-quota-seat-pool in a JoSAA round. The closing rank is the last (worst-ranked) candidate admitted. Together they bound the range of ranks that got admitted that round.',
   },
   {
     question: 'What is the difference between HS, OS, and AI quota?',
@@ -28,12 +28,12 @@ const FAQS = [
   {
     question: 'What are Gender-Neutral and Female-only seat pools?',
     answer:
-      'Gender-Neutral is the main seat pool, open to any candidate. Female-only is a supernumerary pool added on top of the Gender-Neutral matrix to raise female representation at IITs and other centrally funded institutes. Female candidates are considered for both pools and get the better outcome.',
+      'Gender-Neutral is the main seat pool, open to any candidate. The Female-only pool can include supernumerary seats. Female candidates can be considered for both pools under the applicable JoSAA rules; match the pool shown in each cutoff row.',
   },
   {
     question: 'Where does RankMatrix get these cutoff numbers?',
     answer:
-      'Directly from the public JoSAA round-wise opening and closing rank publications. The numbers are cleaned and structured for filtering and search, but not altered — they are exactly what JoSAA published.',
+      'RankMatrix stores data sourced from public JoSAA round-wise opening and closing rank publications. Imports and page refreshes are separate; verify important figures against the official publication and report discrepancies with the year, round and filters.',
   },
 ];
 
