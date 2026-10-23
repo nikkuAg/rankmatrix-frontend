@@ -65,9 +65,8 @@ export default function About() {
         <h2>What RankMatrix is</h2>
         <p>
           RankMatrix is a free JEE college and branch predictor for JoSAA counselling. It works with
-          both JEE Main and JEE Advanced ranks, covers every IIT, NIT, IIIT, and GFTI that
-          participates in JoSAA, and is built entirely on official JoSAA data — opening and closing
-          ranks, the seat matrix, and the participating-institute list.
+          both JEE Main and JEE Advanced ranks, uses the participating institutes and programmes in
+          our stored catalogue.
         </p>
         <p>
           The aim is narrow on purpose: help an aspirant turn a JEE rank into a clear, ordered list
