@@ -1,4 +1,3 @@
-import { instituteType } from '@/utils/instituteIdentity.mjs';
 import React from 'react';
 import { Box } from '@mui/material';
 import { notFound } from 'next/navigation';
@@ -6,6 +5,7 @@ import { AppLink } from '@/components/AppLink';
 import { DataPageLayout } from '@/components/DataPageLayout';
 import { summaryRows } from '@/utils/cutoffSummaries.mjs';
 import { groupInstitutesByExam } from '@/utils/examGroups.mjs';
+import { instituteType } from '@/utils/instituteIdentity.mjs';
 import { breadcrumbJsonLd, faqJsonLd, serializeJsonLd } from '@/utils/jsonLd';
 import { buildMetadata, programmeTitleName } from '@/utils/metadata.mjs';
 import { fetchBranchSeo } from '@/utils/seoApi';
@@ -118,9 +118,10 @@ export default async function BranchPage({ params }) {
         <h2>About {data.name}</h2>
         <p>
           {data.name} is offered through JoSAA counselling at {data.institutes?.length ?? 0}{' '}
-          participating institutes in the stored catalogue. Admission is merit-based — IIT and IISc seats are
-          allocated from the JEE Advanced rank list; NIT, IIIT, and GFTI seats use JEE Main. Every
-          institute below takes the branch through the {data.degree}, {data.courseDuration}
+          participating institutes in the stored catalogue. Admission is merit-based — IIT and IISc
+          seats are allocated from the JEE Advanced rank list; NIT, IIIT, and GFTI seats use JEE
+          Main. Every institute below takes the branch through the {data.degree},{' '}
+          {data.courseDuration}
           -year programme.
         </p>
         <p>
@@ -193,7 +194,7 @@ export default async function BranchPage({ params }) {
         <h2>Using this data</h2>
         <ul>
           <li>
-            To predict which colleges and branches your rank qualifies for across JoSAA, use the{' '}
+            For a limited historical college and branch shortlist, use the{' '}
             <AppLink href="/predict">College &amp; Branch Predictor</AppLink>.
           </li>
           <li>

@@ -138,8 +138,8 @@ export const Footer = () => {
                 maxWidth: 320,
               }}
             >
-              A free JoSAA &amp; JEE counselling companion built on official JoSAA data. No signup,
-              no phone number, no email, no marketing spam.
+              A free JoSAA &amp; JEE counselling companion built on official JoSAA data. No signup
+              or contact details required to use the tools.
             </Typography>
             <Stack direction="row" gap={2} sx={{ mt: 0.5 }}>
               <MuiLink
@@ -251,9 +251,10 @@ export const Footer = () => {
               textAlign: { xs: 'left', md: 'right' },
             }}
           >
-            Not affiliated with JoSAA, JEE, NTA, the IITs, NITs, IIITs, or GFTIs. All data is
-            sourced from public JoSAA publications. Verify schedules, rules, and cutoffs on the
-            official sources before making admission decisions.
+            Not affiliated with JoSAA, JEE, NTA, the IITs, NITs, IIITs, or GFTIs. Cutoff and seat
+            observations come from JoSAA; NIRF figures come from NIRF. Predictor outputs are our
+            calculations. Verify schedules, rules, and cutoffs on the official sources before making
+            admission decisions.
           </Typography>
         </Box>
       </Box>

@@ -184,10 +184,10 @@ export const DataPageLayout = ({
             opacity: 0.85,
           }}
         >
-          Data on this page is sourced from public JoSAA publications and cleaned for easier
-          reference. RankMatrix is an independent project and is not affiliated with JoSAA, JEE,
-          NTA, the IITs, NITs, IIITs, or GFTIs. Verify all schedules, rules, and cutoffs on the
-          official{' '}
+          Cutoff and seat observations are compiled from JoSAA publications; NIRF figures come from
+          NIRF. Stored coverage can be incomplete. RankMatrix is an independent project and is not
+          affiliated with JoSAA, JEE, NTA, the IITs, NITs, IIITs, or GFTIs. Verify all schedules,
+          rules, and cutoffs on the official{' '}
           <MuiLink
             href="https://josaa.nic.in"
             target="_blank"

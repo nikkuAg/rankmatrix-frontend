@@ -1,10 +1,10 @@
-import { instituteType } from '@/utils/instituteIdentity.mjs';
 import React from 'react';
 import { Box } from '@mui/material';
 import { notFound } from 'next/navigation';
 import { AppLink } from '@/components/AppLink';
 import { DataPageLayout } from '@/components/DataPageLayout';
 import { summaryRows } from '@/utils/cutoffSummaries.mjs';
+import { admissionRankLabel, instituteType } from '@/utils/instituteIdentity.mjs';
 import { breadcrumbJsonLd, faqJsonLd, serializeJsonLd } from '@/utils/jsonLd';
 import { buildMetadata, instituteTitleName } from '@/utils/metadata.mjs';
 import { fetchInstituteSeo } from '@/utils/seoApi';
@@ -52,16 +52,15 @@ const buildFaqs = (data) => {
   const typeLabel = INSTITUTE_TYPE_LABEL[instituteType(data)] || instituteType(data);
   const branchCount = data.branches?.length ?? 0;
   const latestNirf = data.nirfRanks?.[0];
-  const latestYear = data.latestYear;
 
   return [
     {
       question: `Where is ${data.name} located?`,
-      answer: `${data.name} is located in ${data.city}, ${data.state}. It is a ${typeLabel} and participates in JoSAA counselling for admission to its undergraduate engineering programmes.`,
+      answer: `${data.name} is located in ${data.city}, ${data.state}. Its institution family is ${typeLabel}; it participates in JoSAA counselling for admission to its undergraduate engineering programmes.`,
     },
     {
       question: `How many branches does ${data.name} offer through JoSAA?`,
-      answer: `${data.name} offers ${branchCount} undergraduate branches through JoSAA counselling${latestYear ? ` in the ${latestYear} counselling year` : ''}. The full list with cutoffs is on this page.`,
+      answer: `The stored active-programme catalogue lists ${branchCount} programmes for ${data.name}. This count does not certify the complete official offering for a particular counselling year; inspect the current official programme list.`,
     },
     {
       question: `What is the NIRF rank of ${data.name}?`,
@@ -70,8 +69,8 @@ const buildFaqs = (data) => {
         : `${data.name} does not have a recent stored NIRF ranking published on RankMatrix. Check the official NIRF site for the latest.`,
     },
     {
-      question: `How do I know if my JEE rank qualifies for ${data.name}?`,
-      answer: `Use the RankMatrix College & Branch Predictor and compare your JEE Main or JEE Advanced rank with the historical closing ranks listed on this page for each branch. Closing ranks shift year-over-year, so it is best to compare against the most recent two to three years.`,
+      question: `Which rank should I compare for ${data.name}?`,
+      answer: `Use the RankMatrix College & Branch Predictor and compare ${admissionRankLabel(data)} ranks with the historical closing ranks listed on this page for each branch. Match the quota, category, pool and rank list. Historical comparisons do not establish current eligibility or guarantee admission.`,
     },
   ];
 };
@@ -121,7 +120,7 @@ export default async function InstitutePage({ params }) {
         addressRegion: data.state,
         addressCountry: 'IN',
       },
-      description: `${data.name} is a ${typeLabel} in ${data.city}, ${data.state}, participating in JoSAA counselling.`,
+      description: `${data.name} (${typeLabel}) is in ${data.city}, ${data.state}, with participating JoSAA programmes.`,
     },
     breadcrumbJsonLd([
       { name: 'Home', path: '/' },
@@ -166,17 +165,15 @@ export default async function InstitutePage({ params }) {
       >
         <h2>About {data.name}</h2>
         <p>
-          {data.name} ({data.displayCode}) is a {typeLabel} located in {data.city}, {data.state}. It
-          is listed as participating in the stored catalogue and allocates its undergraduate
-          engineering seats through the common JoSAA seat-allocation process based on JEE Main or
-          JEE Advanced ranks.
+          {data.name} ({data.displayCode}) is located in {data.city}, {data.state}. Its institution
+          family is {typeLabel}. For participating JoSAA programmes, compare{' '}
+          {`${admissionRankLabel(data)} ranks`}, subject to the programme&apos;s requirements.
         </p>
         {relatedCopy && <p>{relatedCopy}</p>}
         <p>
-          Below you will find the current list of branches offered at {data.name}, each with the
-          most recent round&apos;s opening and closing rank for the Open category, Gender-Neutral
-          seat pool. For multi-year trends on any specific branch, open the branch&apos;s deep
-          cutoff page.
+          Below you will find the stored programme list for {data.name}, each with the most recent
+          round&apos;s opening and closing rank for the Open category, Gender-Neutral seat pool. For
+          multi-year trends on any specific branch, open the branch&apos;s deep cutoff page.
         </p>
 
         {sortedNirf.length > 0 && (
@@ -254,7 +251,7 @@ export default async function InstitutePage({ params }) {
         <h2>Using this data</h2>
         <ul>
           <li>
-            To predict which colleges and branches your rank qualifies for across JoSAA, use the{' '}
+            For a limited historical college and branch shortlist, use the{' '}
             <AppLink href="/predict">College &amp; Branch Predictor</AppLink>.
           </li>
           <li>
