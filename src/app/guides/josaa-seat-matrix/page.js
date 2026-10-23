@@ -25,7 +25,7 @@ const FAQS = [
   {
     question: 'What are Gender-Neutral and Female-only seat pools?',
     answer:
-      'Gender-Neutral seats are open to any candidate. The female-only pool can include supernumerary seats; inspect the exact programme matrix. Female candidates are considered automatically for both pools and get the better outcome; male candidates are considered only for the Gender-Neutral pool.',
+      'Gender-Neutral seats are open to any candidate. The female-only pool can include supernumerary seats; inspect the exact programme matrix. Eligible female candidates are considered for applicable pools under the official allocation sequence; programme eligibility still applies.',
   },
   {
     question: 'How are reservations applied on top of the seat matrix?',
@@ -92,7 +92,8 @@ export default function JoSAASeatMatrixGuide() {
           who they are reserved for. Before each counselling year begins, JoSAA publishes the full
           matrix: every institute, every branch, every category, every quota, every seat pool.
           During the counselling rounds, JoSAA allocates seats out of this matrix — one cell of it
-          at a time — until all candidates are allocated or all seats are exhausted.
+          at a time — subject to eligibility, submitted choices and the schedule; some candidates
+          can remain unallocated and vacancies can remain.
         </p>
         <p>
           On RankMatrix, the full matrix is browsable at{' '}
@@ -156,9 +157,9 @@ export default function JoSAASeatMatrixGuide() {
           </li>
         </ul>
         <p>
-          JoSAA considers every candidate for all categories they qualify for and gives them the
-          best outcome. If you are OBC-NCL and your rank is also good enough to get an Open seat,
-          you may be allocated the Open seat instead.
+          JoSAA considers eligible programme sections in the prescribed allocation sequence. If you
+          are OBC-NCL and your rank is also good enough to get an Open seat, you may be allocated
+          the Open seat instead.
         </p>
 
         <h2>Quota, in detail</h2>

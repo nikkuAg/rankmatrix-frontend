@@ -62,9 +62,9 @@ export default function Terms() {
 
         <h2>2. Unofficial data, no admission decisions</h2>
         <p>
-          Cutoff and seat records are compiled from public JoSAA publications. Predictor outputs
-          are RankMatrix calculations, not official allocations. NIRF figures come from NIRF,
-          rather than JoSAA. The stored catalogue may be incomplete. It is provided for informational
+          Cutoff and seat records are compiled from public JoSAA publications. Predictor outputs are
+          RankMatrix calculations, not official allocations. NIRF figures come from NIRF, rather
+          than JoSAA. The stored catalogue may be incomplete. It is provided for informational
           purposes only.
         </p>
         <p>
@@ -123,10 +123,11 @@ export default function Terms() {
 
         <h2>6. Intellectual property</h2>
         <p>
-          Cutoff and seat observations originate with JoSAA; NIRF observations originate with NIRF. The site
-          design, written content (guides, explanations, FAQ entries), code, and visual elements are
-          the work of the maker and protected by applicable copyright. You may quote or link short
-          excerpts with attribution; please do not copy whole guides verbatim onto other sites.
+          Cutoff and seat observations originate with JoSAA; NIRF observations originate with NIRF.
+          The site design, written content (guides, explanations, FAQ entries), code, and visual
+          elements are the work of the maker and protected by applicable copyright. You may quote or
+          link short excerpts with attribution; please do not copy whole guides verbatim onto other
+          sites.
         </p>
 
         <h2>7. No warranties</h2>

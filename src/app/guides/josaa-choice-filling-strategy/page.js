@@ -127,7 +127,7 @@ export default function JoSAAChoiceFillingStrategy() {
           <li>
             <strong>Float.</strong> Hold the seat as a fallback and keep participating; the
             algorithm continues looking for anything higher on your preference list in subsequent
-            rounds. If nothing higher opens, you keep this seat at the end.
+            rounds. Seat retention still requires completed acceptance, verification and reporting.
           </li>
           <li>
             <strong>Slide.</strong> A middle ground available only when you have been allocated a

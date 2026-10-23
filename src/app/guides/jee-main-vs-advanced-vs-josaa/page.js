@@ -12,34 +12,29 @@ const PUBLISHED = '2026-04-23';
 
 const FAQS = [
   {
-    question: 'Is JEE Main and JoSAA the same thing?',
+    question: 'Which exam applies to JoSAA programmes?',
     answer:
-      'No. JEE Main is an entrance exam conducted by the NTA. JoSAA is a counselling and seat allocation process that uses JEE Main ranks (plus JEE Advanced ranks for IITs) to allocate seats at centrally funded engineering institutes. You sit JEE Main to get a rank; you register with JoSAA to get a seat.',
+      'Participating IIT and IISc programmes use JEE Advanced. NIT+ programmes use the applicable JEE Main paper: Paper 1 for B.E./B.Tech, Paper 2A for B.Arch or Paper 2B for B.Planning. Check programme-specific requirements.',
   },
   {
-    question: 'Do I have to clear JEE Advanced to get into an NIT?',
+    question: 'Must every Advanced candidate qualify through Main?',
     answer:
-      'No. NIT admission is based on your JEE Main rank, not JEE Advanced. JoSAA IIT and IISc programmes use JEE Advanced. A JEE Main rank is sufficient for NITs, IIITs, and GFTIs through JoSAA.',
+      'No universal statement is safe: foreign nationals and applicable OCI/PIO routes have different requirements. Use the current official nationality and eligibility instructions.',
   },
   {
-    question: 'If I qualify JEE Advanced but not JEE Main, can I still join JoSAA?',
+    question: 'Are Main, Advanced and category ranks interchangeable?',
     answer:
-      'JEE Main qualification is normally required for Indian candidates registering for JEE Advanced, but foreign-national and specified OCI/PIO routes have exceptions. Check the official JEE Advanced eligibility page for your route; a rank alone does not establish all admission eligibility.',
+      'No. Main and Advanced have different scales. OPEN rows use the applicable common rank list, while reserved/PwD rows can use corresponding category lists. Match the paper, rank list, year, round, quota and pool.',
   },
   {
-    question: 'Can I skip JoSAA and apply to an IIT directly?',
+    question: 'What does JoSAA add after examination results?',
     answer:
-      'No. There is no direct-apply route for IITs for Indian undergraduate admission. Every seat at every IIT is allocated through JoSAA. The IIT you may prefer cannot offer you a seat outside of JoSAA even if your JEE Advanced rank is very good.',
+      'JoSAA is counselling, not another examination. It considers eligible rank lists, choices and available seats under allocation rules. A result alone does not establish admission eligibility or guarantee a seat.',
   },
   {
-    question: 'Do state engineering colleges participate in JoSAA?',
+    question: 'What can RankMatrix compare?',
     answer:
-      'No. JoSAA covers its published participating-institute list, including IITs, IISc and the NIT+ system. Other colleges may use state counselling or separate routes; verify the institute and programme.',
-  },
-  {
-    question: 'Is NTA the same as JoSAA?',
-    answer:
-      "No. NTA (National Testing Agency) conducts JEE Main as an exam body. It has no role in seat allocation. JoSAA is a separate authority constituted to run counselling for centrally funded institutes, and it consumes NTA's JEE Main rank list as an input.",
+      'The predictor accepts one Main rank and an optional Advanced rank for a selected category and pool. It does not collect separate CRL and category ranks or separate Paper 2 ranks, and cannot represent every admission route. Its result cap can omit alternatives.',
   },
 ];
 
@@ -49,7 +44,7 @@ export const metadata = buildMetadata({
   description: DESCRIPTION,
   type: 'article',
   publishedTime: PUBLISHED,
-  modifiedTime: '2026-10-23',
+  modifiedTime: '2026-10-24',
 });
 
 const jsonLd = [
@@ -58,7 +53,7 @@ const jsonLd = [
     title: TITLE,
     description: DESCRIPTION,
     datePublished: PUBLISHED,
-    dateModified: '2026-10-23',
+    dateModified: '2026-10-24',
   }),
   faqJsonLd(FAQS),
   breadcrumbJsonLd([
@@ -81,237 +76,57 @@ export default function JeeMainVsAdvancedVsJoSAAGuide() {
       <GuideLayout
         title={TITLE}
         description={DESCRIPTION}
-        lastUpdated="23 October 2026"
-        readingTimeMinutes={6}
+        lastUpdated="24 October 2026"
+        readingTimeMinutes={4}
         breadcrumbs={[
           { name: 'Home', path: '/' },
           { name: 'Guides', path: '/guides' },
           { name: 'JEE Main vs Advanced vs JoSAA', path: PAGE_URL },
         ]}
       >
-        <h2>The one-paragraph summary</h2>
+        <h2>Which exam applies to JoSAA programmes?</h2>
         <p>
-          <strong>JEE Main</strong> is an exam. <strong>JEE Advanced</strong> is a different
-          (harder) exam that only the top JEE Main scorers are eligible to sit.{' '}
-          <strong>JoSAA</strong> is not an exam at all — it is the counselling process that takes
-          the ranks from those two exams and allocates actual college seats. Each of the three is
-          run by a different body, and they happen in order: JEE Main, then JEE Advanced, then JoSAA
-          counselling.
+          Participating IIT and IISc programmes use JEE Advanced. NIT+ programmes use the applicable
+          JEE Main paper: Paper 1 for B.E./B.Tech, Paper 2A for B.Arch or Paper 2B for B.Planning.
+          Check programme-specific requirements.
         </p>
-
-        <h2>Who runs what</h2>
-        <table>
-          <thead>
-            <tr>
-              <th>Stage</th>
-              <th>Run by</th>
-              <th>Type</th>
-              <th>Produces</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>JEE Main</td>
-              <td>National Testing Agency (NTA)</td>
-              <td>Entrance exam (two sessions)</td>
-              <td>JEE Main rank list (CRL + category ranks)</td>
-            </tr>
-            <tr>
-              <td>JEE Advanced</td>
-              <td>One of the IITs (rotating annually)</td>
-              <td>Entrance examination</td>
-              <td>JEE Advanced rank list (CRL + category ranks)</td>
-            </tr>
-            <tr>
-              <td>JoSAA counselling</td>
-              <td>Joint Seat Allocation Authority</td>
-              <td>Seat allocation process</td>
-              <td>Your allocated institute and branch</td>
-            </tr>
-          </tbody>
-        </table>
-
-        <h2>JEE Main, in one screen</h2>
-        <ul>
-          <li>
-            Conducted by <strong>NTA</strong> twice a year (typically January and April sessions).
-          </li>
-          <li>Computer-based exam in Physics, Chemistry, Mathematics.</li>
-          <li>
-            The better of your two session scores is used to produce your final JEE Main percentile
-            and rank.
-          </li>
-          <li>
-            Your JEE Main rank is the input for:
-            <ul>
-              <li>JoSAA seat allocation at NITs, IIITs, and GFTIs.</li>
-              <li>
-                Eligibility for JEE Advanced — only the top JEE Main scorers qualify to sit JEE
-                Advanced.
-              </li>
-              <li>
-                State-level counselling in some states that use JEE Main as their entrance rank.
-              </li>
-            </ul>
-          </li>
-        </ul>
-
-        <h2>JEE Advanced, in one screen</h2>
-        <ul>
-          <li>
-            Conducted by the <strong>IIT system</strong>; one IIT rotates in as the organising
-            institute each year.
-          </li>
-          <li>
-            Two papers of three hours each, same subjects (Physics, Chemistry, Mathematics) but
-            significantly harder.
-          </li>
-          <li>
-            Only the top JEE Main qualifiers (eligibility is published on the official JEE Advanced
-            website) are eligible to register.
-          </li>
-          <li>
-            The applicable JEE Advanced rank list is used for IIT and IISc JoSAA programmes;
-            preferences, seat availability and other eligibility rules also apply. JEE Main rank is
-            irrelevant for IITs once you have a JEE Advanced rank.
-          </li>
-        </ul>
-
-        <h2>JoSAA, in one screen</h2>
-        <ul>
-          <li>A counselling authority, not an exam body. No exam, no paper, no test.</li>
-          <li>
-            Runs a single allocation process that uses the JEE Main rank list for NIT / IIIT / GFTI
-            seats and the JEE Advanced rank list for IIT seats.
-          </li>
-          <li>
-            You register on josaa.nic.in, submit an ordered preference list, and participate in five
-            to six rounds of seat allocation.
-          </li>
-          <li>
-            The full process is covered in the{' '}
-            <AppLink href="/guides/what-is-josaa-counselling">JoSAA counselling guide</AppLink> and
-            the <AppLink href="/guides/josaa-counselling-rounds">rounds walkthrough</AppLink>.
-          </li>
-        </ul>
-
-        <h2>How the three fit together — a timeline</h2>
-        <ol>
-          <li>
-            <strong>JEE Main session 1 (typically January).</strong> Sit the exam. Get a percentile.
-            Session result is published a few weeks later.
-          </li>
-          <li>
-            <strong>JEE Main session 2 (typically April).</strong> Sit again to improve your score
-            if you want. Final JEE Main rank is published based on the better of the two sessions.
-          </li>
-          <li>
-            <strong>JEE Advanced registration.</strong> If your JEE Main rank is within the
-            eligibility cutoff, you can register for JEE Advanced.
-          </li>
-          <li>
-            <strong>JEE Advanced exam.</strong> Typically held in late May or early June. Rank list
-            published shortly after.
-          </li>
-          <li>
-            <strong>JoSAA counselling opens.</strong> Usually in June, after both JEE Main and JEE
-            Advanced results are out. You register, fill choices, participate in rounds.
-          </li>
-          <li>
-            <strong>Seat allocated, reporting, and classes begin.</strong>
-          </li>
-        </ol>
+        <h2>Must every Advanced candidate qualify through Main?</h2>
         <p>
-          Exact dates move year to year. The ordering never does. For current-year dates, always
-          refer to the official JEE Main (NTA), JEE Advanced, and JoSAA notifications.
+          No universal statement is safe: foreign nationals and applicable OCI/PIO routes have
+          different requirements. Use the current official nationality and eligibility instructions.
         </p>
-
-        <h2>Which rank goes where — a quick lookup</h2>
-        <table>
-          <thead>
-            <tr>
-              <th>I want admission to&hellip;</th>
-              <th>Rank used</th>
-              <th>How</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>IITs</td>
-              <td>JEE Advanced rank</td>
-              <td>JoSAA counselling (mandatory)</td>
-            </tr>
-            <tr>
-              <td>NITs</td>
-              <td>JEE Main rank</td>
-              <td>JoSAA counselling, then CSAB special rounds for vacant seats</td>
-            </tr>
-            <tr>
-              <td>IIITs</td>
-              <td>JEE Main rank</td>
-              <td>JoSAA counselling, then CSAB special rounds for vacant seats</td>
-            </tr>
-            <tr>
-              <td>GFTIs</td>
-              <td>JEE Main rank</td>
-              <td>JoSAA counselling, then CSAB special rounds for vacant seats</td>
-            </tr>
-            <tr>
-              <td>State engineering colleges</td>
-              <td>State entrance rank or JEE Main rank (varies by state)</td>
-              <td>State-level counselling — not JoSAA</td>
-            </tr>
-          </tbody>
-        </table>
-
-        <h2>Common points of confusion</h2>
-        <ul>
-          <li>
-            <strong>&quot;JEE Main is my rank list.&quot;</strong> You have <em>two</em> rank
-            numbers in JEE Main: a Common Rank List (CRL) position and a category rank (for OBC-NCL,
-            EWS, SC, ST, PwD candidates). JoSAA uses both — your CRL for Open-category seats, your
-            category rank for reserved seats — and gives you whichever gets you the better
-            allocation.
-          </li>
-          <li>
-            <strong>&quot;I cleared JEE Advanced so I can skip JEE Main.&quot;</strong> Eligibility
-            depends on nationality and the applicable admission route. Check the official JEE
-            Advanced requirements instead of assuming both ranks are always required.
-          </li>
-          <li>
-            <strong>&quot;JoSAA will rank me based on my preference.&quot;</strong> No. Ranks come
-            from JEE Main / Advanced. Your preference list only changes <em>which</em>
-            institute-branch you are considered for in each round; it does not change your rank.
-          </li>
-        </ul>
-
-        <h2>Related guides</h2>
-        <ul>
-          <li>
-            <AppLink href="/guides/what-is-josaa-counselling">What is JoSAA counselling</AppLink>
-          </li>
-          <li>
-            <AppLink href="/guides/josaa-counselling-rounds">JoSAA counselling rounds</AppLink>
-          </li>
-          <li>
-            <AppLink href="/guides/josaa-opening-and-closing-ranks">
-              Opening and closing ranks explained
-            </AppLink>
-          </li>
-          <li>
-            <AppLink href="/guides/jee-main-college-predictor">
-              How the college predictor works
-            </AppLink>
-          </li>
-        </ul>
-
-        <h2>Common questions</h2>
-        {FAQS.map((faq) => (
-          <React.Fragment key={faq.question}>
-            <h3>{faq.question}</h3>
-            <p>{faq.answer}</p>
-          </React.Fragment>
-        ))}
+        <h2>Are Main, Advanced and category ranks interchangeable?</h2>
+        <p>
+          No. Main and Advanced have different scales. OPEN rows use the applicable common rank
+          list, while reserved/PwD rows can use corresponding category lists. Match the paper, rank
+          list, year, round, quota and pool.
+        </p>
+        <h2>What does JoSAA add after examination results?</h2>
+        <p>
+          JoSAA is counselling, not another examination. It considers eligible rank lists, choices
+          and available seats under allocation rules. A result alone does not establish admission
+          eligibility or guarantee a seat.
+        </p>
+        <h2>What can RankMatrix compare?</h2>
+        <p>
+          The predictor accepts one Main rank and an optional Advanced rank for a selected category
+          and pool. It does not collect separate CRL and category ranks or separate Paper 2 ranks,
+          and cannot represent every admission route. Its result cap can omit alternatives.
+        </p>
+        <h2>Official sources and related tools</h2>
+        <p>
+          Use the <a href="https://josaa.nic.in/information-bulletin/">2026 JoSAA business rules</a>
+          for rank-list definitions, allocation sequence, registration, verification and acceptance
+          options. Check the <a href="https://josaa.nic.in/">
+            official schedule and notices
+          </a> and <a href="https://jeeadv.ac.in/foreign.html">Advanced nationality requirements</a>
+          . This page&apos;s review date is not a dataset import date.
+        </p>
+        <p>
+          Explore <AppLink href="/ranks">stored cutoffs</AppLink>,{' '}
+          <AppLink href="/seat-matrix">seat data</AppLink> and{' '}
+          <AppLink href="/guides/what-is-josaa-counselling">the counselling overview</AppLink>.
+        </p>
       </GuideLayout>
     </>
   );
