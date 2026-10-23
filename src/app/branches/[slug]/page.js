@@ -116,7 +116,7 @@ export default async function BranchPage({ params }) {
           { label: `${data.courseDuration} years` },
           { label: `${data.institutes?.length ?? 0} colleges` },
         ]}
-        lastUpdated={data.latestYear ? `JoSAA ${data.latestYear}` : 'April 2026'}
+        lastUpdated={data.latestYear ? `JoSAA ${data.latestYear}` : 'Year not available'}
       >
         <h2>About {data.name}</h2>
         <p>
@@ -135,7 +135,7 @@ export default async function BranchPage({ params }) {
 
         <h2>Colleges offering {data.name}</h2>
         {institutes.length === 0 ? (
-          <p>No institutes currently list this branch in the latest JoSAA cycle.</p>
+          <p>RankMatrix currently has no participating institutes on file for this programme.</p>
         ) : (
           <Box className="table-scroll">
             <table>
