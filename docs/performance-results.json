@@ -1,0 +1,131 @@
+{
+  "date": "2026-10-23",
+  "environment": "Mobile simulated lab measurements; not real-user CrUX results or ranking scores.",
+  "runs": [
+    {
+      "label": "Deployed homepage",
+      "url": "https://www.rankmatrix.in/",
+      "lighthouseVersion": "13.5.0",
+      "scores": {
+        "performance": 52,
+        "accessibility": 92,
+        "best-practices": 77,
+        "seo": 100
+      },
+      "metrics": {
+        "largest-contentful-paint": {
+          "value": 3646.56306,
+          "display": "3.6\u00a0s"
+        },
+        "cumulative-layout-shift": {
+          "value": 0.9025062170601666,
+          "display": "0.903"
+        },
+        "total-blocking-time": {
+          "value": 458,
+          "display": "460\u00a0ms"
+        }
+      }
+    },
+    {
+      "label": "Local homepage before expanded fixes",
+      "url": "http://127.0.0.1:3001/",
+      "lighthouseVersion": "13.5.0",
+      "scores": {
+        "performance": 52,
+        "accessibility": 92,
+        "best-practices": 77,
+        "seo": 100
+      },
+      "metrics": {
+        "largest-contentful-paint": {
+          "value": 3899.9792999999995,
+          "display": "3.9\u00a0s"
+        },
+        "cumulative-layout-shift": {
+          "value": 0.9025062170601666,
+          "display": "0.903"
+        },
+        "total-blocking-time": {
+          "value": 381.9999999999991,
+          "display": "380\u00a0ms"
+        }
+      }
+    },
+    {
+      "label": "Local homepage after expanded fixes",
+      "url": "http://127.0.0.1:3001/",
+      "lighthouseVersion": "13.5.0",
+      "scores": {
+        "performance": 82,
+        "accessibility": 100,
+        "best-practices": 77,
+        "seo": 100
+      },
+      "metrics": {
+        "largest-contentful-paint": {
+          "value": 3695.8262,
+          "display": "3.7\u00a0s"
+        },
+        "cumulative-layout-shift": {
+          "value": 0,
+          "display": "0"
+        },
+        "total-blocking-time": {
+          "value": 320,
+          "display": "320\u00a0ms"
+        }
+      }
+    },
+    {
+      "label": "Local colleges before catalogue CLS correction",
+      "url": "http://127.0.0.1:3001/colleges",
+      "lighthouseVersion": "13.5.0",
+      "scores": {
+        "performance": 67,
+        "accessibility": 100,
+        "best-practices": 77,
+        "seo": 100
+      },
+      "metrics": {
+        "largest-contentful-paint": {
+          "value": 3759.0694999999996,
+          "display": "3.8\u00a0s"
+        },
+        "cumulative-layout-shift": {
+          "value": 0.2785519441355936,
+          "display": "0.279"
+        },
+        "total-blocking-time": {
+          "value": 335.5,
+          "display": "340\u00a0ms"
+        }
+      }
+    },
+    {
+      "label": "Local colleges after catalogue CLS correction",
+      "url": "http://127.0.0.1:3001/colleges",
+      "lighthouseVersion": "13.5.0",
+      "scores": {
+        "performance": 85,
+        "accessibility": 100,
+        "best-practices": 77,
+        "seo": 100
+      },
+      "metrics": {
+        "largest-contentful-paint": {
+          "value": 3769.7752750000004,
+          "display": "3.8\u00a0s"
+        },
+        "cumulative-layout-shift": {
+          "value": 0.04874756672901943,
+          "display": "0.049"
+        },
+        "total-blocking-time": {
+          "value": 208.5,
+          "display": "210\u00a0ms"
+        }
+      }
+    }
+  ]
+}

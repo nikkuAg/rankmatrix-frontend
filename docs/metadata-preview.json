@@ -1,0 +1,117 @@
+[
+  {
+    "path": "/",
+    "title": "Free JEE College Predictor & JoSAA Cutoffs | RankMatrix",
+    "description": "Predict colleges with your JEE Main or Advanced rank. Compare JoSAA cutoffs, branches and seat matrices using official data. Free, with no signup."
+  },
+  {
+    "path": "/about",
+    "title": "About RankMatrix: Data, Purpose & Founder",
+    "description": "Meet the maker of RankMatrix and learn why it offers free JEE college predictions, JoSAA cutoffs and seat data without requiring signup."
+  },
+  {
+    "path": "/branches",
+    "title": "Engineering Branches & JoSAA College Cutoffs | RankMatrix",
+    "description": "Find engineering programmes offered through JoSAA. Compare colleges, degrees, course duration and branch-wise opening and closing ranks."
+  },
+  {
+    "path": "/colleges",
+    "title": "JoSAA Colleges: IIT, NIT, IIIT & GFTI List | RankMatrix",
+    "description": "Browse JoSAA participating IITs, NITs, IIITs and GFTIs. Compare branches, published cutoffs, seats and NIRF ranks to build your college shortlist."
+  },
+  {
+    "path": "/contact",
+    "title": "Contact RankMatrix: Feedback & Data Corrections",
+    "description": "Report a bug, flag a JoSAA data error or suggest a feature. Find contact details for the developer of RankMatrix."
+  },
+  {
+    "path": "/guides",
+    "title": "JoSAA Counselling & JEE Admission Guides | RankMatrix",
+    "description": "Understand JoSAA counselling, choice filling, rank lists, quotas and seat allocation. Use practical guides alongside college cutoffs and prediction tools."
+  },
+  {
+    "path": "/methodology",
+    "title": "How the JEE College Predictor Works | RankMatrix",
+    "description": "Learn how RankMatrix compares your JEE rank with historical JoSAA cutoffs, which filters it uses and why predictions cannot guarantee admission."
+  },
+  {
+    "path": "/predict",
+    "title": "Free JEE Main & Advanced College Predictor | RankMatrix",
+    "description": "Find college and branch options for your JEE Main or Advanced rank. Compare historical JoSAA cutoffs by category and quota. Free, no signup."
+  },
+  {
+    "path": "/privacy",
+    "title": "Privacy Policy | RankMatrix",
+    "description": "Read how RankMatrix handles browser storage, analytics, advertising and technical request data, and how to contact us about privacy."
+  },
+  {
+    "path": "/ranks",
+    "title": "JoSAA Opening & Closing Ranks by Year and Round | RankMatrix",
+    "description": "Compare JoSAA opening and closing ranks by college, branch, year, round, category and quota. Explore historical IIT, NIT, IIIT and GFTI cutoffs."
+  },
+  {
+    "path": "/seat-matrix",
+    "title": "JoSAA Seat Matrix: College & Category-wise Seats | RankMatrix",
+    "description": "Explore JoSAA seats by college, branch, year, category, quota and seat pool. Compare seat availability alongside historical admission cutoffs."
+  },
+  {
+    "path": "/terms",
+    "title": "Terms of Use | RankMatrix",
+    "description": "Read the terms for using RankMatrix, including data sources, prediction limitations, the independent-service disclaimer and liability notices."
+  },
+  {
+    "path": "/guides/jee-main-college-predictor",
+    "title": "JEE College Predictor: Inputs, Accuracy & Limits | RankMatrix",
+    "description": "Learn which ranks and filters a JEE college predictor uses, how to interpret historical cutoffs and how to turn results into a college shortlist."
+  },
+  {
+    "path": "/guides/jee-main-vs-advanced-vs-josaa",
+    "title": "JEE Main vs Advanced vs JoSAA: Key Differences | RankMatrix",
+    "description": "Understand how JEE Main, JEE Advanced and JoSAA fit together, which rank lists apply and how candidates reach IIT, NIT, IIIT and GFTI admission."
+  },
+  {
+    "path": "/guides/josaa-choice-filling-strategy",
+    "title": "JoSAA Choice Filling: How to Order Your Choices | RankMatrix",
+    "description": "Build a JoSAA preference list using your interests and historical cutoffs. Learn how to order choices and avoid common counselling mistakes."
+  },
+  {
+    "path": "/guides/josaa-counselling-rounds",
+    "title": "JoSAA Counselling Rounds: Freeze, Float & Slide | RankMatrix",
+    "description": "Understand mock allocations, counselling rounds, freeze, float, slide and reporting. Learn how each step affects your JoSAA choices."
+  },
+  {
+    "path": "/guides/josaa-opening-and-closing-ranks",
+    "title": "JoSAA Opening vs Closing Rank Explained | RankMatrix",
+    "description": "Learn what opening and closing ranks mean, which rank list to compare and how category, quota, seat pool and round affect JoSAA cutoffs."
+  },
+  {
+    "path": "/guides/josaa-reservation-categories",
+    "title": "JoSAA Categories: OPEN, EWS, OBC-NCL, SC, ST & PwD | RankMatrix",
+    "description": "Understand JoSAA category labels, PwD status and seat pools. Learn how to match your rank list with the correct category and quota cutoff."
+  },
+  {
+    "path": "/guides/josaa-seat-matrix",
+    "title": "JoSAA Seat Matrix: Categories, Quotas & Seat Pools | RankMatrix",
+    "description": "Read the JoSAA seat matrix with confidence. Understand category, HS, OS and AI quotas, gender seat pools and how to compare programme seats."
+  },
+  {
+    "path": "/guides/what-is-josaa-counselling",
+    "title": "What Is JoSAA Counselling? Admission Process Guide | RankMatrix",
+    "description": "Learn what JoSAA does, which institutes participate and how registration, choice filling and seat allocation connect to JEE Main and Advanced ranks."
+  },
+  {
+    "path": "/colleges/indian-institute-of-technology-bhubaneswar",
+    "title": "IIT Bhubaneswar JoSAA Cutoffs 2026, Branches & Seats | RankMatrix",
+    "description": "Compare IIT Bhubaneswar JoSAA cutoffs 2026, branches, seats and NIRF rank history. Explore opening and closing ranks before filling your counselling choices."
+  },
+  {
+    "path": "/branches/aerospace-engineering",
+    "title": "Aerospace Engineering (Bachelor of Technology): Colleges & JoSAA Cutoffs | RankMatrix",
+    "description": "Compare 10 JoSAA colleges offering Aerospace Engineering (Bachelor of Technology, 4 years). Explore published cutoffs and institute details."
+  },
+  {
+    "path": "/colleges/indian-institute-of-technology-patna/btech-chemical-engineering-mba-in-hospital-and-health-care-management-iim-bodh-gaya",
+    "title": "IIT Patna B.Tech (Chemical Engineering) - MBA in Hospital and Health Care Management (IIM Bodh Gaya) Cutoffs 2026 | RankMatrix",
+    "description": "IIT Patna B.Tech (Chemical Engineering) - MBA in Hospital and Health Care Management (IIM Bodh Gaya): compare JoSAA opening and closing ranks by year, round, category and quota, plus published seat data."
+  }
+]
