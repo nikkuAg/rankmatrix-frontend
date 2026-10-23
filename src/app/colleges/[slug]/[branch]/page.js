@@ -3,6 +3,7 @@ import { Box } from '@mui/material';
 import { notFound } from 'next/navigation';
 import { AppLink } from '@/components/AppLink';
 import { DataPageLayout } from '@/components/DataPageLayout';
+import { cutoffSummaries } from '@/utils/cutoffSummaries.mjs';
 import { breadcrumbJsonLd, faqJsonLd, serializeJsonLd } from '@/utils/jsonLd';
 import { buildMetadata, instituteTitleName } from '@/utils/metadata.mjs';
 import { fetchInstituteBranchSeo } from '@/utils/seoApi';
@@ -38,14 +39,19 @@ export async function generateMetadata({ params }) {
 
 const formatRank = (value) => (value == null ? '—' : value.toLocaleString('en-IN'));
 
-const buildFaqs = (data, summaryRow) => {
+const buildFaqs = (data, summaries) => {
   const years = data.yearsAvailable || [];
   return [
     {
       question: `What was the ${data.branch.name} closing rank at ${data.institute.name}?`,
-      answer: summaryRow
-        ? `In JoSAA ${summaryRow.year}, Round ${summaryRow.round}, Open category, Gender-Neutral seat pool, ${summaryRow.quota} quota, the closing rank for ${data.branch.name} at ${data.institute.name} was ${formatRank(summaryRow.closingRank)} and the opening rank was ${formatRank(summaryRow.openingRank)}. Older and category-specific cutoffs are in the table on this page.`
-        : `RankMatrix has no matching Open category, Gender-Neutral AI/OS summary on file for this combination. Other categories, quotas or years may still have rows below. This does not establish whether official data has been published.`,
+      answer: summaries.length
+        ? summaries
+            .map(
+              (row) =>
+                `JoSAA ${row.year}, Round ${row.round}, Open category, Gender-Neutral seat pool, ${row.quota} quota: opening rank ${formatRank(row.openingRank)}, closing rank ${formatRank(row.closingRank)}.`,
+            )
+            .join(' ')
+        : 'RankMatrix has no matching Open category, Gender-Neutral summary on file for this combination. Other categories or years may still have rows below. This does not establish whether official data has been published.',
     },
     {
       question: `Which JoSAA years are covered on this page?`,
@@ -75,14 +81,6 @@ const groupCutoffsByYear = (cutoffs) => {
   return [...byYear.entries()].sort(([a], [b]) => b - a);
 };
 
-const pickSummary = (cutoffs) =>
-  cutoffs.find(
-    (r) =>
-      r.category === 'General' &&
-      r.seatPool === 'Gender-Neutral' &&
-      (r.quota === 'AI' || r.quota === 'OS'),
-  ) || null;
-
 export default async function InstituteBranchPage({ params }) {
   const { slug, branch } = await params;
   const data = await loadData(slug, branch);
@@ -92,8 +90,8 @@ export default async function InstituteBranchPage({ params }) {
   const canonicalUrl = `${SITE_URL}${canonicalPath}`;
   const latestYear = data.yearsAvailable?.[0];
   const latestYearRows = data.cutoffs.filter((r) => r.year === latestYear);
-  const summaryRow = pickSummary(latestYearRows);
-  const faqs = buildFaqs(data, summaryRow);
+  const summaries = cutoffSummaries(latestYearRows, latestYear);
+  const faqs = buildFaqs(data, summaries);
 
   const yearGroups = groupCutoffsByYear(data.cutoffs);
 
@@ -144,32 +142,42 @@ export default async function InstituteBranchPage({ params }) {
           { label: data.institute.type },
           { label: data.institute.state },
           { label: `${data.yearsAvailable?.length || 0} years of data` },
-          ...(summaryRow
-            ? [
-                {
-                  label: `Latest closing rank: ${formatRank(summaryRow.closingRank)}`,
-                },
-              ]
-            : []),
         ]}
         lastUpdated={latestYear ? `JoSAA ${latestYear}` : 'Year not available'}
       >
         <h2>Summary</h2>
-        {summaryRow ? (
-          <p>
-            In JoSAA <strong>{summaryRow.year}</strong>, Round {summaryRow.round},{' '}
-            {data.branch.name} at {data.institute.name} had an{' '}
-            <strong>opening rank of {formatRank(summaryRow.openingRank)}</strong> and a{' '}
-            <strong>closing rank of {formatRank(summaryRow.closingRank)}</strong> for the Open
-            category under the Gender-Neutral seat pool, {summaryRow.quota} quota. The tables below
-            show the full round-wise, category-wise breakdown across the last few JoSAA cycles,
-            followed by the latest year&apos;s seat matrix.
-          </p>
+        <p>
+          Open category, Gender-Neutral seat pool. Each available quota is shown separately at its
+          latest recorded round in JoSAA {latestYear || 'the latest stored year'}. Quota labels do
+          not establish your eligibility.
+        </p>
+        {summaries.length ? (
+          <Box className="table-scroll">
+            <table>
+              <thead>
+                <tr>
+                  <th>Quota</th>
+                  <th>Round</th>
+                  <th>Opening rank</th>
+                  <th>Closing rank</th>
+                </tr>
+              </thead>
+              <tbody>
+                {summaries.map((row) => (
+                  <tr key={row.quota}>
+                    <td>{row.quota}</td>
+                    <td>{row.round}</td>
+                    <td>{formatRank(row.openingRank)}</td>
+                    <td>{formatRank(row.closingRank)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </Box>
         ) : (
           <p>
-            RankMatrix has no matching Open category, Gender-Neutral AI/OS summary on file for this
-            combination. Other categories, quotas or years may still have rows below. Check the
-            official source when a required slice is missing.
+            RankMatrix has no matching Open category, Gender-Neutral summary on file. Other
+            categories or years may have rows below.
           </p>
         )}
 

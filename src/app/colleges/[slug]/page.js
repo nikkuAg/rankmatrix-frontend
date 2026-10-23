@@ -3,6 +3,7 @@ import { Box } from '@mui/material';
 import { notFound } from 'next/navigation';
 import { AppLink } from '@/components/AppLink';
 import { DataPageLayout } from '@/components/DataPageLayout';
+import { summaryRows } from '@/utils/cutoffSummaries.mjs';
 import { breadcrumbJsonLd, faqJsonLd, serializeJsonLd } from '@/utils/jsonLd';
 import { buildMetadata, instituteTitleName } from '@/utils/metadata.mjs';
 import { fetchInstituteSeo } from '@/utils/seoApi';
@@ -197,9 +198,9 @@ export default async function InstitutePage({ params }) {
         <h2>Branches offered at {data.name}</h2>
         <p>
           Headline closing ranks below are from the latest JoSAA counselling year, Open category,
-          Gender-Neutral seat pool, at the latest available allocation round, using AI or OS quota
-          as labelled. Click any branch name to open a deep page with year-wise, category-wise
-          cutoff trends and the latest seat matrix for that branch.
+          Gender-Neutral seat pool, at the latest available allocation round, with each available
+          quota shown separately. Click any branch name to open a deep page with year-wise,
+          category-wise cutoff trends and the latest seat matrix for that branch.
         </p>
         {sortedBranches.length === 0 ? (
           <p>No active branches listed for this institute in the latest cycle.</p>
@@ -218,21 +219,23 @@ export default async function InstitutePage({ params }) {
                 </tr>
               </thead>
               <tbody>
-                {sortedBranches.map((branch) => (
-                  <tr key={branch.code}>
-                    <td>
-                      <AppLink href={`${canonicalPath}/${branch.slug}`}>{branch.name}</AppLink>
-                    </td>
-                    <td>{branch.degree}</td>
-                    <td>{branch.courseDuration}y</td>
-                    <td>
-                      {branch.latestQuota ?? '—'} / {branch.latestRound ?? '—'}
-                    </td>
-                    <td>{formatRank(branch.latestOpeningRank)}</td>
-                    <td>{formatRank(branch.latestClosingRank)}</td>
-                    <td>{branch.totalSeatsLatestYear ?? '—'}</td>
-                  </tr>
-                ))}
+                {sortedBranches.flatMap((branch) =>
+                  summaryRows(branch).map((summary) => (
+                    <tr key={`${branch.code}-${summary?.quota ?? 'missing'}`}>
+                      <td>
+                        <AppLink href={`${canonicalPath}/${branch.slug}`}>{branch.name}</AppLink>
+                      </td>
+                      <td>{branch.degree}</td>
+                      <td>{branch.courseDuration}y</td>
+                      <td>
+                        {summary?.quota ?? '—'} / {summary?.round ?? '—'}
+                      </td>
+                      <td>{formatRank(summary?.openingRank)}</td>
+                      <td>{formatRank(summary?.closingRank)}</td>
+                      <td>{branch.totalSeatsLatestYear ?? '—'}</td>
+                    </tr>
+                  )),
+                )}
               </tbody>
             </table>
           </Box>
