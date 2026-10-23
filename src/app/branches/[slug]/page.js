@@ -3,6 +3,7 @@ import { Box } from '@mui/material';
 import { notFound } from 'next/navigation';
 import { AppLink } from '@/components/AppLink';
 import { DataPageLayout } from '@/components/DataPageLayout';
+import { groupInstitutesByExam } from '@/utils/examGroups.mjs';
 import { breadcrumbJsonLd, faqJsonLd, serializeJsonLd } from '@/utils/jsonLd';
 import { buildMetadata } from '@/utils/metadata.mjs';
 import { fetchBranchSeo } from '@/utils/seoApi';
@@ -50,7 +51,7 @@ const buildFaqs = (data) => {
     },
     {
       question: `Which rank do I need for ${data.name} at the top colleges?`,
-      answer: `Cutoffs vary dramatically by institute. The table below shows the latest Open category, Gender-Neutral closing rank per institute. For a rank-based shortlist across all colleges and branches, use the RankMatrix College & Branch Predictor.`,
+      answer: `Cutoffs vary dramatically by institute. The tables show Open category, Gender-Neutral closing ranks, grouped by exam. JEE Advanced and JEE Main ranks are different scales; match the year, quota and round before comparing. For a rank-based shortlist across all colleges and branches, use the RankMatrix College & Branch Predictor.`,
     },
     {
       question: `Do I need JEE Advanced for ${data.name}?`,
@@ -58,14 +59,6 @@ const buildFaqs = (data) => {
     },
   ];
 };
-
-const sortInstitutes = (list) =>
-  [...list].sort((a, b) => {
-    const rankA = a.latestClosingRank ?? Number.POSITIVE_INFINITY;
-    const rankB = b.latestClosingRank ?? Number.POSITIVE_INFINITY;
-    if (rankA !== rankB) return rankA - rankB;
-    return a.name.localeCompare(b.name);
-  });
 
 export default async function BranchPage({ params }) {
   const { slug } = await params;
@@ -75,7 +68,7 @@ export default async function BranchPage({ params }) {
   const faqs = buildFaqs(data);
   const canonicalPath = `/branches/${slug}`;
   const canonicalUrl = `${SITE_URL}${canonicalPath}`;
-  const institutes = sortInstitutes(data.institutes || []);
+  const instituteGroups = groupInstitutesByExam(data.institutes || []);
 
   const jsonLd = [
     {
@@ -127,56 +120,67 @@ export default async function BranchPage({ params }) {
           -year programme.
         </p>
         <p>
-          The table shows the latest JoSAA counselling year&apos;s Open category, Gender-Neutral
-          closing rank for each institute offering this branch, sorted by how competitive the cutoff
-          is. Click any institute name to see its full branch list, NIRF history, and other branches
-          on offer.
+          The tables show the latest stored JoSAA year&apos;s Open category, Gender-Neutral cutoffs,
+          grouped by admission exam and listed alphabetically within each group. JEE Advanced and
+          JEE Main ranks are different scales and must not be compared numerically. Even within one
+          exam, match the year, rank list, quota and round before comparing. A lower closing rank
+          does not by itself establish that a college is better.
         </p>
 
         <h2>Colleges offering {data.name}</h2>
-        {institutes.length === 0 ? (
+        {instituteGroups.length === 0 ? (
           <p>RankMatrix currently has no participating institutes on file for this programme.</p>
         ) : (
-          <Box className="table-scroll">
-            <table>
-              <thead>
-                <tr>
-                  <th>Institute</th>
-                  <th>Type</th>
-                  <th>State</th>
-                  <th>NIRF rank</th>
-                  <th>Quota / round</th>
-                  <th>Opening rank</th>
-                  <th>Closing rank</th>
-                  <th>Deep cutoffs</th>
-                </tr>
-              </thead>
-              <tbody>
-                {institutes.map((institute) => (
-                  <tr key={institute.code}>
-                    <td>
-                      <AppLink href={`/colleges/${institute.slug}`}>{institute.name}</AppLink>
-                    </td>
-                    <td>{institute.type}</td>
-                    <td>{institute.state}</td>
-                    <td>
-                      {institute.latestNirfRank
-                        ? `${institute.latestNirfRank} (${institute.latestNirfYear})`
-                        : '—'}
-                    </td>
-                    <td>
-                      {institute.latestQuota ?? '—'} / {institute.latestRound ?? '—'}
-                    </td>
-                    <td>{formatRank(institute.latestOpeningRank)}</td>
-                    <td>{formatRank(institute.latestClosingRank)}</td>
-                    <td>
-                      <AppLink href={`/colleges/${institute.slug}/${slug}`}>View</AppLink>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </Box>
+          instituteGroups.map((group) => (
+            <section key={group.id} id={`exam-${group.id}`}>
+              <h3>{group.title}</h3>
+              <Box className="table-scroll">
+                <table>
+                  <caption>
+                    {data.name}: {group.title}. Open category, Gender-Neutral seat pool.
+                  </caption>
+                  <thead>
+                    <tr>
+                      <th scope="col">Institute</th>
+                      <th scope="col">Type</th>
+                      <th scope="col">State</th>
+                      <th scope="col">NIRF rank</th>
+                      <th scope="col">Quota / round</th>
+                      <th scope="col">Opening rank</th>
+                      <th scope="col">Closing rank</th>
+                      <th scope="col">Deep cutoffs</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {group.institutes.map((institute) => (
+                      <tr key={institute.code}>
+                        <td>
+                          <AppLink href={`/colleges/${institute.slug}`}>{institute.name}</AppLink>
+                        </td>
+                        <td>{institute.type}</td>
+                        <td>{institute.state}</td>
+                        <td>
+                          {institute.latestNirfRank
+                            ? `${institute.latestNirfRank} (${institute.latestNirfYear})`
+                            : '—'}
+                        </td>
+                        <td>
+                          {institute.latestQuota ?? '—'} / {institute.latestRound ?? '—'}
+                        </td>
+                        <td>{formatRank(institute.latestOpeningRank)}</td>
+                        <td>{formatRank(institute.latestClosingRank)}</td>
+                        <td>
+                          <AppLink href={`/colleges/${institute.slug}/${slug}`}>
+                            Cutoffs at {institute.displayCode || institute.name}
+                          </AppLink>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </Box>
+            </section>
+          ))
         )}
 
         <h2>Using this data</h2>
