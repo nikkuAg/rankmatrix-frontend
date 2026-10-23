@@ -1,5 +1,4 @@
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
-import { GoogleAnalytics } from '@next/third-parties/google';
 import { Poppins } from 'next/font/google';
 import Script from 'next/script';
 import { RankMatrixLayout } from '@/components/RankMatrixLayout';
@@ -109,7 +108,21 @@ export default function RootLayout({ children }) {
             </ThemeProviderWrapper>
           </StoreProvider>
         </AppRouterCacheProvider>
-        {process.env.NEXT_PUBLIC_GA_ID && <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />}
+        {process.env.NEXT_PUBLIC_GA_ID && (
+          <>
+            <Script id="rankmatrix-ga-init" strategy="beforeInteractive">
+              {`window.dataLayer = window.dataLayer || [];
+                window.gtag = window.gtag || function(){window.dataLayer.push(arguments);};
+                window.gtag('js', new Date());
+                window.gtag('config', ${serializeJsonLd(process.env.NEXT_PUBLIC_GA_ID)});`}
+            </Script>
+            <Script
+              id="rankmatrix-ga"
+              src={`https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(process.env.NEXT_PUBLIC_GA_ID)}`}
+              strategy="lazyOnload"
+            />
+          </>
+        )}
         {process.env.NEXT_PUBLIC_ENABLE_ADSENSE === 'true' && (
           <Script
             id="google-adsense"
