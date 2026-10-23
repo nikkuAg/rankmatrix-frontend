@@ -1,19 +1,21 @@
 import React from 'react';
 import { AppLink } from '@/components/AppLink';
 import { GuideLayout } from '@/components/GuideLayout';
-import { articleJsonLd, breadcrumbJsonLd, faqJsonLd } from '@/utils/jsonLd';
+import { OfficialRuleNotes } from '@/components/OfficialRuleNotes';
+import { articleJsonLd, breadcrumbJsonLd, faqJsonLd, serializeJsonLd } from '@/utils/jsonLd';
+import { buildMetadata } from '@/utils/metadata.mjs';
 
 const PAGE_URL = '/guides/jee-main-college-predictor';
 const TITLE = 'JEE college & branch predictor: how it works';
 const DESCRIPTION =
-  'What a JEE college and branch predictor actually does under the hood, which inputs matter (JEE Main or JEE Advanced rank, category, home state), what it cannot tell you, and how to read its results without being misled.';
+  'Learn which ranks and filters a JEE college predictor uses, how to interpret historical cutoffs and how to turn results into a college shortlist.';
 const PUBLISHED = '2026-04-23';
 
 const FAQS = [
   {
     question: 'How accurate is a JEE college & branch predictor?',
     answer:
-      'A predictor is only as accurate as the historical data and the model used to project it forward. A good predictor uses multiple past years of official JoSAA opening and closing ranks and applies a delta to account for year-over-year cutoff movement. It cannot guarantee an outcome — actual cutoffs can move by several hundred ranks from one year to the next based on exam difficulty, seat-matrix changes, and how other candidates fill their preferences. Treat it as a ranked shortlist of likely colleges and branches to plan around, not a guarantee.',
+      'A predictor is only as accurate as the historical data and the model used to project it forward. RankMatrix currently compares its configured latest-year rows using a delta search window; older years can be explored separately. It cannot guarantee an outcome — actual cutoffs can move by several hundred ranks from one year to the next based on exam difficulty, seat-matrix changes, and how other candidates fill their preferences. Treat it as a ranked shortlist of likely colleges and branches to plan around, not a guarantee.',
   },
   {
     question: 'What inputs do I need to use the RankMatrix JEE college & branch predictor?',
@@ -23,7 +25,7 @@ const FAQS = [
   {
     question: 'Do I need to enter my phone number or email?',
     answer:
-      'No. RankMatrix never asks for your phone number, email, name, or any identifying information to run a prediction. You type your rank, you get a prediction, nothing is sent anywhere you have to worry about.',
+      'No. RankMatrix never asks for your phone number, email, name, or any identifying information to run a prediction. You type your rank, you get a prediction, Contact details are not required; the privacy policy explains analytics, advertising and technical request data.',
   },
   {
     question: 'Why does the predictor show colleges where the closing rank is above mine?',
@@ -42,35 +44,14 @@ const FAQS = [
   },
 ];
 
-export const metadata = {
-  title: TITLE,
+export const metadata = buildMetadata({
+  path: PAGE_URL,
+  title: 'JEE College Predictor: Inputs, Accuracy & Limits',
   description: DESCRIPTION,
-  alternates: { canonical: PAGE_URL },
-  keywords: [
-    'JEE college & branch predictor',
-    'JEE college and branch predictor',
-    'JEE college predictor',
-    'JEE branch predictor',
-    'JoSAA college predictor',
-    'how JEE college predictor works',
-    'JEE Main college predictor',
-    'JEE Advanced college predictor',
-    'best JEE college predictor',
-    'free JEE predictor no signup',
-  ],
-  openGraph: {
-    type: 'article',
-    url: PAGE_URL,
-    title: TITLE,
-    description: DESCRIPTION,
-    publishedTime: PUBLISHED,
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: TITLE,
-    description: DESCRIPTION,
-  },
-};
+  type: 'article',
+  publishedTime: PUBLISHED,
+  modifiedTime: '2026-10-23',
+});
 
 const jsonLd = [
   articleJsonLd({
@@ -78,6 +59,7 @@ const jsonLd = [
     title: TITLE,
     description: DESCRIPTION,
     datePublished: PUBLISHED,
+    dateModified: '2026-10-23',
   }),
   faqJsonLd(FAQS),
   breadcrumbJsonLd([
@@ -94,13 +76,13 @@ export default function JeeMainCollegePredictorGuide() {
         <script
           key={i}
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(obj) }}
+          dangerouslySetInnerHTML={{ __html: serializeJsonLd(obj) }}
         />
       ))}
       <GuideLayout
         title={TITLE}
         description={DESCRIPTION}
-        lastUpdated="April 2026"
+        lastUpdated="23 October 2026"
         readingTimeMinutes={6}
         breadcrumbs={[
           { name: 'Home', path: '/' },
@@ -108,6 +90,7 @@ export default function JeeMainCollegePredictorGuide() {
           { name: 'JEE college & branch predictor', path: PAGE_URL },
         ]}
       >
+        <OfficialRuleNotes />
         <h2>What a JEE college &amp; branch predictor is</h2>
         <p>
           A JEE college and branch predictor is a tool that answers a single question:{' '}
@@ -115,9 +98,8 @@ export default function JeeMainCollegePredictorGuide() {
             given my JEE Main or JEE Advanced rank, my category, and my home state, which JoSAA
             colleges and branches am I likely to be admitted to?
           </em>{' '}
-          It does not grant seats. It does not run the JoSAA allocation. It just lines up what the
-          JoSAA allocation <em>would</em> have looked like for your profile based on past trends, so
-          you can plan your real preference list with the right expectations.
+          It does not grant seats. It does not run the JoSAA allocation. It provides historical
+          comparisons rather than a simulation of the full allocation algorithm.
         </p>
         <p>
           If you want to try ours, <AppLink href="/predict">the RankMatrix predictor</AppLink> is on
@@ -134,32 +116,23 @@ export default function JeeMainCollegePredictorGuide() {
         </p>
         <p>
           RankMatrix ingests multiple recent years of that data and stores it structured so it can
-          be queried against your inputs in milliseconds. You can explore the raw underlying numbers
-          in <AppLink href="/ranks">Opening &amp; Closing Ranks</AppLink>.
+          be queried and compared with your inputs. You can explore the raw underlying numbers in{' '}
+          <AppLink href="/ranks">Opening &amp; Closing Ranks</AppLink>.
         </p>
 
         <h2>What happens when you hit Predict</h2>
-        <p>The algorithm, explained without jargon:</p>
-        <ol>
-          <li>Take your JEE rank, category, and home state from the form.</li>
-          <li>
-            Pull the historical closing ranks for every institute-branch combination that your
-            category and home state qualify for. For NITs, home-state candidates have a different
-            cutoff column than out-of-state candidates; the tool respects that.
-          </li>
-          <li>
-            Apply a <strong>delta</strong> window — a few percent above and below each closing rank
-            — to account for year-to-year movement. This is what makes the result a shortlist rather
-            than a binary match.
-          </li>
-          <li>
-            Return the list sorted by how close each college-branch&apos;s historical closing rank
-            is to yours, most comfortable first.
-          </li>
-        </ol>
         <p>
-          The window is adjustable. A wider delta surfaces more ambitious options; a narrower delta
-          keeps the list closer to what is historically safe for your rank.
+          The current endpoint uses its configured latest JoSAA rank model and maximum stored round.
+          It matches your category and seat pool, calculates a delta window around your input ranks
+          and applies institute/quota selection tiers. IIT rows use the Advanced-rank window; other
+          rows use the Main-rank window. The selected rows are displayed by opening rank.
+        </p>
+        <p>
+          Delta controls the search window, not an admission probability. The endpoint does not
+          average earlier years, guarantee document eligibility or automatically cross-check the
+          current seat matrix. Read the{' '}
+          <AppLink href="/methodology">implementation and limits</AppLink> before treating any
+          shortlist as a counselling decision.
         </p>
 
         <h2>What a predictor cannot tell you</h2>
@@ -196,11 +169,12 @@ export default function JeeMainCollegePredictorGuide() {
         <ul>
           <li>
             <strong>Safe</strong> — colleges where your rank is comfortably inside last year&apos;s
-            closing rank with room to spare. High chance even if cutoffs tighten this year.
+            closing rank with room to spare. This is a historical comparison, not a measured
+            admission probability.
           </li>
           <li>
             <strong>Realistic</strong> — colleges where your rank is within a small delta of last
-            year&apos;s closing rank. Most likely outcome, assuming an average year.
+            year&apos;s closing rank. Future cutoffs and eligibility checks can change the result.
           </li>
           <li>
             <strong>Ambitious</strong> — colleges where last year you would have been a few ranks
@@ -228,8 +202,8 @@ export default function JeeMainCollegePredictorGuide() {
           <li>Have your JEE Main rank ready (category rank if you qualify for reservation).</li>
           <li>Know your category exactly as declared in your JEE Main application.</li>
           <li>
-            Know your home state for JoSAA purposes — this is the state of the board that issued
-            your class-12 certificate.
+            Use the state-code eligibility rule in the official-source note above, including its
+            exceptions.
           </li>
           <li>
             Have a rough idea of a few branches you are open to. &quot;I&apos;ll take anything&quot;

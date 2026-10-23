@@ -1,12 +1,14 @@
 import React from 'react';
 import { AppLink } from '@/components/AppLink';
 import { GuideLayout } from '@/components/GuideLayout';
-import { articleJsonLd, breadcrumbJsonLd, faqJsonLd } from '@/utils/jsonLd';
+import { OfficialRuleNotes } from '@/components/OfficialRuleNotes';
+import { articleJsonLd, breadcrumbJsonLd, faqJsonLd, serializeJsonLd } from '@/utils/jsonLd';
+import { buildMetadata } from '@/utils/metadata.mjs';
 
 const PAGE_URL = '/guides/josaa-reservation-categories';
 const TITLE = 'JoSAA reservation categories explained — GE, OBC-NCL, SC, ST, EWS, PwD';
 const DESCRIPTION =
-  'How JoSAA reservation works: what each category means (GE, OBC-NCL, SC, ST, EWS, PwD), how supernumerary female seats fit in, and how your category interacts with home-state and other-state quotas. Plain English, official rules.';
+  'Understand JoSAA category labels, PwD status and seat pools. Learn how to match your rank list with the correct category and quota cutoff.';
 const PUBLISHED = '2026-05-19';
 
 const FAQS = [
@@ -28,7 +30,7 @@ const FAQS = [
   {
     question: 'How do female-only supernumerary seats work?',
     answer:
-      'IITs run a supernumerary female pool to improve gender diversity. These seats are over and above the regular seat matrix, allocated only to female candidates, and integrated into the regular seat allocation rounds. NITs, IIITs, and GFTIs do not have an equivalent supernumerary scheme but do report gender-neutral and female-only seat counts in the JoSAA seat matrix.',
+      'Female-only pools can include supernumerary seats at multiple institute groups. See the official-source note and the programme seat matrix on this page.',
   },
   {
     question: 'Can I switch from a category-pool seat to a general-pool seat in a later round?',
@@ -37,33 +39,14 @@ const FAQS = [
   },
 ];
 
-export const metadata = {
-  title: TITLE,
+export const metadata = buildMetadata({
+  path: PAGE_URL,
+  title: 'JoSAA Categories: OPEN, EWS, OBC-NCL, SC, ST & PwD',
   description: DESCRIPTION,
-  alternates: { canonical: PAGE_URL },
-  keywords: [
-    'JoSAA reservation categories',
-    'JoSAA OBC-NCL',
-    'JoSAA SC ST EWS',
-    'JoSAA PwD reservation',
-    'JoSAA category explained',
-    'JoSAA female supernumerary seats',
-    'JoSAA home state quota',
-    'JoSAA other state quota',
-  ],
-  openGraph: {
-    type: 'article',
-    url: PAGE_URL,
-    title: TITLE,
-    description: DESCRIPTION,
-    publishedTime: PUBLISHED,
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: TITLE,
-    description: DESCRIPTION,
-  },
-};
+  type: 'article',
+  publishedTime: PUBLISHED,
+  modifiedTime: '2026-10-23',
+});
 
 const jsonLd = [
   articleJsonLd({
@@ -71,6 +54,7 @@ const jsonLd = [
     title: TITLE,
     description: DESCRIPTION,
     datePublished: PUBLISHED,
+    dateModified: '2026-10-23',
   }),
   faqJsonLd(FAQS),
   breadcrumbJsonLd([
@@ -87,13 +71,13 @@ export default function JoSAAReservationCategories() {
         <script
           key={i}
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(obj) }}
+          dangerouslySetInnerHTML={{ __html: serializeJsonLd(obj) }}
         />
       ))}
       <GuideLayout
         title={TITLE}
         description={DESCRIPTION}
-        lastUpdated="May 2026"
+        lastUpdated="23 October 2026"
         readingTimeMinutes={8}
         breadcrumbs={[
           { name: 'Home', path: '/' },
@@ -101,6 +85,7 @@ export default function JoSAAReservationCategories() {
           { name: 'Reservation categories', path: PAGE_URL },
         ]}
       >
+        <OfficialRuleNotes />
         <h2>The short version</h2>
         <p>
           JoSAA allocates seats from two parallel pools running side by side: a general (open) pool
@@ -168,9 +153,8 @@ export default function JoSAAReservationCategories() {
         </p>
         <ul>
           <li>
-            <strong>HS</strong>: 50% of NIT seats are reserved for candidates whose home state
-            matches the NIT&apos;s state (as determined by your class-12 board, not your current
-            residence).
+            Use the state-code eligibility rule in the official-source note above, including its
+            exceptions.
           </li>
           <li>
             <strong>OS</strong>: the remaining 50% of NIT seats go to candidates whose home state
@@ -182,9 +166,8 @@ export default function JoSAAReservationCategories() {
           </li>
         </ul>
         <p>
-          Your home state is defined by the state listed on your class-12 board certificate. If you
-          moved states during school, the board that issued your certificate decides your JoSAA home
-          state.
+          Use the state-code eligibility rule in the official-source note above, including its
+          exceptions.
         </p>
 
         <h2>Female-only supernumerary seats (IITs)</h2>
@@ -195,9 +178,8 @@ export default function JoSAAReservationCategories() {
           the Gender-Neutral (GN) sub-pool. Allocation happens in the same JoSAA rounds.
         </p>
         <p>
-          NITs, IIITs, and GFTIs do not have a supernumerary female pool, but the JoSAA seat matrix
-          still reports GN and F counts per category for transparency on existing
-          gender-distribution patterns.
+          Check the programme-specific category and seat-pool counts in the official matrix; the
+          note above links to the governing rules.
         </p>
 
         <h2>How the algorithm uses all this</h2>
@@ -215,11 +197,9 @@ export default function JoSAAReservationCategories() {
 
         <h2>Documentation: get it right at registration</h2>
         <p>
-          The category you registered for in JEE Main or JEE Advanced is what flows through to JoSAA
-          — you cannot change it during JoSAA itself. If your category certificate is outdated, in
-          the wrong format, or from the wrong authority, JoSAA will revoke the category-pool
-          component of any seat you have been allocated and place you back in the general pool only.
-          That can change which institute you end up at.
+          Check the current category-change, certificate-validity and verification provisions on the
+          official portal. A documentation problem can affect eligibility and seat retention; do not
+          assume an automatic transfer to another category or a replacement allocation.
         </p>
         <ul>
           <li>Get your OBC-NCL / EWS certificate issued in the current financial year.</li>

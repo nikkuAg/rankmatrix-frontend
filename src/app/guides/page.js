@@ -2,38 +2,18 @@ import React from 'react';
 import { Box, Card, Stack, Typography } from '@mui/material';
 import Link from 'next/link';
 import { GuideLayout } from '@/components/GuideLayout';
-import { breadcrumbJsonLd } from '@/utils/jsonLd';
+import { breadcrumbJsonLd, serializeJsonLd } from '@/utils/jsonLd';
+import { buildMetadata } from '@/utils/metadata.mjs';
 
 const PAGE_URL = '/guides';
 const DESCRIPTION =
-  'Plain-English guides to JoSAA counselling, JEE Main and JEE Advanced admissions, opening and closing ranks, the seat matrix, and using the RankMatrix JEE college & branch predictor. Free, no signup, no spam — built by a student, for students.';
+  'Understand JoSAA counselling, choice filling, rank lists, quotas and seat allocation. Use practical guides alongside college cutoffs and prediction tools.';
 
-export const metadata = {
-  title: 'JoSAA & JEE Counselling Guides',
+export const metadata = buildMetadata({
+  path: PAGE_URL,
+  title: 'JoSAA Counselling & JEE Admission Guides',
   description: DESCRIPTION,
-  alternates: { canonical: PAGE_URL },
-  keywords: [
-    'JoSAA counselling guide',
-    'JEE Main counselling guide',
-    'JEE Advanced counselling',
-    'JoSAA rounds explained',
-    'JoSAA seat matrix guide',
-    'JEE college & branch predictor',
-    'JEE college and branch predictor',
-    'JEE college predictor how it works',
-  ],
-  openGraph: {
-    type: 'website',
-    url: PAGE_URL,
-    title: 'JoSAA & JEE Counselling Guides — RankMatrix',
-    description: DESCRIPTION,
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'JoSAA & JEE Counselling Guides | RankMatrix',
-    description: DESCRIPTION,
-  },
-};
+});
 
 const GUIDES = [
   {
@@ -104,7 +84,7 @@ export default function GuidesHub() {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbs) }}
+        dangerouslySetInnerHTML={{ __html: serializeJsonLd(breadcrumbs) }}
       />
       <GuideLayout
         title="JoSAA & JEE counselling guides"

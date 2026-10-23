@@ -1,12 +1,14 @@
 import React from 'react';
 import { AppLink } from '@/components/AppLink';
 import { GuideLayout } from '@/components/GuideLayout';
-import { articleJsonLd, breadcrumbJsonLd, faqJsonLd } from '@/utils/jsonLd';
+import { OfficialRuleNotes } from '@/components/OfficialRuleNotes';
+import { articleJsonLd, breadcrumbJsonLd, faqJsonLd, serializeJsonLd } from '@/utils/jsonLd';
+import { buildMetadata } from '@/utils/metadata.mjs';
 
 const PAGE_URL = '/guides/what-is-josaa-counselling';
 const TITLE = 'What is JoSAA counselling?';
 const DESCRIPTION =
-  'JoSAA runs the single admission process that allocates seats across all IITs, NITs, IIITs, and centrally funded technical institutes using JEE Main and JEE Advanced ranks. Here is exactly how it works.';
+  'Learn what JoSAA does, which institutes participate and how registration, choice filling and seat allocation connect to JEE Main and Advanced ranks.';
 const PUBLISHED = '2026-04-23';
 
 const FAQS = [
@@ -37,31 +39,14 @@ const FAQS = [
   },
 ];
 
-export const metadata = {
-  title: TITLE,
+export const metadata = buildMetadata({
+  path: PAGE_URL,
+  title: 'What Is JoSAA Counselling? Admission Process Guide',
   description: DESCRIPTION,
-  alternates: { canonical: PAGE_URL },
-  keywords: [
-    'what is JoSAA',
-    'JoSAA counselling',
-    'JoSAA 2026',
-    'JoSAA explained',
-    'IIT NIT IIIT GFTI counselling',
-    'JEE Main counselling process',
-  ],
-  openGraph: {
-    type: 'article',
-    url: PAGE_URL,
-    title: TITLE,
-    description: DESCRIPTION,
-    publishedTime: PUBLISHED,
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: TITLE,
-    description: DESCRIPTION,
-  },
-};
+  type: 'article',
+  publishedTime: PUBLISHED,
+  modifiedTime: '2026-10-23',
+});
 
 const jsonLd = [
   articleJsonLd({
@@ -69,6 +54,7 @@ const jsonLd = [
     title: TITLE,
     description: DESCRIPTION,
     datePublished: PUBLISHED,
+    dateModified: '2026-10-23',
   }),
   faqJsonLd(FAQS),
   breadcrumbJsonLd([
@@ -85,13 +71,13 @@ export default function WhatIsJoSAACounselling() {
         <script
           key={i}
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(obj) }}
+          dangerouslySetInnerHTML={{ __html: serializeJsonLd(obj) }}
         />
       ))}
       <GuideLayout
         title={TITLE}
         description={DESCRIPTION}
-        lastUpdated="April 2026"
+        lastUpdated="23 October 2026"
         readingTimeMinutes={7}
         breadcrumbs={[
           { name: 'Home', path: '/' },
@@ -99,6 +85,7 @@ export default function WhatIsJoSAACounselling() {
           { name: 'What is JoSAA', path: PAGE_URL },
         ]}
       >
+        <OfficialRuleNotes />
         <h2>The short answer</h2>
         <p>
           JoSAA — the Joint Seat Allocation Authority — is the single body that allocates
@@ -251,9 +238,8 @@ export default function WhatIsJoSAACounselling() {
             Advanced application; documentation must hold up at reporting.
           </li>
           <li>
-            Home-state allocation for NITs uses the state listed on your class-12 certificate. If
-            you moved states during school, the board that issued your certificate decides your home
-            state for JoSAA purposes.
+            Use the state-code eligibility rule in the official-source note above, including its
+            exceptions.
           </li>
         </ul>
 

@@ -70,8 +70,8 @@ export const PredictPageContent = ({ faqs }) => {
         <ul>
           <li>
             <strong>Comfortable</strong> — your rank is well inside the closing rank from previous
-            cycles (typically by roughly 10% or more). These are seats you would normally expect to
-            get if you list them high; they are useful as floor anchors on your preference list.
+            cycles. These can be useful options to investigate, but there is no universally safe
+            percentage margin and no historical cutoff guarantees a seat.
           </li>
           <li>
             <strong>Boundary</strong> — your rank is within striking distance of the closing rank,
@@ -86,45 +86,27 @@ export const PredictPageContent = ({ faqs }) => {
           </li>
         </ul>
 
-        <h2>A worked example</h2>
+        <h2>Which rank should I compare with a JoSAA cutoff?</h2>
         <p>
-          Suppose you are a JEE Main rank 8,500 candidate, OBC-NCL category, Gender-Neutral pool,
-          home state Maharashtra, and you also have a JEE Advanced rank of 6,200. The predictor
-          might surface something like:
+          First match the exam and rank list: IIT seats use JEE Advanced; NIT, IIIT and other NIT+
+          seats use JEE Main. OPEN cutoffs refer to the Common Rank List (CRL); reserved categories
+          use their corresponding category ranks. Match the category, PwD status, quota, seat pool,
+          year and round shown in the row. A percentile is not a rank.
         </p>
-        <blockquote>
-          IIT Roorkee — Mechanical Engineering — OBC-NCL — GN — OR 5,890 / CR 6,310 —{' '}
-          <em>boundary</em>
-          <br />
-          NIT Trichy — Electronics &amp; Communication — OBC-NCL — OS — GN — OR 9,200 / CR 11,400 —{' '}
-          <em>comfortable</em>
-          <br />
-          IIIT Hyderabad — Computer Science — OBC-NCL — GN — OR 4,100 / CR 5,800 — <em>stretch</em>
-        </blockquote>
-        <p>How to read this:</p>
-        <ul>
-          <li>
-            <strong>IIT Roorkee Mechanical</strong> is right on the boundary — your JEE Advanced
-            rank (6,200) is just inside the closing rank (6,310). You should list it high but not
-            count on it; if the closing rank tightens by even 50 places this year, you miss.
-          </li>
-          <li>
-            <strong>NIT Trichy ECE</strong> is comfortable for your JEE Main rank (8,500) against a
-            CR of 11,400. If you list it above your stretch options, you should get it; it makes a
-            solid floor.
-          </li>
-          <li>
-            <strong>IIIT Hyderabad CSE</strong> is a stretch — 8,500 is well past 5,800. Listing it
-            costs nothing if you place it above your safer options, but do not expect it; it goes
-            either in mock allocation or late rounds if at all.
-          </li>
-        </ul>
+        <h2>A hypothetical cutoff comparison</h2>
+        <p>
+          If a row has an opening rank of 8,000 and closing rank of 10,000, a rank of 9,000 in the
+          same rank list falls within that historical interval. A rank of 11,000 is outside it.
+          These illustrative numbers do not describe any institute or predict a future allocation.
+          Check actual <AppLink href="/ranks">JoSAA cutoffs</AppLink> and the{' '}
+          <AppLink href="/seat-matrix">seat matrix</AppLink> for your exact filters.
+        </p>
 
         <h2>How to actually use the list</h2>
         <ol>
           <li>
             <strong>Pick three or four floor anchors</strong> from the &ldquo;comfortable&rdquo;
-            bucket. These guarantee you something acceptable.
+            bucket, while remembering that none is guaranteed.
           </li>
           <li>
             <strong>Stack your real targets in the boundary bucket</strong>, in genuine order of
