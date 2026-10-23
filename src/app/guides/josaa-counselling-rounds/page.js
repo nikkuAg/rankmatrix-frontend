@@ -1,12 +1,13 @@
 import React from 'react';
 import { AppLink } from '@/components/AppLink';
 import { GuideLayout } from '@/components/GuideLayout';
-import { articleJsonLd, breadcrumbJsonLd, faqJsonLd } from '@/utils/jsonLd';
+import { articleJsonLd, breadcrumbJsonLd, faqJsonLd, serializeJsonLd } from '@/utils/jsonLd';
+import { buildMetadata } from '@/utils/metadata.mjs';
 
 const PAGE_URL = '/guides/josaa-counselling-rounds';
 const TITLE = 'JoSAA counselling rounds: how they work';
 const DESCRIPTION =
-  'Choice filling, mock allocations, the five to six regular rounds, freeze / float / slide, and the withdrawal and reporting cycle — the full JoSAA round-by-round process laid out in order.';
+  'Understand mock allocations, counselling rounds, freeze, float, slide and reporting. Learn how each step affects your JoSAA choices.';
 const PUBLISHED = '2026-04-23';
 
 const FAQS = [
@@ -18,7 +19,7 @@ const FAQS = [
   {
     question: 'What does freeze, float, and slide mean in JoSAA?',
     answer:
-      'These are the three options you choose after being allocated a seat in a round. Freeze accepts the seat as final — you are out of the pool and guaranteed that seat. Float keeps you in the pool to consider any higher preference across any institute. Slide keeps you in the pool but restricts upgrades to higher-priority branches at the same institute you were allocated. Freeze ends your participation; float and slide continue it.',
+      'These are the three options you choose after being allocated a seat in a round. Freeze accepts the seat as final — you stop seeking upgrades; retaining the seat still depends on eligibility, verification, payment and reporting. Float keeps you in the pool to consider any higher preference across any institute. Slide keeps you in the pool but restricts upgrades to higher-priority branches at the same institute you were allocated. Freeze ends your participation; float and slide continue it.',
   },
   {
     question: 'Can I change my choice list once the rounds begin?',
@@ -38,35 +39,18 @@ const FAQS = [
   {
     question: 'If my seat gets cancelled in JoSAA, can I still apply through CSAB?',
     answer:
-      'Generally yes, as long as you did not have an active seat accepted in the final JoSAA round. CSAB sets its own registration window each year and has its own eligibility rules; refer to the official CSAB notification for the current year before counting on it.',
+      'CSAB has its own eligibility, seat-retention and registration rules. Check the current official CSAB business rules for your exact JoSAA seat status before relying on special rounds.',
   },
 ];
 
-export const metadata = {
-  title: TITLE,
+export const metadata = buildMetadata({
+  path: PAGE_URL,
+  title: 'JoSAA Counselling Rounds: Freeze, Float & Slide',
   description: DESCRIPTION,
-  alternates: { canonical: PAGE_URL },
-  keywords: [
-    'JoSAA rounds',
-    'JoSAA freeze float slide',
-    'JoSAA mock allocation',
-    'JoSAA choice filling',
-    'JoSAA reporting',
-    'CSAB special rounds',
-  ],
-  openGraph: {
-    type: 'article',
-    url: PAGE_URL,
-    title: TITLE,
-    description: DESCRIPTION,
-    publishedTime: PUBLISHED,
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: TITLE,
-    description: DESCRIPTION,
-  },
-};
+  type: 'article',
+  publishedTime: PUBLISHED,
+  modifiedTime: '2026-10-23',
+});
 
 const jsonLd = [
   articleJsonLd({
@@ -74,6 +58,7 @@ const jsonLd = [
     title: TITLE,
     description: DESCRIPTION,
     datePublished: PUBLISHED,
+    dateModified: '2026-10-23',
   }),
   faqJsonLd(FAQS),
   breadcrumbJsonLd([
@@ -90,13 +75,13 @@ export default function JoSAACounsellingRoundsGuide() {
         <script
           key={i}
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(obj) }}
+          dangerouslySetInnerHTML={{ __html: serializeJsonLd(obj) }}
         />
       ))}
       <GuideLayout
         title={TITLE}
         description={DESCRIPTION}
-        lastUpdated="April 2026"
+        lastUpdated="23 October 2026"
         readingTimeMinutes={7}
         breadcrumbs={[
           { name: 'Home', path: '/' },

@@ -2,12 +2,14 @@ import React from 'react';
 import { Link as MuiLink } from '@mui/material';
 import { AppLink } from '@/components/AppLink';
 import { GuideLayout } from '@/components/GuideLayout';
-import { articleJsonLd, breadcrumbJsonLd, faqJsonLd } from '@/utils/jsonLd';
+import { OfficialRuleNotes } from '@/components/OfficialRuleNotes';
+import { articleJsonLd, breadcrumbJsonLd, faqJsonLd, serializeJsonLd } from '@/utils/jsonLd';
+import { buildMetadata } from '@/utils/metadata.mjs';
 
 const PAGE_URL = '/guides/josaa-opening-and-closing-ranks';
 const TITLE = 'JoSAA opening and closing ranks, explained';
 const DESCRIPTION =
-  'What JoSAA opening and closing ranks actually mean, how they differ from your JEE Main or Advanced rank, why they move between rounds, and how to use them to plan your preference list.';
+  'Learn what opening and closing ranks mean, which rank list to compare and how category, quota, seat pool and round affect JoSAA cutoffs.';
 const PUBLISHED = '2026-04-23';
 
 const FAQS = [
@@ -29,41 +31,23 @@ const FAQS = [
   {
     question: "Which round's closing rank should I use when planning my JoSAA choices?",
     answer:
-      'The last-round closing rank is the most conservative and the one most people quote for "which branch I can get". But for an aggressive JoSAA strategy, also look at the Round 1 closing rank — if you are close to that, you have a good shot at being allocated early and having the option to freeze. A two-year window is more reliable than any single year.',
+      'Compare the round relevant to your planning alongside earlier rounds and years. The final published round provides a historical endpoint, not a safety threshold or a guaranteed forecast. Use the actual published schedule rather than assuming a sixth round exists.',
   },
   {
     question: 'Can closing ranks go up dramatically year-over-year?',
     answer:
-      'Yes, though it is uncommon. Large moves usually happen when something structural changes: seat matrix reshuffle at a given institute, a new branch created or merged, a reservation rule update, or a big swing in exam difficulty that shifts the overall rank distribution. Most year-to-year moves are within a few percent of the previous year.',
+      'Yes, though it is uncommon. Large moves usually happen when something structural changes: seat matrix reshuffle at a given institute, a new branch created or merged, a reservation rule update, or a big swing in exam difficulty that shifts the overall rank distribution. The size and direction of movement must be checked in the published data; there is no universal percentage bound.',
   },
 ];
 
-export const metadata = {
-  title: TITLE,
+export const metadata = buildMetadata({
+  path: PAGE_URL,
+  title: 'JoSAA Opening vs Closing Rank Explained',
   description: DESCRIPTION,
-  alternates: { canonical: PAGE_URL },
-  keywords: [
-    'JoSAA opening rank',
-    'JoSAA closing rank',
-    'JEE Main cutoff rank',
-    'JoSAA round wise ranks',
-    'JEE Advanced closing rank',
-    'NIT closing rank',
-    'IIT closing rank',
-  ],
-  openGraph: {
-    type: 'article',
-    url: PAGE_URL,
-    title: TITLE,
-    description: DESCRIPTION,
-    publishedTime: PUBLISHED,
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: TITLE,
-    description: DESCRIPTION,
-  },
-};
+  type: 'article',
+  publishedTime: PUBLISHED,
+  modifiedTime: '2026-10-23',
+});
 
 const jsonLd = [
   articleJsonLd({
@@ -71,6 +55,7 @@ const jsonLd = [
     title: TITLE,
     description: DESCRIPTION,
     datePublished: PUBLISHED,
+    dateModified: '2026-10-23',
   }),
   faqJsonLd(FAQS),
   breadcrumbJsonLd([
@@ -87,13 +72,13 @@ export default function JoSAAOpeningAndClosingRanksGuide() {
         <script
           key={i}
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(obj) }}
+          dangerouslySetInnerHTML={{ __html: serializeJsonLd(obj) }}
         />
       ))}
       <GuideLayout
         title={TITLE}
         description={DESCRIPTION}
-        lastUpdated="April 2026"
+        lastUpdated="23 October 2026"
         readingTimeMinutes={7}
         breadcrumbs={[
           { name: 'Home', path: '/' },
@@ -101,6 +86,7 @@ export default function JoSAAOpeningAndClosingRanksGuide() {
           { name: 'Opening & closing ranks', path: PAGE_URL },
         ]}
       >
+        <OfficialRuleNotes />
         <h2>The short definition</h2>
         <p>
           At the end of every JoSAA round, each institute-branch-category-seat pool combination has
@@ -118,7 +104,7 @@ export default function JoSAAOpeningAndClosingRanksGuide() {
         <p>A single row in the JoSAA ranks dataset carries seven pieces of information:</p>
         <ul>
           <li>
-            <strong>Institute</strong> — e.g. IIT Bombay, NIT Trichy, IIIT Hyderabad.
+            <strong>Institute</strong> — e.g. IIT Bombay, NIT Trichy, IIIT Allahabad.
           </li>
           <li>
             <strong>Branch</strong> — Computer Science and Engineering, Electronics, Mechanical,
@@ -176,9 +162,9 @@ export default function JoSAAOpeningAndClosingRanksGuide() {
 
         <h2>Why closing ranks drift between rounds</h2>
         <p>
-          JoSAA runs five to six rounds of allocation. The same institute-branch will have six
-          closing ranks in a single year, usually moving monotonically later (larger rank numbers)
-          as rounds progress. The drift is caused by three flows of movement:
+          The number of rounds follows the published schedule for that year. Each round can have a
+          different closing rank for the same programme and allocation slice. The drift is caused by
+          three flows of movement:
         </p>
         <ul>
           <li>
@@ -187,9 +173,8 @@ export default function JoSAAOpeningAndClosingRanksGuide() {
             the next-in-rank candidate, pushing that branch&apos;s closing rank higher.
           </li>
           <li>
-            <strong>Freezes and withdrawals.</strong> Some candidates lock in their seat early
-            (freeze) or leave the process (withdraw), opening up seats for candidates ranked below
-            them who then fill the vacancy.
+            <strong>Freezes and withdrawals.</strong> Withdrawals can release seats. Freezing
+            retains a seat and stops upgrades; freezing does not itself create a vacancy.
           </li>
           <li>
             <strong>No-shows.</strong> Allocated candidates who miss the reporting / fee payment
@@ -197,9 +182,8 @@ export default function JoSAAOpeningAndClosingRanksGuide() {
           </li>
         </ul>
         <p>
-          The direction is almost always &quot;closing rank gets larger with each round&quot; —
-          meaning branches become <em>more</em> reachable in later rounds, not less. If your rank
-          just missed a Round 1 cutoff, do not give up: Round 3 or Round 5 may be in range.
+          Do not rely on a guaranteed direction of movement. Compare the actual round-wise rows for
+          the same category, quota and pool, and check the current allocation rules.
         </p>
 
         <h2>HS vs OS vs AI — the quota that trips everyone up</h2>
@@ -219,11 +203,9 @@ export default function JoSAAOpeningAndClosingRanksGuide() {
         <h2>Seat-pool cutoffs: Gender-Neutral and Female-only</h2>
         <p>
           Each institute-branch-category combination has a Gender-Neutral closing rank and a
-          separate Female-only closing rank. The Female-only seats are supernumerary — added on top
-          of the regular matrix — and their closing ranks are typically later than the
-          Gender-Neutral ones for the same branch. Female candidates are considered in both pools
-          and get the better outcome, so they only need to plan against the Gender-Neutral column;
-          the Female-only column expands their options.
+          separate Female-only closing rank when that pool is offered. Eligible female candidates
+          should compare both pools using the correct category and rank list. Do not ignore either
+          pool or assume the same relationship between their cutoffs in every programme.
         </p>
 
         <h2>Practical rules of thumb</h2>
@@ -233,8 +215,8 @@ export default function JoSAAOpeningAndClosingRanksGuide() {
             not a trend.
           </li>
           <li>
-            <strong>Use Round 6 closing ranks for safety assessments</strong> — they are the outer
-            limit of who got the seat.
+            <strong>Check the final published round</strong> for a historical endpoint. Do not treat
+            it as a safety guarantee or assume every year has six rounds.
           </li>
           <li>
             <strong>Use Round 1 closing ranks for early allocations</strong> — if you want to freeze
@@ -246,9 +228,9 @@ export default function JoSAAOpeningAndClosingRanksGuide() {
             Advanced rank against IIT cutoffs. They are separate universes.
           </li>
           <li>
-            <strong>Remember the category.</strong> Open-category cutoffs are almost always the
-            strictest. If you are eligible for a reservation category, look at both cutoffs — JoSAA
-            gives you the better outcome.
+            <strong>Match the rank list.</strong> Compare OPEN cutoffs with CRL and
+            reserved-category cutoffs with the corresponding category rank; their numeric values are
+            not interchangeable.
           </li>
         </ul>
 

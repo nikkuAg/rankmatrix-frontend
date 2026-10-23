@@ -1,12 +1,13 @@
 import React from 'react';
 import { AppLink } from '@/components/AppLink';
 import { GuideLayout } from '@/components/GuideLayout';
-import { articleJsonLd, breadcrumbJsonLd, faqJsonLd } from '@/utils/jsonLd';
+import { articleJsonLd, breadcrumbJsonLd, faqJsonLd, serializeJsonLd } from '@/utils/jsonLd';
+import { buildMetadata } from '@/utils/metadata.mjs';
 
 const PAGE_URL = '/guides/jee-main-vs-advanced-vs-josaa';
 const TITLE = 'JEE Main vs JEE Advanced vs JoSAA';
 const DESCRIPTION =
-  'Three different things that get conflated constantly. Who conducts what, which ranks go where, and how they fit together to decide your IIT, NIT, IIIT, or GFTI admission.';
+  'Understand how JEE Main, JEE Advanced and JoSAA fit together, which rank lists apply and how candidates reach IIT, NIT, IIIT and GFTI admission.';
 const PUBLISHED = '2026-04-23';
 
 const FAQS = [
@@ -42,31 +43,14 @@ const FAQS = [
   },
 ];
 
-export const metadata = {
-  title: TITLE,
+export const metadata = buildMetadata({
+  path: PAGE_URL,
+  title: 'JEE Main vs Advanced vs JoSAA: Key Differences',
   description: DESCRIPTION,
-  alternates: { canonical: PAGE_URL },
-  keywords: [
-    'JEE Main vs JEE Advanced',
-    'JEE Main vs JoSAA',
-    'JEE Advanced vs JoSAA',
-    'JEE Main JEE Advanced difference',
-    'JoSAA JEE Main',
-    'JoSAA JEE Advanced',
-  ],
-  openGraph: {
-    type: 'article',
-    url: PAGE_URL,
-    title: TITLE,
-    description: DESCRIPTION,
-    publishedTime: PUBLISHED,
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: TITLE,
-    description: DESCRIPTION,
-  },
-};
+  type: 'article',
+  publishedTime: PUBLISHED,
+  modifiedTime: '2026-10-23',
+});
 
 const jsonLd = [
   articleJsonLd({
@@ -74,6 +58,7 @@ const jsonLd = [
     title: TITLE,
     description: DESCRIPTION,
     datePublished: PUBLISHED,
+    dateModified: '2026-10-23',
   }),
   faqJsonLd(FAQS),
   breadcrumbJsonLd([
@@ -90,13 +75,13 @@ export default function JeeMainVsAdvancedVsJoSAAGuide() {
         <script
           key={i}
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(obj) }}
+          dangerouslySetInnerHTML={{ __html: serializeJsonLd(obj) }}
         />
       ))}
       <GuideLayout
         title={TITLE}
         description={DESCRIPTION}
-        lastUpdated="April 2026"
+        lastUpdated="23 October 2026"
         readingTimeMinutes={6}
         breadcrumbs={[
           { name: 'Home', path: '/' },
@@ -182,8 +167,8 @@ export default function JeeMainVsAdvancedVsJoSAAGuide() {
             significantly harder.
           </li>
           <li>
-            Only the top JEE Main qualifiers (the exact cutoff is published by JoSAA each year) are
-            eligible to register.
+            Only the top JEE Main qualifiers (eligibility is published on the official JEE Advanced
+            website) are eligible to register.
           </li>
           <li>
             Your JEE Advanced rank is the <em>only</em> input JoSAA uses for IIT seat allocation.

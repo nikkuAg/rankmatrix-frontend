@@ -1,19 +1,20 @@
 import React from 'react';
 import { AppLink } from '@/components/AppLink';
 import { GuideLayout } from '@/components/GuideLayout';
-import { articleJsonLd, breadcrumbJsonLd, faqJsonLd } from '@/utils/jsonLd';
+import { articleJsonLd, breadcrumbJsonLd, faqJsonLd, serializeJsonLd } from '@/utils/jsonLd';
+import { buildMetadata } from '@/utils/metadata.mjs';
 
 const PAGE_URL = '/guides/josaa-choice-filling-strategy';
 const TITLE = 'JoSAA choice filling strategy — how to order your preference list';
 const DESCRIPTION =
-  'A practical, opinionated guide to filling your JoSAA choice list — the order that matters, the freeze/float/slide decision, common mistakes to avoid, and how to use the predictor output without overcommitting.';
+  'Build a JoSAA preference list using your interests and historical cutoffs. Learn how to order choices and avoid common counselling mistakes.';
 const PUBLISHED = '2026-05-19';
 
 const FAQS = [
   {
     question: 'How many choices should I fill in JoSAA?',
     answer:
-      'There is no minimum number, but a complete preference list typically has 30 to 100 entries. The right number depends on your rank: a top-1000 rank can stay short (10-30 ambitious choices), while a rank past 50,000 usually benefits from a longer list (60-150 entries) covering multiple branches across NITs, IIITs, and GFTIs to make sure something gets allocated.',
+      'There is no universal ideal length for a preference list. Include eligible programmes you would genuinely accept, in your own preference order. Historical cutoffs help you explore options but cannot ensure an allocation.',
   },
   {
     question: 'Does the order of choices actually matter?',
@@ -37,32 +38,14 @@ const FAQS = [
   },
 ];
 
-export const metadata = {
-  title: TITLE,
+export const metadata = buildMetadata({
+  path: PAGE_URL,
+  title: 'JoSAA Choice Filling: How to Order Your Choices',
   description: DESCRIPTION,
-  alternates: { canonical: PAGE_URL },
-  keywords: [
-    'JoSAA choice filling',
-    'JoSAA preference order',
-    'JoSAA strategy',
-    'JoSAA freeze float slide',
-    'JoSAA choice locking',
-    'JoSAA choice list strategy',
-    'JEE counselling strategy',
-  ],
-  openGraph: {
-    type: 'article',
-    url: PAGE_URL,
-    title: TITLE,
-    description: DESCRIPTION,
-    publishedTime: PUBLISHED,
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: TITLE,
-    description: DESCRIPTION,
-  },
-};
+  type: 'article',
+  publishedTime: PUBLISHED,
+  modifiedTime: '2026-10-23',
+});
 
 const jsonLd = [
   articleJsonLd({
@@ -70,6 +53,7 @@ const jsonLd = [
     title: TITLE,
     description: DESCRIPTION,
     datePublished: PUBLISHED,
+    dateModified: '2026-10-23',
   }),
   faqJsonLd(FAQS),
   breadcrumbJsonLd([
@@ -86,13 +70,13 @@ export default function JoSAAChoiceFillingStrategy() {
         <script
           key={i}
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(obj) }}
+          dangerouslySetInnerHTML={{ __html: serializeJsonLd(obj) }}
         />
       ))}
       <GuideLayout
         title={TITLE}
         description={DESCRIPTION}
-        lastUpdated="May 2026"
+        lastUpdated="23 October 2026"
         readingTimeMinutes={9}
         breadcrumbs={[
           { name: 'Home', path: '/' },
@@ -123,13 +107,13 @@ export default function JoSAAChoiceFillingStrategy() {
         <h3>1. Stretch picks (top of the list)</h3>
         <p>
           (Institute, branch) combinations where your rank is past the closing rank by a small
-          margin — say within 5-10%. These are seats you would happily take if a late-round opening
-          surfaces them. Putting them at the top costs you nothing if you do not get them and
-          rewards you handsomely if you do.
+          margin in the historical data. No fixed percentage represents an admission probability.
+          These are seats you would happily take if a late-round opening surfaces them. Putting them
+          at the top costs you nothing if you do not get them and rewards you handsomely if you do.
         </p>
         <p>
-          <strong>Limit:</strong> 5-15 entries. More than that becomes noise: any stretch past ~30%
-          of the closing rank realistically never opens.
+          <strong>Check:</strong> include a programme only if you are eligible and would accept it.
+          There is no validated cutoff percentage beyond which a future allocation is impossible.
         </p>
 
         <h3>2. Target picks (the boundary, middle of the list)</h3>
@@ -146,9 +130,9 @@ export default function JoSAAChoiceFillingStrategy() {
 
         <h3>3. Floor anchors (bottom of the list)</h3>
         <p>
-          Seats you are comfortably inside the closing rank for — by 10% or more. These are
-          guarantees in case nothing higher works. Always include enough of them that you definitely
-          get <em>something</em> you can live with.
+          These are acceptable programmes whose historical closing ranks leave a larger margin
+          relative to your matching rank list. They broaden your options but do not guarantee an
+          allocation. Order the entire list by genuine preference, regardless of the bucket.
         </p>
         <p>
           <strong>Limit:</strong> 5-20 entries. Make sure at least the bottom 3-5 are entries you
@@ -206,18 +190,17 @@ export default function JoSAAChoiceFillingStrategy() {
           </li>
         </ul>
         <p>
-          A useful heuristic: <strong>freeze if you got a target-bucket pick or a stretch</strong>;{' '}
-          <strong>float if you got a floor anchor</strong> and you have target picks above it;
-          <strong>slide</strong> is rare in practice but useful if your institute is your priority
-          and branch is negotiable.
+          Choose freeze, float or slide by whether you want further upgrades and by the options
+          available in that round. Read the current reporting requirements before confirming;
+          historical cutoffs do not make a seat safe from eligibility or document issues.
         </p>
 
         <h2>Common mistakes to avoid</h2>
         <ul>
           <li>
             <strong>Sorting by likelihood instead of preference.</strong> The single most common
-            mistake. Putting your safest pick at the top guarantees you get that pick and nothing
-            higher will be looked at.
+            mistake. Putting a less-preferred programme first can prevent an allocation to a
+            programme you prefer but placed lower, if you qualify for both.
           </li>
           <li>
             <strong>Filling too few choices.</strong> A short list is fine if all of them are seats

@@ -1,12 +1,14 @@
 import React from 'react';
 import { AppLink } from '@/components/AppLink';
 import { GuideLayout } from '@/components/GuideLayout';
-import { articleJsonLd, breadcrumbJsonLd, faqJsonLd } from '@/utils/jsonLd';
+import { OfficialRuleNotes } from '@/components/OfficialRuleNotes';
+import { articleJsonLd, breadcrumbJsonLd, faqJsonLd, serializeJsonLd } from '@/utils/jsonLd';
+import { buildMetadata } from '@/utils/metadata.mjs';
 
 const PAGE_URL = '/guides/josaa-seat-matrix';
 const TITLE = 'JoSAA seat matrix: categories, quotas, seat pools';
 const DESCRIPTION =
-  'What the JoSAA seat matrix actually is, what every category and quota and seat pool column means, how seats are distributed across them, and why this matters when you plan your JoSAA choice list.';
+  'Read the JoSAA seat matrix with confidence. Understand category, HS, OS and AI quotas, gender seat pools and how to compare programme seats.';
 const PUBLISHED = '2026-04-23';
 
 const FAQS = [
@@ -18,51 +20,33 @@ const FAQS = [
   {
     question: 'What is the difference between HS, OS, and AI quota?',
     answer:
-      "HS (Home State) quota seats at an NIT are reserved for candidates whose home state matches the NIT's state. OS (Other State) quota seats at the same NIT are for candidates from any other state. AI (All India) quota applies to IITs, IIITs, and GFTIs, where seats are not split by state — every candidate competes in the same pool regardless of domicile. Roughly half of each NIT branch is HS and half is OS; the exact split is in the published seat matrix.",
+      'HS, OS and AI mean Home State, Other State and All India. Match the quota shown in the actual programme matrix. The source note explains where to verify eligibility.',
   },
   {
     question: 'What are Gender-Neutral and Female-only seat pools?',
     answer:
-      'Gender-Neutral seats are open to any candidate. Female-only seats are supernumerary — added on top of the Gender-Neutral matrix specifically to raise female representation, particularly at IITs. Female candidates are considered automatically for both pools and get the better outcome; male candidates are considered only for the Gender-Neutral pool.',
+      'Gender-Neutral seats are open to any candidate. The female-only pool can include supernumerary seats; inspect the exact programme matrix. Female candidates are considered automatically for both pools and get the better outcome; male candidates are considered only for the Gender-Neutral pool.',
   },
   {
     question: 'How are reservations applied on top of the seat matrix?',
     answer:
-      'The category reservations (OBC-NCL, SC, ST, EWS, PwD) are applied per branch per quota. For example, a given branch at an NIT might have 50 HS seats split as 25 Open, 13 OBC-NCL, 7 SC, 4 ST, with 5 EWS supernumerary and a further PwD reservation within each category. Exact numbers come from the official seat matrix that JoSAA publishes each year.',
+      'Read the category and PwD columns of the official programme matrix directly. Do not reconstruct the published integer seat counts using a hypothetical percentage split.',
   },
   {
     question: 'Does the seat matrix change during counselling?',
     answer:
-      'The published seat matrix is fixed for a given year once counselling starts — numbers do not move between rounds. What changes between rounds is the number of vacant seats in each cell as candidates freeze, float, slide, or withdraw. That is why closing ranks move round-over-round even though the seat count itself does not.',
+      'Use the latest official publication and any corrections. A historical seat matrix is not a live vacancy count; allocations and vacancies change between rounds.',
   },
 ];
 
-export const metadata = {
-  title: TITLE,
+export const metadata = buildMetadata({
+  path: PAGE_URL,
+  title: 'JoSAA Seat Matrix: Categories, Quotas & Seat Pools',
   description: DESCRIPTION,
-  alternates: { canonical: PAGE_URL },
-  keywords: [
-    'JoSAA seat matrix',
-    'JoSAA category wise seats',
-    'HS OS AI quota JoSAA',
-    'Gender Neutral Female only seats',
-    'NIT seat matrix',
-    'IIT seat matrix',
-    'EWS OBC SC ST reservation JEE',
-  ],
-  openGraph: {
-    type: 'article',
-    url: PAGE_URL,
-    title: TITLE,
-    description: DESCRIPTION,
-    publishedTime: PUBLISHED,
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: TITLE,
-    description: DESCRIPTION,
-  },
-};
+  type: 'article',
+  publishedTime: PUBLISHED,
+  modifiedTime: '2026-10-23',
+});
 
 const jsonLd = [
   articleJsonLd({
@@ -70,6 +54,7 @@ const jsonLd = [
     title: TITLE,
     description: DESCRIPTION,
     datePublished: PUBLISHED,
+    dateModified: '2026-10-23',
   }),
   faqJsonLd(FAQS),
   breadcrumbJsonLd([
@@ -86,13 +71,13 @@ export default function JoSAASeatMatrixGuide() {
         <script
           key={i}
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(obj) }}
+          dangerouslySetInnerHTML={{ __html: serializeJsonLd(obj) }}
         />
       ))}
       <GuideLayout
         title={TITLE}
         description={DESCRIPTION}
-        lastUpdated="April 2026"
+        lastUpdated="23 October 2026"
         readingTimeMinutes={8}
         breadcrumbs={[
           { name: 'Home', path: '/' },
@@ -100,6 +85,7 @@ export default function JoSAASeatMatrixGuide() {
           { name: 'Seat matrix', path: PAGE_URL },
         ]}
       >
+        <OfficialRuleNotes />
         <h2>What the seat matrix is</h2>
         <p>
           The JoSAA seat matrix is the authoritative ledger of how many engineering seats exist and
@@ -160,8 +146,8 @@ export default function JoSAASeatMatrixGuide() {
             <strong>ST</strong> — Scheduled Tribes.
           </li>
           <li>
-            <strong>EWS</strong> — Economically Weaker Sections. A supernumerary reservation;
-            specific income and asset criteria apply.
+            Check the programme-specific category and seat-pool counts in the official matrix; the
+            note above links to the governing rules.
           </li>
           <li>
             <strong>PwD</strong> — Persons with Disabilities. This is a <em>sub</em>-reservation
@@ -178,10 +164,8 @@ export default function JoSAASeatMatrixGuide() {
         <h2>Quota, in detail</h2>
         <h3>HS — Home State (NITs only)</h3>
         <p>
-          At every NIT, roughly half of each branch&apos;s seats are reserved for candidates whose
-          home state matches the NIT&apos;s state. Home state is defined by the board that issued
-          your class-12 certificate, not by where you currently live. HS quota cutoffs are usually
-          looser than OS quota cutoffs for the same branch, because the HS pool is smaller.
+          Use the state-code eligibility rule in the official-source note above, including its
+          exceptions.
         </p>
         <h3>OS — Other State (NITs only)</h3>
         <p>
@@ -245,7 +229,8 @@ export default function JoSAASeatMatrixGuide() {
           </li>
           <li>
             If a branch has many seats in your category and the closing rank is well below your
-            rank, you can reasonably expect to get it.
+            rank, it was historically within reach for that exact rank list and allocation slice;
+            admission is still not guaranteed.
           </li>
         </ul>
 
@@ -260,13 +245,10 @@ export default function JoSAASeatMatrixGuide() {
             <AppLink href="/seat-matrix">Seat Matrix</AppLink> and check seat count in your category
             + quota + pool.
           </li>
+          <li>Check all category, PwD and seat-pool rows for which you are eligible.</li>
           <li>
-            Watch for supernumerary seats (EWS, Female-only). They can meaningfully expand your
-            options if you qualify.
-          </li>
-          <li>
-            Avoid single-seat cells as top choices unless you are certain about your rank. Keep them
-            as upside choices in the middle of your list instead.
+            Seat count helps you understand the available options, but your final choice order
+            should reflect your preferences rather than an assumed allocation probability.
           </li>
         </ul>
 
