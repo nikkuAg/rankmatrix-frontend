@@ -1,6 +1,5 @@
 'use client';
 
-import { instituteType } from '@/utils/instituteIdentity.mjs';
 import React, { useEffect, useMemo, useState } from 'react';
 import { KeyboardArrowLeft, KeyboardArrowRight } from '@mui/icons-material';
 import {
@@ -8,7 +7,6 @@ import {
   Button,
   Stack,
   Table,
-  TableBody,
   TableCell,
   TableHead,
   TableRow,
@@ -16,10 +14,7 @@ import {
   useTheme,
 } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
-import { AppLink } from '@/components/AppLink';
-import { COLLEGE_FILTER_LABELS } from '@/utils/instituteIdentity.mjs';
 import { ChipFilter } from '@/components/ChipFilter';
-import { NoDataComponent } from '@/components/NoData';
 import { PaginationBox } from '@/components/PaginationBox';
 import { SearchBox } from '@/components/SearchBox';
 import { TableSkeleton } from '@/components/Spinner/TableSkeleton';
@@ -34,8 +29,10 @@ import {
   updateSearchValue,
 } from '@/store/slices/college';
 import { catalogueState } from '@/utils/catalogue.mjs';
+import { COLLEGE_FILTER_LABELS } from '@/utils/instituteIdentity.mjs';
 import { sendAnalyticsEvent } from '../../utils/analyticEvent';
 import { TableLayout } from '../TableLayout';
+import { CollegeRows } from './CollegeRows';
 
 export const CollegeList = ({ initialData }) => {
   const [getCollegeData, collegeQuery] = useLazyGetCollegeDataQuery();
@@ -232,67 +229,11 @@ export const CollegeList = ({ initialData }) => {
                     </TableRow>
                   )}
                 </TableHead>
-                <TableBody>
-                  {data?.data?.length > 0 ? (
-                    data?.data?.map((college, i) => (
-                      <TableRow
-                        key={college.code}
-                        sx={{
-                          '&:hover': {
-                            backgroundColor: theme.palette.primary.light,
-                          },
-                          ...(i === data.data.length - 1 && {
-                            '& td': {
-                              borderBottom: '0px !important',
-                            },
-                          }),
-                        }}
-                      >
-                        <TableCell>{college.code}</TableCell>
-                        <TableCell>
-                          {college.slug ? (
-                            <AppLink href={`/colleges/${college.slug}`}>{college.name}</AppLink>
-                          ) : (
-                            college.name
-                          )}
-                        </TableCell>
-                        <TableCell>{instituteType(college)}</TableCell>
-                        <TableCell>{college.state}</TableCell>
-                        {!expandedNirf && (
-                          <TableCell
-                            sx={{
-                              borderRight: '0px !important',
-                              transition: 'all 0.3s ease',
-                              ...(expandedNirf && {
-                                colSpan: nirfYears.length,
-                              }),
-                            }}
-                          >
-                            {college.nirfRanks.find((rank) => rank.year === nirfYears[0])?.rank ||
-                              '-'}
-                          </TableCell>
-                        )}
-                        {expandedNirf &&
-                          nirfYears.map((year, i) => (
-                            <TableCell
-                              key={year}
-                              sx={
-                                i === nirfYears.length - 1 && {
-                                  borderRight: '0px !important',
-                                }
-                              }
-                            >
-                              {college.nirfRanks.find((rank) => rank.year === year)?.rank || '-'}
-                            </TableCell>
-                          ))}
-                      </TableRow>
-                    ))
-                  ) : (
-                    <TableRow>
-                      <NoDataComponent colSpan={8} />
-                    </TableRow>
-                  )}
-                </TableBody>
+                <CollegeRows
+                  colleges={data?.data}
+                  expandedNirf={expandedNirf}
+                  nirfYears={nirfYears}
+                />
               </Table>
             </TableLayout>
           </Stack>
