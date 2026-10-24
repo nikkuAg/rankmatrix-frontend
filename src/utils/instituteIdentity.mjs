@@ -12,7 +12,8 @@ export function instituteType(institute = {}) {
   return institute.type;
 }
 
-export const COLLEGE_FILTER_LABELS = { IIT: 'IIT / IISc' };
+// Preserve RankMatrix's filter convention: IISc remains inside the IIT bucket.
+export const COLLEGE_FILTER_LABELS = { IIT: 'IIT' };
 
 export function admissionRankLabel(institute) {
   const type = instituteType(institute);
