@@ -65,7 +65,7 @@ export function CutoffAnalysis({ rows, year }) {
           </div>
           <p>
             “Up” means a larger closing-rank number; “down” means a smaller one. We compare
-            {` ${year - 1} and ${year}`} only at the same round, quota, category and seat pool. A
+            {` ${year - 1} and ${year} only `}at the same round, quota, category and seat pool. A
             year&apos;s latest stored round may not be its official final round. Missing rounds are
             not filled in, and the change between endpoints does not imply that ranks moved in the
             same direction at every round. Changes to eligibility or rank-list definitions can also
