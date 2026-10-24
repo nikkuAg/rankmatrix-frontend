@@ -1,0 +1,75 @@
+name: Deploy frontend to Azure
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+
+concurrency:
+  group: deploy-azure-frontend
+  cancel-in-progress: false
+
+env:
+  ACR_NAME: crrankmatrix
+  IMAGE_NAME: rankmatrix-frontend
+  RESOURCE_GROUP: rankmatrix
+  CONTAINER_APP: ca-rankmatrix-frontend
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Azure login (passwordless OIDC)
+        uses: azure/login@v2
+        with:
+          client-id: e2d06f9a-1533-4578-b2e2-caf17f6112c8
+          tenant-id: 972ccfa1-9fe8-437a-ab60-3885f9be487e
+          subscription-id: f6cdd27d-1584-4ef5-b9d4-31d72ed14d10
+      - name: Build, test and push immutable image
+        run: |
+          set -euo pipefail
+          az acr login --name "$ACR_NAME"
+          docker build --tag "$ACR_NAME.azurecr.io/$IMAGE_NAME:${GITHUB_SHA}" \
+            --platform linux/amd64 \
+            --build-arg NEXT_PUBLIC_API_URL=https://api.rankmatrix.in \
+            --build-arg NEXT_PUBLIC_GA_ID=G-TZT11R6PC6 \
+            --build-arg NEXT_PUBLIC_ENABLE_ADSENSE=false .
+          docker push "$ACR_NAME.azurecr.io/$IMAGE_NAME:${GITHUB_SHA}"
+      - name: Deploy revision
+        id: deploy
+        run: |
+          set -euo pipefail
+          PREVIOUS_IMAGE=$(az containerapp show -n "$CONTAINER_APP" -g "$RESOURCE_GROUP" --query 'properties.template.containers[0].image' -o tsv)
+          echo "previous_image=$PREVIOUS_IMAGE" >> "$GITHUB_OUTPUT"
+          az containerapp update -n "$CONTAINER_APP" -g "$RESOURCE_GROUP" \
+            --image "$ACR_NAME.azurecr.io/$IMAGE_NAME:${GITHUB_SHA}" \
+            --query properties.latestRevisionName -o tsv
+      - name: Verify deployed content
+        run: |
+          set -euo pipefail
+          FQDN=$(az containerapp show -n "$CONTAINER_APP" -g "$RESOURCE_GROUP" --query properties.configuration.ingress.fqdn -o tsv)
+          # Wait for the new revision, rather than accepting a response from the old one.
+          REVISION=$(az containerapp show -n "$CONTAINER_APP" -g "$RESOURCE_GROUP" --query properties.latestRevisionName -o tsv)
+          for attempt in $(seq 1 30); do
+            READY=$(az containerapp show -n "$CONTAINER_APP" -g "$RESOURCE_GROUP" --query properties.latestReadyRevisionName -o tsv)
+            [ "$READY" = "$REVISION" ] && break
+            [ "$attempt" = 30 ] && exit 1
+            sleep 10
+          done
+          SMOKE_BASE_URL="https://$FQDN" node scripts/smoke-azure.mjs
+      - name: Restore previous image on failed deployment
+        if: failure() && steps.deploy.outputs.previous_image != ''
+        env:
+          PREVIOUS_IMAGE: ${{ steps.deploy.outputs.previous_image }}
+        run: |
+          az containerapp update -n "$CONTAINER_APP" -g "$RESOURCE_GROUP" \
+            --image "$PREVIOUS_IMAGE" --query properties.latestRevisionName -o tsv
