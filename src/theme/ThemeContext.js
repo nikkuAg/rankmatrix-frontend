@@ -95,6 +95,7 @@ export const ThemeProviderWrapper = ({ children }) => {
           textUnderlineOffset: '3px',
         },
         p: { margin: 0 },
+        'em, i, blockquote': { fontFamily: 'var(--font-poppins-italic)' },
         th: {
           borderBottom: `1px solid ${theme.palette.gray.light} !important`,
           borderRight: `1px solid ${theme.palette.gray.light} !important`,
