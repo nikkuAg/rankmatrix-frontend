@@ -91,18 +91,19 @@ export default function GuidesHub() {
         description="Straightforward, no-spam explainers built around the questions JEE aspirants actually ask — from someone who built the tool they're reading them in."
       >
         <p>
-          JoSAA counselling is the single process through which almost every government engineering
-          seat in India is allocated — IITs via JEE Advanced, NITs / IIITs / GFTIs via JEE Main. The
-          rules are well documented on the official JoSAA site, but that documentation is written
-          for operators, not candidates. These guides translate the important bits into plain
-          English, connect them to what you will actually see in the RankMatrix tools, and point at
-          official sources wherever you should double-check.
+          JoSAA allocates seats at its published participating institutes. State counselling and
+          other admission authorities run separate processes outside JoSAA. The rules are well
+          documented on the official JoSAA site, but that documentation is written for operators,
+          not candidates. These guides translate the important bits into plain English, connect them
+          to what you will actually see in the RankMatrix tools, and point at official sources
+          wherever you should double-check.
         </p>
         <p>
-          Every guide below is free, with no signup, no phone number, no email capture, and no
-          retargeting. If something is still unclear after reading one, the relevant tool — Opening
-          &amp; Closing Ranks, Seat Matrix, Participating Colleges, or the Predictor — is one click
-          away.
+          Every guide below is free, and no account or contact details are required to read it. See
+          the <Link href="/privacy">privacy policy</Link> for browser storage, Analytics and
+          optional advertising information. If something is still unclear after reading one, the
+          relevant tool &mdash; Opening &amp; Closing Ranks, Seat Matrix, Participating Colleges, or
+          the Predictor &mdash; is one click away.
         </p>
 
         <Stack gap={2} sx={{ mt: 4 }}>
