@@ -3,6 +3,7 @@ import { GoogleAnalytics } from '@next/third-parties/google';
 import { Poppins } from 'next/font/google';
 import Script from 'next/script';
 import { Footer } from '@/components/Footer';
+import { Navbar } from '@/components/Navbar';
 import { RankMatrixLayout } from '@/components/RankMatrixLayout';
 import { ADSENSE_CLIENT_ID } from '@/constants';
 import StoreProvider from '@/store/provider';
@@ -106,7 +107,9 @@ export default function RootLayout({ children }) {
         <AppRouterCacheProvider options={{ enableCssLayer: false, key: 'mui' }}>
           <StoreProvider>
             <ThemeProviderWrapper>
-              <RankMatrixLayout footer={<Footer />}>{children}</RankMatrixLayout>
+              <RankMatrixLayout footer={<Footer />} navigation={<Navbar />}>
+                {children}
+              </RankMatrixLayout>
             </ThemeProviderWrapper>
           </StoreProvider>
         </AppRouterCacheProvider>

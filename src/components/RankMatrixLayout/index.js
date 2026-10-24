@@ -1,40 +1,16 @@
-'use client';
-
-import React from 'react';
-import { Box, Stack, useTheme } from '@mui/material';
-import { Navbar } from '@/components/Navbar';
 import { SnackBar } from '@/components/Snackbar';
+import styles from './Layout.module.css';
 
-export const RankMatrixLayout = ({ children, footer }) => {
-  const theme = useTheme();
-
-  return (
-    <Box
-      sx={{
-        backgroundColor: theme.background.main,
-        width: '100%',
-        minHeight: '100dvh',
-      }}
-    >
-      <Stack minHeight="100dvh" width="100%">
-        <Box
-          component="a"
-          href="#main-content"
-          sx={{
-            position: 'absolute',
-            left: -10000,
-            '&:focus': { left: 16, top: 8, zIndex: 1500, p: 2, bgcolor: 'background.paper' },
-          }}
-        >
-          Skip to content
-        </Box>
-        <Navbar />
-        <Box component="main" id="main-content" tabIndex={-1} flexGrow={1}>
-          {children}
-        </Box>
-        {footer}
-        <SnackBar />
-      </Stack>
-    </Box>
-  );
-};
+export const RankMatrixLayout = ({ children, footer, navigation }) => (
+  <div className={styles.shell}>
+    <a href="#main-content" className={styles.skip}>
+      Skip to content
+    </a>
+    {navigation}
+    <main id="main-content" tabIndex={-1} className={styles.main}>
+      {children}
+    </main>
+    {footer}
+    <SnackBar />
+  </div>
+);

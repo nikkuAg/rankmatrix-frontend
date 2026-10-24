@@ -1,15 +1,14 @@
 'use client';
 
-import { createContext, useContext, useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { GlobalStyles } from '@mui/material';
 import CssBaseline from '@mui/material/CssBaseline';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { themes } from '@/constants/themes';
 import { sendAnalyticsEvent } from '../utils/analyticEvent';
+import { ThemeContext } from './ThemeState';
 
-const ThemeContext = createContext();
-
-export const useThemeContext = () => useContext(ThemeContext);
+export { useThemeContext } from './ThemeState';
 
 export const ThemeProviderWrapper = ({ children }) => {
   // SSR renders 'light' to match the server-rendered HTML; the first
@@ -73,6 +72,15 @@ export const ThemeProviderWrapper = ({ children }) => {
       styles={{
         body: {
           backgroundColor: theme.background.main,
+          '--rm-feature-bg': theme.palette.primary.main,
+          '--rm-feature-fg': theme.palette.text.light,
+          '--rm-focus-bg': theme.palette.background.paper,
+          '--rm-guide-bg': theme.background.main,
+          '--rm-guide-panel': theme.background.dark,
+          '--rm-guide-text': theme.palette.text.main,
+          '--rm-guide-primary': theme.palette.primary.main,
+          '--rm-guide-border': theme.palette.gray.light,
+          '--rm-guide-divider': mode === 'dark' ? 'rgba(255,255,255,0.12)' : 'rgba(0,0,0,0.12)',
           '--rm-footer-bg': mode === 'dark' ? theme.palette.primary.dark : theme.background.dark,
           '--rm-footer-fg': mode === 'dark' ? theme.palette.text.light : theme.palette.text.main,
           '--rm-footer-muted': mode === 'dark' ? 'rgba(255,255,255,0.72)' : 'rgba(0,41,66,0.72)',
