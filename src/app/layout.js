@@ -1,11 +1,12 @@
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
-import { GoogleAnalytics } from '@next/third-parties/google';
 import { Poppins } from 'next/font/google';
 import Script from 'next/script';
+import { AnalyticsInteractions } from '@/components/AnalyticsInteractions';
 import { RankMatrixLayout } from '@/components/RankMatrixLayout';
 import { ADSENSE_CLIENT_ID } from '@/constants';
 import StoreProvider from '@/store/provider';
 import { ThemeProviderWrapper } from '@/theme/ThemeContext';
+import { analyticsBootstrap } from '@/utils/analyticsTransport.mjs';
 import { serializeJsonLd } from '@/utils/jsonLd';
 import {
   buildMetadata,
@@ -94,6 +95,14 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={poppins.variable}>
+        {analyticsBootstrap(process.env.NEXT_PUBLIC_GA_ID) && (
+          <script
+            id="rankmatrix-analytics-init"
+            dangerouslySetInnerHTML={{
+              __html: analyticsBootstrap(process.env.NEXT_PUBLIC_GA_ID),
+            }}
+          />
+        )}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: serializeJsonLd(organizationJsonLd) }}
@@ -109,7 +118,16 @@ export default function RootLayout({ children }) {
             </ThemeProviderWrapper>
           </StoreProvider>
         </AppRouterCacheProvider>
-        {process.env.NEXT_PUBLIC_GA_ID && <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />}
+        {analyticsBootstrap(process.env.NEXT_PUBLIC_GA_ID) && (
+          <>
+            <AnalyticsInteractions />
+            <Script
+              id="rankmatrix-analytics"
+              strategy="afterInteractive"
+              src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`}
+            />
+          </>
+        )}
         {process.env.NEXT_PUBLIC_ENABLE_ADSENSE === 'true' && (
           <Script
             id="google-adsense"
