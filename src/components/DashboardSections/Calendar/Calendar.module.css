@@ -10,7 +10,12 @@
     padding: 16px;
   }
   .controls {
-    gap: 4px;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .controls label {
+    order: -1;
+    flex-basis: 100%;
   }
 }
 .calendar h2 {
