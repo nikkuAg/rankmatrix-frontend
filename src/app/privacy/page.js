@@ -59,7 +59,8 @@ export default function Privacy() {
           preferences. Your browser&apos;s site-data controls can remove saved settings. Clearing
           browser storage does not remove information already processed by servers or providers.</p>
         <h2>Providers, analytics and advertising</h2>
-        <p>Vercel hosts the website; Microsoft Azure services host the backend and database.
+        <p>Microsoft Azure services host the website, backend and database. Vercel may also
+          process technical request data when you visit a retained Vercel deployment.
           These providers handle technical request data to operate the service. Google Analytics
           can be enabled through deployment configuration. When loaded, it can process page visits,
           device information, cookies and interaction events. Reviewed custom events use aggregate
