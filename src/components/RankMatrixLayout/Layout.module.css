@@ -1,0 +1,48 @@
+.shell {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: 100dvh;
+  background: var(--rm-guide-bg, #fbfcff);
+}
+.skip {
+  position: absolute;
+  left: -10000px;
+}
+.skip:focus {
+  left: 16px;
+  top: 8px;
+  z-index: 1500;
+  padding: 16px;
+  background: var(--rm-focus-bg, #fff);
+}
+.main {
+  flex-grow: 1;
+}
+.feature {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.featureHeader {
+  width: 100%;
+  padding: 40px 32px;
+  background: var(--rm-feature-bg, #6096fc);
+  color: var(--rm-feature-fg, #fff);
+}
+.featureHeader h1 {
+  margin: 0;
+  font-size: 2.125rem;
+  font-weight: 500;
+  line-height: 1.235;
+}
+.featureContent {
+  width: 100%;
+  flex-grow: 1;
+  padding: 0;
+}
+@media (min-width: 600px) {
+  .featureContent {
+    padding: 0 32px;
+  }
+}
