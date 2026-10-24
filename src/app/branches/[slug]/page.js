@@ -203,6 +203,12 @@ export default async function BranchPage({ params }) {
         <h2>Using this data</h2>
         <ul>
           <li>
+            To compare changes over time, open a deep cutoff page above and follow the{' '}
+            <AppLink href="/guides/reading-cutoff-trends">matched-round comparison guide</AppLink>.
+            In the <AppLink href="/ranks">cutoff explorer</AppLink>, select the same programme,
+            category, quota and pool manually; this link does not preselect your filters.
+          </li>
+          <li>
             For a limited historical college and branch shortlist, use the{' '}
             <AppLink href="/predict">College &amp; Branch Predictor</AppLink>.
           </li>

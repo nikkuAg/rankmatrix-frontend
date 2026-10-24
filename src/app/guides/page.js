@@ -17,6 +17,13 @@ export const metadata = buildMetadata({
 
 const GUIDES = [
   {
+    slug: 'reading-cutoff-trends',
+    title: 'How to compare cutoff changes',
+    summary:
+      'A worked example of round-wise and year-wise closing-rank movement without mixing quotas, categories, pools or rank lists.',
+    readingTimeMinutes: 4,
+  },
+  {
     slug: 'what-is-josaa-counselling',
     title: 'What is JoSAA counselling?',
     summary:

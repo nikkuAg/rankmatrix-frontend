@@ -225,6 +225,10 @@ export default function JoSAAOpeningAndClosingRanksGuide() {
         <h2>Related tools and guides</h2>
         <ul>
           <li>
+            <AppLink href="/guides/reading-cutoff-trends">Worked cutoff-change example</AppLink> —
+            compare matching rounds and understand missing observations before interpreting a trend.
+          </li>
+          <li>
             <AppLink href="/ranks">Opening &amp; Closing Ranks table</AppLink> — the full
             year/round/category/quota/pool filterable view.
           </li>

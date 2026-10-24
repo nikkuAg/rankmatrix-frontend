@@ -8,7 +8,10 @@ const { renderToStaticMarkup } = require('react-dom/server');
 const { transformSync } = require('next/dist/build/swc');
 
 function load(relative) {
-  const filename = path.resolve(__dirname, '../src', relative);
+  let filename = path.resolve(__dirname, '../src', relative);
+  if (fs.existsSync(filename) && fs.statSync(filename).isDirectory())
+    filename = path.join(filename, 'index.js');
+  else if (!fs.existsSync(filename)) filename += '.js';
   const compiled = transformSync(fs.readFileSync(filename, 'utf8'), {
     filename,
     jsc: {
@@ -21,10 +24,40 @@ function load(relative) {
   target.filename = filename;
   target.paths = Module._nodeModulePaths(path.dirname(filename));
   const original = target.require.bind(target);
-  target.require = (id) => (id.startsWith('@/') ? load(id.slice(2)) : original(id));
+  target.require = (id) =>
+    id.endsWith('.module.css') ? {} : id.startsWith('@/') ? load(id.slice(2)) : original(id);
   target._compile(compiled.code, filename);
   return target.exports;
 }
+
+test('comparison guide has consistent canonical/article metadata and visible hypothetical example', () => {
+  const { default: Page, metadata } = load('app/guides/reading-cutoff-trends/page.js');
+  const html = renderToStaticMarkup(React.createElement(Page));
+  assert.equal(
+    metadata.alternates.canonical,
+    'https://www.rankmatrix.in/guides/reading-cutoff-trends',
+  );
+  assert.equal((html.match(/<h1\b/g) || []).length, 1);
+  assert.ok(html.includes('not published cutoffs for any institute'));
+  assert.ok(html.includes('same round'));
+  const documents = [...html.matchAll(/<script type="application\/ld\+json">(.*?)<\/script>/g)].map(
+    (match) => JSON.parse(match[1]),
+  );
+  assert.deepEqual(
+    documents.map((item) => item['@type']),
+    ['Article', 'BreadcrumbList'],
+  );
+  assert.equal(documents[0].url, metadata.alternates.canonical);
+  for (const href of [
+    '/ranks',
+    '/seat-matrix',
+    '/colleges',
+    '/branches',
+    '/predict',
+    '/methodology',
+  ])
+    assert.ok(html.includes(`href="${href}"`), href);
+});
 
 test('source notes separate observed years and unknown import provenance', () => {
   const { DataSourceNotes } = load('components/DataSourceNotes/index.js');
