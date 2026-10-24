@@ -24,9 +24,9 @@ import {
   updateYear,
 } from '@/store/slices/rank';
 import { useDebounce } from '@/utils/debounceHook';
+import { COLLEGE_FILTER_LABELS } from '@/utils/instituteIdentity.mjs';
 import { sendAnalyticsEvent } from '../../utils/analyticEvent';
 import { useIsMobile } from '../../utils/screenSizeHook';
-import { COLLEGE_FILTER_LABELS } from '@/utils/instituteIdentity.mjs';
 import { ChipFilter } from '../ChipFilter';
 import { Dropdown } from '../Dropdown';
 import { NoDataComponent } from '../NoData';
@@ -112,12 +112,6 @@ export const RankList = () => {
       } else if (sortOrder === SORT_ORDER.DESC) {
         dispatch(updateOrdering(`-${sortField}`));
       }
-      sendAnalyticsEvent({
-        action: 'sort_applied',
-        category: 'rank_list',
-        label: 'Rank List sort',
-        value: { sortField, sortOrder },
-      });
     } else {
       dispatch(updateOrdering(null));
     }
@@ -135,7 +129,7 @@ export const RankList = () => {
       action: 'college_type_applied',
       category: 'rank_list',
       label: 'Rank List filters',
-      value: filterValues,
+      parameters: { selected_count: filterValues.length },
     });
   };
 
@@ -146,7 +140,7 @@ export const RankList = () => {
         action: 'search',
         category: 'rank_list',
         label: 'Rank List Search',
-        value: searchValue,
+        parameters: { state: searchValue ? 'set' : 'cleared' },
       });
     }
   };
@@ -173,6 +167,16 @@ export const RankList = () => {
   };
 
   const handleSort = (field) => {
+    sendAnalyticsEvent({
+      action: 'sort_applied',
+      category: 'rank_list',
+      label: 'Rank List sort',
+      parameters: {
+        field,
+        direction:
+          sortField === field ? (sortOrder === SORT_ORDER.ASC ? 'desc' : 'cleared') : 'asc',
+      },
+    });
     if (sortField === field) {
       if (sortOrder === SORT_ORDER.ASC) {
         setSortOrder(SORT_ORDER.DESC);
@@ -193,7 +197,7 @@ export const RankList = () => {
         action: 'filters_applied',
         category: 'rank_list',
         label: 'Rank List Filters',
-        value: { filterValues, field },
+        parameters: { field, selected_count: filterValues.length },
       });
     } else {
       dispatch(removeFilters(field));
@@ -201,7 +205,7 @@ export const RankList = () => {
         action: 'filters_removed',
         category: 'rank_list',
         label: 'Rank List Filters remove',
-        value: { field },
+        parameters: { field },
       });
     }
   };
@@ -219,7 +223,7 @@ export const RankList = () => {
       action: 'filter_range_applied',
       category: 'rank_list',
       label: 'Rank List Filters',
-      value: { filterValue, field },
+      parameters: { field },
     });
   };
 

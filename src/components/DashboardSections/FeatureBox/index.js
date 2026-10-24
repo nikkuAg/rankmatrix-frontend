@@ -85,6 +85,7 @@ const FeatureCard = ({ title, image, link }) => {
         component={Link}
         href={link}
         prefetch={false}
+        data-analytics-handled="tool_opened"
         sx={{ width: '100%', height: '100%' }}
         onClick={() => {
           sendAnalyticsEvent({

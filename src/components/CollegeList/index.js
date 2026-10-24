@@ -50,12 +50,6 @@ export const CollegeList = ({ initialData }) => {
       } else if (sortOrder === SORT_ORDER.DESC) {
         dispatch(updateOrdering(`-${sortField}`));
       }
-      sendAnalyticsEvent({
-        action: 'sort_applied',
-        category: 'college_list',
-        label: 'College List sort',
-        value: { sortField, sortOrder },
-      });
     } else {
       dispatch(updateOrdering(null));
     }
@@ -67,7 +61,7 @@ export const CollegeList = ({ initialData }) => {
       action: 'college_type_applied',
       category: 'college_list',
       label: 'College List filters',
-      value: filterValues,
+      parameters: { selected_count: filterValues.length },
     });
   };
 
@@ -78,12 +72,22 @@ export const CollegeList = ({ initialData }) => {
         action: 'search',
         category: 'college_list',
         label: 'College List Search',
-        value: searchValue,
+        parameters: { state: searchValue ? 'set' : 'cleared' },
       });
     }
   };
 
   const handleSort = (field) => {
+    sendAnalyticsEvent({
+      action: 'sort_applied',
+      category: 'college_list',
+      label: 'College List sort',
+      parameters: {
+        field,
+        direction:
+          sortField === field ? (sortOrder === SORT_ORDER.ASC ? 'desc' : 'cleared') : 'asc',
+      },
+    });
     if (sortField === field) {
       if (sortOrder === SORT_ORDER.ASC) {
         setSortOrder(SORT_ORDER.DESC);
@@ -113,7 +117,7 @@ export const CollegeList = ({ initialData }) => {
       action: 'expand_nirf',
       category: 'college_list',
       label: 'College List NIRF Expanded',
-      value: !expandedNirf,
+      parameters: { state: expandedNirf ? 'collapsed' : 'expanded' },
     });
   };
 

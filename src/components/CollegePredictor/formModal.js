@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import {
   Button,
   Dialog,
@@ -19,6 +19,18 @@ import { sendAnalyticsEvent } from '../../utils/analyticEvent';
 
 export const FormModal = ({ open, setOpen, setFormData, getPredictionData, defaultValues }) => {
   const theme = useTheme();
+  const wasOpen = useRef(false);
+  useEffect(() => {
+    if (open && !wasOpen.current) {
+      sendAnalyticsEvent({
+        action: 'form_viewed',
+        category: 'college_predictor',
+        label: 'Predictor form shown',
+        value: 1,
+      });
+    }
+    wasOpen.current = open;
+  }, [open]);
   const handleClose = () => {
     setOpen(false);
     sendAnalyticsEvent({
@@ -38,17 +50,27 @@ export const FormModal = ({ open, setOpen, setFormData, getPredictionData, defau
     }
     getPredictionData(formJson)
       .unwrap()
-      .then((_) => {
+      .then((results) => {
         sendAnalyticsEvent({
           action: 'prediction_completed',
           category: 'college_predictor',
           label: 'Prediction results returned',
           value: 1,
+          parameters: {
+            outcome: results?.length ? 'results' : 'empty',
+            result_count: results?.length ?? 0,
+          },
         });
         setFormData(formJson);
         handleClose();
       })
       .catch(() => {
+        sendAnalyticsEvent({
+          action: 'prediction_failed',
+          category: 'college_predictor',
+          label: 'Prediction request failed',
+          parameters: { outcome: 'error' },
+        });
         // The query layer displays the failure; keep the form open for retry.
       });
 
