@@ -3,6 +3,7 @@ import { Box } from '@mui/material';
 import { notFound } from 'next/navigation';
 import { AppLink } from '@/components/AppLink';
 import { DataPageLayout } from '@/components/DataPageLayout';
+import { DataSourceNotes } from '@/components/DataSourceNotes';
 import { summaryRows } from '@/utils/cutoffSummaries.mjs';
 import { admissionRankLabel, instituteType } from '@/utils/instituteIdentity.mjs';
 import { breadcrumbJsonLd, faqJsonLd, serializeJsonLd } from '@/utils/jsonLd';
@@ -248,6 +249,13 @@ export default async function InstitutePage({ params }) {
           </Box>
         )}
 
+        <DataSourceNotes
+          cutoffYears={(data.branches || []).flatMap((branch) =>
+            branch.cutoffSummaries.map((row) => row.year),
+          )}
+          nirfYears={(data.nirfRanks || []).map((row) => row.year)}
+          includeSeats
+        />
         <h2>Using this data</h2>
         <ul>
           <li>
