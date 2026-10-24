@@ -29,6 +29,7 @@ module.exports = {
   generateIndexSitemap: true,
   sitemapSize: 5000,
   exclude: [
+    '/health',
     '/opengraph-image*',
     '/twitter-image*',
     '/icon*',

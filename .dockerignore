@@ -4,6 +4,7 @@ node_modules
 .github
 .vercel
 .env*
+.deploy-state.json
 coverage
 docs
 *.log

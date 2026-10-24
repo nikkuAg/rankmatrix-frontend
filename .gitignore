@@ -45,3 +45,6 @@ next-env.d.ts
 
 # VS Code file
 .vscode
+# Deployment runner state
+.deploy-state.json
+*-image.tar.gz
