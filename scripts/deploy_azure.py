@@ -5,6 +5,7 @@ the previous revision, hostname and public release identifier.
 """
 import json
 import os
+import re
 from pathlib import Path
 import signal
 import subprocess
@@ -24,10 +25,24 @@ class Deployment:
         self.state = Path(env.get('DEPLOY_STATE', '.deploy-state.json'))
 
     def az(self, *args):
-        result = subprocess.run(
-            ['az', 'containerapp', *args, '-n', self.app, '-g', self.group,
-             '--only-show-errors', '-o', 'json'],
-            check=True, capture_output=True, text=True, timeout=90)
+        command = ['az', 'containerapp', *args, '-n', self.app, '-g', self.group]
+        if args[:2] == ('revision', 'set-mode'):
+            # The CLI's set-mode command sends a full PUT, including unrelated
+            # environment, identity, certificate and secret configuration. Use
+            # the app-scoped PATCH supported by ARM instead; no extra IAM role.
+            command = ['az', 'rest', '--method', 'patch', '--url',
+                       'https://management.azure.com' + self.resource_id + '?api-version=2025-01-01',
+                       '--body', json.dumps({'location': self.location,
+                                             'properties': {'configuration': {'activeRevisionsMode': 'Multiple'}}})]
+        try:
+            result = subprocess.run(command + ['--only-show-errors', '-o', 'json'],
+                                    check=True, capture_output=True, text=True, timeout=90)
+        except subprocess.CalledProcessError as error:
+            # Print only the Azure error code; validation messages may contain
+            # application configuration and must not expose secret values.
+            code = re.search(r'\(([A-Za-z][A-Za-z0-9_.]+)\)', error.stderr or '')
+            raise RuntimeError('Azure {} failed: {}'.format(' '.join(args[:2]),
+                               code.group(1) if code else 'command error')) from None
         return json.loads(result.stdout) if result.stdout.strip() else None
 
     def health(self, base, expected=None):
@@ -70,6 +85,17 @@ class Deployment:
     def rollback(self):
         saved = json.loads(self.state.read_text())
         print('Restoring traffic to ' + saved['revision'], flush=True)
+        current = self.az('show')['properties']
+        if current['configuration']['activeRevisionsMode'].lower() == 'single':
+            weights = current['configuration']['ingress']['traffic']
+            selected = (weights[0].get('revisionName') or current['latestReadyRevisionName']) if len(weights) == 1 else None
+            if selected != saved['revision'] or weights[0].get('weight') != 100:
+                raise RuntimeError('Single-mode traffic no longer matches the saved revision')
+            if saved['release']:
+                self.wait_health(saved['base'], saved['release'])
+            self.smoke(saved['base'])
+            print('Previous release verified; deployment stopped before traffic changed.', flush=True)
+            return
         for attempt in range(3):
             try:
                 previous = self.az('revision', 'show', '--revision', saved['revision'])
@@ -92,6 +118,8 @@ class Deployment:
 
     def deploy(self):
         app = self.az('show')
+        self.resource_id = app['id']
+        self.location = app['location']
         ingress = app['properties']['configuration']['ingress']
         previous = app['properties']['latestReadyRevisionName']
         weights = ingress.get('traffic', [])
@@ -105,6 +133,14 @@ class Deployment:
         # Pin the healthy revision BEFORE creating the candidate. Otherwise an
         # existing latestRevision traffic rule can publish an untested image.
         self.az('revision', 'set-mode', '--mode', 'multiple')
+        for attempt in range(12):
+            current = self.az('show')['properties']
+            if (current['configuration']['activeRevisionsMode'].lower() == 'multiple'
+                    and current['provisioningState'] == 'Succeeded'):
+                break
+            if attempt == 11:
+                raise RuntimeError('Revision-mode update did not complete')
+            time.sleep(5)
         self.traffic(previous)
         try:
             image = '{ACR_NAME}.azurecr.io/{IMAGE_NAME}:{GITHUB_SHA}'.format(**self.env)

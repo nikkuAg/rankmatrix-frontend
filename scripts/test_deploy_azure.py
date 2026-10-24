@@ -6,6 +6,7 @@ import tempfile
 import unittest
 from unittest.mock import patch
 import urllib.error
+import subprocess
 from deploy_azure import Deployment
 
 
@@ -24,7 +25,10 @@ class FakeDeployment(Deployment):
     def az(self, *args):
         self.actions.append(args)
         if args == ('show',):
-            return {'properties': {'latestReadyRevisionName': 'old', 'configuration': {
+            return {'id': '/subscriptions/test/resourceGroups/rg/providers/Microsoft.App/containerApps/app',
+                    'location': 'centralindia',
+                    'properties': {'provisioningState': 'Succeeded', 'latestReadyRevisionName': 'old', 'configuration': {
+                'activeRevisionsMode': 'Multiple',
                 'ingress': {'fqdn': 'stable', 'traffic': [{'revisionName': 'old', 'weight': 100}]}}}}
         if args[0] == 'update':
             self.assert_traffic('old')
@@ -73,6 +77,41 @@ class FakeDeployment(Deployment):
 
 
 class DeploymentTests(unittest.TestCase):
+    def test_failure_before_mode_change_verifies_unchanged_single_mode_release(self):
+        with tempfile.TemporaryDirectory() as directory:
+            deploy = FakeDeployment(directory)
+            deploy.state.write_text(json.dumps({'revision': 'old', 'release': 'old', 'base': 'https://stable'}))
+            app = deploy.az('show')
+            app['properties']['configuration']['activeRevisionsMode'] = 'Single'
+            with patch.object(deploy, 'az', return_value=app) as azure:
+                deploy.rollback()
+                azure.assert_called_once_with('show')
+            self.assertEqual(deploy.checked, [('https://stable', 'old')])
+
+    def test_revision_mode_uses_only_app_scoped_merge_patch(self):
+        with tempfile.TemporaryDirectory() as directory:
+            deploy = FakeDeployment(directory)
+            deploy.resource_id = '/subscriptions/test/resourceGroups/rg/providers/Microsoft.App/containerApps/app'
+            deploy.location = 'centralindia'
+            with patch('deploy_azure.subprocess.run') as run:
+                run.return_value.stdout = '{}'
+                Deployment.az(deploy, 'revision', 'set-mode', '--mode', 'multiple')
+            command = run.call_args.args[0]
+            self.assertEqual(command[:4], ['az', 'rest', '--method', 'patch'])
+            self.assertEqual(json.loads(command[command.index('--body') + 1]),
+                             {'location': 'centralindia',
+                              'properties': {'configuration': {'activeRevisionsMode': 'Multiple'}}})
+            self.assertIn(deploy.resource_id, command[command.index('--url') + 1])
+
+    def test_azure_errors_explain_code_without_logging_configuration(self):
+        with tempfile.TemporaryDirectory() as directory:
+            deploy = FakeDeployment(directory)
+            error = subprocess.CalledProcessError(1, ['az'], stderr='ERROR: (LinkedAuthorizationFailed) secret=password')
+            with patch('deploy_azure.subprocess.run', side_effect=error):
+                with self.assertRaisesRegex(RuntimeError, 'LinkedAuthorizationFailed') as raised:
+                    Deployment.az(deploy, 'show')
+            self.assertNotIn('password', str(raised.exception))
+
     def test_real_health_check_rejects_old_release_and_unhealthy_payload(self):
         with tempfile.TemporaryDirectory() as directory:
             deploy = FakeDeployment(directory)
