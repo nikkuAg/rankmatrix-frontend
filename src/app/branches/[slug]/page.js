@@ -3,6 +3,7 @@ import { Box } from '@mui/material';
 import { notFound } from 'next/navigation';
 import { AppLink } from '@/components/AppLink';
 import { DataPageLayout } from '@/components/DataPageLayout';
+import { DataSourceNotes } from '@/components/DataSourceNotes';
 import { summaryRows } from '@/utils/cutoffSummaries.mjs';
 import { groupInstitutesByExam } from '@/utils/examGroups.mjs';
 import { instituteType } from '@/utils/instituteIdentity.mjs';
@@ -191,6 +192,14 @@ export default async function BranchPage({ params }) {
           ))
         )}
 
+        <DataSourceNotes
+          cutoffYears={(data.institutes || []).flatMap((institute) =>
+            institute.cutoffSummaries.map((row) => row.year),
+          )}
+          nirfYears={(data.institutes || [])
+            .filter((institute) => institute.latestNirfRank != null)
+            .map((institute) => institute.latestNirfYear)}
+        />
         <h2>Using this data</h2>
         <ul>
           <li>

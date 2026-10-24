@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 import { AppLink } from '@/components/AppLink';
 import { CutoffAnalysis } from '@/components/CutoffAnalysis';
 import { DataPageLayout } from '@/components/DataPageLayout';
+import { DataSourceNotes } from '@/components/DataSourceNotes';
 import { cutoffSummaries } from '@/utils/cutoffSummaries.mjs';
 import { instituteType } from '@/utils/instituteIdentity.mjs';
 import { breadcrumbJsonLd, faqJsonLd, serializeJsonLd } from '@/utils/jsonLd';
@@ -256,6 +257,11 @@ export default async function InstituteBranchPage({ params }) {
           </p>
         )}
 
+        <DataSourceNotes
+          cutoffYears={data.cutoffs.map((row) => row.year)}
+          seatYears={(data.seats || []).map((row) => row.year)}
+          includeSeats
+        />
         <h2>Source and rank-list interpretation</h2>
         <p>
           Source:{' '}
