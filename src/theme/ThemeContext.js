@@ -71,7 +71,16 @@ export const ThemeProviderWrapper = ({ children }) => {
   const globalStyles = (
     <GlobalStyles
       styles={{
-        body: { backgroundColor: theme.background.main },
+        body: {
+          backgroundColor: theme.background.main,
+          '--rm-footer-bg': mode === 'dark' ? theme.palette.primary.dark : theme.background.dark,
+          '--rm-footer-fg': mode === 'dark' ? theme.palette.text.light : theme.palette.text.main,
+          '--rm-footer-muted': mode === 'dark' ? 'rgba(255,255,255,0.72)' : 'rgba(0,41,66,0.72)',
+          '--rm-footer-subtle': mode === 'dark' ? 'rgba(255,255,255,0.55)' : 'rgba(0,41,66,0.6)',
+          '--rm-footer-border': mode === 'dark' ? 'rgba(255,255,255,0.1)' : 'rgba(0,41,66,0.1)',
+          '--rm-footer-focus': theme.palette.primary.main,
+          '--rm-footer-logo': mode === 'dark' ? 'url(/logo_dark.svg)' : 'url(/logo.svg)',
+        },
         a: {
           color: `${theme.palette.text.link} !important`,
           overflowWrap: 'anywhere',
