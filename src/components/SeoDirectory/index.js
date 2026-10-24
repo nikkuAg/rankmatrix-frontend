@@ -1,6 +1,6 @@
-import { instituteType } from '@/utils/instituteIdentity.mjs';
-import Link from 'next/link';
+import { DirectoryNavigation } from '@/components/DirectoryNavigation';
 import { GuideLayout } from '@/components/GuideLayout';
+import { instituteType } from '@/utils/instituteIdentity.mjs';
 import { fetchSeoSlugs } from '@/utils/seoApi';
 
 // Server-rendered links keep the catalogue discoverable before interactive tables load.
@@ -17,7 +17,9 @@ export async function SeoDirectory({ kind, faqs }) {
         }))
         .concat({
           name: 'Other participating institutes',
-          entries: entries.filter((entry) => !['IIT', 'IISc', 'NIT', 'IIIT', 'GFTI'].includes(instituteType(entry))),
+          entries: entries.filter(
+            (entry) => !['IIT', 'IISc', 'NIT', 'IIIT', 'GFTI'].includes(instituteType(entry)),
+          ),
         })
     : [{ name: 'Programmes and cutoff comparisons', entries }];
 
@@ -36,24 +38,24 @@ export async function SeoDirectory({ kind, faqs }) {
       }
       breadcrumbs={[]}
     >
-      {groups
-        .filter((group) => group.entries.length)
-        .map((group) => (
-          <section key={group.name}>
-            <h3>{group.name}</h3>
-            <ul style={{ columns: '2 20rem' }}>
-              {[...group.entries]
-                .sort((a, b) => a.name.localeCompare(b.name))
-                .map((entry) => (
-                  <li key={entry.slug}>
-                    <Link href={`${prefix}/${entry.slug}`} prefetch={false}>
-                      {entry.name}
-                    </Link>
-                  </li>
-                ))}
-            </ul>
-          </section>
-        ))}
+      <DirectoryNavigation>
+        {groups
+          .filter((group) => group.entries.length)
+          .map((group) => (
+            <section key={group.name}>
+              <h3>{group.name}</h3>
+              <ul style={{ columns: '2 20rem' }}>
+                {[...group.entries]
+                  .sort((a, b) => a.name.localeCompare(b.name))
+                  .map((entry) => (
+                    <li key={entry.slug}>
+                      <a href={`${prefix}/${entry.slug}`}>{entry.name}</a>
+                    </li>
+                  ))}
+              </ul>
+            </section>
+          ))}
+      </DirectoryNavigation>
       <h2>Common questions</h2>
       {faqs.map(({ question, answer }) => (
         <section key={question}>
