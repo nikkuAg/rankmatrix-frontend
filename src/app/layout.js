@@ -2,6 +2,7 @@ import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
 import { GoogleAnalytics } from '@next/third-parties/google';
 import { Poppins } from 'next/font/google';
 import Script from 'next/script';
+import { Footer } from '@/components/Footer';
 import { RankMatrixLayout } from '@/components/RankMatrixLayout';
 import { ADSENSE_CLIENT_ID } from '@/constants';
 import StoreProvider from '@/store/provider';
@@ -105,7 +106,7 @@ export default function RootLayout({ children }) {
         <AppRouterCacheProvider options={{ enableCssLayer: false, key: 'mui' }}>
           <StoreProvider>
             <ThemeProviderWrapper>
-              <RankMatrixLayout>{children}</RankMatrixLayout>
+              <RankMatrixLayout footer={<Footer />}>{children}</RankMatrixLayout>
             </ThemeProviderWrapper>
           </StoreProvider>
         </AppRouterCacheProvider>

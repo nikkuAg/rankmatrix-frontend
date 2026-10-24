@@ -2,11 +2,10 @@
 
 import React from 'react';
 import { Box, Stack, useTheme } from '@mui/material';
-import { Footer } from '@/components/Footer';
 import { Navbar } from '@/components/Navbar';
 import { SnackBar } from '@/components/Snackbar';
 
-export const RankMatrixLayout = ({ children }) => {
+export const RankMatrixLayout = ({ children, footer }) => {
   const theme = useTheme();
 
   return (
@@ -33,7 +32,7 @@ export const RankMatrixLayout = ({ children }) => {
         <Box component="main" id="main-content" tabIndex={-1} flexGrow={1}>
           {children}
         </Box>
-        <Footer />
+        {footer}
         <SnackBar />
       </Stack>
     </Box>

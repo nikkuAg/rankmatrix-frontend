@@ -1,9 +1,5 @@
-'use client';
-
-import React from 'react';
-import { GitHub, LinkedIn } from '@mui/icons-material';
-import { Avatar, Box, Link as MuiLink, Stack, Typography, useTheme } from '@mui/material';
 import Link from 'next/link';
+import styles from './Footer.module.css';
 
 const TOOL_LINKS = [
   { label: 'College & Branch Predictor', href: '/predict' },
@@ -40,224 +36,88 @@ const SITE_LINKS = [
   { label: 'Terms of use', href: '/terms' },
 ];
 
-const NavList = ({ ariaLabel, heading, children, headingSx }) => (
-  <Box component="nav" aria-label={ariaLabel}>
-    <Typography component="h2" sx={headingSx}>
-      {heading}
-    </Typography>
-    <Box component="ul" sx={{ listStyle: 'none', p: 0, m: 0, display: 'grid', gap: 1.25 }}>
-      {children}
-    </Box>
-  </Box>
+const NavList = ({ heading, links, external = false }) => (
+  <nav aria-label={heading}>
+    <h2 className={styles.heading}>{heading}</h2>
+    <ul className={styles.links}>
+      {links.map(({ label, href }) => (
+        <li key={href}>
+          {external ? (
+            <a className={styles.link} href={href} target="_blank" rel="noopener noreferrer">
+              {label}
+            </a>
+          ) : (
+            <Link className={styles.link} href={href}>
+              {label}
+            </Link>
+          )}
+        </li>
+      ))}
+    </ul>
+  </nav>
 );
 
-export const Footer = () => {
-  const theme = useTheme();
-  const isDark = theme.palette.mode === 'dark';
-
-  // Theme-aware palette — follow the page, don't fight it.
-  const surface = isDark ? theme.palette.primary.dark : theme.background.dark;
-  const foreground = isDark ? theme.palette.text.light : theme.palette.text.main;
-  const mutedForeground = isDark ? 'rgba(255, 255, 255, 0.72)' : 'rgba(0, 41, 66, 0.72)';
-  const subtleForeground = isDark ? 'rgba(255, 255, 255, 0.55)' : 'rgba(0, 41, 66, 0.6)';
-  const hairline = isDark ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 41, 66, 0.1)';
-  const logoSrc = isDark ? '/logo_dark.svg' : '/logo.svg';
-
-  const sectionHeadingSx = {
-    fontSize: '0.72rem',
-    fontWeight: 700,
-    letterSpacing: '0.12em',
-    textTransform: 'uppercase',
-    color: subtleForeground,
-    mb: 2,
-  };
-
-  // !important beats the global `a { color: text.link !important }` rule in
-  // ThemeContext's GlobalStyles so footer links render as readable text, not
-  // a third blue.
-  const linkSx = {
-    color: `${mutedForeground} !important`,
-    fontSize: '0.95rem',
-    lineHeight: 1.4,
-    textDecoration: 'none',
-    transition: 'color 150ms ease',
-    '&:hover': { color: `${foreground} !important`, textDecoration: 'none' },
-    '&:focus-visible': {
-      color: `${foreground} !important`,
-      outline: `2px solid ${theme.palette.primary.main}`,
-      outlineOffset: 3,
-    },
-  };
-
-  return (
-    <Box
-      component="footer"
-      sx={{
-        mt: 8,
-        backgroundColor: surface,
-        color: foreground,
-      }}
-    >
-      <Box sx={{ maxWidth: 1280, mx: 'auto', px: { xs: 3, md: 6 }, pt: { xs: 6, md: 8 }, pb: 4 }}>
-        <Box
-          sx={{
-            display: 'grid',
-            gridTemplateColumns: {
-              xs: '1fr',
-              sm: '1fr 1fr',
-              md: '1.4fr 1fr 1.3fr 1fr 1fr',
-            },
-            gap: { xs: 5, md: 5 },
-          }}
-        >
-          <Stack gap={2.5}>
-            <Stack direction="row" alignItems="center" gap={1.5}>
-              <Avatar
-                alt="RankMatrix"
-                src={logoSrc}
-                variant="square"
-                sx={{ width: 40, height: 40 }}
-              />
-              <Typography
-                component="span"
-                sx={{
-                  fontWeight: 500,
-                  fontSize: '1.4rem',
-                  letterSpacing: '-0.01em',
-                  color: foreground,
-                }}
-              >
-                RankMatrix
-              </Typography>
-            </Stack>
-            <Typography
-              sx={{
-                fontSize: '0.95rem',
-                lineHeight: 1.65,
-                color: mutedForeground,
-                maxWidth: 320,
-              }}
+export const Footer = () => (
+  <footer className={styles.footer}>
+    <div className={styles.inner}>
+      <div className={styles.grid}>
+        <div className={styles.brand}>
+          <div className={styles.brandRow}>
+            <span className={styles.logo} role="img" aria-label="RankMatrix" />
+            <span className={styles.brandName}>RankMatrix</span>
+          </div>
+          <p className={styles.description}>
+            A free JoSAA &amp; JEE counselling companion built on official JoSAA data. No signup or
+            contact details required to use the tools.
+          </p>
+          <div className={styles.social}>
+            <a
+              className={styles.link}
+              href="https://github.com/nikkuAg"
+              target="_blank"
+              rel="noopener noreferrer me"
+              aria-label="RankMatrix maker on GitHub"
             >
-              A free JoSAA &amp; JEE counselling companion built on official JoSAA data. No signup
-              or contact details required to use the tools.
-            </Typography>
-            <Stack direction="row" gap={2} sx={{ mt: 0.5 }}>
-              <MuiLink
-                href="https://github.com/nikkuAg"
-                target="_blank"
-                rel="noopener noreferrer me"
-                aria-label="RankMatrix maker on GitHub"
-                sx={{
-                  ...linkSx,
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  '& svg': { fontSize: 22 },
-                }}
-              >
-                <GitHub />
-              </MuiLink>
-              <MuiLink
-                href="https://www.linkedin.com/in/ag-divyansh/"
-                target="_blank"
-                rel="noopener noreferrer author"
-                aria-label="RankMatrix maker on LinkedIn"
-                sx={{
-                  ...linkSx,
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  '& svg': { fontSize: 22 },
-                }}
-              >
-                <LinkedIn />
-              </MuiLink>
-            </Stack>
-          </Stack>
-
-          <NavList ariaLabel="Tools" heading="Tools" headingSx={sectionHeadingSx}>
-            {TOOL_LINKS.map((link) => (
-              <li key={link.href}>
-                <MuiLink component={Link} href={link.href} sx={linkSx}>
-                  {link.label}
-                </MuiLink>
-              </li>
-            ))}
-          </NavList>
-
-          <NavList ariaLabel="Guides" heading="Guides" headingSx={sectionHeadingSx}>
-            {GUIDE_LINKS.map((link) => (
-              <li key={link.href}>
-                <MuiLink component={Link} href={link.href} sx={linkSx}>
-                  {link.label}
-                </MuiLink>
-              </li>
-            ))}
-          </NavList>
-
-          <NavList ariaLabel="Reference" heading="Reference" headingSx={sectionHeadingSx}>
-            {REFERENCE_LINKS.map((link) => (
-              <li key={link.href}>
-                <MuiLink href={link.href} target="_blank" rel="noopener noreferrer" sx={linkSx}>
-                  {link.label}
-                </MuiLink>
-              </li>
-            ))}
-          </NavList>
-
-          <NavList ariaLabel="Site" heading="Site" headingSx={sectionHeadingSx}>
-            {SITE_LINKS.map((link) => (
-              <li key={link.href}>
-                <MuiLink component={Link} href={link.href} sx={linkSx}>
-                  {link.label}
-                </MuiLink>
-              </li>
-            ))}
-          </NavList>
-        </Box>
-
-        <Box
-          sx={{
-            mt: { xs: 5, md: 7 },
-            pt: 3,
-            borderTop: `1px solid ${hairline}`,
-            display: 'flex',
-            flexDirection: { xs: 'column', md: 'row' },
-            gap: { xs: 2, md: 3 },
-            justifyContent: 'space-between',
-            alignItems: { xs: 'flex-start', md: 'flex-end' },
-          }}
-        >
-          <Typography sx={{ fontSize: '0.8rem', color: subtleForeground, lineHeight: 1.5 }}>
-            © {new Date().getFullYear()} RankMatrix · Built by{' '}
-            <MuiLink
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M12 1.27a11 11 0 00-3.48 21.46c.55.09.73-.28.73-.55v-1.84c-3.03.64-3.67-1.46-3.67-1.46-.55-1.29-1.28-1.65-1.28-1.65-.92-.65.1-.65.1-.65 1.1 0 1.73 1.1 1.73 1.1.92 1.65 2.57 1.2 3.21.92a2 2 0 01.64-1.47c-2.47-.27-5.04-1.19-5.04-5.5 0-1.1.46-2.1 1.2-2.84a3.76 3.76 0 010-2.93s.91-.28 3.11 1.1c1.8-.49 3.7-.49 5.5 0 2.1-1.38 3.02-1.1 3.02-1.1a3.76 3.76 0 010 2.93c.83.74 1.2 1.74 1.2 2.94 0 4.21-2.57 5.13-5.04 5.4.45.37.82.92.82 2.02v3.03c0 .27.1.64.73.55A11 11 0 0012 1.27" />
+              </svg>
+            </a>
+            <a
+              className={styles.link}
               href="https://www.linkedin.com/in/ag-divyansh/"
               target="_blank"
               rel="noopener noreferrer author"
-              sx={{
-                color: `${subtleForeground} !important`,
-                textDecoration: 'underline',
-                textUnderlineOffset: 3,
-                '&:hover': { color: `${foreground} !important` },
-              }}
+              aria-label="RankMatrix maker on LinkedIn"
             >
-              Divyansh Agarwal
-            </MuiLink>
-          </Typography>
-          <Typography
-            sx={{
-              fontSize: '0.75rem',
-              color: subtleForeground,
-              lineHeight: 1.55,
-              maxWidth: 720,
-              textAlign: { xs: 'left', md: 'right' },
-            }}
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z" />
+              </svg>
+            </a>
+          </div>
+        </div>
+        <NavList heading="Tools" links={TOOL_LINKS} />
+        <NavList heading="Guides" links={GUIDE_LINKS} />
+        <NavList heading="Reference" links={REFERENCE_LINKS} external />
+        <NavList heading="Site" links={SITE_LINKS} />
+      </div>
+      <div className={styles.bottom}>
+        <p className={styles.byline}>
+          &copy; {new Date().getFullYear()} RankMatrix &middot; Built by{' '}
+          <a
+            href="https://www.linkedin.com/in/ag-divyansh/"
+            target="_blank"
+            rel="noopener noreferrer author"
           >
-            Not affiliated with JoSAA, JEE, NTA, the IITs, NITs, IIITs, or GFTIs. Cutoff and seat
-            observations come from JoSAA; NIRF figures come from NIRF. Predictor outputs are our
-            calculations. Verify schedules, rules, and cutoffs on the official sources before making
-            admission decisions.
-          </Typography>
-        </Box>
-      </Box>
-    </Box>
-  );
-};
+            Divyansh Agarwal
+          </a>
+        </p>
+        <p className={styles.disclaimer}>
+          Not affiliated with JoSAA, JEE, NTA, the IITs, NITs, IIITs, or GFTIs. Cutoff and seat
+          observations come from JoSAA; NIRF figures come from NIRF. Predictor outputs are our
+          calculations. Verify schedules, rules, and cutoffs on the official sources before making
+          admission decisions.
+        </p>
+      </div>
+    </div>
+  </footer>
+);
