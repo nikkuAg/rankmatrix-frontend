@@ -28,6 +28,13 @@ application passes smoke checks; later deployments check the previous SHA too.
 Multiple-revision mode with explicit 100% traffic is retained. Existing split
 traffic is refused, not silently replaced.
 
+Revision mode is changed with a minimal ARM merge PATCH to the existing app,
+instead of the CLI command that resubmits environment, identity and certificate
+configuration through a full PUT. This retains the app-scoped deployment role.
+The workflow waits for that configuration operation to complete before traffic
+updates. If it stops while the previous single-mode release still serves 100%,
+recovery verifies that release without attempting an invalid traffic split.
+
 Limits: this handles deployment failures, not subsequent uptime incidents.
 Runner loss, force cancellation, Azure outages or a shared backend/database outage
 can prevent recovery. Failed recovery remains visible as a failed workflow.
