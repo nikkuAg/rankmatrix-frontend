@@ -1,26 +1,10 @@
 'use client';
 
 import React, { useEffect, useMemo, useState } from 'react';
-import { KeyboardArrowLeft, KeyboardArrowRight } from '@mui/icons-material';
-import {
-  Box,
-  Button,
-  Stack,
-  Table,
-  TableCell,
-  TableHead,
-  TableRow,
-  Typography,
-  useTheme,
-} from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 import { useDispatch, useSelector } from 'react-redux';
-import { ChipFilter } from '@/components/ChipFilter';
-import { PaginationBox } from '@/components/PaginationBox';
-import { SearchBox } from '@/components/SearchBox';
-import { TableSkeleton } from '@/components/Spinner/TableSkeleton';
-import { TableSortCell } from '@/components/TableSortCell';
 import { SORT_ORDER } from '@/constants';
-import { COLLEGE_TYPES } from '@/constants/josaa';
+import { TableSkeleton } from '@/components/Spinner/TableSkeleton';
 import { useLazyGetCollegeDataQuery } from '@/store/queries/college';
 import {
   updateFilters,
@@ -29,9 +13,11 @@ import {
   updateSearchValue,
 } from '@/store/slices/college';
 import { catalogueState } from '@/utils/catalogue.mjs';
-import { COLLEGE_FILTER_LABELS } from '@/utils/instituteIdentity.mjs';
 import { sendAnalyticsEvent } from '../../utils/analyticEvent';
-import { TableLayout } from '../TableLayout';
+import { CollegeControls } from './CollegeControls';
+import { CollegeHeader } from './CollegeHeader';
+import styles from './CollegeList.module.css';
+import { CollegePagination } from './CollegePagination';
 import { CollegeRows } from './CollegeRows';
 
 export const CollegeList = ({ initialData }) => {
@@ -132,24 +118,23 @@ export const CollegeList = ({ initialData }) => {
   };
 
   return (
-    <Box width={'100%'} height={'100%'} py={2}>
-      <Stack spacing={2} height={'100%'}>
-        <Stack
-          direction={{ xs: 'column', sm: 'row' }}
-          justifyContent={'space-between'}
-          gap={2}
-          alignItems={{ xs: 'flex-start', sm: 'center' }}
-        >
-          <ChipFilter
-            filterList={Object.keys(COLLEGE_TYPES)}
-            labels={COLLEGE_FILTER_LABELS}
-            onChange={handleCollegeTypeChange}
-            defaultSelected={Object.keys(COLLEGE_TYPES)}
-          />
-          <SearchBox onChange={handleSearchChange} width={{ xs: '100%', sm: '35%' }} />
-        </Stack>
+    <div
+      className={styles.root}
+      style={{
+        '--rm-list-muted': theme.palette.gray.dark,
+        '--rm-list-surface': theme.background.default,
+        '--rm-list-shadow': theme.palette.shadow.main,
+      }}
+    >
+      <div className={styles.content}>
+        <CollegeControls
+          onTypeChange={handleCollegeTypeChange}
+          onSearchChange={handleSearchChange}
+          defaultSelected={collegeReqData.filters?.type}
+          defaultSearch={collegeReqData.search || ''}
+        />
         {!isLoading && data?.totalPages > 1 && (
-          <PaginationBox
+          <CollegePagination
             currentPage={data.page}
             totalPages={data.totalPages}
             onPageChange={handlePageChange}
@@ -161,85 +146,29 @@ export const CollegeList = ({ initialData }) => {
         {isLoading ? (
           <TableSkeleton rows={10} columns={5} />
         ) : (
-          <Stack flexGrow={1}>
-            {!sortField && (
-              <Typography
-                variant="p"
-                alignSelf={'flex-end'}
-                fontWeight={300}
-                color={theme.palette.gray.dark}
-              >
-                *Data sorted by latest NIRF year
-              </Typography>
-            )}
-            <TableLayout>
-              <Table aria-label="Participating colleges" sx={{ minWidth: 680 }}>
-                <TableHead>
-                  <TableRow>
-                    <TableCell>College Code</TableCell>
-                    <TableSortCell
-                      sortField={sortField}
-                      sortOrder={sortOrder}
-                      handleSort={handleSort}
-                      title="College Name"
-                      field="name"
-                      showFilter={false}
-                    />
-                    <TableCell>College Type</TableCell>
-                    <TableSortCell
-                      sortField={sortField}
-                      sortOrder={sortOrder}
-                      handleSort={handleSort}
-                      title="State"
-                      field="state"
-                      showFilter={false}
-                    />
-                    <TableCell
-                      colSpan={expandedNirf ? nirfYears.length : 1}
-                      sx={{
-                        transition: 'all 0.3s ease',
-                        borderRight: '0px !important',
-                      }}
-                    >
-                      <Button
-                        onClick={handleExpandNIRF}
-                        color="inherit"
-                        sx={{ textTransform: 'none' }}
-                      >
-                        NIRF Rank{expandedNirf ? 's' : nirfYears[0] ? ` (${nirfYears[0]})` : ''}
-                        {expandedNirf ? <KeyboardArrowLeft /> : <KeyboardArrowRight />}
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                  {expandedNirf && (
-                    <TableRow>
-                      <TableCell colSpan={4} />
-                      {nirfYears.map((year, i) => (
-                        <TableCell
-                          key={year}
-                          sx={
-                            i === nirfYears.length - 1 && {
-                              borderRight: '0px !important',
-                            }
-                          }
-                        >
-                          {year}
-                        </TableCell>
-                      ))}
-                    </TableRow>
-                  )}
-                </TableHead>
+          <div className={styles.results}>
+            {!sortField && <span className={styles.note}>*Data sorted by latest NIRF year</span>}
+            <div className={styles.tableContainer}>
+              <table aria-label="Participating colleges" className={styles.table}>
+                <CollegeHeader
+                  sortField={sortField}
+                  sortOrder={sortOrder}
+                  handleSort={handleSort}
+                  expandedNirf={expandedNirf}
+                  nirfYears={nirfYears}
+                  onExpand={handleExpandNIRF}
+                />
                 <CollegeRows
                   colleges={data?.data}
                   expandedNirf={expandedNirf}
                   nirfYears={nirfYears}
                 />
-              </Table>
-            </TableLayout>
-          </Stack>
+              </table>
+            </div>
+          </div>
         )}
         {!isLoading && data?.totalPages > 1 && (
-          <PaginationBox
+          <CollegePagination
             currentPage={data.page}
             totalPages={data.totalPages}
             onPageChange={handlePageChange}
@@ -248,7 +177,7 @@ export const CollegeList = ({ initialData }) => {
             totalItems={data.totalItems}
           />
         )}
-      </Stack>
-    </Box>
+      </div>
+    </div>
   );
 };
