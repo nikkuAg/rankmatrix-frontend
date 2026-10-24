@@ -1,5 +1,4 @@
 import React from 'react';
-import { Box, Card, Stack, Typography } from '@mui/material';
 import Link from 'next/link';
 import { GuideLayout } from '@/components/GuideLayout';
 import { breadcrumbJsonLd, serializeJsonLd } from '@/utils/jsonLd';
@@ -113,36 +112,52 @@ export default function GuidesHub() {
           the Predictor &mdash; is one click away.
         </p>
 
-        <Stack gap={2} sx={{ mt: 4 }}>
-          {GUIDES.map((guide) => (
-            <Link
-              key={guide.slug}
-              href={`${PAGE_URL}/${guide.slug}`}
-              style={{ textDecoration: 'none', color: 'inherit' }}
-            >
-              <Card
-                variant="outlined"
-                sx={{
-                  borderRadius: 2,
-                  backgroundColor: 'transparent',
-                  p: 2.5,
-                  transition: 'border-color 120ms, background-color 120ms',
-                  '&:hover': { borderColor: 'primary.main' },
-                }}
-              >
-                <Typography component="h2" sx={{ fontSize: '1.2rem', fontWeight: 600, mb: 1 }}>
-                  {guide.title}
-                </Typography>
-                <Typography component="p" sx={{ fontSize: '0.95rem', lineHeight: 1.6, mb: 1.5 }}>
-                  {guide.summary}
-                </Typography>
-                <Box sx={{ fontSize: '0.8rem', opacity: 0.6 }}>
-                  {guide.readingTimeMinutes} min read
-                </Box>
-              </Card>
-            </Link>
+        <div className="guide-paths">
+          {[
+            [
+              '01 / Understand the system',
+              [
+                'what-is-josaa-counselling',
+                'jee-main-vs-advanced-vs-josaa',
+                'josaa-reservation-categories',
+              ],
+            ],
+            [
+              '02 / Read the evidence',
+              ['josaa-opening-and-closing-ranks', 'reading-cutoff-trends', 'josaa-seat-matrix'],
+            ],
+            [
+              '03 / Prepare your choices',
+              [
+                'jee-main-college-predictor',
+                'josaa-choice-filling-strategy',
+                'josaa-counselling-rounds',
+              ],
+            ],
+          ].map(([title, slugs]) => (
+            <section key={title}>
+              <h2>{title}</h2>
+              {slugs
+                .map((slug) => GUIDES.find((guide) => guide.slug === slug))
+                .filter(Boolean)
+                .map((guide) => (
+                  <Link
+                    className="guide-card"
+                    href={`${PAGE_URL}/${guide.slug}`}
+                    prefetch={false}
+                    key={guide.slug}
+                  >
+                    <h3>
+                      {guide.title}
+                      <span aria-hidden="true"> ↗</span>
+                    </h3>
+                    <p>{guide.summary}</p>
+                    <span>{guide.readingTimeMinutes} min read</span>
+                  </Link>
+                ))}
+            </section>
           ))}
-        </Stack>
+        </div>
       </GuideLayout>
     </>
   );

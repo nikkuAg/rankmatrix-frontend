@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link as MuiLink } from '@mui/material';
 import { GuideLayout } from '@/components/GuideLayout';
 import { breadcrumbJsonLd, serializeJsonLd } from '@/utils/jsonLd';
 import { buildMetadata } from '@/utils/metadata.mjs';
@@ -60,7 +59,7 @@ export default function Contact() {
 
         <h2>Email</h2>
         <p>
-          <MuiLink href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</MuiLink>
+          <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
         </p>
         <p>
           For data correction requests, please include the page URL and a link or screenshot of the
@@ -70,22 +69,22 @@ export default function Contact() {
         <h2>GitHub</h2>
         <p>
           Code, issues, and feature requests can also go to the maker&apos;s GitHub:{' '}
-          <MuiLink href="https://github.com/nikkuAg" target="_blank" rel="noopener noreferrer me">
+          <a href="https://github.com/nikkuAg" target="_blank" rel="noopener noreferrer me">
             github.com/nikkuAg
-          </MuiLink>
+          </a>
           .
         </p>
 
         <h2>LinkedIn</h2>
         <p>
           For professional queries, collaborations, or anything that does not fit a bug tracker:{' '}
-          <MuiLink
+          <a
             href="https://www.linkedin.com/in/ag-divyansh/"
             target="_blank"
             rel="noopener noreferrer author"
           >
             linkedin.com/in/ag-divyansh
-          </MuiLink>
+          </a>
           .
         </p>
 
@@ -95,9 +94,9 @@ export default function Contact() {
           pick, run a personalised counselling session, or intervene in your JoSAA registration. For
           anything specific to your candidature — eligibility, documentation, reporting, payment —
           please refer to the official{' '}
-          <MuiLink href="https://josaa.nic.in" target="_blank" rel="noopener noreferrer">
+          <a href="https://josaa.nic.in" target="_blank" rel="noopener noreferrer">
             JoSAA portal
-          </MuiLink>
+          </a>
           .
         </p>
       </GuideLayout>

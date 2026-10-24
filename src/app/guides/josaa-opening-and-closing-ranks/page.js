@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link as MuiLink } from '@mui/material';
 import { AppLink } from '@/components/AppLink';
 import { GuideLayout } from '@/components/GuideLayout';
 import { OfficialRuleNotes } from '@/components/OfficialRuleNotes';
@@ -216,9 +215,9 @@ export default function JoSAAOpeningAndClosingRanksGuide() {
           RankMatrix sources opening and closing ranks from the public JoSAA publications released
           at the end of each round. Imports may be incomplete or contain errors; verify important
           figures against the official source. For the official archive go to{' '}
-          <MuiLink href="https://josaa.nic.in" target="_blank" rel="noopener noreferrer">
+          <a href="https://josaa.nic.in" target="_blank" rel="noopener noreferrer">
             josaa.nic.in
-          </MuiLink>
+          </a>
           .
         </p>
 

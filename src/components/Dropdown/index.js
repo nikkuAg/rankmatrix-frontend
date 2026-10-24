@@ -1,81 +1,38 @@
 'use client';
 
-import React from 'react';
-import { FormControl, InputLabel, MenuItem, Select, useTheme } from '@mui/material';
+import { useId } from 'react';
 
-export const Dropdown = ({
+export function Dropdown({
   label,
   id,
   selectedValue,
   handleChange,
-  listData,
-  width = '20%',
+  listData = [],
   disabled = false,
-}) => {
-  const theme = useTheme();
+}) {
+  const generatedId = useId();
   return (
-    <FormControl
-      size="small"
-      sx={{
-        minWidth: width,
-        boxShadow: `0px 0px 16px 0px ${theme.palette.shadow.main}`,
-        '& .MuiOutlinedInput-root': {
-          border: `0px`,
-        },
-        '& .MuiOutlinedInput-notchedOutline': {
-          border: `2px solid`,
-          borderColor: `${disabled ? theme.palette.gray.light : theme.palette.gray.main} !important`,
-        },
-        '& .MuiFormLabel-root': {
-          color: `${disabled ? theme.palette.gray.light : theme.palette.gray.dark}`,
-          '&.Mui-focused': {
-            color: `${disabled ? theme.palette.gray.light : theme.palette.primary.main}`,
-          },
-        },
-        '& .MuiOutlinedInput-root:hover': {
-          '& > fieldset': {
-            borderColor: `${disabled ? theme.palette.gray.light : theme.palette.primary.main} !important`,
-          },
-          '& .MuiSvgIcon-root': {
-            color: `${disabled ? theme.palette.gray.light : theme.palette.primary.main} !important`,
-          },
-        },
-        '& .MuiOutlinedInput-root.Mui-focused': {
-          '& > fieldset': {
-            borderColor: `${disabled ? theme.palette.gray.light : theme.palette.primary.main} !important`,
-          },
-          '& .MuiSvgIcon-root': {
-            color: `${disabled ? theme.palette.gray.light : theme.palette.primary.main} !important`,
-          },
-        },
-        '&:hover > .MuiFormLabel-root': {
-          color: `${disabled ? theme.palette.gray.light : theme.palette.primary.main}`,
-        },
-        '& .MuiOutlinedInput-root .MuiSvgIcon-root': disabled && {
-          color: `${theme.palette.gray.light} !important`,
-        },
-      }}
-    >
-      <InputLabel id={id} color={theme.palette.gray.dark}>
-        {label}
-      </InputLabel>
-      <Select
+    <label className="field" htmlFor={id || generatedId}>
+      {label}
+      <select
+        id={id || generatedId}
         disabled={disabled}
-        labelId={id}
-        label={label}
-        autoWidth
-        value={selectedValue}
-        onChange={handleChange}
+        value={selectedValue ?? ''}
+        onChange={(event) => {
+          const value =
+            listData.find((item) => String(item.value) === event.target.value)?.value ?? '';
+          handleChange({ target: { value } });
+        }}
       >
-        <MenuItem value={''} disabled>
+        <option value="" disabled>
           {label}
-        </MenuItem>
-        {listData?.map((data, i) => (
-          <MenuItem value={data.value} key={i}>
-            {data.label}
-          </MenuItem>
+        </option>
+        {listData.map((item) => (
+          <option value={item.value} key={item.value}>
+            {item.label}
+          </option>
         ))}
-      </Select>
-    </FormControl>
+      </select>
+    </label>
   );
-};
+}

@@ -1,59 +1,43 @@
 'use client';
 
-import React from 'react';
-import CircleIcon from '@mui/icons-material/Circle';
-import { Box, Link, Stack, Typography } from '@mui/material';
 import { SITE_CONTENT } from '@/constants/siteContent';
-import { useSiteContent } from '@/store/selectors/siteContent';
+import { useGetSiteContentsQuery } from '@/store/queries/siteContent';
+import styles from './Updates.module.css';
 
-export const ContentListCard = ({ title, contentType, height, maxHeight }) => {
-  const contentList = useSiteContent();
+export function ContentListCard({ title, contentType }) {
+  const { data, isLoading, isError } = useGetSiteContentsQuery();
+  const items = data?.[contentType] ?? [];
   return (
-    <Stack gap={1.5} px={'1rem'} py={'1.5rem'} height={height}>
-      <Typography fontWeight={'500'} fontSize={'1.2rem'}>
-        {title}
-      </Typography>
-      <Box
-        flexGrow={1}
-        sx={{ maxHeight: { xs: 'none', sm: maxHeight }, overflowY: 'auto', pr: 0.5 }}
-      >
-        {contentType === SITE_CONTENT.UPDATES && (
-          <Stack gap={1}>
-            {(contentList[SITE_CONTENT.UPDATES] ?? []).map((content, index) => (
-              <Stack key={index} gap={1} flexDirection={'row'} alignItems={'center'}>
-                <CircleIcon sx={{ fontSize: '0.5rem' }} />
-                <Typography
-                  fontSize={'1rem'}
-                  flexGrow={1}
-                  margin={'0 !important'}
-                  flexWrap={'wrap'}
-                  component={'div'}
-                  dangerouslySetInnerHTML={{ __html: content.content }}
-                />
-              </Stack>
-            ))}
-          </Stack>
-        )}
-        {contentType === SITE_CONTENT.LINKS && (
-          <Stack gap={1}>
-            {(contentList[SITE_CONTENT.LINKS] ?? []).map((content, index) => (
-              <Stack
-                key={index}
-                gap={1}
-                flexDirection={'row'}
-                alignItems={'center'}
-                flexWrap={'wrap'}
-              >
-                <CircleIcon sx={{ fontSize: '0.5rem' }} />
-                <Typography fontWeight={'500'}>{content.title}</Typography>
-                <Link href={content.url} target="_blank" rel="noreferrer">
-                  {content.url}
-                </Link>
-              </Stack>
-            ))}
-          </Stack>
-        )}
-      </Box>
-    </Stack>
+    <section className={styles.card}>
+      <h2>{title}</h2>
+      {items.length > 0 ? (
+        <ul>
+          {items.map((item, index) => (
+            <li key={index}>
+              {contentType === SITE_CONTENT.UPDATES ? (
+                <div dangerouslySetInnerHTML={{ __html: item.content }} />
+              ) : (
+                <>
+                  <strong>{item.title}</strong>
+                  <a href={item.url} target="_blank" rel="noopener noreferrer">
+                    {item.url}
+                  </a>
+                </>
+              )}
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p className="muted">
+          {isLoading
+            ? 'Loading notices.'
+            : isError
+              ? 'Notices are temporarily unavailable.'
+              : 'No published items here yet.'}{' '}
+          Check the <a href="https://josaa.nic.in/">official JoSAA website</a> for the latest
+          notices.
+        </p>
+      )}
+    </section>
   );
-};
+}

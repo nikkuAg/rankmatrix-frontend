@@ -1,5 +1,4 @@
 import React from 'react';
-import { Box } from '@mui/material';
 import { notFound } from 'next/navigation';
 import { AppLink } from '@/components/AppLink';
 import { DataPageLayout } from '@/components/DataPageLayout';
@@ -180,7 +179,7 @@ export default async function InstitutePage({ params }) {
         {sortedNirf.length > 0 && (
           <>
             <h2>stored NIRF rank history</h2>
-            <Box className="table-scroll">
+            <div className="table-scroll" tabIndex={0} role="region" aria-label="Data table">
               <table>
                 <thead>
                   <tr>
@@ -197,7 +196,7 @@ export default async function InstitutePage({ params }) {
                   ))}
                 </tbody>
               </table>
-            </Box>
+            </div>
           </>
         )}
 
@@ -213,7 +212,7 @@ export default async function InstitutePage({ params }) {
         {sortedBranches.length === 0 ? (
           <p>No active branches listed for this institute in the latest cycle.</p>
         ) : (
-          <Box className="table-scroll">
+          <div className="table-scroll" tabIndex={0} role="region" aria-label="Data table">
             <table>
               <thead>
                 <tr>
@@ -246,7 +245,7 @@ export default async function InstitutePage({ params }) {
                 )}
               </tbody>
             </table>
-          </Box>
+          </div>
         )}
 
         <DataSourceNotes

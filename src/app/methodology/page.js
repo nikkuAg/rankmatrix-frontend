@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link as MuiLink } from '@mui/material';
 import { AppLink } from '@/components/AppLink';
 import { GuideLayout } from '@/components/GuideLayout';
 import { articleJsonLd, breadcrumbJsonLd, serializeJsonLd } from '@/utils/jsonLd';
@@ -125,9 +124,9 @@ export default function Methodology() {
         <h2>Sources, refreshes and corrections</h2>
         <p>
           Rank and seat data originate from{' '}
-          <MuiLink href="https://josaa.nic.in/or-cr/">JoSAA publications</MuiLink>. Importing an
-          official release and refreshing a cached web page are separate operations. Detail pages
-          can revalidate daily, but that does not mean new official data have been imported daily. A
+          <a href="https://josaa.nic.in/or-cr/">JoSAA publications</a>. Importing an official
+          release and refreshing a cached web page are separate operations. Detail pages can
+          revalidate daily, but that does not mean new official data have been imported daily. A
           displayed JoSAA year identifies the dataset, not the date of the last import. Please{' '}
           <AppLink href="/contact">report discrepancies</AppLink> with the exact year, round and
           filters.

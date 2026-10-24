@@ -1,5 +1,4 @@
 import React from 'react';
-import { Box } from '@mui/material';
 import { notFound } from 'next/navigation';
 import { AppLink } from '@/components/AppLink';
 import { CutoffAnalysis } from '@/components/CutoffAnalysis';
@@ -158,7 +157,7 @@ export default async function InstituteBranchPage({ params }) {
           not establish your eligibility.
         </p>
         {summaries.length ? (
-          <Box className="table-scroll">
+          <div className="table-scroll" tabIndex={0} role="region" aria-label="Data table">
             <table>
               <thead>
                 <tr>
@@ -179,7 +178,7 @@ export default async function InstituteBranchPage({ params }) {
                 ))}
               </tbody>
             </table>
-          </Box>
+          </div>
         ) : (
           <p>
             RankMatrix has no matching Open category, Gender-Neutral summary on file. Other
@@ -196,7 +195,7 @@ export default async function InstituteBranchPage({ params }) {
           yearGroups.map(([year, rows]) => (
             <React.Fragment key={year}>
               <h3>JoSAA {year}</h3>
-              <Box className="table-scroll">
+              <div className="table-scroll" tabIndex={0} role="region" aria-label="Data table">
                 <table>
                   <thead>
                     <tr>
@@ -221,14 +220,14 @@ export default async function InstituteBranchPage({ params }) {
                     ))}
                   </tbody>
                 </table>
-              </Box>
+              </div>
             </React.Fragment>
           ))
         )}
 
         <h2>Latest seat matrix {latestYear ? `(${latestYear})` : ''}</h2>
         {data.seats && data.seats.length > 0 ? (
-          <Box className="table-scroll">
+          <div className="table-scroll" tabIndex={0} role="region" aria-label="Data table">
             <table>
               <thead>
                 <tr>
@@ -249,7 +248,7 @@ export default async function InstituteBranchPage({ params }) {
                 ))}
               </tbody>
             </table>
-          </Box>
+          </div>
         ) : (
           <p>
             RankMatrix has no seat rows on file for this combination in the cutoff year shown. Check

@@ -1,0 +1,63 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+.card {
+  padding: 24px 20px;
+  color: var(--text);
+  text-decoration: none;
+  background: var(--surface);
+  border-right: 1px solid var(--line);
+  transition: background 180ms;
+}
+.card:last-child {
+  border: 0;
+}
+.card:hover {
+  background: var(--surface-raised);
+}
+.number {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: var(--muted);
+  margin-bottom: 36px;
+}
+.number span {
+  color: var(--accent);
+  font-size: 18px;
+}
+.card h3 {
+  font-size: 16px;
+  line-height: 1.4;
+  margin-bottom: 12px;
+}
+.card p {
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.8;
+  margin: 0;
+}
+@media (max-width: 1000px) {
+  .grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .card {
+    border-bottom: 1px solid var(--line);
+  }
+}
+@media (max-width: 600px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+  .card {
+    border-right: 0;
+    padding: 20px;
+  }
+  .number {
+    margin-bottom: 16px;
+  }
+}

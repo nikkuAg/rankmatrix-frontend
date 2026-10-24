@@ -1,0 +1,24 @@
+.card {
+  padding: 24px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+}
+.card h2 {
+  font-size: 20px;
+  margin-bottom: 20px;
+}
+.card ul {
+  margin: 0;
+  padding-left: 18px;
+  display: grid;
+  gap: 16px;
+  font-size: 13px;
+}
+.card li strong,
+.card li a {
+  display: block;
+}
+.card p {
+  font-size: 13px;
+  margin: 0;
+}

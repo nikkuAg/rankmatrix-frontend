@@ -1,0 +1,71 @@
+.calendar {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  min-height: 450px;
+}
+.calendar h2 {
+  font-size: 20px;
+  margin: 0 0 20px;
+}
+.controls {
+  display: flex;
+  align-items: end;
+  gap: 12px;
+  justify-content: space-between;
+}
+.controls label {
+  flex: 1;
+}
+.days {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 4px;
+  margin: 20px 0;
+}
+.days > * {
+  display: grid;
+  place-items: center;
+  min-height: 36px;
+}
+.weekday {
+  color: var(--muted);
+  font-size: 10px;
+}
+.days button {
+  border: 1px solid transparent;
+  border-radius: var(--radius);
+  background: transparent;
+  font-size: 12px;
+}
+.days button:hover {
+  border-color: var(--control-line);
+}
+.days .event {
+  color: var(--accent);
+  background: #303b25;
+}
+.days button[aria-pressed='true'] {
+  background: var(--accent);
+  color: var(--page);
+}
+.events {
+  margin: 20px 0;
+  font-size: 12px;
+}
+.events article {
+  display: grid;
+  grid-template-columns: 90px 1fr;
+  gap: 20px;
+  border-top: 1px solid var(--line);
+  padding: 16px 0;
+}
+.events span {
+  color: var(--accent);
+}
+.events p {
+  margin: 0;
+}
+.calendar > a {
+  font-size: 12px;
+}

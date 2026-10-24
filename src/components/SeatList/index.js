@@ -1,18 +1,6 @@
 'use client';
 
 import React, { useEffect, useMemo, useState } from 'react';
-import {
-  Box,
-  Stack,
-  Tab,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
-  Tabs,
-  useTheme,
-} from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { SORT_ORDER } from '@/constants';
 import { CATEGORIES, COLLEGE_TYPES, QUOTAS, SEAT_POOLS } from '@/constants/josaa';
@@ -26,10 +14,10 @@ import {
   updatePageNumber,
   updateSearchValue,
 } from '@/store/slices/seats';
+import { programmeExam } from '@/utils/choices.mjs';
 import { useDebounce } from '@/utils/debounceHook';
 import { COLLEGE_FILTER_LABELS } from '@/utils/instituteIdentity.mjs';
 import { sendAnalyticsEvent } from '../../utils/analyticEvent';
-import { useIsMobile } from '../../utils/screenSizeHook';
 import { ChipFilter } from '../ChipFilter';
 import { NoDataComponent } from '../NoData';
 import { PaginationBox } from '../PaginationBox';
@@ -40,9 +28,6 @@ import { TableSortCell } from '../TableSortCell';
 
 export const SeatList = () => {
   const INCREASE = 'increase';
-  const theme = useTheme();
-  const isMobile650 = useIsMobile(650);
-  const isMobile800 = useIsMobile(800);
 
   const dispatch = useDispatch();
   const seatReqData = useDebounce(
@@ -199,79 +184,50 @@ export const SeatList = () => {
   };
 
   return (
-    <Box width={'100%'} height={'100%'} py={2}>
-      <Stack spacing={2} height={'100%'}>
-        <Stack
-          direction={isMobile650 ? 'column' : 'row'}
-          justifyContent={'space-between'}
-          gap={2}
-          alignItems={isMobile650 ? 'flex-start' : 'center'}
-        >
+    <div className="tool-content">
+      <div className="tool-stack">
+        <div className="toolbar">
           <ChipFilter
             filterList={Object.keys(COLLEGE_TYPES)}
             labels={COLLEGE_FILTER_LABELS}
             onChange={handleCollegeTypeChange}
-            defaultSelected={Object.keys(COLLEGE_TYPES)}
+            defaultSelected={seatReqData.filters?.institute__type || Object.keys(COLLEGE_TYPES)}
           />
-          <SearchBox onChange={handleSearchChange} width={isMobile650 ? '100%' : '35%'} />
-        </Stack>
+          <SearchBox defaultValue={seatReqData.search || ''} onChange={handleSearchChange} />
+        </div>
         {isFiltersFetching || isFiltersLoading ? (
           <TableSkeleton rows={10} columns={6} />
         ) : (
           <>
-            <Stack direction={'row'} justifyContent={'space-between'} width={'100%'}>
-              <Tabs
-                value={tabValue}
-                variant="scrollable"
-                scrollButtons="auto"
-                aria-label="scrollable-josaa-seat-matrix-year"
-                onChange={(e, value) => {
-                  handleTabChange(value);
-                }}
-              >
-                {filterData.years?.map((year, idx) => (
-                  <Tab
-                    value={year}
-                    label={`JoSAA ${year}`}
-                    key={idx}
-                    sx={{
-                      ':hover': {
-                        color: theme.palette.primary.main,
-                      },
-                      ...(theme.palette.mode === 'dark' && {
-                        '&.Mui-selected': {
-                          color: theme.palette.primary.light,
-                        },
-                      }),
-                    }}
-                  />
+            <div className="toolbar">
+              <div className="chips" role="group" aria-label="Seat data year">
+                {filterData?.years?.map((year) => (
+                  <button
+                    key={year}
+                    type="button"
+                    aria-pressed={!increaseBtnSelected && tabValue === year}
+                    onClick={() => handleTabChange(year)}
+                  >
+                    JoSAA {year}
+                  </button>
                 ))}
-              </Tabs>
-              <Tabs
-                value={increaseBtnSelected && INCREASE}
-                sx={{ width: isMobile800 ? '45%' : '20%' }}
-                onChange={() => {
-                  handleTabChange(INCREASE);
-                }}
+              </div>
+              <button
+                type="button"
+                className="button"
+                aria-pressed={increaseBtnSelected}
+                onClick={() => handleTabChange(INCREASE)}
               >
-                <Tab
-                  wrapped
-                  label={increaseTabBtnText}
-                  value={INCREASE}
-                  sx={{
-                    width: '100%',
-                    ':hover': {
-                      color: theme.palette.primary.main,
-                    },
-                    ...(theme.palette.mode === 'dark' && {
-                      '&.Mui-selected': {
-                        color: theme.palette.primary.light,
-                      },
-                    }),
-                  }}
-                />
-              </Tabs>
-            </Stack>
+                {increaseTabBtnText}
+              </button>
+            </div>
+            {increaseBtnSelected && (
+              <p className="notice">
+                The comparison treats missing prior-year records as zero. A positive change does not
+                by itself confirm that new seats were added. Verify the underlying yearly seat
+                records.
+              </p>
+            )}
             {!isSeatsFetching && !isSeatsLoading && seatData?.totalPages > 1 && (
               <PaginationBox
                 currentPage={seatData.page}
@@ -285,11 +241,11 @@ export const SeatList = () => {
             {isSeatsFetching || isSeatsLoading ? (
               <TableSkeleton rows={10} columns={7} />
             ) : (
-              <Stack flexGrow={1}>
+              <div className="tool-stack">
                 <TableLayout showTable={seatData?.data?.length > 0}>
-                  <Table aria-label="college-table">
-                    <TableHead>
-                      <TableRow>
+                  <table aria-label="college-table">
+                    <thead>
+                      <tr>
                         <TableSortCell
                           sortField={sortField}
                           sortOrder={sortOrder}
@@ -360,43 +316,41 @@ export const SeatList = () => {
                             hideBorderRight={true}
                           />
                         )}
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
+                      </tr>
+                    </thead>
+                    <tbody>
                       {seatData?.data?.length > 0 ? (
-                        seatData?.data?.map((seat, i) => (
-                          <TableRow
+                        seatData?.data?.map((seat) => (
+                          <tr
                             key={`${seat.institute.code}_${seat.branch.code}_${seat.category}_${seat.quota}_${seat.seatPool}`}
-                            sx={{
-                              '&:hover': {
-                                backgroundColor: theme.palette.primary.light,
-                              },
-                              ...(i === seatData.data.length - 1 && {
-                                '& td': {
-                                  borderBottom: '0px !important',
-                                },
-                              }),
-                            }}
                           >
-                            <TableCell>{seat.institute.name}</TableCell>
-                            <TableCell>{seat.branch.name}</TableCell>
-                            <TableCell>{seat.category}</TableCell>
-                            <TableCell>{seat.quota}</TableCell>
-                            <TableCell>{seat.seatPool}</TableCell>
-                            <TableCell sx={{ borderRight: '0px !important' }}>
+                            <td>
+                              {seat.institute.name}
+                              <small className="cell-detail">{programmeExam(seat.institute)}</small>
+                            </td>
+                            <td>
+                              {seat.branch.name}
+                              <small className="cell-detail">
+                                {seat.branch.degree} · {seat.branch.courseDuration} years
+                              </small>
+                            </td>
+                            <td>{seat.category}</td>
+                            <td>{seat.quota}</td>
+                            <td>{seat.seatPool}</td>
+                            <td>
                               {increaseBtnSelected ? seat.changeInSeats : seat.availableSeats}
-                            </TableCell>
-                          </TableRow>
+                            </td>
+                          </tr>
                         ))
                       ) : (
-                        <TableRow>
+                        <tr>
                           <NoDataComponent colSpan={6} />
-                        </TableRow>
+                        </tr>
                       )}
-                    </TableBody>
-                  </Table>
+                    </tbody>
+                  </table>
                 </TableLayout>
-              </Stack>
+              </div>
             )}
             {!isSeatsFetching && !isSeatsLoading && seatData?.totalPages > 1 && (
               <PaginationBox
@@ -410,7 +364,7 @@ export const SeatList = () => {
             )}
           </>
         )}
-      </Stack>
-    </Box>
+      </div>
+    </div>
   );
 };

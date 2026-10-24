@@ -1,12 +1,9 @@
 'use client';
 
-import React from 'react';
-import { ArrowDownward, ArrowUpward } from '@mui/icons-material';
-import { Box, TableCell } from '@mui/material';
-import { SORT_ORDER } from '@/constants';
 import { FilterBox } from '../FilterBox';
+import styles from './TableSortCell.module.css';
 
-export const TableSortCell = ({
+export function TableSortCell({
   sortField,
   sortOrder,
   handleSort,
@@ -17,18 +14,19 @@ export const TableSortCell = ({
   showFilter = true,
   onApplyFilter,
   defaultSelected = [],
-  hideBorderRight = false,
-  hideBorderBottom = false,
   showRangeFilter = false,
   showSort = true,
-}) => {
+}) {
   return (
-    <TableCell
-      sx={{
-        userSelect: 'none',
-        borderBottom: `${hideBorderBottom && '0px !important'}`,
-        borderRight: `${hideBorderRight && '0px !important'}`,
-      }}
+    <th
+      scope="col"
+      aria-sort={
+        showSort && sortField === field
+          ? sortOrder === 'asc'
+            ? 'ascending'
+            : 'descending'
+          : 'none'
+      }
     >
       <FilterBox
         filterTitle={filterTitle || title}
@@ -38,23 +36,17 @@ export const TableSortCell = ({
         defaultSelected={defaultSelected}
         showRangeFilter={showRangeFilter}
       >
-        <Box
-          display="flex"
-          alignItems="center"
-          gap={1}
-          onClick={() => handleSort(field)}
-          sx={{ cursor: 'pointer' }}
-        >
-          {title}
-          {showSort &&
-            sortField === field &&
-            (sortOrder === SORT_ORDER.ASC ? (
-              <ArrowUpward fontSize="small" />
-            ) : (
-              <ArrowDownward fontSize="small" />
-            ))}
-        </Box>
+        {showSort ? (
+          <button type="button" className={styles.sort} onClick={() => handleSort(field)}>
+            {title}
+            <span aria-hidden="true">
+              {sortField === field ? (sortOrder === 'asc' ? '↑' : '↓') : '↕'}
+            </span>
+          </button>
+        ) : (
+          title
+        )}
       </FilterBox>
-    </TableCell>
+    </th>
   );
-};
+}

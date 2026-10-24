@@ -1,13 +1,13 @@
-import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
-import { Poppins } from 'next/font/google';
+import { Fraunces, Manrope } from 'next/font/google';
+import '@/styles/tokens.css';
 import Script from 'next/script';
+import { AnalyticsInteractions } from '@/components/AnalyticsInteractions';
 import { Footer } from '@/components/Footer';
 import { Navbar } from '@/components/Navbar';
-import { AnalyticsInteractions } from '@/components/AnalyticsInteractions';
 import { RankMatrixLayout } from '@/components/RankMatrixLayout';
+import { SiteInteractions } from '@/components/SiteInteractions';
 import { ADSENSE_CLIENT_ID } from '@/constants';
 import StoreProvider from '@/store/provider';
-import { ThemeProviderWrapper } from '@/theme/ThemeContext';
 import { analyticsBootstrap } from '@/utils/analyticsTransport.mjs';
 import { serializeJsonLd } from '@/utils/jsonLd';
 import {
@@ -18,18 +18,9 @@ import {
   SITE_URL,
 } from '@/utils/metadata.mjs';
 
-const poppins = Poppins({
-  variable: '--font-poppins',
-  weight: ['300', '400', '500', '600', '700'],
-  style: 'normal',
-  subsets: ['latin'],
-  display: 'swap',
-});
-
-const poppinsItalic = Poppins({
-  variable: '--font-poppins-italic',
-  weight: ['300', '400', '500', '600', '700'],
-  style: 'italic',
+const manrope = Manrope({ variable: '--font-body', subsets: ['latin'], display: 'swap' });
+const fraunces = Fraunces({
+  variable: '--font-display',
   subsets: ['latin'],
   display: 'swap',
   preload: false,
@@ -55,10 +46,7 @@ export const metadata = {
 export const viewport = {
   width: 'device-width',
   initialScale: 1,
-  themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#ffffff' },
-    { media: '(prefers-color-scheme: dark)', color: '#0a0a0a' },
-  ],
+  themeColor: '#141816',
 };
 
 const FOUNDER = {
@@ -105,7 +93,7 @@ const websiteJsonLd = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={`${poppins.variable} ${poppinsItalic.variable}`}>
+      <body className={`${manrope.variable} ${fraunces.variable}`}>
         {analyticsBootstrap(process.env.NEXT_PUBLIC_GA_ID) && (
           <script
             id="rankmatrix-analytics-init"
@@ -122,15 +110,12 @@ export default function RootLayout({ children }) {
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: serializeJsonLd(websiteJsonLd) }}
         />
-        <AppRouterCacheProvider options={{ enableCssLayer: false, key: 'mui' }}>
-          <StoreProvider>
-            <ThemeProviderWrapper>
-              <RankMatrixLayout footer={<Footer />} navigation={<Navbar />}>
-                {children}
-              </RankMatrixLayout>
-            </ThemeProviderWrapper>
-          </StoreProvider>
-        </AppRouterCacheProvider>
+        <StoreProvider>
+          <RankMatrixLayout footer={<Footer />} navigation={<Navbar />}>
+            {children}
+          </RankMatrixLayout>
+        </StoreProvider>
+        <SiteInteractions />
         {analyticsBootstrap(process.env.NEXT_PUBLIC_GA_ID) && (
           <>
             <AnalyticsInteractions />

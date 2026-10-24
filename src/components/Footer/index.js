@@ -47,7 +47,7 @@ const NavList = ({ heading, links, external = false }) => (
               {label}
             </a>
           ) : (
-            <Link className={styles.link} href={href}>
+            <Link className={styles.link} href={href} prefetch={false}>
               {label}
             </Link>
           )}
@@ -116,6 +116,11 @@ export const Footer = () => (
           observations come from JoSAA; NIRF figures come from NIRF. Predictor outputs are our
           calculations. Verify schedules, rules, and cutoffs on the official sources before making
           admission decisions.
+        </p>
+      </div>
+      <div className={styles.wordmarkCrop} data-footer-reveal="visible" aria-hidden="true">
+        <p className={styles.wordmark} data-footer-wordmark>
+          rankmatrix
         </p>
       </div>
     </div>

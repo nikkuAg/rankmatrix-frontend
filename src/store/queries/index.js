@@ -4,7 +4,7 @@ import { apis } from '@/constants/apis';
 import { openToast } from '@/store/slices/toast';
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: apis.BASE_URL,
+  baseUrl: process.env.NEXT_PUBLIC_API_PROXY === 'true' ? '' : apis.BASE_URL,
   prepareHeaders: (headers) => {
     headers.set('Content-Type', 'application/json');
 

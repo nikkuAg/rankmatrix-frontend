@@ -9,13 +9,31 @@ const nextConfig = {
   poweredByHeader: false,
   productionBrowserSourceMaps: false,
 
+  async rewrites() {
+    if (process.env.NEXT_PUBLIC_API_PROXY !== 'true') return [];
+    const origin = new URL(process.env.NEXT_PUBLIC_API_URL).origin;
+    return [
+      'site/content',
+      'site/content/branch',
+      'site/content/seat',
+      'site/content/rank',
+      'institutes/search',
+      'branches/search',
+      'josaa/seats/search',
+      'josaa/ranks/search',
+      'predictions/institute',
+    ].map((path) => ({ source: `/api/${path}`, destination: `${origin}/api/${path}` }));
+  },
+
   async redirects() {
-    return [{
-      source: '/:path*',
-      has: [{ type: 'host', value: 'rankmatrix.in' }],
-      destination: 'https://www.rankmatrix.in/:path*',
-      permanent: true,
-    }];
+    return [
+      {
+        source: '/:path*',
+        has: [{ type: 'host', value: 'rankmatrix.in' }],
+        destination: 'https://www.rankmatrix.in/:path*',
+        permanent: true,
+      },
+    ];
   },
 
   images: {
@@ -24,17 +42,7 @@ const nextConfig = {
   },
 
   experimental: {
-    optimizePackageImports: [
-      '@mui/material',
-      '@mui/icons-material',
-      '@mui/system',
-      '@mui/x-date-pickers',
-      'react-icons',
-      'date-fns',
-      '@reduxjs/toolkit',
-      'react-redux',
-      'framer-motion',
-    ],
+    optimizePackageImports: ['@reduxjs/toolkit', 'react-redux'],
   },
 
   async headers() {

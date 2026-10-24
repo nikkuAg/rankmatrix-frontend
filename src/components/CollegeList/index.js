@@ -1,10 +1,9 @@
 'use client';
 
 import React, { useEffect, useMemo, useState } from 'react';
-import { useTheme } from '@mui/material/styles';
 import { useDispatch, useSelector } from 'react-redux';
-import { SORT_ORDER } from '@/constants';
 import { TableSkeleton } from '@/components/Spinner/TableSkeleton';
+import { SORT_ORDER } from '@/constants';
 import { useLazyGetCollegeDataQuery } from '@/store/queries/college';
 import {
   updateFilters,
@@ -24,7 +23,6 @@ export const CollegeList = ({ initialData }) => {
   const [getCollegeData, collegeQuery] = useLazyGetCollegeDataQuery();
   const collegeReqData = useSelector((state) => state.college);
   const { data, isLoading } = catalogueState(collegeReqData, collegeQuery, initialData);
-  const theme = useTheme();
   const dispatch = useDispatch();
   const [expandedNirf, setExpandedNirf] = useState(false);
   const [sortField, setSortField] = useState(null);
@@ -122,14 +120,7 @@ export const CollegeList = ({ initialData }) => {
   };
 
   return (
-    <div
-      className={styles.root}
-      style={{
-        '--rm-list-muted': theme.palette.gray.dark,
-        '--rm-list-surface': theme.background.default,
-        '--rm-list-shadow': theme.palette.shadow.main,
-      }}
-    >
+    <div className={styles.root}>
       <div className={styles.content}>
         <CollegeControls
           onTypeChange={handleCollegeTypeChange}

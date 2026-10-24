@@ -1,5 +1,4 @@
 import React from 'react';
-import { Box } from '@mui/material';
 import { notFound } from 'next/navigation';
 import { AppLink } from '@/components/AppLink';
 import { DataPageLayout } from '@/components/DataPageLayout';
@@ -141,7 +140,7 @@ export default async function BranchPage({ params }) {
           instituteGroups.map((group) => (
             <section key={group.id} id={`exam-${group.id}`}>
               <h3>{group.title}</h3>
-              <Box className="table-scroll">
+              <div className="table-scroll" tabIndex={0} role="region" aria-label="Data table">
                 <table>
                   <caption>
                     {data.name}: {group.title}. Open category, Gender-Neutral seat pool.
@@ -187,7 +186,7 @@ export default async function BranchPage({ params }) {
                     )}
                   </tbody>
                 </table>
-              </Box>
+              </div>
             </section>
           ))
         )}

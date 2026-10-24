@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link as MuiLink } from '@mui/material';
 import { AppLink } from '@/components/AppLink';
 import { GuideLayout } from '@/components/GuideLayout';
 import { breadcrumbJsonLd, serializeJsonLd } from '@/utils/jsonLd';
@@ -93,17 +92,17 @@ export default function About() {
         <h2>Who built it</h2>
         <p>
           RankMatrix is built and maintained by{' '}
-          <MuiLink
+          <a
             href="https://www.linkedin.com/in/ag-divyansh/"
             target="_blank"
             rel="noopener noreferrer author"
           >
             Divyansh Agarwal
-          </MuiLink>{' '}
+          </a>{' '}
           (
-          <MuiLink href="https://github.com/nikkuAg" target="_blank" rel="noopener noreferrer me">
+          <a href="https://github.com/nikkuAg" target="_blank" rel="noopener noreferrer me">
             GitHub
-          </MuiLink>
+          </a>
           ), an IIT Roorkee alumnus working as a software development engineer. The site is an
           independent side project, not a company. It is not affiliated with JoSAA, JEE, NTA, the
           IITs, NITs, IIITs, or GFTIs. Every claim on the site is checkable against the official
@@ -136,9 +135,9 @@ export default function About() {
           <li>
             <strong>Not an official source.</strong> Always confirm the latest schedule,
             eligibility, and cutoffs on{' '}
-            <MuiLink href="https://josaa.nic.in" target="_blank" rel="noopener noreferrer">
+            <a href="https://josaa.nic.in" target="_blank" rel="noopener noreferrer">
               josaa.nic.in
-            </MuiLink>{' '}
+            </a>{' '}
             before making any admission decision.
           </li>
           <li>

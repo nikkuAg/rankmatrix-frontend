@@ -48,7 +48,7 @@ export const GuideLayout = ({
           {readingTimeMinutes && <span>· {readingTimeMinutes} min read</span>}
         </div>
       </header>
-      <div className={styles.content}>
+      <div className={`${styles.content} prose`}>
         {children}
         <hr className={styles.divider} />
         <aside className={styles.maker}>

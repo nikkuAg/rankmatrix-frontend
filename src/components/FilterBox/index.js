@@ -1,116 +1,157 @@
 'use client';
 
-import React, { useState } from 'react';
-import { FilterList } from '@mui/icons-material';
-import { Badge, IconButton, Menu, Stack, useTheme } from '@mui/material';
-import { ListFilter } from './ListFilter';
-import { RangeFilter } from './RangeFilter';
+import { useRef, useState } from 'react';
+import styles from './FilterBox.module.css';
 
-export const FilterBox = ({
+export function FilterBox({
   children,
-  flexDirection = 'row',
   filterTitle,
   filterValue = [],
   showFilter = true,
   onApplyFilter,
   defaultSelected = [],
   showRangeFilter = false,
-}) => {
-  const theme = useTheme();
-  const [anchorEl, setAnchorEl] = useState(null);
-  const [selectedValues, setSelectedValues] = useState(defaultSelected);
-  const [tempSelected, setTempSelected] = useState(defaultSelected);
-
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-    setTempSelected([...selectedValues]);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
+}) {
+  const dialog = useRef(null);
+  const trigger = useRef(null);
+  const [selected, setSelected] = useState(defaultSelected);
+  const [draft, setDraft] = useState(defaultSelected);
+  const [error, setError] = useState('');
+  const active = showRangeFilter
+    ? selected.some((value, index) => value !== filterValue[index])
+    : selected.length > 0;
+  function close() {
+    dialog.current.close();
+    trigger.current.focus();
+  }
+  function apply(event) {
+    event.preventDefault();
+    if (
+      showRangeFilter &&
+      (!draft.every((value) => value !== '' && Number.isFinite(Number(value))) ||
+        Number(draft[0]) > Number(draft[1]))
+    ) {
+      setError('Enter a valid minimum and maximum rank.');
+      return;
+    }
+    const values = showRangeFilter ? draft.map(Number) : draft;
+    setSelected(values);
+    onApplyFilter?.(values);
+    close();
+  }
   return (
-    <Stack direction={flexDirection} justifyContent={'space-between'} alignItems={'center'}>
+    <div className={styles.cell}>
       {children}
       {(showFilter || showRangeFilter) && (
         <>
-          <IconButton onClick={handleClick}>
-            <Badge
-              badgeContent={
-                showRangeFilter
-                  ? selectedValues[0] === filterValue[0] && selectedValues[1] === filterValue[1]
-                    ? 0
-                    : 1
-                  : selectedValues.length
-              }
-              sx={{
-                '& .MuiBadge-badge': {
-                  right: -3,
-                  top: 3,
-                  backgroundColor: theme.palette.primary.main,
-                  color: theme.palette.text.light,
-                },
-              }}
-            >
-              <FilterList
-                color={
-                  (showFilter && selectedValues.length > 0) ||
-                  (showRangeFilter &&
-                    (selectedValues[0] !== filterValue[0] || selectedValues[1] !== filterValue[1]))
-                    ? 'primary'
-                    : 'inherit'
-                }
-              />
-            </Badge>
-          </IconButton>
-          <Menu
-            anchorEl={anchorEl}
-            anchorOrigin={{
-              vertical: 'bottom',
-              horizontal: 'right',
-            }}
-            transformOrigin={{
-              vertical: 'top',
-              horizontal: 'right',
-            }}
-            open={Boolean(anchorEl)}
-            onClose={handleClose}
-            slotProps={{
-              paper: {
-                sx: {
-                  minWidth: 300,
-                  maxHeight: 300,
-                  py: 0,
-                  backgroundColor: theme.background.main,
-                },
-              },
+          <button
+            ref={trigger}
+            type="button"
+            className={`${styles.trigger} ${active ? styles.active : ''}`}
+            aria-label={`${filterTitle}: ${active ? 'filter active' : 'filter'}`}
+            aria-haspopup="dialog"
+            onClick={() => {
+              setDraft([...selected]);
+              setError('');
+              dialog.current.showModal();
             }}
           >
-            {showFilter && (
-              <ListFilter
-                onApplyFilter={onApplyFilter}
-                filterTitle={filterTitle}
-                filterValue={filterValue}
-                handleClose={handleClose}
-                setSelectedValues={setSelectedValues}
-                tempSelected={tempSelected}
-                setTempSelected={setTempSelected}
-              />
-            )}
-            {showRangeFilter && (
-              <RangeFilter
-                onApplyFilter={onApplyFilter}
-                filterTitle={filterTitle}
-                filterValue={filterValue}
-                handleClose={handleClose}
-                setSelectedValues={setSelectedValues}
-                tempSelected={tempSelected}
-                setTempSelected={setTempSelected}
-              />
-            )}
-          </Menu>
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              aria-hidden="true"
+            >
+              <path d="M3 5h18M6 12h12M9 19h6" />
+            </svg>
+            {active && <span className={styles.dot} />}
+          </button>
+          <dialog
+            ref={dialog}
+            className={styles.dialog}
+            aria-label={filterTitle}
+            onClose={() => trigger.current?.focus()}
+            onClick={(event) => {
+              if (event.target === dialog.current) close();
+            }}
+          >
+            <form onSubmit={apply}>
+              <header>
+                <h2>{filterTitle}</h2>
+                <button
+                  type="button"
+                  className="icon-button"
+                  aria-label="Close filter"
+                  onClick={close}
+                >
+                  ×
+                </button>
+              </header>
+              {showRangeFilter ? (
+                <div className={styles.range}>
+                  {['Minimum rank', 'Maximum rank'].map((label, index) => (
+                    <label className="field" key={label}>
+                      {label}
+                      <input
+                        type="number"
+                        required
+                        min={filterValue[0]}
+                        max={filterValue[1]}
+                        step="1"
+                        value={draft[index] ?? filterValue[index] ?? ''}
+                        onChange={(event) =>
+                          setDraft((previous) => [
+                            index === 0 ? event.target.value : previous[0],
+                            index === 1 ? event.target.value : previous[1],
+                          ])
+                        }
+                      />
+                    </label>
+                  ))}
+                </div>
+              ) : (
+                <div className={styles.options}>
+                  {filterValue.map((item) => {
+                    const value = typeof item === 'object' ? item.value : item;
+                    return (
+                      <label key={value}>
+                        <input
+                          type="checkbox"
+                          checked={draft.includes(value)}
+                          onChange={() =>
+                            setDraft((previous) =>
+                              previous.includes(value)
+                                ? previous.filter((item) => item !== value)
+                                : [...previous, value],
+                            )
+                          }
+                        />
+                        {typeof item === 'object' ? item.label : item}
+                      </label>
+                    );
+                  })}
+                </div>
+              )}
+              {error && <p role="alert">{error}</p>}
+              <footer>
+                <button
+                  type="button"
+                  className="button"
+                  onClick={() => setDraft(showRangeFilter ? [...filterValue] : [])}
+                >
+                  Clear
+                </button>
+                <button className="button primary" type="submit">
+                  Apply filter
+                </button>
+              </footer>
+            </form>
+          </dialog>
         </>
       )}
-    </Stack>
+    </div>
   );
-};
+}

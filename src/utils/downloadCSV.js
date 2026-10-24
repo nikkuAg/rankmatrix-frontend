@@ -11,4 +11,5 @@ export function downloadCSV(data, filename = 'rankmatrix_prediction.csv') {
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
 }

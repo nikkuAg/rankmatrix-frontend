@@ -1,76 +1,85 @@
 .header {
-  width: 100%;
-  padding: 16px 0;
-  background: var(--rm-guide-bg, #fbfcff);
-  color: var(--rm-guide-text, #002942);
+  border-bottom: 1px solid var(--line);
+  background: var(--page);
+  position: relative;
+  z-index: 20;
 }
 .inner {
-  width: 100%;
-  padding: 0 16px;
-}
-.top {
+  max-width: 1440px;
+  margin: auto;
+  padding: 20px var(--gutter);
   display: flex;
-  justify-content: space-between;
+  align-items: center;
+  gap: 32px;
 }
 .logo {
   display: flex;
-  gap: 8px;
+  align-items: center;
+  gap: 10px;
+  color: var(--text);
   text-decoration: none;
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: -0.6px;
+  flex-shrink: 0;
 }
 .logoImage {
-  display: block;
-  flex: 0 0 40px;
-  width: 40px;
-  height: 40px;
-  background-image: var(--rm-footer-logo, url('/logo.svg'));
-  background-position: center;
-  background-size: cover;
-}
-.title {
-  display: flex;
-  color: var(--rm-guide-text, #002942);
-  font-size: 1.5rem;
-  font-weight: 500;
-  line-height: 1.235;
-}
-.toggle {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border: 0;
-  border-radius: 50%;
-  padding: 8px;
-  background: transparent;
-  color: var(--rm-guide-text, #002942);
-  cursor: pointer;
-}
-.toggle:hover {
-  background: rgba(127, 127, 127, 0.08);
-}
-.toggle:focus-visible {
-  outline: 2px solid currentColor;
-  outline-offset: 2px;
+  width: 30px;
+  height: 30px;
+  background: var(--accent);
+  mask: url(/logo.svg) center/contain no-repeat;
 }
 .navigation {
   display: flex;
-  flex-wrap: wrap;
-  gap: 16px;
-  margin-top: 16px;
+  align-items: center;
+  gap: 24px;
+  margin: auto;
 }
 .navigation a {
-  padding: 4px 0;
-  text-underline-offset: 3px;
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 12px;
+  padding: 10px 0;
+  white-space: nowrap;
 }
-@media (min-width: 600px) {
-  .logo {
-    gap: 16px;
-  }
-  .title {
-    font-size: 2.125rem;
-  }
+.navigation a:hover {
+  color: var(--accent);
 }
-@media (min-width: 900px) {
+.cta {
+  white-space: nowrap;
+}
+@media (max-width: 1150px) {
   .inner {
-    padding: 0 32px;
+    gap: 20px;
+    flex-wrap: wrap;
+    padding-block: 16px 12px;
+  }
+  .navigation {
+    order: 3;
+    width: 100%;
+    margin: 0;
+    gap: 24px;
+    overflow-x: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--line) transparent;
+  }
+  .cta {
+    margin-left: auto;
+  }
+}
+@media (max-width: 380px) {
+  .cta {
+    font-size: 11px;
+    padding: 8px;
+  }
+  .logo {
+    font-size: 17px;
+  }
+  .logoImage {
+    width: 24px;
+    height: 24px;
+  }
+  .inner {
+    gap: 12px;
   }
 }
