@@ -27,9 +27,9 @@ import {
   updateSearchValue,
 } from '@/store/slices/seats';
 import { useDebounce } from '@/utils/debounceHook';
+import { COLLEGE_FILTER_LABELS } from '@/utils/instituteIdentity.mjs';
 import { sendAnalyticsEvent } from '../../utils/analyticEvent';
 import { useIsMobile } from '../../utils/screenSizeHook';
-import { COLLEGE_FILTER_LABELS } from '@/utils/instituteIdentity.mjs';
 import { ChipFilter } from '../ChipFilter';
 import { NoDataComponent } from '../NoData';
 import { PaginationBox } from '../PaginationBox';
@@ -89,12 +89,6 @@ export const SeatList = () => {
       } else if (sortOrder === SORT_ORDER.DESC) {
         dispatch(updateOrdering(`-${sortField}`));
       }
-      sendAnalyticsEvent({
-        action: 'sort_applied',
-        category: 'seat_list',
-        label: 'Seat List sort',
-        value: { sortField, sortOrder },
-      });
     } else {
       dispatch(updateOrdering(null));
     }
@@ -112,7 +106,7 @@ export const SeatList = () => {
       action: 'college_type_applied',
       category: 'seat_list',
       label: 'Seat List filters',
-      value: filterValues,
+      parameters: { selected_count: filterValues.length },
     });
   };
 
@@ -123,7 +117,7 @@ export const SeatList = () => {
         action: 'search',
         category: 'seat_list',
         label: 'Seat List Search',
-        value: searchValue,
+        parameters: { state: searchValue ? 'set' : 'cleared' },
       });
     }
   };
@@ -151,6 +145,16 @@ export const SeatList = () => {
   };
 
   const handleSort = (field) => {
+    sendAnalyticsEvent({
+      action: 'sort_applied',
+      category: 'seat_list',
+      label: 'Seat List sort',
+      parameters: {
+        field,
+        direction:
+          sortField === field ? (sortOrder === SORT_ORDER.ASC ? 'desc' : 'cleared') : 'asc',
+      },
+    });
     if (sortField === field) {
       if (sortOrder === SORT_ORDER.ASC) {
         setSortOrder(SORT_ORDER.DESC);
@@ -171,7 +175,7 @@ export const SeatList = () => {
         action: 'filters_applied',
         category: 'seat_list',
         label: 'Seat List Filters',
-        value: { filterValues, field },
+        parameters: { field, selected_count: filterValues.length },
       });
     } else {
       dispatch(removeFilters(field));
@@ -179,7 +183,7 @@ export const SeatList = () => {
         action: 'filters_removed',
         category: 'seat_list',
         label: 'Seat List Filters remove',
-        value: { field },
+        parameters: { field },
       });
     }
   };

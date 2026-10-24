@@ -13,7 +13,6 @@ import {
 } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppLink } from '@/components/AppLink';
-import { COLLEGE_FILTER_LABELS } from '@/utils/instituteIdentity.mjs';
 import { ChipFilter } from '@/components/ChipFilter';
 import { NoDataComponent } from '@/components/NoData';
 import { PaginationBox } from '@/components/PaginationBox';
@@ -31,6 +30,7 @@ import {
   updateSearchValue,
 } from '@/store/slices/branch';
 import { catalogueState } from '@/utils/catalogue.mjs';
+import { COLLEGE_FILTER_LABELS } from '@/utils/instituteIdentity.mjs';
 import { sendAnalyticsEvent } from '../../utils/analyticEvent';
 import { TableLayout } from '../TableLayout';
 
@@ -56,12 +56,6 @@ export const BranchList = ({ initialData }) => {
       } else if (sortOrder === SORT_ORDER.DESC) {
         dispatch(updateOrdering(`-${sortField}`));
       }
-      sendAnalyticsEvent({
-        action: 'sort_applied',
-        category: 'branch_list',
-        label: 'Branch List sort',
-        value: { sortField, sortOrder },
-      });
     } else {
       dispatch(updateOrdering(null));
     }
@@ -73,7 +67,7 @@ export const BranchList = ({ initialData }) => {
       action: 'college_type_applied',
       category: 'branch_list',
       label: 'Branch List filters',
-      value: filterValues,
+      parameters: { selected_count: filterValues.length },
     });
   };
 
@@ -84,7 +78,7 @@ export const BranchList = ({ initialData }) => {
         action: 'filters_applied',
         category: 'branch_list',
         label: 'Branch List Filters',
-        value: { filterValues, field },
+        parameters: { field, selected_count: filterValues.length },
       });
     } else {
       dispatch(removeFilters(field));
@@ -92,7 +86,7 @@ export const BranchList = ({ initialData }) => {
         action: 'filters_removed',
         category: 'branch_list',
         label: 'Branch List Filters remove',
-        value: { field },
+        parameters: { field },
       });
     }
   };
@@ -104,12 +98,22 @@ export const BranchList = ({ initialData }) => {
         action: 'search',
         category: 'branch_list',
         label: 'Branch List Search',
-        value: searchValue,
+        parameters: { state: searchValue ? 'set' : 'cleared' },
       });
     }
   };
 
   const handleSort = (field) => {
+    sendAnalyticsEvent({
+      action: 'sort_applied',
+      category: 'branch_list',
+      label: 'Branch List sort',
+      parameters: {
+        field,
+        direction:
+          sortField === field ? (sortOrder === SORT_ORDER.ASC ? 'desc' : 'cleared') : 'asc',
+      },
+    });
     if (sortField === field) {
       if (sortOrder === SORT_ORDER.ASC) {
         setSortOrder(SORT_ORDER.DESC);
