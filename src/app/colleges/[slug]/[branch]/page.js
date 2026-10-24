@@ -2,6 +2,7 @@ import React from 'react';
 import { Box } from '@mui/material';
 import { notFound } from 'next/navigation';
 import { AppLink } from '@/components/AppLink';
+import { CutoffAnalysis } from '@/components/CutoffAnalysis';
 import { DataPageLayout } from '@/components/DataPageLayout';
 import { cutoffSummaries } from '@/utils/cutoffSummaries.mjs';
 import { instituteType } from '@/utils/instituteIdentity.mjs';
@@ -184,6 +185,8 @@ export default async function InstituteBranchPage({ params }) {
             categories or years may have rows below.
           </p>
         )}
+
+        <CutoffAnalysis rows={data.cutoffs} year={latestYear} />
 
         <h2>Opening and closing ranks by year</h2>
         {yearGroups.length === 0 ? (
