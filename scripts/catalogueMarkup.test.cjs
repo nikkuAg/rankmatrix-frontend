@@ -149,7 +149,8 @@ test('initial college controls expose all four selected types and a labelled sea
     ),
   );
   assert.equal((html.match(/aria-pressed="true"/g) || []).length, 4);
-  assert.match(html, /IIT \/ IISc/);
+  assert.match(html, />IIT<\/button>/);
+  assert.doesNotMatch(html, /IIT \/ IISc/);
   const label = html.match(/<label[^>]*for="([^"]+)"[^>]*>Search by any keyword<\/label>/);
   assert.ok(label);
   assert.ok(html.includes(`id="${label[1]}" type="text"`));
