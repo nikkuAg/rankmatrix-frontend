@@ -53,6 +53,7 @@ export const PredictPageContent = ({ faqs }) => {
             py: 0.5,
             my: 2.5,
             fontStyle: 'italic',
+            fontFamily: 'var(--font-poppins-italic)',
             opacity: 0.9,
           },
         }}

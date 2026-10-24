@@ -20,9 +20,18 @@ import {
 const poppins = Poppins({
   variable: '--font-poppins',
   weight: ['300', '400', '500', '600', '700'],
-  style: ['normal', 'italic'],
+  style: 'normal',
   subsets: ['latin'],
   display: 'swap',
+});
+
+const poppinsItalic = Poppins({
+  variable: '--font-poppins-italic',
+  weight: ['300', '400', '500', '600', '700'],
+  style: 'italic',
+  subsets: ['latin'],
+  display: 'swap',
+  preload: false,
 });
 
 const SITE_DESCRIPTION = HOME_DESCRIPTION;
@@ -95,7 +104,7 @@ const websiteJsonLd = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={poppins.variable}>
+      <body className={`${poppins.variable} ${poppinsItalic.variable}`}>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: serializeJsonLd(organizationJsonLd) }}
