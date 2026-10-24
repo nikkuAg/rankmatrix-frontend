@@ -4,9 +4,19 @@ const bundleAnalyzer = withBundleAnalyzer({ enabled: process.env.ANALYZE === 'tr
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  output: process.env.STANDALONE_BUILD === 'true' ? 'standalone' : undefined,
   reactStrictMode: true,
   poweredByHeader: false,
   productionBrowserSourceMaps: false,
+
+  async redirects() {
+    return [{
+      source: '/:path*',
+      has: [{ type: 'host', value: 'rankmatrix.in' }],
+      destination: 'https://www.rankmatrix.in/:path*',
+      permanent: true,
+    }];
+  },
 
   images: {
     formats: ['image/avif', 'image/webp'],
@@ -29,6 +39,11 @@ const nextConfig = {
 
   async headers() {
     return [
+      {
+        source: '/:path*',
+        has: [{ type: 'host', value: '.*\\.azurecontainerapps\\.io' }],
+        headers: [{ key: 'X-Robots-Tag', value: 'noindex' }],
+      },
       {
         source: '/:path*.(svg|ico|png|jpg|jpeg|webp|avif|woff|woff2|ttf)',
         headers: [
