@@ -259,6 +259,12 @@ export default async function InstitutePage({ params }) {
         <h2>Using this data</h2>
         <ul>
           <li>
+            Read the{' '}
+            <AppLink href="/guides/reading-cutoff-trends">worked cutoff-comparison example</AppLink>
+            , then open a programme above to inspect its recorded movement by quota. Check its seats
+            separately in the <AppLink href="/seat-matrix">seat-matrix tool</AppLink>.
+          </li>
+          <li>
             For a limited historical college and branch shortlist, use the{' '}
             <AppLink href="/predict">College &amp; Branch Predictor</AppLink>.
           </li>

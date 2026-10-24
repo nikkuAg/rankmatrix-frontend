@@ -8,6 +8,11 @@ export function CutoffAnalysis({ rows, year }) {
     <section aria-labelledby="cutoff-analysis-title">
       <h2 id="cutoff-analysis-title">How the recorded closing ranks changed</h2>
       <p>
+        Follow the <a href="/guides/reading-cutoff-trends">worked cutoff-comparison example</a> to
+        interpret rank-number changes, then verify your exact slice in the{' '}
+        <a href="/ranks">cutoff explorer</a>.
+      </p>
+      <p>
         This comparison uses Open category (stored as General), Gender-Neutral rows only, with each
         quota kept separate. It describes stored observations, not demand, admission chances or your
         eligibility. Other categories and seat pools remain in the detailed tables below.
