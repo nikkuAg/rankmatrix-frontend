@@ -1,8 +1,17 @@
 .calendar {
+  min-width: 0;
   border: 1px solid var(--line);
   border-radius: var(--radius-lg);
   padding: 24px;
   min-height: 450px;
+}
+@media (max-width: 380px) {
+  .calendar {
+    padding: 16px;
+  }
+  .controls {
+    gap: 4px;
+  }
 }
 .calendar h2 {
   font-size: 20px;

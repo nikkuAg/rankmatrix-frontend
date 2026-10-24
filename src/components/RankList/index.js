@@ -258,16 +258,19 @@ export const RankList = () => {
                 disabled={roundList.length === 0}
               />
             </div>
-            {!isRanksFetching && !isRanksLoading && rankData?.totalPages > 1 && (
-              <PaginationBox
-                currentPage={rankData.page}
-                totalPages={rankData.totalPages}
-                onPageChange={handlePageChange}
-                start={rankData.startIndex}
-                end={rankData.endIndex}
-                totalItems={rankData.totalItems}
-              />
-            )}
+            {rankReqData.filters?.round &&
+              !isRanksFetching &&
+              !isRanksLoading &&
+              rankData?.totalPages > 1 && (
+                <PaginationBox
+                  currentPage={rankData.page}
+                  totalPages={rankData.totalPages}
+                  onPageChange={handlePageChange}
+                  start={rankData.startIndex}
+                  end={rankData.endIndex}
+                  totalItems={rankData.totalItems}
+                />
+              )}
             {rankReqData.filters?.round ? (
               isRanksFetching || isRanksLoading ? (
                 <TableSkeleton rows={10} columns={6} />
@@ -395,16 +398,19 @@ export const RankList = () => {
             ) : (
               <NoDataComponent text="Select a year and round to view the opening and closing ranks" />
             )}
-            {!isRanksFetching && !isRanksLoading && rankData?.totalPages > 1 && (
-              <PaginationBox
-                currentPage={rankData.page}
-                totalPages={rankData.totalPages}
-                onPageChange={handlePageChange}
-                start={rankData.startIndex}
-                end={rankData.endIndex}
-                totalItems={rankData.totalItems}
-              />
-            )}
+            {rankReqData.filters?.round &&
+              !isRanksFetching &&
+              !isRanksLoading &&
+              rankData?.totalPages > 1 && (
+                <PaginationBox
+                  currentPage={rankData.page}
+                  totalPages={rankData.totalPages}
+                  onPageChange={handlePageChange}
+                  start={rankData.startIndex}
+                  end={rankData.endIndex}
+                  totalItems={rankData.totalItems}
+                />
+              )}
           </>
         )}
       </div>
