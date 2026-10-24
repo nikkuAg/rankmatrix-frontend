@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { Suspense } from 'react';
 import { Box, Stack, useTheme } from '@mui/material';
 import { Navbar } from '@/components/Navbar';
 import { SnackBar } from '@/components/Snackbar';
@@ -28,12 +28,16 @@ export const RankMatrixLayout = ({ children, footer }) => {
         >
           Skip to content
         </Box>
-        <Navbar />
+        <Suspense fallback={null}>
+          <Navbar />
+        </Suspense>
         <Box component="main" id="main-content" tabIndex={-1} flexGrow={1}>
-          {children}
+          <Suspense fallback={null}>{children}</Suspense>
         </Box>
-        {footer}
-        <SnackBar />
+        <Suspense fallback={null}>{footer}</Suspense>
+        <Suspense fallback={null}>
+          <SnackBar />
+        </Suspense>
       </Stack>
     </Box>
   );

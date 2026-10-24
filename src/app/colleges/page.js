@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { CollegeList } from '@/components/CollegeList';
 import { FeatureLayout } from '@/components/RankMatrixLayout/FeatureLayout';
 import { SeoDirectory } from '@/components/SeoDirectory';
@@ -49,9 +49,13 @@ const College = async () => {
         dangerouslySetInnerHTML={{ __html: serializeJsonLd(faqJsonLd(FAQS)) }}
       />
       <FeatureLayout title={'Participating Colleges'} maxWidth={'xl'}>
-        <CollegeList initialData={initialData} />
+        <Suspense fallback={null}>
+          <CollegeList initialData={initialData} />
+        </Suspense>
       </FeatureLayout>
-      <SeoDirectory kind="institutes" faqs={FAQS} />
+      <Suspense fallback={null}>
+        <SeoDirectory kind="institutes" faqs={FAQS} />
+      </Suspense>
     </>
   );
 };
