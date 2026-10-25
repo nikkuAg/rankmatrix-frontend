@@ -2,6 +2,7 @@
 
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Icon } from '@/components/Icon';
 import { closeToast } from '@/store/slices/toast';
 
 export function SnackBar() {
@@ -24,7 +25,7 @@ export function SnackBar() {
         aria-label="Dismiss notification"
         onClick={() => dispatch(closeToast())}
       >
-        ×
+        <Icon name="close" />
       </button>
     </div>
   );

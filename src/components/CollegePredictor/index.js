@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
+import { Icon } from '@/components/Icon';
 import { useLazyGetpredictionDataQuery } from '@/store/queries/prediction';
 import { sendAnalyticsEvent } from '@/utils/analyticEvent';
 import {
@@ -135,7 +136,7 @@ export function CollegePredictor() {
               disabled={view === 'choices' ? !choices.length : !rankData?.length}
               onClick={download}
             >
-              Export {view === 'choices' ? 'choices' : 'results'} ↓
+              Export {view === 'choices' ? 'choices' : 'results'} <Icon name="arrowDown" />
             </button>
           </div>
         </div>
@@ -305,14 +306,17 @@ export function CollegePredictor() {
                       : 'Enter your ranks, explore historical comparisons, then save programmes in your own preference order.'}
                   </p>
                   <Link href="/ranks" prefetch={false}>
-                    Explore all historical cutoffs ↗
+                    Explore all historical cutoffs <Icon name="arrowUpRight" />
                   </Link>
                 </div>
               )
             )}
             {programmes.length > 0 && (
-              <details className={styles.allRecords}>
-                <summary>All returned allocation rows ({rankData.length})</summary>
+              <details data-accordion className={styles.allRecords}>
+                <summary>
+                  All returned allocation rows ({rankData.length}){' '}
+                  <Icon name="chevronDown" className="disclosure-chevron" />
+                </summary>
                 <p>
                   Dataset year is not supplied by the predictor. Rows from different exams or
                   category rank lists are not directly comparable.

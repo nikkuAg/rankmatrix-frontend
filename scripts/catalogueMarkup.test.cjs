@@ -24,6 +24,7 @@ function load(relative) {
   loaded.require = (name) => {
     if (name.endsWith('.module.css')) return {};
     if (name === '@/components/NoData') return load('components/NoData/index.js');
+    if (name === '@/components/Icon') return load('components/Icon/index.js');
     if (name.startsWith('@/')) return originalRequire(path.join(source, name.slice(2)));
     return originalRequire(name);
   };

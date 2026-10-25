@@ -2,6 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import { GuideLayout } from '@/components/GuideLayout';
 import styles from '@/components/GuideLayout/GuideLayout.module.css';
+import { Icon } from '@/components/Icon';
 import { breadcrumbJsonLd, serializeJsonLd } from '@/utils/jsonLd';
 import { buildMetadata } from '@/utils/metadata.mjs';
 
@@ -130,7 +131,9 @@ export default function GuidesHub() {
         headerNote={
           <>
             <span>Already have your rank?</span>
-            <a href="#read-your-rank">Start with rank interpretation ↓</a>
+            <a href="#read-your-rank">
+              Start with rank interpretation <Icon name="arrowDown" />
+            </a>
             <span>Nine guides · no account needed</span>
           </>
         }
@@ -178,7 +181,7 @@ export default function GuidesHub() {
                         <small>{guide.readingTimeMinutes} min read</small>
                       </div>
                       <span className={styles.guideArrow} aria-hidden="true">
-                        ↗
+                        <Icon name="arrowUpRight" />
                       </span>
                     </Link>
                   ))}
@@ -221,7 +224,7 @@ export default function GuidesHub() {
             target="_blank"
             rel="noopener noreferrer"
           >
-            JoSAA official portal ↗
+            JoSAA official portal <Icon name="arrowUpRight" />
           </a>
         </section>
       </GuideLayout>

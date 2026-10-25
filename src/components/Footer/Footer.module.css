@@ -4,7 +4,7 @@
   margin-top: 32px;
 }
 .inner {
-  max-width: 1440px;
+  width: 100%;
   padding: 56px var(--gutter) 0;
   margin: auto;
   container-type: inline-size;

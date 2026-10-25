@@ -17,6 +17,7 @@ import {
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
+import { Icon } from '@/components/Icon';
 import { programmeExam, reorderChoices } from '@/utils/choices.mjs';
 import { ProgrammeEvidence } from './ProgrammeEvidence';
 import styles from './Workspace.module.css';
@@ -60,7 +61,7 @@ function ChoiceRow({
         disabled={disabled}
         aria-label={`Reorder preference ${position}: ${choice.branch.name}, ${choice.institute.name}`}
       >
-        ⠿
+        <Icon name="grip" />
       </button>
       <span className={styles.position}>{String(position).padStart(2, '0')}</span>
       <button
@@ -102,7 +103,7 @@ function ChoiceRow({
         aria-label={`Remove ${choice.branch.name}, ${choice.institute.name}`}
         onClick={onRemove}
       >
-        ×
+        <Icon name="close" />
       </button>
     </li>
   );
@@ -221,7 +222,7 @@ export function ChoiceWorkspace({ choices, onChange }) {
                 {String(choices.indexOf(choice) + 1).padStart(2, '0')} · {choice.branch.name}
                 <small>{choice.institute.name}</small>
               </span>
-              <span aria-hidden="true">×</span>
+              <Icon name="close" />
             </button>
           ))}
           <small>Comparison selections do not change your preference order.</small>
@@ -263,11 +264,13 @@ export function ChoiceWorkspace({ choices, onChange }) {
                 setMessage('Previous list restored.');
               }}
             >
-              ↶ Undo
+              <Icon name="undo" /> Undo
             </button>
           </div>
-          <details className={styles.keyboardHelp}>
-            <summary>Keyboard help</summary>
+          <details data-accordion className={styles.keyboardHelp}>
+            <summary>
+              Keyboard help <Icon name="chevronDown" className="disclosure-chevron" />
+            </summary>
             <p>
               Focus a grip, press Space to pick up, use arrow keys to move, then Space to drop.
               Escape cancels. The list scrolls as you move through longer lists.
@@ -365,7 +368,7 @@ export function ChoiceWorkspace({ choices, onChange }) {
             aria-label="Close comparison"
             onClick={() => dialog.current.close()}
           >
-            ×
+            <Icon name="close" />
           </button>
         </header>
         <p>

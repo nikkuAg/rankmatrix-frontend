@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import { Icon } from '@/components/Icon';
 import { useGetSiteContentsQuery } from '@/store/queries/siteContent';
 import styles from './Calendar.module.css';
 
@@ -76,7 +77,7 @@ export function EventCalendar() {
           aria-label="Previous month"
           onClick={() => shift(-1)}
         >
-          ←
+          <Icon name="arrowLeft" />
         </button>
         <label className="field">
           Month
@@ -88,7 +89,7 @@ export function EventCalendar() {
           aria-label="Next month"
           onClick={() => shift(1)}
         >
-          →
+          <Icon name="arrowRight" />
         </button>
       </div>
       <div ref={dates} className={styles.days} role="group" aria-label="Calendar dates">
@@ -153,7 +154,7 @@ export function EventCalendar() {
         )}
       </div>
       <a href="https://josaa.nic.in/schedule/" target="_blank" rel="noopener noreferrer">
-        Verify the official JoSAA schedule ↗
+        Verify the official JoSAA schedule <Icon name="arrowUpRight" />
       </a>
     </section>
   );

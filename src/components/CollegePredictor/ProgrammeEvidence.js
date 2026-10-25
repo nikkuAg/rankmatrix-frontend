@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { Icon } from '@/components/Icon';
 import { programmeExam } from '@/utils/choices.mjs';
 import { admissionRankLabel, instituteType } from '@/utils/instituteIdentity.mjs';
 import styles from './Workspace.module.css';
@@ -87,13 +88,13 @@ export function ProgrammeEvidence({ programme, preference }) {
           prefetch={false}
           className="button"
         >
-          Explore full programme history ↗
+          Explore full programme history <Icon name="arrowUpRight" />
         </Link>
       )}
       <p className={styles.recordNote}>
         Saved evidence is a snapshot of returned comparisons, not a live eligibility check.{' '}
         <a href="https://josaa.nic.in/or-cr/" target="_blank" rel="noopener noreferrer">
-          Verify official historical records ↗
+          Verify official historical records <Icon name="arrowUpRight" />
         </a>
       </p>
     </aside>

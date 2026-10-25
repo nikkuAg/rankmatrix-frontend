@@ -16,13 +16,14 @@
   background: var(--surface-raised);
 }
 .number {
+  align-items: center;
   display: flex;
   justify-content: space-between;
   font-size: 11px;
   color: var(--muted);
   margin-bottom: 36px;
 }
-.number span {
+.number :global(.ui-icon) {
   color: var(--accent);
   font-size: 18px;
 }

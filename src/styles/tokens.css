@@ -20,7 +20,8 @@
   --space-6: 32px;
   --space-7: 48px;
   --space-8: 64px;
-  --gutter: clamp(20px, 3vw, 48px);
+  --gutter: clamp(20px, 3.5vw, 112px);
+  --motion-ease: cubic-bezier(0.22, 1, 0.36, 1);
   --rm-guide-bg: var(--page);
   --rm-guide-panel: var(--surface);
   --rm-guide-text: var(--text);
@@ -120,6 +121,60 @@ img {
   max-width: 100%;
   height: auto;
 }
+.ui-icon {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  flex: 0 0 18px;
+  vertical-align: -0.2em;
+}
+button:has(> .ui-icon) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+summary {
+  list-style: none;
+}
+summary::-webkit-details-marker {
+  display: none;
+}
+summary .ui-icon {
+  color: var(--accent);
+}
+.disclosure-icon,
+.disclosure-chevron {
+  transition: transform 360ms var(--motion-ease);
+  transform-origin: center;
+}
+details[open] > summary .disclosure-icon,
+details[data-expanded='true'] > summary .disclosure-icon {
+  transform: rotate(45deg);
+}
+details[open] > summary .disclosure-chevron,
+details[data-expanded='true'] > summary .disclosure-chevron {
+  transform: rotate(180deg);
+}
+details[data-expanded='false'] > summary .disclosure-icon,
+details[data-expanded='false'] > summary .disclosure-chevron {
+  transform: rotate(0);
+}
+[data-accordion] > summary {
+  transition: color 180ms ease;
+}
+[data-accordion] > summary:has(> .ui-icon) {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+[data-accordion] > summary:hover {
+  color: var(--accent);
+}
+[data-accordion] {
+  overflow-anchor: none;
+}
 hr {
   border: 0;
   border-top: 1px solid var(--line);
@@ -208,8 +263,8 @@ td a:hover {
 .icon-button {
   display: inline-grid;
   place-items: center;
-  min-width: 40px;
-  min-height: 40px;
+  min-width: 44px;
+  min-height: 44px;
   border: 0;
   border-radius: var(--radius);
   background: transparent;
@@ -518,13 +573,6 @@ td .empty-state {
   display: flex;
   gap: 16px;
   align-items: center;
-}
-.history-year > summary > span > span {
-  color: var(--accent);
-  font-size: 20px;
-}
-.history-year[open] > summary > span > span {
-  transform: rotate(45deg);
 }
 .history-year .table-scroll {
   margin-top: 0;

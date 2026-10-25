@@ -123,10 +123,14 @@
   font-size: 12px;
 }
 .searchSettings summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
   padding: 13px 0;
   min-height: 44px;
 }
-.searchSettings summary span {
+.searchSettings summary small {
   color: var(--muted);
   font-size: 11px;
   margin-left: 8px;
@@ -439,6 +443,10 @@
   color: var(--muted);
 }
 .keyboardHelp summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
   min-height: 44px;
   padding-block: 12px;
 }

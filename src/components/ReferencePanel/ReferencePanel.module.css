@@ -1,5 +1,5 @@
 .panel {
-  max-width: 1440px;
+  width: 100%;
   margin: auto;
   padding: 36px var(--gutter) 48px;
 }
@@ -52,14 +52,6 @@
   font-weight: 500;
   line-height: 1.6;
   margin: 0;
-}
-.item summary > span {
-  color: var(--accent);
-  font-size: 20px;
-  flex-shrink: 0;
-}
-.item[open] summary > span {
-  transform: rotate(45deg);
 }
 .body {
   font-size: 13px;

@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import { Icon } from '@/components/Icon';
 import { PAGE_SIZES } from '@/constants';
 import { CATEGORIES, SEAT_POOLS, STATES } from '@/constants/josaa';
 import { sendAnalyticsEvent } from '@/utils/analyticEvent';
@@ -169,9 +170,12 @@ export function PredictionForm({ defaultValues, getPredictionData, onSuccess, on
             </label>
           </div>
         </fieldset>
-        <details className={styles.searchSettings}>
+        <details data-accordion className={styles.searchSettings}>
           <summary>
-            Search settings <span>Historical window & result count</span>
+            <span>
+              Search settings <small>Historical window &amp; result count</small>
+            </span>
+            <Icon name="chevronDown" className="disclosure-chevron" />
           </summary>
           <div
             className={styles.formGrid}
@@ -216,8 +220,7 @@ export function PredictionForm({ defaultValues, getPredictionData, onSuccess, on
             Cancel
           </button>
           <button type="submit" className="button primary" disabled={pending}>
-            {pending ? 'Finding comparisons…' : 'Find my options'}{' '}
-            <span aria-hidden="true">↗</span>
+            {pending ? 'Finding comparisons…' : 'Find my options'} <Icon name="arrowUpRight" />
           </button>
         </div>
       </form>

@@ -1,3 +1,4 @@
+import { Icon } from '@/components/Icon';
 import styles from './ReferencePanel.module.css';
 
 export function ReferencePanel({ title, description, children, label = 'Useful context' }) {
@@ -17,10 +18,10 @@ export function ReferencePanel({ title, description, children, label = 'Useful c
 
 export function ReferenceItem({ title, children, wide = false }) {
   return (
-    <details className={`${styles.item} ${wide ? styles.wide : ''}`}>
+    <details data-accordion className={`${styles.item} ${wide ? styles.wide : ''}`}>
       <summary>
         <h3>{title}</h3>
-        <span aria-hidden="true">+</span>
+        <Icon name="plus" className="disclosure-icon" />
       </summary>
       <div className={styles.body}>{children}</div>
     </details>

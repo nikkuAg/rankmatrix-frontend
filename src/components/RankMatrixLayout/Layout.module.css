@@ -21,7 +21,7 @@
   min-width: 0;
 }
 .feature {
-  max-width: 1440px;
+  width: 100%;
   margin: auto;
   padding-inline: var(--gutter);
   min-width: 0;

@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { Icon } from '@/components/Icon';
 import styles from './CollegeHeader.module.css';
 
 export function CollegeHeader({
@@ -18,7 +19,7 @@ export function CollegeHeader({
     >
       <button type="button" className={styles.sort} onClick={() => handleSort(field)}>
         {title}
-        {sortField === field && <span aria-hidden="true">{sortOrder === 'asc' ? '↑' : '↓'}</span>}
+        {sortField === field && <Icon name={sortOrder === 'asc' ? 'arrowUp' : 'arrowDown'} />}
       </button>
     </th>
   );
@@ -37,16 +38,7 @@ export function CollegeHeader({
             aria-expanded={expandedNirf}
           >
             NIRF Rank{expandedNirf ? 's' : nirfYears[0] ? ` (${nirfYears[0]})` : ''}
-            <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true">
-              <path
-                fill="currentColor"
-                d={
-                  expandedNirf
-                    ? 'M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z'
-                    : 'M8.59 16.59 10 18l6-6-6-6-1.41 1.41L13.17 12z'
-                }
-              />
-            </svg>
+            <Icon name={expandedNirf ? 'chevronLeft' : 'chevronRight'} />
           </button>
         </th>
       </tr>

@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { Icon } from '@/components/Icon';
 import styles from './CollegePagination.module.css';
 
 export function CollegePagination({
@@ -36,7 +37,7 @@ export function CollegePagination({
               aria-label="Go to previous page"
               onClick={() => onPageChange(currentPage - 1)}
             >
-              ← <span>Previous</span>
+              <Icon name="arrowLeft" /> <span>Previous</span>
             </button>
           </li>
           <li className={styles.mobilePage}>
@@ -70,7 +71,7 @@ export function CollegePagination({
               aria-label="Go to next page"
               onClick={() => onPageChange(currentPage + 1)}
             >
-              <span>Next</span> →
+              <span>Next</span> <Icon name="arrowRight" />
             </button>
           </li>
         </ul>

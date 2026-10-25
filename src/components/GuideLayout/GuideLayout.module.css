@@ -1,9 +1,8 @@
 .article {
   width: 100%;
-  max-width: 1220px;
   min-width: 0;
   margin: auto;
-  padding: 30px 40px 52px;
+  padding: 30px var(--gutter) 52px;
   overflow-wrap: anywhere;
 }
 .article :is(header, section, aside, nav, div) {
@@ -112,7 +111,7 @@
 }
 .readingLayout {
   display: grid;
-  grid-template-columns: 205px minmax(0, 680px);
+  grid-template-columns: clamp(205px, 16vw, 280px) minmax(0, 1fr);
   gap: 45px;
   align-items: start;
 }
@@ -834,4 +833,8 @@
   .recovery h1 {
     font-size: 31px;
   }
+}
+
+.readingLayout:not(.fullLayout) .content {
+  max-width: 960px;
 }

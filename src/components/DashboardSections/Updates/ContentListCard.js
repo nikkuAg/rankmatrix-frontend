@@ -1,5 +1,6 @@
 'use client';
 
+import { Icon } from '@/components/Icon';
 import { SITE_CONTENT } from '@/constants/siteContent';
 import { useGetSiteContentsQuery } from '@/store/queries/siteContent';
 import styles from './Updates.module.css';
@@ -27,7 +28,7 @@ export function ContentListCard({ title, contentType }) {
                     <strong>{item.title}</strong>
                     <small>{item.url}</small>
                   </span>
-                  <span aria-hidden="true">↗</span>
+                  <Icon name="arrowUpRight" />
                 </a>
               )}
             </li>

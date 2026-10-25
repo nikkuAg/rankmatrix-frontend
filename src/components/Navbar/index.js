@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { Icon } from '@/components/Icon';
 import styles from './Navbar.module.css';
 
 const researchLinks = [
@@ -24,13 +25,13 @@ export const Navbar = () => (
         <NavLink href="/ranks">Cutoffs</NavLink>
         <details className={styles.explore} data-site-menu>
           <summary>
-            Explore <span aria-hidden="true">⌄</span>
+            Explore <Icon name="chevronDown" className="disclosure-chevron" />
           </summary>
           <div className={styles.dropdown}>
             <p className="eyebrow">Know your options</p>
             {researchLinks.map(([href, label]) => (
               <NavLink href={href} key={href}>
-                {label} <span aria-hidden="true">↗</span>
+                {label} <Icon name="arrowUpRight" />
               </NavLink>
             ))}
           </div>
@@ -38,11 +39,11 @@ export const Navbar = () => (
         <NavLink href="/guides">Guides</NavLink>
       </nav>
       <Link prefetch={false} href="/predict" className={`${styles.cta} button primary`}>
-        Open workspace <span aria-hidden="true">↗</span>
+        Open workspace <Icon name="arrowUpRight" />
       </Link>
       <details className={styles.mobileMenu} data-site-menu>
         <summary>
-          Menu <span aria-hidden="true">+</span>
+          Menu <Icon name="plus" className="disclosure-icon" />
         </summary>
         <nav aria-label="Mobile navigation">
           <NavLink href="/predict">Predictor & choices</NavLink>

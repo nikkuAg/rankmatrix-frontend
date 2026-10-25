@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { Icon } from '@/components/Icon';
 import { sendAnalyticsEvent } from '@/utils/analyticEvent';
 import styles from './FeatureBox.module.css';
 
@@ -44,7 +45,7 @@ export function FeatureBox() {
         <ToolLink key={href} href={href} className={styles.card} label={title}>
           <span className={styles.number}>
             0{index + 1}
-            <span aria-hidden="true">↗</span>
+            <Icon name="arrowUpRight" />
           </span>
           <h3>{title}</h3>
           <p>{description}</p>

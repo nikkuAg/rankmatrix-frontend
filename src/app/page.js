@@ -4,6 +4,7 @@ import { FeatureBox, ToolLink } from '@/components/DashboardSections/FeatureBox'
 import { Updates } from '@/components/DashboardSections/Updates';
 import styles from '@/components/Home/Home.module.css';
 import { HomeIntro } from '@/components/Home/HomeIntro';
+import { Icon } from '@/components/Icon';
 
 export default function Home() {
   return (
@@ -22,15 +23,15 @@ export default function Home() {
           </p>
           <div className={styles.actions}>
             <ToolLink href="/predict" label="Predict Your College" className="button primary">
-              Build my choice list <span aria-hidden="true">↗</span>
+              Build my choice list <Icon name="arrowUpRight" />
             </ToolLink>
             <Link href="/ranks" prefetch={false} className={styles.secondary}>
-              Explore cutoffs <span aria-hidden="true">→</span>
+              Explore cutoffs <Icon name="arrowRight" />
             </Link>
           </div>
           <p className={styles.note}>
             <span>JEE Main</span>
-            <span aria-hidden="true">+</span>
+            <Icon name="plus" />
             <span>JEE Advanced</span>
             <small>Each rank in its own context.</small>
           </p>
@@ -72,11 +73,11 @@ export default function Home() {
                   <strong>{title}</strong>
                   <small>{description}</small>
                 </div>
-                <span aria-hidden="true">↗</span>
+                <Icon name="arrowUpRight" />
               </div>
             ))}
             <Link href="/predict" prefetch={false} className={styles.boardLink}>
-              Make your own choice list <span aria-hidden="true">→</span>
+              Make your own choice list <Icon name="arrowRight" />
             </Link>
           </div>
           <p className={styles.boardNote}>
@@ -96,7 +97,7 @@ export default function Home() {
               <h2>{title}</h2>
               <p>{description}</p>
             </div>
-            <span aria-hidden="true">↗</span>
+            <Icon name="arrowUpRight" />
           </Link>
         ))}
       </section>
@@ -107,7 +108,7 @@ export default function Home() {
             <h2>Good decisions have context.</h2>
           </div>
           <Link href="/methodology" prefetch={false}>
-            How we use data ↗
+            How we use data <Icon name="arrowUpRight" />
           </Link>
         </div>
         <FeatureBox />
@@ -117,7 +118,7 @@ export default function Home() {
             <h3>A little understanding goes a long way.</h3>
           </div>
           <Link href="/guides" prefetch={false}>
-            Read the counselling guides →
+            Read the counselling guides <Icon name="arrowRight" />
           </Link>
         </div>
       </section>
@@ -128,17 +129,17 @@ export default function Home() {
           an admission guarantee.
         </p>
         <Link href="/guides/reading-cutoff-trends" prefetch={false}>
-          Read the cutoff guide ↗
+          Read the cutoff guide <Icon name="arrowUpRight" />
         </Link>
       </aside>
       <div className={styles.resources}>
-        <details className={styles.desk}>
+        <details data-accordion className={styles.desk}>
           <summary>
             <div>
               <span className="eyebrow">Counselling desk</span>
               <h2>Updates, dates &amp; official links</h2>
             </div>
-            <span aria-hidden="true">+</span>
+            <Icon name="plus" className="disclosure-icon" />
           </summary>
           <div className={styles.news}>
             <Updates />

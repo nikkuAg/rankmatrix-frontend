@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { withHeadingAnchors } from '@/components/GuideLayout/headingAnchors';
+import { Icon } from '@/components/Icon';
 import styles from './DataPageLayout.module.css';
 
 export function DataPageLayout({
@@ -79,10 +80,12 @@ export function DataPageLayout({
             </ol>
           </nav>
           <Link href="/predict" prefetch={false} className={styles.action}>
-            Build your choice list ↗
+            Build your choice list <Icon name="arrowUpRight" />
           </Link>
-          <details className={styles.source}>
-            <summary>Sources & independence</summary>
+          <details data-accordion className={styles.source}>
+            <summary>
+              Sources &amp; independence <Icon name="chevronDown" className="disclosure-chevron" />
+            </summary>
             <p>
               Cutoff and seat observations are compiled from JoSAA publications; NIRF figures come
               from NIRF. Stored coverage can be incomplete. RankMatrix is an independent project and

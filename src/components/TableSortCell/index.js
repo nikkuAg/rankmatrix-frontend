@@ -1,5 +1,6 @@
 'use client';
 
+import { Icon } from '@/components/Icon';
 import { FilterBox } from '../FilterBox';
 import styles from './TableSortCell.module.css';
 
@@ -39,9 +40,9 @@ export function TableSortCell({
         {showSort ? (
           <button type="button" className={styles.sort} onClick={() => handleSort(field)}>
             {title}
-            <span aria-hidden="true">
-              {sortField === field ? (sortOrder === 'asc' ? '↑' : '↓') : '↕'}
-            </span>
+            <Icon
+              name={sortField === field ? (sortOrder === 'asc' ? 'arrowUp' : 'arrowDown') : 'sort'}
+            />
           </button>
         ) : (
           title

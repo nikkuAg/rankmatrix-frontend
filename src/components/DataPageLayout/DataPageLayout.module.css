@@ -4,7 +4,7 @@
 .header {
   padding: 40px var(--gutter) 32px;
   border-bottom: 1px solid var(--line);
-  max-width: 1440px;
+  width: 100%;
   margin: auto;
 }
 .header h1 {
@@ -48,7 +48,7 @@
   max-width: 850px;
 }
 .body {
-  max-width: 1440px;
+  width: 100%;
   padding: 32px var(--gutter) 0;
   margin: auto;
   display: grid;
@@ -92,6 +92,10 @@
   color: var(--muted);
 }
 .source summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
   padding: 14px 0;
 }
 .source p {

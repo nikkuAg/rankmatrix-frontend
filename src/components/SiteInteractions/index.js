@@ -2,9 +2,11 @@
 
 import { useEffect } from 'react';
 import { usePathname } from 'next/navigation';
+import { setupDisclosureMotion } from '@/utils/disclosureMotion';
 
 export function SiteInteractions() {
   const pathname = usePathname();
+  useEffect(() => setupDisclosureMotion(), []);
   useEffect(() => {
     const header = document.querySelector('[data-site-header]');
     if (!header) return;

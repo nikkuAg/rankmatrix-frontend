@@ -13,6 +13,3 @@
 .sort:hover {
   color: var(--accent);
 }
-.sort span {
-  font-size: 14px;
-}

@@ -1,6 +1,7 @@
 'use client';
 
 import { useRef, useState } from 'react';
+import { Icon } from '@/components/Icon';
 import styles from './FilterBox.module.css';
 
 export function FilterBox({
@@ -56,17 +57,7 @@ export function FilterBox({
               dialog.current.showModal();
             }}
           >
-            <svg
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.5"
-              aria-hidden="true"
-            >
-              <path d="M3 5h18M6 12h12M9 19h6" />
-            </svg>
+            <Icon name="filter" />
             {active && <span className={styles.dot} />}
           </button>
           <dialog
@@ -87,7 +78,7 @@ export function FilterBox({
                   aria-label="Close filter"
                   onClick={close}
                 >
-                  ×
+                  <Icon name="close" />
                 </button>
               </header>
               {showRangeFilter ? (

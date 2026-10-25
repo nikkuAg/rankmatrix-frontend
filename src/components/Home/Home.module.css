@@ -1,12 +1,12 @@
 .hero {
-  max-width: 1440px;
+  width: 100%;
   margin: auto;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 80px;
+  gap: clamp(40px, 5vw, 120px);
   align-items: center;
-  min-height: 650px;
-  padding: 80px var(--gutter) 88px;
+  min-height: clamp(650px, 43vw, 880px);
+  padding: clamp(64px, 5vw, 88px) var(--gutter);
   overflow: hidden;
 }
 .copy {
@@ -16,7 +16,7 @@
   margin-bottom: 28px;
 }
 .copy h1 {
-  font-size: clamp(44px, 5.3vw, 76px);
+  font-size: clamp(44px, 5.3vw, 112px);
   font-weight: 500;
   letter-spacing: -0.065em;
   line-height: 1.04;
@@ -30,8 +30,8 @@
   letter-spacing: -0.065em;
 }
 .description {
-  max-width: 420px;
-  font-size: 16px;
+  max-width: 44ch;
+  font-size: clamp(16px, 1.1vw, 21px);
   color: var(--muted);
   line-height: 1.8;
 }
@@ -43,6 +43,7 @@
   margin-top: 32px;
 }
 .secondary {
+  align-items: center;
   color: var(--text);
   font-size: 13px;
   font-weight: 600;
@@ -86,7 +87,7 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 16px;
-  padding: 22px;
+  padding: clamp(22px, 2vw, 32px);
   margin-bottom: 18px;
   border: 1px solid #52604d;
   border-radius: var(--radius);
@@ -101,19 +102,19 @@
 }
 .rankCard span {
   display: block;
-  font-size: 10px;
+  font-size: clamp(11px, 0.8vw, 14px);
   color: var(--muted);
 }
 .rankCard strong {
   display: block;
   margin-top: 5px;
-  font-size: 25px;
+  font-size: clamp(25px, 2vw, 40px);
   font-weight: 500;
   letter-spacing: -0.8px;
 }
 .board {
   position: relative;
-  padding: 22px;
+  padding: clamp(22px, 2vw, 32px);
   background: linear-gradient(135deg, #222a21, #1b201c);
   border: 1px solid #465141;
   border-radius: var(--radius);
@@ -133,13 +134,13 @@
 }
 .boardHeading h2 {
   font-family: var(--font-display), serif;
-  font-size: 27px;
+  font-size: clamp(27px, 2vw, 40px);
   margin: 8px 0 0;
 }
 .boardHeading .count {
   color: var(--accent);
   font:
-    400 36px/1 var(--font-display),
+    400 clamp(36px, 3vw, 60px) / 1 var(--font-display),
     serif;
 }
 .count small {
@@ -162,10 +163,10 @@
 }
 .boardRow {
   display: grid;
-  grid-template-columns: 32px 1fr 16px;
+  grid-template-columns: 32px minmax(0, 1fr) 20px;
   gap: 16px;
   align-items: center;
-  min-height: 84px;
+  min-height: clamp(84px, 6vw, 100px);
   padding: 16px 0;
   border-bottom: 1px solid var(--line);
 }
@@ -174,13 +175,13 @@
   font-size: 13px;
 }
 .boardRow strong {
-  font-size: 13px;
+  font-size: clamp(14px, 1vw, 18px);
   font-weight: 600;
   display: block;
 }
 .boardRow small {
   display: block;
-  font-size: 10px;
+  font-size: clamp(11px, 0.8vw, 14px);
   color: var(--muted);
   margin-top: 4px;
 }
@@ -188,8 +189,8 @@
   background: #354129;
   border: 1px solid #546641;
   border-radius: var(--radius);
-  margin-inline: -22px;
-  padding-inline: 22px;
+  margin-inline: calc(-1 * clamp(22px, 2vw, 32px));
+  padding-inline: clamp(22px, 2vw, 32px);
   transform: translateX(-10px);
   box-shadow: 0 8px 24px #0004;
 }
@@ -200,6 +201,7 @@
   margin: 16px 0 0;
 }
 .boardLink {
+  align-items: center;
   display: flex;
   justify-content: space-between;
   padding-top: 16px;
@@ -210,7 +212,6 @@
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   margin: 0 auto;
-  max-width: calc(1440px - 2 * var(--gutter));
   width: calc(100% - 2 * var(--gutter));
   border-block: 1px solid var(--line);
 }
@@ -243,12 +244,12 @@
   margin: 0;
   color: var(--muted);
 }
-.workflow > a > span:last-child {
+.workflow > a > :last-child {
   margin-left: auto;
   color: var(--accent);
 }
 .tools {
-  max-width: 1440px;
+  width: 100%;
   margin: auto;
   padding: 64px var(--gutter);
 }
@@ -266,6 +267,9 @@
   margin: 12px 0 0;
 }
 .sectionHead > a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   font-size: 12px;
   color: var(--muted);
   padding-block: 12px;
@@ -287,6 +291,9 @@
   font-weight: 500;
 }
 .readingStrip > a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   font-size: 13px;
   padding-block: 12px;
   text-decoration: none;
@@ -296,7 +303,6 @@
   grid-template-columns: 1fr 1.4fr auto;
   align-items: center;
   gap: 24px;
-  max-width: calc(1440px - 2 * var(--gutter));
   width: calc(100% - 2 * var(--gutter));
   margin: 0 auto 24px;
   padding: 24px 0;
@@ -312,11 +318,14 @@
   color: var(--muted);
 }
 .contextNote > a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   font-size: 12px;
   text-decoration: none;
 }
 .resources {
-  max-width: 1440px;
+  width: 100%;
   padding: 0 var(--gutter);
   margin: auto;
 }
@@ -337,13 +346,6 @@
 .desk h2 {
   margin: 6px 0 0;
   font-size: 17px;
-}
-.desk > summary > span {
-  font-size: 24px;
-  color: var(--accent);
-}
-.desk[open] > summary > span {
-  transform: rotate(45deg);
 }
 .news {
   display: grid;

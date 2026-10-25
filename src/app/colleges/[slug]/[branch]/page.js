@@ -4,6 +4,7 @@ import { AppLink } from '@/components/AppLink';
 import { CutoffAnalysis } from '@/components/CutoffAnalysis';
 import { DataPageLayout } from '@/components/DataPageLayout';
 import { DataSourceNotes } from '@/components/DataSourceNotes';
+import { Icon } from '@/components/Icon';
 import { FaqList } from '@/components/ReferencePanel';
 import { cutoffSummaries } from '@/utils/cutoffSummaries.mjs';
 import { admissionRankLabel, instituteType } from '@/utils/instituteIdentity.mjs';
@@ -195,11 +196,16 @@ export default async function InstituteBranchPage({ params }) {
           <p>No cutoff rows are currently on file in RankMatrix for this combination.</p>
         ) : (
           yearGroups.map(([year, rows]) => (
-            <details className="history-year" key={year} open={Number(year) === Number(latestYear)}>
+            <details
+              data-accordion
+              className="history-year"
+              key={year}
+              open={Number(year) === Number(latestYear)}
+            >
               <summary>
                 <h3>JoSAA {year}</h3>
                 <span>
-                  {rows.length} stored observations <span aria-hidden="true">+</span>
+                  {rows.length} stored observations <Icon name="plus" className="disclosure-icon" />
                 </span>
               </summary>
               <div
