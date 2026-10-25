@@ -215,7 +215,7 @@ export default async function InstituteBranchPage({ params }) {
                 role="region"
                 aria-label={`JoSAA ${year} historical cutoffs`}
               >
-                <table>
+                <table className="history-table">
                   <thead>
                     <tr>
                       <th>Round</th>

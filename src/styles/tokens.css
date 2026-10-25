@@ -12,6 +12,9 @@
   --radius-sm: 3px;
   --radius: 4px;
   --radius-lg: 6px;
+  --text-body: 15px;
+  --text-control: 14px;
+  --text-small: 12px;
   --space-1: 4px;
   --space-2: 8px;
   --space-3: 12px;
@@ -188,7 +191,7 @@ hr {
 table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 15px;
+  font-size: var(--text-body);
   font-variant-numeric: tabular-nums;
 }
 th,
@@ -198,11 +201,12 @@ td {
   border-bottom: 1px solid var(--line);
   vertical-align: top;
   line-height: 1.55;
+  overflow-wrap: normal;
 }
 th {
   background: var(--surface-raised);
   color: var(--muted);
-  font-size: 14px;
+  font-size: var(--text-control);
   font-weight: 500;
 }
 tbody tr:hover {
@@ -211,6 +215,7 @@ tbody tr:hover {
 td a {
   color: var(--text);
   text-decoration-color: var(--control-line);
+  overflow-wrap: normal;
 }
 td a:hover {
   color: var(--accent);
@@ -245,7 +250,7 @@ td a:hover {
   background: transparent;
   text-decoration: none;
   color: var(--text);
-  font-size: 13px;
+  font-size: var(--text-control);
   font-weight: 600;
   line-height: 1.4;
 }
@@ -282,7 +287,7 @@ td a:hover {
   flex-direction: column;
   gap: 7px;
   min-width: 0;
-  font-size: 12px;
+  font-size: var(--text-control);
   color: var(--muted);
 }
 .field input,
@@ -290,7 +295,7 @@ td a:hover {
 .field textarea {
   width: 100%;
   min-width: 0;
-  height: 44px;
+  height: 48px;
   border: 1px solid var(--control-line);
   border-radius: var(--radius);
   padding: 10px 12px;
@@ -327,7 +332,7 @@ td a:hover {
   opacity: 0.5;
 }
 .field small {
-  font-size: 11px;
+  font-size: var(--text-small);
 }
 .chips {
   display: flex;
@@ -335,12 +340,12 @@ td a:hover {
   gap: 6px;
 }
 .chips button {
-  min-height: 40px;
+  min-height: 44px;
   padding: 8px 16px;
   border: 1px solid var(--control-line);
   border-radius: var(--radius);
   background: transparent;
-  font-size: 12px;
+  font-size: var(--text-control);
 }
 .chips button[aria-pressed='true'] {
   color: var(--accent);
@@ -370,7 +375,7 @@ td a:hover {
 .eyebrow {
   text-transform: uppercase;
   letter-spacing: 0.13em;
-  font-size: 11px;
+  font-size: var(--text-small);
   color: var(--muted);
   font-weight: 600;
 }
@@ -382,7 +387,7 @@ td a:hover {
   border: 1px solid var(--line);
   padding: 3px 8px;
   border-radius: var(--radius-sm);
-  font-size: 11px;
+  font-size: var(--text-small);
   color: var(--muted);
 }
 .prose {
@@ -558,7 +563,7 @@ td .empty-state {
   color: var(--muted);
 }
 .guide-card > span {
-  font-size: 11px;
+  font-size: var(--text-small);
   color: var(--muted);
 }
 
@@ -570,6 +575,41 @@ td .empty-state {
 }
 .table-scroll .compact-table {
   min-width: 0;
+}
+.table-surface .programme-directory {
+  min-width: 760px;
+}
+.programme-directory th:nth-child(2) {
+  min-width: 260px;
+}
+.programme-directory th:nth-child(3) {
+  min-width: 240px;
+}
+.table-surface .result-table {
+  min-width: 1120px;
+}
+.result-table th {
+  min-width: 120px;
+}
+.result-table th:nth-child(-n + 2) {
+  min-width: 240px;
+}
+.table-surface .records-table {
+  min-width: 1500px;
+}
+.records-table th {
+  min-width: 120px;
+}
+.records-table th:first-child,
+.records-table th:nth-child(3) {
+  min-width: 240px;
+}
+.records-table th:nth-child(4) {
+  min-width: 210px;
+}
+.table-scroll .history-table,
+.table-scroll .analysis-table {
+  min-width: 840px;
 }
 .table-scroll .programme-table {
   min-width: 1080px;
@@ -666,11 +706,11 @@ caption {
   margin: 0;
 }
 .quota-summary header span {
-  font-size: 11px;
+  font-size: var(--text-small);
   color: var(--muted);
 }
 .quota-summary section > p {
-  font-size: 11px;
+  font-size: var(--text-small);
   color: var(--muted);
   margin: 12px 0 20px;
 }
@@ -686,7 +726,7 @@ caption {
 }
 .quota-summary dt {
   color: var(--muted);
-  font-size: 11px;
+  font-size: var(--text-small);
   margin-bottom: 8px;
 }
 .quota-summary dd {

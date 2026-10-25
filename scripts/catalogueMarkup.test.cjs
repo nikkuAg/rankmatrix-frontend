@@ -87,7 +87,7 @@ test('table headers expose sort state and real keyboard-operable buttons', () =>
     nirfYears: [2025, 2024],
   });
   assert.match(html, /aria-sort="ascending"/);
-  assert.match(html, /<button[^>]+type="button"[^>]*>College Name/);
+  assert.match(html, /<button[^>]+type="button"[^>]*>College name/);
   assert.match(html, /aria-expanded="true"/);
   assert.match(html, /colSpan="2"/i);
   assert.match(html, />2025<\/th>/);

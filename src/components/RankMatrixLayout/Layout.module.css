@@ -46,7 +46,7 @@
   align-items: center;
   margin-bottom: 12px;
   color: var(--muted);
-  font-size: 11px;
+  font-size: var(--text-small);
 }
 .featureBreadcrumb a {
   display: inline-flex;
@@ -55,7 +55,7 @@
 }
 .featureDescription {
   max-width: 78ch;
-  font-size: 13px;
+  font-size: var(--text-control);
   line-height: 1.7;
   color: var(--muted);
   margin: 10px 0 0;

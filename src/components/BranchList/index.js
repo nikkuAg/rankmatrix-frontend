@@ -156,15 +156,15 @@ export const BranchList = ({ initialData }) => {
         ) : (
           <div className="tool-stack">
             <TableLayout>
-              <table aria-label="Participating programmes">
+              <table className="programme-directory" aria-label="Participating programmes">
                 <thead>
                   <tr>
-                    <th scope="col">Branch Code</th>
+                    <th scope="col">Branch code</th>
                     <TableSortCell
                       sortField={sortField}
                       sortOrder={sortOrder}
                       handleSort={handleSort}
-                      title="Branch Name"
+                      title="Branch name"
                       field="branch__name"
                       showFilter={false}
                     />
@@ -174,7 +174,7 @@ export const BranchList = ({ initialData }) => {
                       handleSort={handleSort}
                       title="Degree"
                       field="branch__degree"
-                      filterTitle={'Filter by Degree'}
+                      filterTitle={'Filter by degree'}
                       filterValues={filtersData?.degree}
                       onApplyFilter={(filterValues) => handleFilter(filterValues, 'branch__degree')}
                       defaultSelected={branchReqData.filters.branch__degree}
@@ -185,7 +185,7 @@ export const BranchList = ({ initialData }) => {
                       handleSort={handleSort}
                       title="Duration"
                       field="branch__course_duration"
-                      filterTitle={'Filter by Duration'}
+                      filterTitle={'Filter by duration'}
                       filterValues={filtersData?.duration}
                       onApplyFilter={(filterValues) =>
                         handleFilter(filterValues, 'branch__course_duration')

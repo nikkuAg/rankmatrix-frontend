@@ -20,8 +20,13 @@ export function CutoffAnalysis({ rows, year }) {
       </p>
       {analysis.length ? (
         <>
-          <div className="table-scroll">
-            <table>
+          <div
+            className="table-scroll"
+            role="region"
+            aria-label="Closing rank changes by quota"
+            tabIndex={0}
+          >
+            <table className="analysis-table">
               <caption>JoSAA {year}: first to last recorded round, by quota</caption>
               <thead>
                 <tr>

@@ -31,7 +31,7 @@
   letter-spacing: -0.6px;
 }
 .description {
-  font-size: 12px;
+  font-size: var(--text-control);
   color: var(--muted);
   max-width: 270px;
   line-height: 1.8;
@@ -47,7 +47,7 @@
 }
 .heading {
   font:
-    600 10px/1.5 var(--font-body),
+    600 12px/1.5 var(--font-body),
     sans-serif;
   text-transform: uppercase;
   letter-spacing: 0.12em;
@@ -59,13 +59,15 @@
   margin: 0;
   padding: 0;
   display: grid;
-  gap: 12px;
+  gap: 0;
 }
 .link {
   color: var(--text);
-  font-size: 12px;
+  font-size: var(--text-control);
   text-decoration: none;
-  display: inline-block;
+  display: flex;
+  align-items: center;
+  min-height: 44px;
   line-height: 1.6;
 }
 .link:hover {
@@ -76,8 +78,8 @@
   gap: 12px;
 }
 .social a {
-  width: 36px;
-  height: 36px;
+  width: 44px;
+  height: 44px;
   border: 1px solid var(--line);
   border-radius: var(--radius);
   display: grid;
@@ -99,7 +101,7 @@
 .byline,
 .disclaimer {
   margin: 0;
-  font-size: 11px;
+  font-size: var(--text-small);
   line-height: 1.8;
   color: var(--muted);
 }

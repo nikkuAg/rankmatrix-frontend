@@ -16,6 +16,7 @@ import {
 import { downloadCSV } from '@/utils/downloadCSV';
 import { loadPredictorFormData, savePredictorFormData } from '@/utils/formStorage';
 import { instituteType } from '@/utils/instituteIdentity.mjs';
+import { quotaLabel } from '@/utils/quotaLabel.mjs';
 import { PredictionForm } from './PredictionForm';
 import { ProgrammeEvidence } from './ProgrammeEvidence';
 import styles from './Workspace.module.css';
@@ -327,7 +328,7 @@ export function CollegePredictor() {
                   aria-label="All predictor results"
                   tabIndex={0}
                 >
-                  <table>
+                  <table className="records-table">
                     <thead>
                       <tr>
                         {[
@@ -360,7 +361,7 @@ export function CollegePredictor() {
                             {record.branch.degree} · {record.branch.courseDuration} years
                           </td>
                           <td>{record.category}</td>
-                          <td>{record.quota}</td>
+                          <td>{quotaLabel(record.quota)}</td>
                           <td>{record.seatPool}</td>
                           <td>{record.round ?? 'Not supplied'}</td>
                           <td>{record.openingRank}</td>

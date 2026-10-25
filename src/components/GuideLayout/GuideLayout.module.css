@@ -3,7 +3,7 @@
   min-width: 0;
   margin: auto;
   padding: 30px var(--gutter) 52px;
-  overflow-wrap: anywhere;
+  overflow-wrap: break-word;
 }
 .article :is(header, section, aside, nav, div) {
   min-width: 0;
@@ -14,7 +14,7 @@
 .breadcrumbs {
   margin-bottom: 31px;
   color: var(--muted);
-  font-size: 11px;
+  font-size: var(--text-small);
 }
 .breadcrumbs ol {
   display: flex;
@@ -56,7 +56,7 @@
 .eyebrow {
   margin: 0 0 14px;
   color: var(--accent);
-  font-size: 11px;
+  font-size: var(--text-small);
   font-weight: 500;
   letter-spacing: 0.09em;
   text-transform: uppercase;
@@ -84,7 +84,7 @@
   display: grid;
   gap: 7px;
   color: var(--muted);
-  font-size: 11px;
+  font-size: var(--text-small);
   line-height: 1.75;
 }
 .headerNote strong {
@@ -104,7 +104,7 @@
   padding-bottom: 21px;
   border-bottom: 1px solid var(--line);
   color: var(--muted);
-  font-size: 11px;
+  font-size: var(--text-small);
 }
 .meta a {
   color: inherit;
@@ -129,7 +129,7 @@
 .contentsLabel {
   margin: 0 0 11px;
   color: var(--text);
-  font-size: 11px;
+  font-size: var(--text-small);
   font-weight: 500;
 }
 .contents ol,
@@ -145,7 +145,7 @@
   align-items: baseline;
   min-height: 40px;
   padding: 9px 0;
-  font-size: 11px;
+  font-size: var(--text-small);
   line-height: 1.75;
   color: var(--muted);
   text-decoration: none;
@@ -225,44 +225,20 @@
   line-height: 1.5;
   margin: 25px 0 12px;
 }
-.content table {
-  display: block;
-  overflow-x: auto;
-  max-width: 100%;
-  margin: 23px 0;
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  background: var(--surface);
-  font-size: 12px;
-}
-.content caption {
-  text-align: left;
-  font-size: 11px;
-  color: var(--muted);
-  padding: 12px 14px;
-}
-.content th,
-.content td {
-  padding: 14px;
-  line-height: 1.7;
-}
-.content th {
-  font-size: 11px;
-}
 .maker {
   padding: 23px 0 0;
   margin-top: 32px;
   border-top: 1px solid var(--line);
 }
 .content .makerTitle {
-  font-size: 13px;
+  font-size: var(--text-control);
   color: var(--text);
   font-weight: 500;
   margin: 0 0 10px;
 }
 .content .makerText {
   max-width: 90ch;
-  font-size: 12px;
+  font-size: var(--text-control);
   line-height: 1.9;
   color: var(--muted);
   margin: 0;
@@ -280,7 +256,7 @@
 }
 .libraryIntro p {
   color: var(--muted);
-  font-size: 12px;
+  font-size: var(--text-control);
   line-height: 1.9;
   margin: 0;
 }
@@ -318,7 +294,7 @@
 }
 .libraryPath header p {
   color: var(--muted);
-  font-size: 12px;
+  font-size: var(--text-control);
   line-height: 1.85;
   margin: 0;
   max-width: 30ch;
@@ -347,13 +323,13 @@
 }
 .guideRow p {
   color: var(--muted);
-  font-size: 12px;
+  font-size: var(--text-control);
   line-height: 1.85;
   margin: 8px 0 11px;
 }
 .guideRow small {
   color: var(--muted);
-  font-size: 11px;
+  font-size: var(--text-small);
   line-height: 1.75;
 }
 .guideArrow {
@@ -375,7 +351,7 @@
 }
 .libraryNext p {
   max-width: 65ch;
-  font-size: 12px;
+  font-size: var(--text-control);
   line-height: 1.85;
   color: var(--muted);
 }
@@ -425,7 +401,7 @@
   }
   .contents a {
     min-height: 44px;
-    font-size: 12px;
+    font-size: var(--text-control);
   }
   .jumpLinks ol {
     gap: 0 18px;
@@ -474,7 +450,7 @@
     letter-spacing: -0.032em;
   }
   .description {
-    font-size: 13px;
+    font-size: var(--text-control);
     line-height: 1.9;
   }
   .content .section > h2 {
@@ -539,7 +515,7 @@
 }
 .about .content .section p,
 .about .content .section li {
-  font-size: 13px;
+  font-size: var(--text-control);
   line-height: 1.9;
 }
 .about .section:nth-child(5) > ul {
@@ -587,7 +563,7 @@
 }
 .contact .content .section p,
 .contact .content .section li {
-  font-size: 13px;
+  font-size: var(--text-control);
   line-height: 1.9;
 }
 .contact .section:nth-child(2) li strong {
@@ -613,7 +589,7 @@
   background: var(--surface);
 }
 .window figcaption {
-  font-size: 11px;
+  font-size: var(--text-small);
   color: var(--muted);
 }
 .windowScale {
@@ -636,7 +612,7 @@
   padding: 14px 16px;
 }
 .windowScale dt {
-  font-size: 11px;
+  font-size: var(--text-small);
   color: var(--muted);
 }
 .windowScale dd {
@@ -650,7 +626,7 @@
   color: var(--accent);
 }
 .methodology .content .window > p {
-  font-size: 12px;
+  font-size: var(--text-control);
   line-height: 1.85;
   margin: 0;
 }
@@ -738,7 +714,7 @@
   font-weight: 400;
 }
 .recoveryNote p {
-  font-size: 13px;
+  font-size: var(--text-control);
   line-height: 1.9;
 }
 @media (max-width: 800px) {
@@ -825,7 +801,7 @@
     padding: 12px;
   }
   .windowScale dt {
-    font-size: 11px;
+    font-size: var(--text-small);
   }
   .windowScale dd {
     font-size: 24px;

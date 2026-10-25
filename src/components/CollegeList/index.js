@@ -153,7 +153,12 @@ export const CollegeList = ({ initialData }) => {
         ) : (
           <div className={styles.results}>
             {!sortField && <span className={styles.note}>*Data sorted by latest NIRF year</span>}
-            <div className={styles.tableContainer}>
+            <div
+              className={styles.tableContainer}
+              role="region"
+              aria-label="College rankings"
+              tabIndex={0}
+            >
               <table
                 aria-label="Participating colleges"
                 className={styles.table}

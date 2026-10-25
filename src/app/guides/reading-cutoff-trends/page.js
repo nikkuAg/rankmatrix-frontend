@@ -88,33 +88,40 @@ export default function ReadingCutoffTrends() {
           The figures below are invented arithmetic examples for one programme, Open category,
           Gender-Neutral pool and HS quota. They are not published cutoffs for any institute.
         </p>
-        <table>
-          <caption>Hypothetical matched observations</caption>
-          <thead>
-            <tr>
-              <th scope="col">Year</th>
-              <th scope="col">Round</th>
-              <th scope="col">Closing rank</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>2025</td>
-              <td>1</td>
-              <td>10,000</td>
-            </tr>
-            <tr>
-              <td>2025</td>
-              <td>5</td>
-              <td>12,000</td>
-            </tr>
-            <tr>
-              <td>2024</td>
-              <td>5</td>
-              <td>11,500</td>
-            </tr>
-          </tbody>
-        </table>
+        <div
+          className="table-scroll"
+          role="region"
+          aria-label="Hypothetical cutoff observations"
+          tabIndex={0}
+        >
+          <table className="compact-table">
+            <caption>Hypothetical matched observations</caption>
+            <thead>
+              <tr>
+                <th scope="col">Year</th>
+                <th scope="col">Round</th>
+                <th scope="col">Closing rank</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>2025</td>
+                <td>1</td>
+                <td>10,000</td>
+              </tr>
+              <tr>
+                <td>2025</td>
+                <td>5</td>
+                <td>12,000</td>
+              </tr>
+              <tr>
+                <td>2024</td>
+                <td>5</td>
+                <td>11,500</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
         <ul>
           <li>
             Within 2025, the closing-rank number increased by 2,000 between the first and last

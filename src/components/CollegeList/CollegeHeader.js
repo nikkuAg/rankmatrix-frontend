@@ -29,11 +29,11 @@ export function CollegeHeader({
     <thead className={styles.header}>
       <tr>
         <th scope="col" rowSpan={expandedNirf ? 2 : 1}>
-          College Code
+          College code
         </th>
-        {sortCell('College Name', 'name')}
+        {sortCell('College name', 'name')}
         <th scope="col" rowSpan={expandedNirf ? 2 : 1}>
-          College Type
+          College type
         </th>
         {sortCell('State', 'state')}
         <th
@@ -47,7 +47,7 @@ export function CollegeHeader({
             onClick={onExpand}
             aria-expanded={historyExpanded}
           >
-            NIRF Rank{expandedNirf ? 's' : nirfYears[0] ? ` (${nirfYears[0]})` : ''}
+            NIRF rank{expandedNirf ? 's' : nirfYears[0] ? ` (${nirfYears[0]})` : ''}
             <Icon name="chevronRight" />
           </button>
         </th>

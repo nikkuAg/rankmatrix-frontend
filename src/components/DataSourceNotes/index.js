@@ -13,7 +13,12 @@ export function DataSourceNotes({
   return (
     <section aria-labelledby="data-sources-title">
       <h2 id="data-sources-title">Data sources, coverage and freshness</h2>
-      <div className="table-scroll">
+      <div
+        className="table-scroll"
+        role="region"
+        aria-label="Data sources and coverage"
+        tabIndex={0}
+      >
         <table>
           <caption>Where the figures on this page come from</caption>
           <thead>

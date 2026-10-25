@@ -278,7 +278,7 @@ export const RankList = () => {
               ) : (
                 <div className="tool-stack">
                   <TableLayout showTable={rankData?.data?.length > 0}>
-                    <table aria-label="rank-table">
+                    <table className="result-table" aria-label="Opening and closing ranks">
                       <thead>
                         <tr>
                           <TableSortCell

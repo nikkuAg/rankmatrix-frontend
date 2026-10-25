@@ -244,7 +244,7 @@ export const SeatList = () => {
             ) : (
               <div className="tool-stack">
                 <TableLayout showTable={seatData?.data?.length > 0}>
-                  <table aria-label="college-table">
+                  <table className="result-table" aria-label="Programme seats">
                     <thead>
                       <tr>
                         <TableSortCell
