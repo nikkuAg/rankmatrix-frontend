@@ -110,7 +110,6 @@
 }
 .formGrid input,
 .formGrid select {
-  background: var(--page);
   width: 100%;
   min-height: 48px;
 }
