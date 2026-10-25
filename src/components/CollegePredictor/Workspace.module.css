@@ -24,7 +24,7 @@
 }
 .context dl {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1.2fr;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 18px;
   margin: 0;
 }
@@ -108,13 +108,75 @@
 .formGrid .fullField {
   grid-column: 1 / -1;
 }
-.formGrid input,
+.formGrid input:not([type='checkbox']),
 .formGrid select {
   width: 100%;
   min-height: 48px;
 }
 .formGrid small {
   font-size: var(--text-small);
+  line-height: 1.6;
+}
+.allocationChoices {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+.allocationChoices legend {
+  margin-bottom: 8px;
+}
+.selectionGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+.selectionOption {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 48px;
+  padding: 10px 12px;
+  border: 1px solid var(--control-line);
+  border-radius: var(--radius);
+  cursor: pointer;
+  line-height: 1.5;
+}
+.selectionOption:has(input:checked) {
+  background: #2b3422;
+  border-color: var(--accent);
+}
+.selectionOption input {
+  accent-color: var(--accent);
+  width: 16px;
+  height: 16px;
+  flex: 0 0 16px;
+  margin: 0;
+}
+.selectionOption:focus-within {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+.selectionActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+  margin-bottom: 8px;
+}
+.selectionActions button {
+  min-height: 44px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--accent);
+  font-size: var(--text-small);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.allocationChoices > p {
+  margin: 8px 0 0;
+  font-size: var(--text-small);
+  color: var(--muted);
   line-height: 1.6;
 }
 .searchSettings {
@@ -791,6 +853,9 @@
   }
 }
 @media (max-width: 360px) {
+  .selectionGrid {
+    grid-template-columns: 1fr;
+  }
   .rankPair {
     grid-template-columns: 1fr;
   }

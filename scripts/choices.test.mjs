@@ -41,6 +41,20 @@ test('100-choice reordering preserves all records, identity and input immutabili
   );
   assert.equal(reorderChoices(choices, 'missing', choices[0].id), choices);
 });
+
+test('multi-pool quota comparisons stay separate when grouped, saved and exported', () => {
+  const rows = ['AI', 'OS'].flatMap((quota) =>
+    ['Gender-Neutral', 'Female-only'].map((seatPool) => ({ ...row(2, quota), seatPool })),
+  );
+  const choices = groupProgrammes(rows);
+  assert.equal(choices.length, 1);
+  assert.equal(choices[0].records.length, 4);
+  const saved = parseChoices(JSON.stringify({ version: 1, choices }));
+  assert.deepEqual(
+    choiceRows(saved).map(({ quota, seatPool }) => [quota, seatPool]),
+    rows.map(({ quota, seatPool }) => [quota, seatPool]),
+  );
+});
 test('stored choices reject corruption and foreign records while deduplicating valid identities', () => {
   const choice = groupProgrammes([row(1)])[0];
   assert.deepEqual(parseChoices('{broken'), []);

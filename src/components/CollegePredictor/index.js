@@ -16,6 +16,7 @@ import {
 import { downloadCSV } from '@/utils/downloadCSV';
 import { loadPredictorFormData, savePredictorFormData } from '@/utils/formStorage';
 import { instituteType } from '@/utils/instituteIdentity.mjs';
+import { quotaOptions } from '@/utils/predictorSelections.mjs';
 import { quotaLabel } from '@/utils/quotaLabel.mjs';
 import { PredictionForm } from './PredictionForm';
 import { ProgrammeEvidence } from './ProgrammeEvidence';
@@ -162,8 +163,16 @@ export function CollegePredictor() {
               <dd>{formData.category}</dd>
             </div>
             <div>
-              <dt>Seat pool</dt>
-              <dd>{formData.seatPool}</dd>
+              <dt>Seat pools</dt>
+              <dd>{formData.seatPools.join(' · ')}</dd>
+            </div>
+            <div>
+              <dt>Quotas</dt>
+              <dd>
+                {formData.quotas.length === quotaOptions.length
+                  ? 'All applicable quotas'
+                  : formData.quotas.map(quotaLabel).join(' · ')}
+              </dd>
             </div>
             <div>
               <dt>State for quota lookup</dt>

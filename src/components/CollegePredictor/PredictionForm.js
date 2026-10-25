@@ -3,8 +3,16 @@
 import { useEffect, useRef, useState } from 'react';
 import { Icon } from '@/components/Icon';
 import { PAGE_SIZES } from '@/constants';
-import { CATEGORIES, SEAT_POOLS, STATES } from '@/constants/josaa';
+import { CATEGORIES, STATES } from '@/constants/josaa';
 import { sendAnalyticsEvent } from '@/utils/analyticEvent';
+import {
+  predictionRequest,
+  predictorSelections,
+  quotaOptions,
+  readPredictionForm,
+  seatPoolOptions,
+} from '@/utils/predictorSelections.mjs';
+import { quotaLabel } from '@/utils/quotaLabel.mjs';
 import styles from './Workspace.module.css';
 
 export function PredictionForm({ defaultValues, getPredictionData, onSuccess, onClose }) {
@@ -13,11 +21,15 @@ export function PredictionForm({ defaultValues, getPredictionData, onSuccess, on
   const edited = useRef(false);
   const [pending, setPending] = useState(false);
   const [error, setError] = useState('');
+  const selections = predictorSelections(defaultValues);
   useEffect(() => {
     if (!defaultValues || edited.current) return;
-    for (const [name, value] of Object.entries(defaultValues)) {
-      const field = form.current?.elements.namedItem(name);
-      if (field && value != null) field.value = String(value);
+    const values = { ...defaultValues, ...predictorSelections(defaultValues) };
+    for (const field of form.current.elements) {
+      const value = values[field.name];
+      if (value == null) continue;
+      if (field.type === 'checkbox') field.checked = value.includes(field.value);
+      else field.value = String(value);
     }
   }, [defaultValues]);
   useEffect(() => {
@@ -31,11 +43,24 @@ export function PredictionForm({ defaultValues, getPredictionData, onSuccess, on
       viewed.current = true;
     }
   }, []);
+  function selectQuotas(checked) {
+    edited.current = true;
+    for (const field of form.current.elements.namedItem('quotas')) field.checked = checked;
+  }
   async function submit(event) {
     event.preventDefault();
     if (pending) return;
-    const data = Object.fromEntries(new FormData(event.currentTarget).entries());
-    if (!data.advRank.trim()) delete data.advRank;
+    const data = readPredictionForm(new FormData(event.currentTarget));
+    for (const [name, label] of [
+      ['seatPools', 'seat pool'],
+      ['quotas', 'quota'],
+    ]) {
+      if (!data[name].length) {
+        setError(`Select at least one ${label}.`);
+        form.current.elements.namedItem(name)[0].focus();
+        return;
+      }
+    }
     setPending(true);
     setError('');
     sendAnalyticsEvent({
@@ -45,7 +70,7 @@ export function PredictionForm({ defaultValues, getPredictionData, onSuccess, on
       value: 1,
     });
     try {
-      const results = await getPredictionData(data).unwrap();
+      const results = await getPredictionData(predictionRequest(data)).unwrap();
       sendAnalyticsEvent({
         action: 'prediction_completed',
         category: 'college_predictor',
@@ -142,20 +167,7 @@ export function PredictionForm({ defaultValues, getPredictionData, onSuccess, on
             <span>02</span> Allocation context
           </legend>
           <div className={styles.formGrid}>
-            <label className="field">
-              Seat pool
-              <select name="seatPool" required defaultValue={defaultValues?.seatPool ?? ''}>
-                <option value="" disabled>
-                  Select seat pool
-                </option>
-                {Object.values(SEAT_POOLS).map((value) => (
-                  <option key={value} value={value}>
-                    {value}
-                  </option>
-                ))}
-              </select>
-            </label>
-            <label className="field">
+            <label className={`field ${styles.fullField}`}>
               State for quota lookup
               <select name="state" required defaultValue={defaultValues?.state ?? ''}>
                 <option value="" disabled>
@@ -168,6 +180,59 @@ export function PredictionForm({ defaultValues, getPredictionData, onSuccess, on
                 ))}
               </select>
             </label>
+            <fieldset
+              className={`${styles.allocationChoices} ${styles.fullField}`}
+              aria-describedby="seat-pool-help"
+            >
+              <legend>Seat pools</legend>
+              <div className={styles.selectionGrid}>
+                {seatPoolOptions.map((value) => (
+                  <label key={value} className={styles.selectionOption}>
+                    <input
+                      type="checkbox"
+                      name="seatPools"
+                      value={value}
+                      defaultChecked={selections.seatPools.includes(value)}
+                    />
+                    <span>{value}</span>
+                  </label>
+                ))}
+              </div>
+              <p id="seat-pool-help">
+                Select one or both. Female-only eligibility follows JoSAA rules.
+              </p>
+            </fieldset>
+            <fieldset
+              className={`${styles.allocationChoices} ${styles.fullField}`}
+              aria-describedby="quota-help"
+            >
+              <legend>Quotas</legend>
+              <div className={styles.selectionActions}>
+                <button type="button" onClick={() => selectQuotas(true)}>
+                  Select all quotas
+                </button>
+                <button type="button" onClick={() => selectQuotas(false)}>
+                  Clear quotas
+                </button>
+              </div>
+              <div className={styles.selectionGrid}>
+                {quotaOptions.map((value) => (
+                  <label key={value} className={styles.selectionOption}>
+                    <input
+                      type="checkbox"
+                      name="quotas"
+                      value={value}
+                      defaultChecked={selections.quotas.includes(value)}
+                    />
+                    <span>{quotaLabel(value)}</span>
+                  </label>
+                ))}
+              </div>
+              <p id="quota-help">
+                Selections use the state lookup above. Special quotas retain their published codes;
+                check the institute’s rules.
+              </p>
+            </fieldset>
           </div>
         </fieldset>
         <details data-accordion className={styles.searchSettings}>
