@@ -66,6 +66,7 @@ export const Footer = () => (
             <span className={styles.logo} role="img" aria-label="RankMatrix" />
             <span className={styles.brandName}>RankMatrix</span>
           </div>
+          <p className={styles.statement}>Evidence for a decision that belongs to you.</p>
           <p className={styles.description}>
             A free JoSAA &amp; JEE counselling companion built on official JoSAA data. No signup or
             contact details required to use the tools.

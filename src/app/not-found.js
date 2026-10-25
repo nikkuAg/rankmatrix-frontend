@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import styles from '@/components/GuideLayout/GuideLayout.module.css';
 
 export const metadata = {
   title: { absolute: 'Page Not Found | RankMatrix' },
@@ -12,26 +13,57 @@ export const metadata = {
 
 export default function NotFound() {
   return (
-    <section style={{ maxWidth: 820, margin: 'auto', padding: '3rem 1.5rem' }}>
-      <h1>Page not found</h1>
-      <p>
-        The address may be incorrect, or this institute or programme is not in our current
-        catalogue.
-      </p>
-      <ul>
-        <li>
-          <Link href="/colleges">Browse participating colleges</Link>
-        </li>
-        <li>
-          <Link href="/branches">Compare engineering branches</Link>
-        </li>
-        <li>
-          <Link href="/guides">Read JoSAA counselling guides</Link>
-        </li>
-        <li>
-          <Link href="/">Return to RankMatrix home</Link>
-        </li>
-      </ul>
+    <section className={`${styles.article} ${styles.recovery}`}>
+      <div className={styles.recoveryLayout}>
+        <div className={styles.errorCode} aria-hidden="true">
+          404
+          <span>
+            One link.
+            <br />A different direction.
+          </span>
+        </div>
+        <div>
+          <p className={styles.eyebrow}>Find your next step</p>
+          <h1>Page not found</h1>
+          <p>
+            The address may be incorrect, or this institute or programme is not in our current
+            catalogue.
+          </p>
+          <ul className={styles.recoveryLinks}>
+            <li>
+              <Link href="/colleges" prefetch={false} className="button primary">
+                Browse participating colleges
+              </Link>
+            </li>
+            <li>
+              <Link href="/branches" prefetch={false} className="button">
+                Compare engineering branches
+              </Link>
+            </li>
+            <li>
+              <Link href="/guides" prefetch={false}>
+                Read JoSAA counselling guides
+              </Link>
+            </li>
+            <li>
+              <Link href="/" prefetch={false}>
+                Return to RankMatrix home
+              </Link>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <aside className={styles.recoveryNote}>
+        <h2>Have a working page with a data discrepancy?</h2>
+        <p>
+          A missing page and an unavailable request are different states. If you can open a record
+          but its data appears incorrect, include the page URL and the official source when
+          reporting it.
+        </p>
+        <Link href="/contact" prefetch={false}>
+          Report a discrepancy →
+        </Link>
+      </aside>
     </section>
   );
 }

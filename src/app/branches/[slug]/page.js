@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import { AppLink } from '@/components/AppLink';
 import { DataPageLayout } from '@/components/DataPageLayout';
 import { DataSourceNotes } from '@/components/DataSourceNotes';
+import { FaqList } from '@/components/ReferencePanel';
 import { summaryRows } from '@/utils/cutoffSummaries.mjs';
 import { groupInstitutesByExam } from '@/utils/examGroups.mjs';
 import { instituteType } from '@/utils/instituteIdentity.mjs';
@@ -222,12 +223,9 @@ export default async function BranchPage({ params }) {
         </ul>
 
         <h2>Frequently asked questions</h2>
-        {faqs.map((faq) => (
-          <React.Fragment key={faq.question}>
-            <h3>{faq.question}</h3>
-            <p>{faq.answer}</p>
-          </React.Fragment>
-        ))}
+        <div className="detail-questions">
+          <FaqList faqs={faqs} />
+        </div>
       </DataPageLayout>
     </>
   );

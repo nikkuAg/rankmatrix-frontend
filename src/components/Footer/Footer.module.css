@@ -37,6 +37,14 @@
   line-height: 1.8;
   margin: 20px 0;
 }
+.statement {
+  font:
+    400 27px/1.25 var(--font-display),
+    serif;
+  letter-spacing: -0.03em;
+  max-width: 280px;
+  margin: 24px 0 16px;
+}
 .heading {
   font:
     600 10px/1.5 var(--font-body),

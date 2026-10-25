@@ -29,42 +29,57 @@ export function ProgrammeEvidence({ programme, preference }) {
       <p className={styles.degree}>
         {instituteType(institute)} · {branch.degree} · {branch.courseDuration} years
       </p>
-      <div className="notice">
+      <p className={styles.rankContext}>
         Compare with {admissionRankLabel(institute)}. OPEN uses CRL; reserved categories use their
         respective rank lists.
-      </div>
-      <h3>Historical allocation records</h3>
+      </p>
+      <h3>
+        Historical allocation records <span>({records.length})</span>
+      </h3>
       <p className={styles.recordNote}>
         Dataset year is not supplied by the predictor. Keep each category, quota, pool and round
         separate.
       </p>
-      <div className="table-scroll" role="region" aria-label="Allocation evidence" tabIndex={0}>
-        <table>
-          <thead>
-            <tr>
-              <th scope="col">Category</th>
-              <th scope="col">Quota</th>
-              <th scope="col">Pool</th>
-              <th scope="col">Round</th>
-              <th scope="col">Opening</th>
-              <th scope="col">Closing</th>
-            </tr>
-          </thead>
-          <tbody>
-            {records.map((record, index) => (
-              <tr
-                key={`${record.category}-${record.quota}-${record.seatPool}-${record.round}-${index}`}
-              >
-                <td>{record.category}</td>
-                <td>{record.quota}</td>
-                <td>{record.seatPool}</td>
-                <td>{record.round ?? 'Not supplied'}</td>
-                <td>{record.openingRank}</td>
-                <td>{record.closingRank}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+      <div className={styles.allocationRecords}>
+        {records.map((record, index) => (
+          <section
+            className={styles.allocationRecord}
+            key={`${record.category}-${record.quota}-${record.seatPool}-${record.round}-${index}`}
+            aria-label={`Allocation record ${index + 1}`}
+          >
+            <dl className={styles.recordScope}>
+              <div>
+                <dt>Category / rank list</dt>
+                <dd>
+                  {record.category} ·{' '}
+                  {['General', 'OPEN'].includes(record.category) ? 'CRL' : 'category rank'}
+                </dd>
+              </div>
+              <div>
+                <dt>Quota</dt>
+                <dd>{record.quota}</dd>
+              </div>
+              <div>
+                <dt>Seat pool</dt>
+                <dd>{record.seatPool}</dd>
+              </div>
+              <div>
+                <dt>Round</dt>
+                <dd>{record.round ?? 'Not supplied'}</dd>
+              </div>
+            </dl>
+            <dl className={styles.rankPair}>
+              <div>
+                <dt>Opening rank</dt>
+                <dd>{record.openingRank?.toLocaleString('en-IN') ?? 'Not supplied'}</dd>
+              </div>
+              <div>
+                <dt>Closing rank</dt>
+                <dd>{record.closingRank?.toLocaleString('en-IN') ?? 'Not supplied'}</dd>
+              </div>
+            </dl>
+          </section>
+        ))}
       </div>
       {institute.slug && branch.slug && (
         <Link

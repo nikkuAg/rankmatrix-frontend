@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { withHeadingAnchors } from '@/components/GuideLayout/headingAnchors';
 import styles from './DataPageLayout.module.css';
 
 export function DataPageLayout({
@@ -9,6 +10,10 @@ export function DataPageLayout({
   lastUpdated,
   children,
 }) {
+  const { content, headings } = withHeadingAnchors(children, { prefix: 'evidence' });
+  const sections = [...headings, { id: 'data-sources-title', title: 'Sources & coverage' }];
+  if (breadcrumbs.length > 3)
+    sections.splice(1, 0, { id: 'cutoff-analysis-title', title: 'Cutoff movement' });
   return (
     <article className={styles.article}>
       <header className={styles.header}>
@@ -53,19 +58,44 @@ export function DataPageLayout({
           </p>
         )}
       </header>
-      <div className={`${styles.content} prose`}>
-        {children}
-        <hr />
-        <aside className="notice">
-          Cutoff and seat observations are compiled from JoSAA publications; NIRF figures come from
-          NIRF. Stored coverage can be incomplete. RankMatrix is an independent project and is not
-          affiliated with JoSAA, JEE, NTA, the IITs, NITs, IIITs, or GFTIs. Verify all schedules,
-          rules, and cutoffs on the official{' '}
-          <a href="https://josaa.nic.in" target="_blank" rel="noopener noreferrer">
-            JoSAA website
-          </a>{' '}
-          before making admission decisions.
+      <div className={styles.body}>
+        <aside className={styles.rail}>
+          <nav aria-label="On this page">
+            <p className="eyebrow">On this page</p>
+            <ol>
+              {sections.map(({ id, title: label }) => (
+                <li key={id}>
+                  <a href={`#${id}`}>
+                    {label.startsWith('About ')
+                      ? 'Overview'
+                      : label.startsWith('Branches offered')
+                        ? 'Programmes & cutoffs'
+                        : label.startsWith('Colleges offering')
+                          ? 'Participating colleges'
+                          : label}
+                  </a>
+                </li>
+              ))}
+            </ol>
+          </nav>
+          <Link href="/predict" prefetch={false} className={styles.action}>
+            Build your choice list ↗
+          </Link>
+          <details className={styles.source}>
+            <summary>Sources & independence</summary>
+            <p>
+              Cutoff and seat observations are compiled from JoSAA publications; NIRF figures come
+              from NIRF. Stored coverage can be incomplete. RankMatrix is an independent project and
+              is not affiliated with JoSAA, JEE, NTA, the IITs, NITs, IIITs, or GFTIs. Verify all
+              schedules, rules, and cutoffs on the official{' '}
+              <a href="https://josaa.nic.in" target="_blank" rel="noopener noreferrer">
+                JoSAA website
+              </a>{' '}
+              before making admission decisions.
+            </p>
+          </details>
         </aside>
+        <div className={`${styles.content} prose`}>{content}</div>
       </div>
     </article>
   );

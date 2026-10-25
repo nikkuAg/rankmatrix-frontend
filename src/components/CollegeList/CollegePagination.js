@@ -39,6 +39,9 @@ export function CollegePagination({
               ← <span>Previous</span>
             </button>
           </li>
+          <li className={styles.mobilePage}>
+            Page {currentPage} of {Math.max(1, totalPages)}
+          </li>
           {pages.map((page, index) => (
             <React.Fragment key={page}>
               {index > 0 && page - pages[index - 1] > 1 && (

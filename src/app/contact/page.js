@@ -42,6 +42,8 @@ export default function Contact() {
         />
       ))}
       <GuideLayout
+        variant="contact"
+        eyebrow="Contact / corrections"
         title={TITLE}
         description={DESCRIPTION}
         lastUpdated="May 2026"
@@ -65,6 +67,21 @@ export default function Contact() {
           For data correction requests, please include the page URL and a link or screenshot of the
           official source you are comparing against — that makes the fix loop almost instant.
         </p>
+        <ol>
+          <li>
+            <strong>The page URL</strong> — identify the institute, programme or tool.
+          </li>
+          <li>
+            <strong>The allocation context</strong> — year, round, category, quota and seat pool.
+          </li>
+          <li>
+            <strong>The observation</strong> — explain what appears incorrect.
+          </li>
+          <li>
+            <strong>The official source</strong> — include the publication you checked.
+          </li>
+        </ol>
+        <p>Do not send passwords, identity documents or unnecessary personal information.</p>
 
         <h2>GitHub</h2>
         <p>

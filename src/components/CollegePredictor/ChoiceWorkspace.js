@@ -63,7 +63,13 @@ function ChoiceRow({
         ⠿
       </button>
       <span className={styles.position}>{String(position).padStart(2, '0')}</span>
-      <button type="button" className={styles.pick} aria-pressed={selected} onClick={onSelect}>
+      <button
+        type="button"
+        className={styles.pick}
+        aria-pressed={selected}
+        aria-label={`Inspect ${choice.branch.name}, ${choice.institute.name}`}
+        onClick={onSelect}
+      >
         <strong>{choice.branch.name}</strong>
         <span>{choice.institute.name}</span>
         <small>
@@ -86,10 +92,13 @@ function ChoiceRow({
           disabled={!compared && compareFull}
           onChange={onCompare}
         />
+        <span className={styles.compareLabel} aria-hidden="true">
+          Compare
+        </span>
       </label>
       <button
         type="button"
-        className="icon-button"
+        className={`icon-button ${styles.removeChoice}`}
         aria-label={`Remove ${choice.branch.name}, ${choice.institute.name}`}
         onClick={onRemove}
       >
@@ -107,8 +116,10 @@ export function ChoiceWorkspace({ choices, onChange }) {
   const [previous, setPrevious] = useState(null);
   const [active, setActive] = useState(null);
   const [message, setMessage] = useState('');
+  const [mobilePane, setMobilePane] = useState('list');
   const dialog = useRef(null);
   const compareButton = useRef(null);
+  const evidenceButton = useRef(null);
   const sensors = useSensors(
     useSensor(PointerSensor, { activationConstraint: { distance: 8 } }),
     useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates }),
@@ -135,21 +146,36 @@ export function ChoiceWorkspace({ choices, onChange }) {
     const next = reorderChoices(choices, active.id, over.id);
     update(next, `Moved to preference ${next.findIndex((choice) => choice.id === active.id) + 1}.`);
   }
+  function inspect(id) {
+    setSelected(id);
+    setMobilePane('evidence');
+    if (window.matchMedia('(max-width: 950px)').matches)
+      requestAnimationFrame(() => evidenceButton.current?.focus());
+  }
   return (
     <section className={styles.workspace} aria-label="My choice list">
-      <div className="toolbar">
+      <div className={styles.workspaceFilters}>
         <label className="field search">
           Find in my choices
           <input
             type="search"
             value={search}
-            onChange={(event) => setSearch(event.target.value)}
+            onChange={(event) => {
+              setSearch(event.target.value);
+              setMobilePane('list');
+            }}
             placeholder="Institute or programme"
           />
         </label>
         <label className="field">
           Exam
-          <select value={exam} onChange={(event) => setExam(event.target.value)}>
+          <select
+            value={exam}
+            onChange={(event) => {
+              setExam(event.target.value);
+              setMobilePane('list');
+            }}
+          >
             <option value="all">Both exams</option>
             <option>JEE Main</option>
             <option>JEE Advanced</option>
@@ -162,6 +188,7 @@ export function ChoiceWorkspace({ choices, onChange }) {
           onClick={() => {
             setSearch('');
             setExam('all');
+            setMobilePane('list');
           }}
         >
           Clear filters
@@ -180,7 +207,45 @@ export function ChoiceWorkspace({ choices, onChange }) {
         <strong>{choices.length} choices</strong> · your preference order{' '}
         {filtered && `· ${visible.length} shown`}
       </p>
-      <div className={styles.columns}>
+      {comparison.length > 0 && (
+        <div className={styles.comparisonTray} aria-label="Programmes selected for comparison">
+          <span>Comparing {comparison.length} / 3</span>
+          {comparison.map((choice) => (
+            <button
+              key={choice.id}
+              type="button"
+              onClick={() => setCompare((current) => current.filter((id) => id !== choice.id))}
+              aria-label={`Remove ${choice.branch.name}, ${choice.institute.name} from comparison`}
+            >
+              <span>
+                {String(choices.indexOf(choice) + 1).padStart(2, '0')} · {choice.branch.name}
+                <small>{choice.institute.name}</small>
+              </span>
+              <span aria-hidden="true">×</span>
+            </button>
+          ))}
+          <small>Comparison selections do not change your preference order.</small>
+        </div>
+      )}
+      <div className={styles.mobilePanes} role="group" aria-label="Choice list panel">
+        <button
+          type="button"
+          aria-pressed={mobilePane === 'list'}
+          onClick={() => setMobilePane('list')}
+        >
+          My list
+        </button>
+        <button
+          ref={evidenceButton}
+          type="button"
+          disabled={!evidence}
+          aria-pressed={mobilePane === 'evidence'}
+          onClick={() => setMobilePane('evidence')}
+        >
+          Evidence{evidence ? ` · ${choices.indexOf(evidence) + 1}` : ''}
+        </button>
+      </div>
+      <div className={styles.columns} data-mobile-pane={mobilePane}>
         <div className={styles.listColumn}>
           <div className={styles.listToolbar}>
             <span>
@@ -208,6 +273,13 @@ export function ChoiceWorkspace({ choices, onChange }) {
               Escape cancels. The list scrolls as you move through longer lists.
             </p>
           </details>
+          <div className={styles.listHeading} aria-hidden="true">
+            <span>Order</span>
+            <span>Programme / institute</span>
+            <span>Record context</span>
+            <span>Compare</span>
+            <span></span>
+          </div>
           <DndContext
             sensors={sensors}
             collisionDetection={closestCenter}
@@ -226,7 +298,7 @@ export function ChoiceWorkspace({ choices, onChange }) {
                     choice={choice}
                     position={choices.indexOf(choice) + 1}
                     selected={evidence?.id === choice.id}
-                    onSelect={() => setSelected(choice.id)}
+                    onSelect={() => inspect(choice.id)}
                     compared={compare.includes(choice.id)}
                     onCompare={() =>
                       setCompare((previous) =>

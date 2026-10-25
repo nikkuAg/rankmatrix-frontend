@@ -17,12 +17,18 @@ export function ContentListCard({ title, contentType }) {
               {contentType === SITE_CONTENT.UPDATES ? (
                 <div dangerouslySetInnerHTML={{ __html: item.content }} />
               ) : (
-                <>
-                  <strong>{item.title}</strong>
-                  <a href={item.url} target="_blank" rel="noopener noreferrer">
-                    {item.url}
-                  </a>
-                </>
+                <a
+                  className={styles.officialLink}
+                  href={item.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <span>
+                    <strong>{item.title}</strong>
+                    <small>{item.url}</small>
+                  </span>
+                  <span aria-hidden="true">↗</span>
+                </a>
               )}
             </li>
           ))}

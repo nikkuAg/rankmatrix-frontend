@@ -1,6 +1,7 @@
 import React from 'react';
 import { AppLink } from '@/components/AppLink';
 import { GuideLayout } from '@/components/GuideLayout';
+import styles from '@/components/GuideLayout/GuideLayout.module.css';
 import { articleJsonLd, breadcrumbJsonLd, serializeJsonLd } from '@/utils/jsonLd';
 import { buildMetadata } from '@/utils/metadata.mjs';
 
@@ -44,6 +45,8 @@ export default function Methodology() {
         />
       ))}
       <GuideLayout
+        variant="methodology"
+        eyebrow="How the evidence works"
         title={TITLE}
         description={DESCRIPTION}
         lastUpdated="23 October 2026"
@@ -72,6 +75,24 @@ export default function Methodology() {
           input bounds, not published cutoffs or an assertion of admission chances. Use the rank
           from the same exam and category list as the cutoff row being compared.
         </p>
+        <figure className={styles.window}>
+          <figcaption>Hypothetical input · rank 10,000 · delta 10%</figcaption>
+          <dl className={styles.windowScale}>
+            <div>
+              <dt>Lower search bound</dt>
+              <dd>9,000</dd>
+            </div>
+            <div>
+              <dt>Example input rank</dt>
+              <dd>10,000</dd>
+            </div>
+            <div>
+              <dt>Upper search bound</dt>
+              <dd>11,000</dd>
+            </div>
+          </dl>
+          <p>Search bounds, not published cutoffs or an admission confidence interval.</p>
+        </figure>
         <h2>Which year and round are used?</h2>
         <p>
           The predictor queries the backend&apos;s configured latest JoSAA rank model and its

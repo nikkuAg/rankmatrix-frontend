@@ -11,7 +11,7 @@
   gap: 6px;
 }
 .chips button {
-  min-height: 40px;
+  min-height: 44px;
   padding: 8px 16px;
   border: 1px solid var(--control-line);
   border-radius: var(--radius);

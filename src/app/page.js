@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { DeferredCalendar } from '@/components/DashboardSections/Calendar/DeferredCalendar';
-import { FeatureBox } from '@/components/DashboardSections/FeatureBox';
+import { FeatureBox, ToolLink } from '@/components/DashboardSections/FeatureBox';
 import { Updates } from '@/components/DashboardSections/Updates';
 import styles from '@/components/Home/Home.module.css';
 import { HomeIntro } from '@/components/Home/HomeIntro';
@@ -21,14 +21,19 @@ export default function Home() {
             feels right for you.
           </p>
           <div className={styles.actions}>
-            <Link href="/predict" prefetch={false} className="button primary">
+            <ToolLink href="/predict" label="Predict Your College" className="button primary">
               Build my choice list <span aria-hidden="true">↗</span>
-            </Link>
+            </ToolLink>
             <Link href="/ranks" prefetch={false} className={styles.secondary}>
               Explore cutoffs <span aria-hidden="true">→</span>
             </Link>
           </div>
-          <p className={styles.note}>Free to use. No signup. Your decision, backed by data.</p>
+          <p className={styles.note}>
+            <span>JEE Main</span>
+            <span aria-hidden="true">+</span>
+            <span>JEE Advanced</span>
+            <small>Each rank in its own context.</small>
+          </p>
         </div>
         <div className={styles.visual} aria-label="Illustration of a choice planning workspace">
           <div className={styles.backdrop} />
@@ -54,12 +59,12 @@ export default function Home() {
             </div>
             <div className={styles.columnHead}>
               <span>Order</span>
-              <span>Your planning process</span>
+              <span>Programme / institute</span>
             </div>
             {[
-              ['Find your options', 'Explore programmes across both exams'],
-              ['Compare the evidence', 'Match category, quota, year and round'],
-              ['Choose your order', 'Put your genuine preferences first'],
+              ['Computer Science and Engineering', 'IIT Roorkee · JEE Advanced'],
+              ['Electrical Engineering', 'NIT Tiruchirappalli · JEE Main'],
+              ['Mechanical Engineering', 'IIT Guwahati · JEE Advanced'],
             ].map(([title, description], index) => (
               <div className={styles.boardRow} key={title}>
                 <span>0{index + 1}</span>
@@ -70,33 +75,77 @@ export default function Home() {
                 <span aria-hidden="true">↗</span>
               </div>
             ))}
-            <p className={styles.boardNote}>
-              An illustrative workspace. Historical data is not an admission guarantee.
-            </p>
+            <Link href="/predict" prefetch={false} className={styles.boardLink}>
+              Make your own choice list <span aria-hidden="true">→</span>
+            </Link>
           </div>
+          <p className={styles.boardNote}>
+            Illustrative preferences, not matches for the example ranks.
+          </p>
         </div>
       </section>
-      <div className={styles.strip}>
-        <span>JEE Main &amp; JEE Advanced</span>
-        <span>Separate rank lists. Clear context.</span>
-        <Link href="/methodology" prefetch={false}>
-          Know the data ↗
-        </Link>
-      </div>
+      <section className={styles.workflow} aria-label="Prepare your choices">
+        {[
+          ['Discover', 'Find programmes with your rank.', '/predict'],
+          ['Compare', 'Keep the evidence side by side.', '/predict'],
+          ['Arrange', 'Drag choices into your order.', '/predict'],
+        ].map(([title, description, href], index) => (
+          <Link href={href} prefetch={false} key={title}>
+            <span className={styles.step}>0{index + 1}</span>
+            <div>
+              <h2>{title}</h2>
+              <p>{description}</p>
+            </div>
+            <span aria-hidden="true">↗</span>
+          </Link>
+        ))}
+      </section>
       <section className={styles.tools}>
         <div className={styles.sectionHead}>
           <div>
-            <p className="eyebrow">The research desk</p>
-            <h2>See the whole picture.</h2>
+            <p className="eyebrow">Look a little closer</p>
+            <h2>Good decisions have context.</h2>
           </div>
-          <p>Free JEE Main &amp; Advanced College Predictor and JoSAA Cutoffs</p>
+          <Link href="/methodology" prefetch={false}>
+            How we use data ↗
+          </Link>
         </div>
         <FeatureBox />
+        <div className={styles.readingStrip}>
+          <div>
+            <p className="eyebrow">Before you choose</p>
+            <h3>A little understanding goes a long way.</h3>
+          </div>
+          <Link href="/guides" prefetch={false}>
+            Read the counselling guides →
+          </Link>
+        </div>
       </section>
-      <section className={styles.news}>
-        <Updates />
-        <DeferredCalendar />
-      </section>
+      <aside className={styles.contextNote}>
+        <strong>Two exams. Two rank scales.</strong>
+        <p>
+          Main and Advanced cutoff values stay separate. Historical allocations offer context, not
+          an admission guarantee.
+        </p>
+        <Link href="/guides/reading-cutoff-trends" prefetch={false}>
+          Read the cutoff guide ↗
+        </Link>
+      </aside>
+      <div className={styles.resources}>
+        <details className={styles.desk}>
+          <summary>
+            <div>
+              <span className="eyebrow">Counselling desk</span>
+              <h2>Updates, dates &amp; official links</h2>
+            </div>
+            <span aria-hidden="true">+</span>
+          </summary>
+          <div className={styles.news}>
+            <Updates />
+            <DeferredCalendar />
+          </div>
+        </details>
+      </div>
       <HomeIntro />
     </>
   );

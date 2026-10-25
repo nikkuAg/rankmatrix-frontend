@@ -74,9 +74,9 @@ export function PredictionForm({ defaultValues, getPredictionData, onSuccess, on
     <section className={styles.formPanel} aria-labelledby="rank-form-title">
       <div className={styles.formHeading}>
         <div>
-          <p className="eyebrow">Start with your context</p>
+          <p className="eyebrow">Your rank context</p>
           <h2 id="rank-form-title">
-            Two exams. <em>Your possibilities.</em>
+            Both exams. <em>Each in context.</em>
           </h2>
         </div>
         <p>
@@ -91,94 +91,118 @@ export function PredictionForm({ defaultValues, getPredictionData, onSuccess, on
         }}
         onSubmit={submit}
       >
-        <div className={styles.formGrid}>
-          <label className="field">
-            JEE Main rank
-            <input
-              name="mainsRank"
-              type="number"
-              min="1"
-              step="1"
-              required
-              defaultValue={defaultValues?.mainsRank ?? ''}
-              placeholder="Enter your rank"
-            />
-            <small>Required · rank, not percentile</small>
-          </label>
-          <label className="field">
-            JEE Advanced rank
-            <input
-              name="advRank"
-              type="number"
-              min="1"
-              step="1"
-              defaultValue={defaultValues?.advRank ?? ''}
-              placeholder="Optional"
-            />
-            <small>For participating IIT and IISc programmes</small>
-          </label>
-          <label className="field">
-            Category / rank list
-            <select name="category" required defaultValue={defaultValues?.category ?? ''}>
-              <option value="" disabled>
-                Select category
-              </option>
-              {Object.values(CATEGORIES).map((value) => (
-                <option key={value} value={value}>
-                  {value}
+        <fieldset className={styles.formSection}>
+          <legend>
+            <span>01</span> Rank context
+          </legend>
+          <div className={styles.formGrid}>
+            <label className={`field ${styles.fullField}`}>
+              Category / rank list
+              <select name="category" required defaultValue={defaultValues?.category ?? ''}>
+                <option value="" disabled>
+                  Select category
                 </option>
-              ))}
-            </select>
-          </label>
-          <label className="field">
-            Seat pool
-            <select name="seatPool" required defaultValue={defaultValues?.seatPool ?? ''}>
-              <option value="" disabled>
-                Select seat pool
-              </option>
-              {Object.values(SEAT_POOLS).map((value) => (
-                <option key={value} value={value}>
-                  {value}
+                {Object.values(CATEGORIES).map((value) => (
+                  <option key={value} value={value}>
+                    {value}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <label className="field">
+              JEE Main rank
+              <input
+                name="mainsRank"
+                type="number"
+                min="1"
+                step="1"
+                required
+                defaultValue={defaultValues?.mainsRank ?? ''}
+                placeholder="Enter your rank"
+              />
+              <small>Required · matching rank list, not percentile</small>
+            </label>
+            <label className="field">
+              JEE Advanced rank
+              <input
+                name="advRank"
+                type="number"
+                min="1"
+                step="1"
+                defaultValue={defaultValues?.advRank ?? ''}
+                placeholder="Optional"
+              />
+              <small>Optional · participating IIT and IISc programmes</small>
+            </label>
+          </div>
+        </fieldset>
+        <fieldset className={styles.formSection}>
+          <legend>
+            <span>02</span> Allocation context
+          </legend>
+          <div className={styles.formGrid}>
+            <label className="field">
+              Seat pool
+              <select name="seatPool" required defaultValue={defaultValues?.seatPool ?? ''}>
+                <option value="" disabled>
+                  Select seat pool
                 </option>
-              ))}
-            </select>
-          </label>
-          <label className="field">
-            State for quota lookup
-            <select name="state" required defaultValue={defaultValues?.state ?? ''}>
-              <option value="" disabled>
-                Select home state
-              </option>
-              {STATES.map((value) => (
-                <option key={value} value={value}>
-                  {value}
+                {Object.values(SEAT_POOLS).map((value) => (
+                  <option key={value} value={value}>
+                    {value}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <label className="field">
+              State for quota lookup
+              <select name="state" required defaultValue={defaultValues?.state ?? ''}>
+                <option value="" disabled>
+                  Select home state
                 </option>
-              ))}
-            </select>
-          </label>
-          <label className="field">
-            Historical search window (%)
-            <input
-              name="delta"
-              type="number"
-              required
-              step="1"
-              defaultValue={defaultValues?.delta ?? 10}
-            />
-            <small>Cutoff delta used by the comparison method</small>
-          </label>
-          <label className="field">
-            Maximum allocation rows
-            <select name="count" defaultValue={defaultValues?.count ?? PAGE_SIZES[0]}>
-              {PAGE_SIZES.map((value) => (
-                <option key={value} value={value}>
-                  {value} rows
-                </option>
-              ))}
-            </select>
-            <small>Several rows may belong to one programme</small>
-          </label>
-        </div>
+                {STATES.map((value) => (
+                  <option key={value} value={value}>
+                    {value}
+                  </option>
+                ))}
+              </select>
+            </label>
+          </div>
+        </fieldset>
+        <details className={styles.searchSettings}>
+          <summary>
+            Search settings <span>Historical window & result count</span>
+          </summary>
+          <div
+            className={styles.formGrid}
+            onInvalid={(event) => {
+              event.currentTarget.closest('details').open = true;
+            }}
+          >
+            <label className="field">
+              Historical search window (%)
+              <input
+                name="delta"
+                type="number"
+                required
+                step="1"
+                defaultValue={defaultValues?.delta ?? 10}
+              />
+              <small>Cutoff delta used by the comparison method</small>
+            </label>
+            <label className="field">
+              Maximum allocation rows
+              <select name="count" defaultValue={defaultValues?.count ?? PAGE_SIZES[0]}>
+                {PAGE_SIZES.map((value) => (
+                  <option key={value} value={value}>
+                    {value} rows
+                  </option>
+                ))}
+              </select>
+              <small>Several rows may belong to one programme</small>
+            </label>
+          </div>
+        </details>
         {error && (
           <p className={styles.error} role="alert">
             {error}

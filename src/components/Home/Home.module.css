@@ -55,6 +55,16 @@
   font-size: 11px;
   color: var(--muted);
   margin: 22px 0 0;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.note > span {
+  color: var(--text);
+}
+.note small {
+  font-size: inherit;
 }
 .visual {
   position: relative;
@@ -184,24 +194,58 @@
   box-shadow: 0 8px 24px #0004;
 }
 .boardNote {
-  font-size: 9px;
+  position: relative;
+  font-size: 11px;
   color: var(--muted);
   margin: 16px 0 0;
 }
-.strip {
+.boardLink {
   display: flex;
-  flex-wrap: wrap;
   justify-content: space-between;
-  gap: 16px;
-  padding: 20px var(--gutter);
-  border-block: 1px solid var(--line);
+  padding-top: 16px;
   font-size: 12px;
-  color: var(--muted);
-  max-width: 1440px;
-  margin: auto;
+  text-decoration: none;
 }
-.strip span:first-child {
+.workflow {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin: 0 auto;
+  max-width: calc(1440px - 2 * var(--gutter));
+  width: calc(100% - 2 * var(--gutter));
+  border-block: 1px solid var(--line);
+}
+.workflow > a {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  padding: 24px;
   color: var(--text);
+  text-decoration: none;
+}
+.workflow > a + a {
+  border-left: 1px solid var(--line);
+}
+.workflow > a:hover {
+  background: var(--surface);
+}
+.workflow .step {
+  font:
+    400 28px/1 var(--font-display),
+    serif;
+  color: var(--accent);
+}
+.workflow h2 {
+  font-size: 16px;
+  margin: 0 0 6px;
+}
+.workflow p {
+  font-size: 12px;
+  margin: 0;
+  color: var(--muted);
+}
+.workflow > a > span:last-child {
+  margin-left: auto;
+  color: var(--accent);
 }
 .tools {
   max-width: 1440px;
@@ -221,19 +265,91 @@
     serif;
   margin: 12px 0 0;
 }
-.sectionHead > p {
+.sectionHead > a {
   font-size: 12px;
   color: var(--muted);
-  max-width: 320px;
+  padding-block: 12px;
+  text-decoration: none;
+}
+.readingStrip {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  padding: 28px 0 0;
+}
+.readingStrip p {
+  margin: 0 0 8px;
+}
+.readingStrip h3 {
   margin: 0;
+  font-size: 18px;
+  font-weight: 500;
+}
+.readingStrip > a {
+  font-size: 13px;
+  padding-block: 12px;
+  text-decoration: none;
+}
+.contextNote {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr auto;
+  align-items: center;
+  gap: 24px;
+  max-width: calc(1440px - 2 * var(--gutter));
+  width: calc(100% - 2 * var(--gutter));
+  margin: 0 auto 24px;
+  padding: 24px 0;
+  border-block: 1px solid var(--line);
+}
+.contextNote strong {
+  font-size: 15px;
+  font-weight: 500;
+}
+.contextNote p {
+  margin: 0;
+  font-size: 12px;
+  color: var(--muted);
+}
+.contextNote > a {
+  font-size: 12px;
+  text-decoration: none;
+}
+.resources {
+  max-width: 1440px;
+  padding: 0 var(--gutter);
+  margin: auto;
+}
+.desk {
+  border-bottom: 1px solid var(--line);
+}
+.desk > summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 20px 0;
+  list-style: none;
+}
+.desk > summary::-webkit-details-marker {
+  display: none;
+}
+.desk h2 {
+  margin: 6px 0 0;
+  font-size: 17px;
+}
+.desk > summary > span {
+  font-size: 24px;
+  color: var(--accent);
+}
+.desk[open] > summary > span {
+  transform: rotate(45deg);
 }
 .news {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 48px;
-  max-width: 1440px;
-  margin: auto;
-  padding: 0 var(--gutter) 48px;
+  padding: 12px 0 28px;
 }
 .news > * {
   min-width: 0;
@@ -277,8 +393,30 @@
   .sectionHead {
     display: block;
   }
-  .sectionHead > p {
-    margin-top: 16px;
+  .sectionHead > a {
+    display: inline-block;
+    margin-top: 8px;
+  }
+  .workflow {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .workflow > a {
+    padding: 20px 8px;
+  }
+  .workflow > a + a {
+    border-left: 0;
+    border-top: 1px solid var(--line);
+  }
+  .contextNote {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+  }
+  .readingStrip {
+    display: block;
+  }
+  .readingStrip > a {
+    display: inline-block;
+    margin-top: 12px;
   }
   .news {
     grid-template-columns: minmax(0, 1fr);

@@ -31,10 +31,13 @@ export function CollegePredictor() {
   const [choices, setChoices] = useState([]);
   const [view, setView] = useState('results');
   const [selected, setSelected] = useState(null);
+  const [mobilePane, setMobilePane] = useState('list');
   const [storageNotice, setStorageNotice] = useState('');
   const loaded = useRef(false);
+  const workspaceRoot = useRef(null);
   const formOpener = useRef(null);
   const resultsButton = useRef(null);
+  const evidenceButton = useRef(null);
   const [getPredictionData, { data: rankData, isFetching }] = useLazyGetpredictionDataQuery();
   useEffect(() => {
     /* eslint-disable react-hooks/set-state-in-effect -- reconcile browser storage after hydration */
@@ -62,7 +65,12 @@ export function CollegePredictor() {
   }
   function closeForm(completed = false) {
     setOpen(false);
-    (completed ? resultsButton : formOpener).current?.focus();
+    requestAnimationFrame(() => {
+      const target = completed
+        ? (resultsButton.current ?? formOpener.current)
+        : (formOpener.current ?? resultsButton.current);
+      target?.focus();
+    });
     sendAnalyticsEvent({
       action: 'form_closed',
       category: 'college_predictor',
@@ -72,6 +80,9 @@ export function CollegePredictor() {
   }
   function openForm() {
     setOpen(true);
+    requestAnimationFrame(() => {
+      workspaceRoot.current?.querySelector('select[name="category"]')?.focus();
+    });
     sendAnalyticsEvent({
       action: `${formData ? 'update' : 'add'}_form_open_clicked`,
       category: 'college_predictor',
@@ -108,24 +119,27 @@ export function CollegePredictor() {
   }
   const programmes = groupProgrammes(rankData || []);
   const evidence = programmes.find((programme) => programme.id === selected) || programmes[0];
+  const initialForm = open && !formData && !choices.length;
   return (
-    <div className={styles.root}>
-      <div className={styles.topline}>
-        <p className="eyebrow">JoSAA / Your planning desk</p>
-        <div className={styles.topActions}>
-          <button ref={formOpener} className="button" type="button" onClick={openForm}>
-            {formData ? 'Edit ranks' : 'Enter ranks'}
-          </button>
-          <button
-            className="button"
-            type="button"
-            disabled={view === 'choices' ? !choices.length : !rankData?.length}
-            onClick={download}
-          >
-            Export {view === 'choices' ? 'choices' : 'results'} ↓
-          </button>
+    <div ref={workspaceRoot} className={styles.root}>
+      {!initialForm && (
+        <div className={styles.topline}>
+          <p className="eyebrow">JoSAA / Your planning desk</p>
+          <div className={styles.topActions}>
+            <button ref={formOpener} className="button" type="button" onClick={openForm}>
+              {formData ? 'Edit ranks' : 'Enter ranks'}
+            </button>
+            <button
+              className="button"
+              type="button"
+              disabled={view === 'choices' ? !choices.length : !rankData?.length}
+              onClick={download}
+            >
+              Export {view === 'choices' ? 'choices' : 'results'} ↓
+            </button>
+          </div>
         </div>
-      </div>
+      )}
       {formData && (
         <div className={styles.context}>
           <dl>
@@ -166,6 +180,7 @@ export function CollegePredictor() {
             savePredictorFormData(data);
             setView('results');
             setSelected(null);
+            setMobilePane('list');
           }}
         />
       )}
@@ -174,148 +189,187 @@ export function CollegePredictor() {
           {storageNotice}
         </p>
       )}
-      <div className={styles.tabs} role="group" aria-label="Workspace view">
-        <button
-          ref={resultsButton}
-          type="button"
-          aria-pressed={view === 'results'}
-          onClick={() => setView('results')}
-        >
-          Predictor results <span>{programmes.length}</span>
-        </button>
-        <button type="button" aria-pressed={view === 'choices'} onClick={() => setView('choices')}>
-          My choices <span>{choices.length}</span>
-        </button>
-      </div>
-      {view === 'choices' ? (
-        <ChoiceWorkspace choices={choices} onChange={changeChoices} />
-      ) : (
-        <>
-          {formData && (
-            <p className={styles.countline}>
-              <strong>
-                {rankData?.length || 0} allocation rows · {programmes.length} programmes
-              </strong>{' '}
-              · Historical comparison order, not a recommended preference order.
-            </p>
-          )}
-          {isFetching ? (
-            <p role="status">Finding historical comparisons…</p>
-          ) : programmes.length ? (
-            <div className={styles.columns}>
-              <div className={styles.listColumn}>
-                <div className={styles.resultsList}>
-                  {programmes.map((programme) => {
-                    const saved = choices.some((choice) => choice.id === programme.id);
-                    return (
-                      <article
-                        className={`${styles.result} ${evidence?.id === programme.id ? styles.selected : ''}`}
-                        key={programme.id}
-                      >
-                        <button
-                          type="button"
-                          className={styles.pick}
-                          aria-pressed={evidence?.id === programme.id}
-                          onClick={() => setSelected(programme.id)}
-                        >
-                          <span className="badge">{programmeExam(programme.institute)}</span>
-                          <strong>{programme.branch.name}</strong>
-                          <span>{programme.institute.name}</span>
-                          <small>
-                            {instituteType(programme.institute)} · {programme.branch.degree} ·{' '}
-                            {programme.branch.courseDuration} years · {programme.records.length}{' '}
-                            allocation {programme.records.length === 1 ? 'record' : 'records'}
-                          </small>
-                        </button>
-                        <button
-                          type="button"
-                          className="button small"
-                          disabled={saved}
-                          onClick={() => changeChoices([...choices, programme])}
-                        >
-                          {saved ? 'Saved ✓' : '+ Save choice'}
-                        </button>
-                      </article>
-                    );
-                  })}
-                </div>
-              </div>
-              <ProgrammeEvidence programme={evidence} />
-            </div>
-          ) : (
-            <div className={styles.start}>
-              <p className="eyebrow">Your next chapter starts with context</p>
-              <h2>{formData ? 'No comparisons returned.' : 'A considered choice starts here.'}</h2>
-              <p>
-                {formData
-                  ? 'Adjust your search window or inspect the full cutoff data. An empty result is not an eligibility decision.'
-                  : 'Enter your ranks, explore historical comparisons, then save programmes in your own preference order.'}
-              </p>
-              <Link href="/ranks" prefetch={false}>
-                Explore all historical cutoffs ↗
-              </Link>
-            </div>
-          )}
-          {programmes.length > 0 && (
-            <details className={styles.allRecords}>
-              <summary>All returned allocation rows ({rankData.length})</summary>
-              <p>
-                Dataset year is not supplied by the predictor. Rows from different exams or category
-                rank lists are not directly comparable.
-              </p>
-              <div
-                className="table-surface"
-                role="region"
-                aria-label="All predictor results"
-                tabIndex={0}
-              >
-                <table>
-                  <thead>
-                    <tr>
-                      {[
-                        'Institute',
-                        'Type / exam',
-                        'Programme',
-                        'Degree / duration',
-                        'Category',
-                        'Quota',
-                        'Pool',
-                        'Round',
-                        'Opening rank',
-                        'Closing rank',
-                      ].map((label) => (
-                        <th scope="col" key={label}>
-                          {label}
-                        </th>
-                      ))}
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {rankData.map((record, index) => (
-                      <tr key={index}>
-                        <td>{record.institute.name}</td>
-                        <td>
-                          {instituteType(record.institute)} · {programmeExam(record.institute)}
-                        </td>
-                        <td>{record.branch.name}</td>
-                        <td>
-                          {record.branch.degree} · {record.branch.courseDuration} years
-                        </td>
-                        <td>{record.category}</td>
-                        <td>{record.quota}</td>
-                        <td>{record.seatPool}</td>
-                        <td>{record.round ?? 'Not supplied'}</td>
-                        <td>{record.openingRank}</td>
-                        <td>{record.closingRank}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </details>
-          )}
-        </>
+      {!initialForm && (
+        <div className={styles.tabs} role="group" aria-label="Workspace view">
+          <button
+            ref={resultsButton}
+            type="button"
+            aria-pressed={view === 'results'}
+            onClick={() => setView('results')}
+          >
+            Predictor results <span>{programmes.length}</span>
+          </button>
+          <button
+            type="button"
+            aria-pressed={view === 'choices'}
+            onClick={() => setView('choices')}
+          >
+            My choices <span>{choices.length}</span>
+          </button>
+        </div>
       )}
+      {!initialForm &&
+        (view === 'choices' ? (
+          <ChoiceWorkspace choices={choices} onChange={changeChoices} />
+        ) : (
+          <>
+            {formData && (
+              <p className={styles.countline}>
+                <strong>
+                  {rankData?.length || 0} allocation rows · {programmes.length} programmes
+                </strong>{' '}
+                · Historical comparison order, not a recommended preference order.
+              </p>
+            )}
+            {isFetching ? (
+              <p role="status">Finding historical comparisons…</p>
+            ) : programmes.length ? (
+              <>
+                <div
+                  className={styles.mobilePanes}
+                  role="group"
+                  aria-label="Prediction results panel"
+                >
+                  <button
+                    type="button"
+                    aria-pressed={mobilePane === 'list'}
+                    onClick={() => setMobilePane('list')}
+                  >
+                    Programmes
+                  </button>
+                  <button
+                    ref={evidenceButton}
+                    type="button"
+                    aria-pressed={mobilePane === 'evidence'}
+                    onClick={() => setMobilePane('evidence')}
+                  >
+                    Evidence
+                  </button>
+                </div>
+                <div className={styles.columns} data-mobile-pane={mobilePane}>
+                  <div className={styles.listColumn}>
+                    <div className={styles.resultsList}>
+                      {programmes.map((programme) => {
+                        const saved = choices.some((choice) => choice.id === programme.id);
+                        return (
+                          <article
+                            className={`${styles.result} ${evidence?.id === programme.id ? styles.selected : ''}`}
+                            key={programme.id}
+                          >
+                            <button
+                              type="button"
+                              className={styles.pick}
+                              aria-pressed={evidence?.id === programme.id}
+                              onClick={() => {
+                                setSelected(programme.id);
+                                setMobilePane('evidence');
+                                if (window.matchMedia('(max-width: 950px)').matches)
+                                  requestAnimationFrame(() => evidenceButton.current?.focus());
+                              }}
+                            >
+                              <span className="badge">{programmeExam(programme.institute)}</span>
+                              <strong>{programme.branch.name}</strong>
+                              <span>{programme.institute.name}</span>
+                              <small>
+                                {instituteType(programme.institute)} · {programme.branch.degree} ·{' '}
+                                {programme.branch.courseDuration} years · {programme.records.length}{' '}
+                                allocation {programme.records.length === 1 ? 'record' : 'records'}
+                              </small>
+                            </button>
+                            <button
+                              type="button"
+                              className="button small"
+                              disabled={saved}
+                              onClick={() => changeChoices([...choices, programme])}
+                            >
+                              {saved ? 'Saved ✓' : '+ Save choice'}
+                            </button>
+                          </article>
+                        );
+                      })}
+                    </div>
+                  </div>
+                  <ProgrammeEvidence programme={evidence} />
+                </div>
+              </>
+            ) : (
+              !open && (
+                <div className={styles.start}>
+                  <p className="eyebrow">Your next chapter starts with context</p>
+                  <h2>
+                    {formData ? 'No comparisons returned.' : 'A considered choice starts here.'}
+                  </h2>
+                  <p>
+                    {formData
+                      ? 'Adjust your search window or inspect the full cutoff data. An empty result is not an eligibility decision.'
+                      : 'Enter your ranks, explore historical comparisons, then save programmes in your own preference order.'}
+                  </p>
+                  <Link href="/ranks" prefetch={false}>
+                    Explore all historical cutoffs ↗
+                  </Link>
+                </div>
+              )
+            )}
+            {programmes.length > 0 && (
+              <details className={styles.allRecords}>
+                <summary>All returned allocation rows ({rankData.length})</summary>
+                <p>
+                  Dataset year is not supplied by the predictor. Rows from different exams or
+                  category rank lists are not directly comparable.
+                </p>
+                <div
+                  className="table-surface"
+                  role="region"
+                  aria-label="All predictor results"
+                  tabIndex={0}
+                >
+                  <table>
+                    <thead>
+                      <tr>
+                        {[
+                          'Institute',
+                          'Type / exam',
+                          'Programme',
+                          'Degree / duration',
+                          'Category',
+                          'Quota',
+                          'Pool',
+                          'Round',
+                          'Opening rank',
+                          'Closing rank',
+                        ].map((label) => (
+                          <th scope="col" key={label}>
+                            {label}
+                          </th>
+                        ))}
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {rankData.map((record, index) => (
+                        <tr key={index}>
+                          <td>{record.institute.name}</td>
+                          <td>
+                            {instituteType(record.institute)} · {programmeExam(record.institute)}
+                          </td>
+                          <td>{record.branch.name}</td>
+                          <td>
+                            {record.branch.degree} · {record.branch.courseDuration} years
+                          </td>
+                          <td>{record.category}</td>
+                          <td>{record.quota}</td>
+                          <td>{record.seatPool}</td>
+                          <td>{record.round ?? 'Not supplied'}</td>
+                          <td>{record.openingRank}</td>
+                          <td>{record.closingRank}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </details>
+            )}
+          </>
+        ))}
       <p className={styles.recordNote}>
         Working draft only. Verify current programme availability, eligibility and official data
         before filling choices on JoSAA.{' '}

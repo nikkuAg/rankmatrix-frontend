@@ -65,7 +65,10 @@ const Predict = () => {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: serializeJsonLd(faqJsonLd(FAQS)) }}
       />
-      <FeatureLayout title={'Your college & choice workspace'}>
+      <FeatureLayout
+        title="Your college & choice workspace"
+        description="Explore historical comparisons for both exams. Save programmes, inspect their records and prepare your own preference order."
+      >
         <CollegePredictor />
       </FeatureLayout>
       <PredictPageContent faqs={FAQS} />
