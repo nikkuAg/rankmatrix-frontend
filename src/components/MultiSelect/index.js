@@ -103,7 +103,15 @@ export function MultiSelect({
           </div>
           <div className={styles.options} role="group" aria-labelledby={`${id}-label`}>
             {options.map((option) => (
-              <label className={styles.option} key={option.value}>
+              <label
+                className={styles.option}
+                key={option.value}
+                onMouseDown={(event) => {
+                  if (event.button !== 0) return;
+                  event.preventDefault();
+                  event.currentTarget.querySelector('input').focus();
+                }}
+              >
                 <input
                   type="checkbox"
                   name={name}
