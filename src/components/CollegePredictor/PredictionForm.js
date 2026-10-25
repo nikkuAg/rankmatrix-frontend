@@ -2,23 +2,37 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { Icon } from '@/components/Icon';
+import { MultiSelect } from '@/components/MultiSelect';
 import { PAGE_SIZES } from '@/constants';
-import { CATEGORIES, SEAT_POOLS, STATES } from '@/constants/josaa';
+import { STATES } from '@/constants/josaa';
 import { sendAnalyticsEvent } from '@/utils/analyticEvent';
+import {
+  categoryLabel,
+  categoryOptions,
+  predictionFormData,
+  predictionRequest,
+  predictorFormValues,
+  quotaOptions,
+  seatPoolOptions,
+} from '@/utils/predictorSelections.mjs';
+import { quotaLabel } from '@/utils/quotaLabel.mjs';
 import styles from './Workspace.module.css';
+
+const categories = categoryOptions.map((value) => ({ value, label: categoryLabel(value) }));
+const pools = seatPoolOptions.map((value) => ({ value, label: value }));
+const quotas = quotaOptions.map((value) => ({ value, label: quotaLabel(value) }));
 
 export function PredictionForm({ defaultValues, getPredictionData, onSuccess, onClose }) {
   const viewed = useRef(false);
   const form = useRef(null);
   const edited = useRef(false);
+  const [values, setValues] = useState(() => predictorFormValues(defaultValues));
   const [pending, setPending] = useState(false);
   const [error, setError] = useState('');
+  const [invalid, setInvalid] = useState('');
   useEffect(() => {
     if (!defaultValues || edited.current) return;
-    for (const [name, value] of Object.entries(defaultValues)) {
-      const field = form.current?.elements.namedItem(name);
-      if (field && value != null) field.value = String(value);
-    }
+    setValues(predictorFormValues(defaultValues));
   }, [defaultValues]);
   useEffect(() => {
     if (!viewed.current) {
@@ -31,11 +45,40 @@ export function PredictionForm({ defaultValues, getPredictionData, onSuccess, on
       viewed.current = true;
     }
   }, []);
+  function update(name, value) {
+    edited.current = true;
+    setValues((previous) => ({ ...previous, [name]: value }));
+    if (invalid === name) {
+      setInvalid('');
+      setError('');
+    }
+  }
+  function updateRank(category, exam, value) {
+    edited.current = true;
+    setValues((previous) => ({
+      ...previous,
+      ranks: {
+        ...previous.ranks,
+        [category]: { ...previous.ranks[category], [exam]: value },
+      },
+    }));
+  }
   async function submit(event) {
     event.preventDefault();
     if (pending) return;
-    const data = Object.fromEntries(new FormData(event.currentTarget).entries());
-    if (!data.advRank.trim()) delete data.advRank;
+    for (const [name, label] of [
+      ['categories', 'category'],
+      ['seatPools', 'seat pool'],
+      ['quotas', 'quota'],
+    ]) {
+      if (!values[name].length) {
+        setInvalid(name);
+        setError(`Select at least one ${label}.`);
+        form.current.querySelector(`[data-selection="${name}"]`).focus();
+        return;
+      }
+    }
+    const data = predictionFormData(values);
     setPending(true);
     setError('');
     sendAnalyticsEvent({
@@ -45,7 +88,7 @@ export function PredictionForm({ defaultValues, getPredictionData, onSuccess, on
       value: 1,
     });
     try {
-      const results = await getPredictionData(data).unwrap();
+      const results = await getPredictionData(predictionRequest(data)).unwrap();
       sendAnalyticsEvent({
         action: 'prediction_completed',
         category: 'college_predictor',
@@ -81,83 +124,81 @@ export function PredictionForm({ defaultValues, getPredictionData, onSuccess, on
           </h2>
         </div>
         <p>
-          Use the rank list matching your selected category. OPEN uses CRL; reserved seats use the
-          corresponding category rank.
+          Select the categories you want to explore. Enter each category’s own rank: CRL for OPEN,
+          the corresponding category rank for reserved seats.
         </p>
       </div>
-      <form
-        ref={form}
-        onChange={() => {
-          edited.current = true;
-        }}
-        onSubmit={submit}
-      >
+      <form ref={form} onSubmit={submit}>
         <fieldset className={styles.formSection}>
           <legend>
             <span>01</span> Rank context
           </legend>
-          <div className={styles.formGrid}>
-            <label className={`field ${styles.fullField}`}>
-              Category / rank list
-              <select name="category" required defaultValue={defaultValues?.category ?? ''}>
-                <option value="" disabled>
-                  Select category
-                </option>
-                {Object.values(CATEGORIES).map((value) => (
-                  <option key={value} value={value}>
-                    {value}
-                  </option>
-                ))}
-              </select>
-            </label>
-            <label className="field">
-              JEE Main rank
-              <input
-                name="mainsRank"
-                type="number"
-                min="1"
-                step="1"
-                required
-                defaultValue={defaultValues?.mainsRank ?? ''}
-                placeholder="Enter your rank"
-              />
-              <small>Required · matching rank list, not percentile</small>
-            </label>
-            <label className="field">
-              JEE Advanced rank
-              <input
-                name="advRank"
-                type="number"
-                min="1"
-                step="1"
-                defaultValue={defaultValues?.advRank ?? ''}
-                placeholder="Optional"
-              />
-              <small>Optional · participating IIT and IISc programmes</small>
-            </label>
-          </div>
+          <MultiSelect
+            name="categories"
+            label="Categories / rank lists"
+            options={categories}
+            value={values.categories}
+            onChange={(value) => update('categories', value)}
+            placeholder="Select categories"
+            invalid={invalid === 'categories'}
+            errorId="predictor-form-error"
+            help="Choose only categories relevant to your rank lists. A selection does not establish eligibility."
+          />
+          {values.categories.map((category) => (
+            <fieldset key={category} className={styles.rankProfile}>
+              <legend>{categoryLabel(category)}</legend>
+              <div className={styles.formGrid}>
+                <label className="field">
+                  JEE Main rank
+                  <input
+                    name={`mainsRank:${category}`}
+                    aria-label={`JEE Main rank — ${category}`}
+                    type="number"
+                    min="1"
+                    step="1"
+                    required
+                    value={values.ranks[category]?.mainsRank ?? ''}
+                    onChange={(event) => updateRank(category, 'mainsRank', event.target.value)}
+                    placeholder={category === 'General' ? 'Enter CRL' : 'Enter category rank'}
+                  />
+                  <small>
+                    Required · {category === 'General' ? 'CRL' : `${category} rank list`}, not
+                    percentile
+                  </small>
+                </label>
+                <label className="field">
+                  JEE Advanced rank
+                  <input
+                    name={`advRank:${category}`}
+                    aria-label={`JEE Advanced rank — ${category}`}
+                    type="number"
+                    min="1"
+                    step="1"
+                    value={values.ranks[category]?.advRank ?? ''}
+                    onChange={(event) => updateRank(category, 'advRank', event.target.value)}
+                    placeholder="Optional"
+                  />
+                  <small>
+                    Optional · {category === 'General' ? 'CRL' : `${category} rank list`}
+                  </small>
+                </label>
+              </div>
+            </fieldset>
+          ))}
         </fieldset>
         <fieldset className={styles.formSection}>
           <legend>
             <span>02</span> Allocation context
           </legend>
           <div className={styles.formGrid}>
-            <label className="field">
-              Seat pool
-              <select name="seatPool" required defaultValue={defaultValues?.seatPool ?? ''}>
-                <option value="" disabled>
-                  Select seat pool
-                </option>
-                {Object.values(SEAT_POOLS).map((value) => (
-                  <option key={value} value={value}>
-                    {value}
-                  </option>
-                ))}
-              </select>
-            </label>
-            <label className="field">
+            <label className={`field ${styles.fullField}`}>
               State for quota lookup
-              <select name="state" required defaultValue={defaultValues?.state ?? ''}>
+              <select
+                name="state"
+                required
+                value={values.state}
+                onChange={(event) => update('state', event.target.value)}
+              >
                 <option value="" disabled>
                   Select home state
                 </option>
@@ -168,6 +209,28 @@ export function PredictionForm({ defaultValues, getPredictionData, onSuccess, on
                 ))}
               </select>
             </label>
+            <MultiSelect
+              name="seatPools"
+              label="Seat pools"
+              options={pools}
+              value={values.seatPools}
+              onChange={(value) => update('seatPools', value)}
+              allLabel="Both seat pools"
+              invalid={invalid === 'seatPools'}
+              errorId="predictor-form-error"
+              help="Female-only eligibility follows JoSAA rules."
+            />
+            <MultiSelect
+              name="quotas"
+              label="Quotas"
+              options={quotas}
+              value={values.quotas}
+              onChange={(value) => update('quotas', value)}
+              allLabel="All applicable quotas"
+              invalid={invalid === 'quotas'}
+              errorId="predictor-form-error"
+              help="Uses your state. Special quotas keep published codes; check institute rules."
+            />
           </div>
         </fieldset>
         <details data-accordion className={styles.searchSettings}>
@@ -190,25 +253,32 @@ export function PredictionForm({ defaultValues, getPredictionData, onSuccess, on
                 type="number"
                 required
                 step="1"
-                defaultValue={defaultValues?.delta ?? 10}
+                value={values.delta}
+                onChange={(event) => update('delta', event.target.value)}
               />
               <small>Cutoff delta used by the comparison method</small>
             </label>
             <label className="field">
               Maximum allocation rows
-              <select name="count" defaultValue={defaultValues?.count ?? PAGE_SIZES[0]}>
+              <select
+                name="count"
+                value={values.count}
+                onChange={(event) => update('count', event.target.value)}
+              >
                 {PAGE_SIZES.map((value) => (
                   <option key={value} value={value}>
                     {value} rows
                   </option>
                 ))}
               </select>
-              <small>Several rows may belong to one programme</small>
+              <small>
+                Shared across selected rank lists; several rows may belong to one programme.
+              </small>
             </label>
           </div>
         </details>
         {error && (
-          <p className={styles.error} role="alert">
+          <p id="predictor-form-error" className={styles.error} role="alert">
             {error}
           </p>
         )}

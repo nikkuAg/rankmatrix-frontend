@@ -41,6 +41,20 @@ test('100-choice reordering preserves all records, identity and input immutabili
   );
   assert.equal(reorderChoices(choices, 'missing', choices[0].id), choices);
 });
+
+test('multi-pool quota comparisons stay separate when grouped, saved and exported', () => {
+  const rows = ['AI', 'OS'].flatMap((quota) =>
+    ['Gender-Neutral', 'Female-only'].map((seatPool) => ({ ...row(2, quota), seatPool })),
+  );
+  const choices = groupProgrammes(rows);
+  assert.equal(choices.length, 1);
+  assert.equal(choices[0].records.length, 4);
+  const saved = parseChoices(JSON.stringify({ version: 1, choices }));
+  assert.deepEqual(
+    choiceRows(saved).map(({ quota, seatPool }) => [quota, seatPool]),
+    rows.map(({ quota, seatPool }) => [quota, seatPool]),
+  );
+});
 test('stored choices reject corruption and foreign records while deduplicating valid identities', () => {
   const choice = groupProgrammes([row(1)])[0];
   assert.deepEqual(parseChoices('{broken'), []);
@@ -55,6 +69,22 @@ test('stored choices reject corruption and foreign records while deduplicating v
     records: [{ ...choice.records[0], category: { unexpected: true } }],
   };
   assert.deepEqual(parseChoices(JSON.stringify({ version: 1, choices: [corrupt] })), []);
+});
+
+test('category-specific cutoff records remain distinct in saved programmes and exports', () => {
+  const rows = [
+    { ...row(2), category: 'General', openingRank: 18000 },
+    { ...row(2), category: 'OBC-NCL', openingRank: 4500 },
+  ];
+  const choices = parseChoices(JSON.stringify({ version: 1, choices: groupProgrammes(rows) }));
+  assert.equal(choices.length, 1);
+  assert.deepEqual(
+    choiceRows(choices).map(({ category, openingRank }) => [category, openingRank]),
+    [
+      ['General', 18000],
+      ['OBC-NCL', 4500],
+    ],
+  );
 });
 test('choice export includes all allocation rows and never fabricates a dataset year', () => {
   const data = choiceRows(groupProgrammes([row(1), row(1, 'HS'), row(2)]));
