@@ -302,6 +302,21 @@ td a:hover {
 .field textarea {
   height: 100px;
 }
+.field select {
+  appearance: none;
+  padding-inline: 12px 42px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23aab3ab' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-size: 18px;
+  background-position: right 12px center;
+  background-repeat: no-repeat;
+}
+@media (forced-colors: active) {
+  .field select {
+    appearance: auto;
+    background-image: none;
+    padding-inline: 12px;
+  }
+}
 .field input:focus,
 .field select:focus {
   outline: 2px solid var(--accent);
@@ -550,7 +565,32 @@ td .empty-state {
 .cell-detail {
   display: block;
   margin-top: 6px;
-  font-size: 11px;
+  font-size: 12px;
+  color: var(--muted);
+}
+.table-scroll .compact-table {
+  min-width: 0;
+}
+.table-scroll .programme-table {
+  min-width: 1080px;
+}
+.programme-table .name-column {
+  min-width: 240px;
+}
+.programme-table .degree-column {
+  min-width: 210px;
+}
+.programme-table .allocation-column {
+  min-width: 155px;
+}
+.programme-table th,
+.programme-table td,
+.programme-table a {
+  overflow-wrap: normal;
+  word-break: normal;
+}
+.table-scroll-hint {
+  font-size: 12px;
   color: var(--muted);
 }
 .history-year {

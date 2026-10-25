@@ -130,14 +130,26 @@
     margin-left: auto;
   }
   .mobileMenu > summary {
-    display: flex;
-    gap: 20px;
-    align-items: center;
-    min-height: 44px;
-    border: 1px solid var(--line);
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
     border-radius: var(--radius);
-    padding: 8px 12px;
-    font-size: 13px;
+  }
+  .mobileMenu > summary:hover {
+    background: var(--surface-raised);
+  }
+  .mobileMenu > summary svg {
+    width: 24px;
+    height: 24px;
+    color: var(--text);
+  }
+  .closeIcon,
+  .mobileMenu[open] .menuIcon {
+    display: none;
+  }
+  .mobileMenu[open] .closeIcon {
+    display: block;
   }
   .mobileMenu nav {
     position: absolute;
@@ -158,7 +170,7 @@
     padding-block: 14px;
     min-height: 48px;
     border-bottom: 1px solid var(--line);
-    font-size: 12px;
+    font-size: 14px;
     color: var(--text);
     text-decoration: none;
   }

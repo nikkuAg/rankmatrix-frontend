@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { Icon } from '@/components/Icon';
 import { programmeExam } from '@/utils/choices.mjs';
 import { admissionRankLabel, instituteType } from '@/utils/instituteIdentity.mjs';
+import { quotaLabel } from '@/utils/quotaLabel.mjs';
 import styles from './Workspace.module.css';
 
 export function ProgrammeEvidence({ programme, preference }) {
@@ -58,7 +59,7 @@ export function ProgrammeEvidence({ programme, preference }) {
               </div>
               <div>
                 <dt>Quota</dt>
-                <dd>{record.quota}</dd>
+                <dd>{quotaLabel(record.quota)}</dd>
               </div>
               <div>
                 <dt>Seat pool</dt>

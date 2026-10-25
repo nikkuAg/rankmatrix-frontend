@@ -17,6 +17,7 @@ import {
 import { programmeExam } from '@/utils/choices.mjs';
 import { useDebounce } from '@/utils/debounceHook';
 import { COLLEGE_FILTER_LABELS } from '@/utils/instituteIdentity.mjs';
+import { quotaLabel } from '@/utils/quotaLabel.mjs';
 import { sendAnalyticsEvent } from '../../utils/analyticEvent';
 import { ChipFilter } from '../ChipFilter';
 import { NoDataComponent } from '../NoData';
@@ -250,7 +251,7 @@ export const SeatList = () => {
                           sortField={sortField}
                           sortOrder={sortOrder}
                           handleSort={handleSort}
-                          title="Institute Name"
+                          title="Institute name"
                           field="institute__name"
                           showFilter={false}
                         />
@@ -268,7 +269,7 @@ export const SeatList = () => {
                           handleSort={handleSort}
                           title="Category"
                           field="category"
-                          filterTitle={'Filter by Category'}
+                          filterTitle={'Filter by category'}
                           filterValues={Object.values(CATEGORIES)}
                           onApplyFilter={(filterValues) => handleFilter(filterValues, 'category')}
                           defaultSelected={seatReqData.filters.category}
@@ -279,8 +280,11 @@ export const SeatList = () => {
                           handleSort={handleSort}
                           title="Quota"
                           field="quota"
-                          filterTitle={'Filter by Quota'}
-                          filterValues={Object.values(QUOTAS)}
+                          filterTitle={'Filter by quota'}
+                          filterValues={Object.values(QUOTAS).map((value) => ({
+                            value,
+                            label: quotaLabel(value),
+                          }))}
                           onApplyFilter={(filterValues) => handleFilter(filterValues, 'quota')}
                           defaultSelected={seatReqData.filters.quota}
                         />
@@ -288,9 +292,9 @@ export const SeatList = () => {
                           sortField={sortField}
                           sortOrder={sortOrder}
                           handleSort={handleSort}
-                          title="Seat Pool"
+                          title="Seat pool"
                           field="seat_pool"
-                          filterTitle={'Filter by Seat Pool'}
+                          filterTitle={'Filter by seat pool'}
                           filterValues={Object.values(SEAT_POOLS)}
                           onApplyFilter={(filterValues) => handleFilter(filterValues, 'seat_pool')}
                           defaultSelected={seatReqData.filters.seat_pool}
@@ -300,7 +304,7 @@ export const SeatList = () => {
                             sortField={sortField}
                             sortOrder={sortOrder}
                             handleSort={handleSort}
-                            title="Changes in Seats"
+                            title="Changes in seats"
                             field="change_in_seats"
                             showFilter={false}
                             hideBorderRight={true}
@@ -310,7 +314,7 @@ export const SeatList = () => {
                             sortField={sortField}
                             sortOrder={sortOrder}
                             handleSort={handleSort}
-                            title="Available Seats"
+                            title="Available seats"
                             field="available_seats"
                             showFilter={false}
                             hideBorderRight={true}
@@ -335,7 +339,7 @@ export const SeatList = () => {
                               </small>
                             </td>
                             <td>{seat.category}</td>
-                            <td>{seat.quota}</td>
+                            <td>{quotaLabel(seat.quota)}</td>
                             <td>{seat.seatPool}</td>
                             <td>
                               {increaseBtnSelected ? seat.changeInSeats : seat.availableSeats}

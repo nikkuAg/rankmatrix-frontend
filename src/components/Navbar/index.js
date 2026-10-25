@@ -42,8 +42,9 @@ export const Navbar = () => (
         Open workspace <Icon name="arrowUpRight" />
       </Link>
       <details className={styles.mobileMenu} data-site-menu>
-        <summary>
-          Menu <Icon name="plus" className="disclosure-icon" />
+        <summary aria-label="Navigation menu">
+          <Icon name="menu" className={styles.menuIcon} />
+          <Icon name="close" className={styles.closeIcon} />
         </summary>
         <nav aria-label="Mobile navigation">
           <NavLink href="/predict">Predictor & choices</NavLink>

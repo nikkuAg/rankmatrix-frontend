@@ -10,6 +10,7 @@ import { cutoffSummaries } from '@/utils/cutoffSummaries.mjs';
 import { admissionRankLabel, instituteType } from '@/utils/instituteIdentity.mjs';
 import { breadcrumbJsonLd, faqJsonLd, serializeJsonLd } from '@/utils/jsonLd';
 import { buildMetadata, instituteTitleName, programmeTitleName } from '@/utils/metadata.mjs';
+import { quotaLabel } from '@/utils/quotaLabel.mjs';
 import { fetchInstituteBranchSeo } from '@/utils/seoApi';
 
 export const revalidate = 86400;
@@ -163,7 +164,7 @@ export default async function InstituteBranchPage({ params }) {
             {summaries.map((row) => (
               <section key={row.quota}>
                 <header>
-                  <h3>{row.quota} quota</h3>
+                  <h3>{quotaLabel(row.quota)} quota</h3>
                   <span>
                     JoSAA {latestYear} · Round {row.round}
                   </span>
@@ -229,7 +230,7 @@ export default async function InstituteBranchPage({ params }) {
                     {rows.map((row, i) => (
                       <tr key={`${year}-${i}`}>
                         <td>{row.round}</td>
-                        <td>{row.quota}</td>
+                        <td>{quotaLabel(row.quota)}</td>
                         <td>{row.category}</td>
                         <td>{row.seatPool}</td>
                         <td>{formatRank(row.openingRank)}</td>
@@ -258,7 +259,7 @@ export default async function InstituteBranchPage({ params }) {
               <tbody>
                 {data.seats.map((row, i) => (
                   <tr key={i}>
-                    <td>{row.quota}</td>
+                    <td>{quotaLabel(row.quota)}</td>
                     <td>{row.category}</td>
                     <td>{row.seatPool}</td>
                     <td>{row.availableSeats}</td>

@@ -159,7 +159,7 @@ test('cutoff analysis is visible server HTML with scoped comparisons and honest 
     'same round, quota, category and seat pool',
   ])
     assert.ok(html.includes(text), text);
-  assert.match(html, /<th scope="row">HS<\/th>/);
+  assert.match(html, /<th scope="row">Home State \(HS\)<\/th>/);
   assert.match(html, /<caption>/);
   assert.ok(html.includes('2025 and 2026 only'));
   const empty = renderToStaticMarkup(React.createElement(CutoffAnalysis, { year: 2026, rows: [] }));

@@ -16,6 +16,7 @@ import {
 import { programmeExam } from '@/utils/choices.mjs';
 import { useDebounce } from '@/utils/debounceHook';
 import { COLLEGE_FILTER_LABELS } from '@/utils/instituteIdentity.mjs';
+import { quotaLabel } from '@/utils/quotaLabel.mjs';
 import { sendAnalyticsEvent } from '../../utils/analyticEvent';
 import { ChipFilter } from '../ChipFilter';
 import { Dropdown } from '../Dropdown';
@@ -243,14 +244,14 @@ export const RankList = () => {
           <>
             <div className="toolbar">
               <Dropdown
-                label={'Select Year'}
+                label={'Select year'}
                 id={'select-year'}
                 listData={yearList.sort((a, b) => b.value - a.value)}
                 selectedValue={rankReqData.year}
                 handleChange={handleYearChange}
               />
               <Dropdown
-                label={'Select Round'}
+                label={'Select round'}
                 id={'select-round'}
                 listData={roundList}
                 selectedValue={rankReqData?.filters?.round || ''}
@@ -284,7 +285,7 @@ export const RankList = () => {
                             sortField={sortField}
                             sortOrder={sortOrder}
                             handleSort={handleSort}
-                            title="Institute Name"
+                            title="Institute name"
                             field="institute__name"
                             showFilter={false}
                           />
@@ -302,7 +303,7 @@ export const RankList = () => {
                             handleSort={handleSort}
                             title="Category"
                             field="category"
-                            filterTitle={'Filter by Category'}
+                            filterTitle={'Filter by category'}
                             filterValues={Object.values(CATEGORIES)}
                             onApplyFilter={(filterValues) => handleFilter(filterValues, 'category')}
                             defaultSelected={rankReqData.filters.category}
@@ -313,8 +314,11 @@ export const RankList = () => {
                             handleSort={handleSort}
                             title="Quota"
                             field="quota"
-                            filterTitle={'Filter by Quota'}
-                            filterValues={Object.values(QUOTAS)}
+                            filterTitle={'Filter by quota'}
+                            filterValues={Object.values(QUOTAS).map((value) => ({
+                              value,
+                              label: quotaLabel(value),
+                            }))}
                             onApplyFilter={(filterValues) => handleFilter(filterValues, 'quota')}
                             defaultSelected={rankReqData.filters.quota}
                           />
@@ -322,9 +326,9 @@ export const RankList = () => {
                             sortField={sortField}
                             sortOrder={sortOrder}
                             handleSort={handleSort}
-                            title="Seat Pool"
+                            title="Seat pool"
                             field="seat_pool"
-                            filterTitle={'Filter by Seat Pool'}
+                            filterTitle={'Filter by seat pool'}
                             filterValues={Object.values(SEAT_POOLS)}
                             onApplyFilter={(filterValues) =>
                               handleFilter(filterValues, 'seat_pool')
@@ -335,11 +339,11 @@ export const RankList = () => {
                             sortField={sortField}
                             sortOrder={sortOrder}
                             handleSort={handleSort}
-                            title="Opening Rank"
+                            title="Opening rank"
                             field="opening_rank"
                             showFilter={false}
                             showRangeFilter={true}
-                            filterTitle={'Filter by Opening Rank'}
+                            filterTitle={'Filter by opening rank'}
                             filterValues={rangeValues}
                             onApplyFilter={(v) => handleRangeFilter(v, 'opening_rank')}
                             defaultSelected={rangeDefaultValues.openingRank || rangeValues}
@@ -348,12 +352,12 @@ export const RankList = () => {
                             sortField={sortField}
                             sortOrder={sortOrder}
                             handleSort={handleSort}
-                            title="Closing Rank"
+                            title="Closing rank"
                             field="closing_rank"
                             showFilter={false}
                             hideBorderRight={true}
                             showRangeFilter={true}
-                            filterTitle={'Filter by Closing Rank'}
+                            filterTitle={'Filter by closing rank'}
                             filterValues={rangeValues}
                             onApplyFilter={(v) => handleRangeFilter(v, 'closing_rank')}
                             defaultSelected={rangeDefaultValues.closingRank || rangeValues}
@@ -379,7 +383,7 @@ export const RankList = () => {
                                 </small>
                               </td>
                               <td>{rank.category}</td>
-                              <td>{rank.quota}</td>
+                              <td>{quotaLabel(rank.quota)}</td>
                               <td>{rank.seatPool}</td>
                               <td>{rank.openingRank}</td>
                               <td>{rank.closingRank}</td>

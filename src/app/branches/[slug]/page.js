@@ -9,6 +9,7 @@ import { groupInstitutesByExam } from '@/utils/examGroups.mjs';
 import { instituteType } from '@/utils/instituteIdentity.mjs';
 import { breadcrumbJsonLd, faqJsonLd, serializeJsonLd } from '@/utils/jsonLd';
 import { buildMetadata, programmeTitleName } from '@/utils/metadata.mjs';
+import { quotaLabel } from '@/utils/quotaLabel.mjs';
 import { fetchBranchSeo } from '@/utils/seoApi';
 
 export const revalidate = 86400;
@@ -142,17 +143,21 @@ export default async function BranchPage({ params }) {
             <section key={group.id} id={`exam-${group.id}`}>
               <h3>{group.title}</h3>
               <div className="table-scroll" tabIndex={0} role="region" aria-label="Data table">
-                <table>
+                <table className="programme-table">
                   <caption>
                     {data.name}: {group.title}. Open category, Gender-Neutral seat pool.
                   </caption>
                   <thead>
                     <tr>
-                      <th scope="col">Institute</th>
+                      <th scope="col" className="name-column">
+                        Institute
+                      </th>
                       <th scope="col">Type</th>
                       <th scope="col">State</th>
                       <th scope="col">NIRF rank</th>
-                      <th scope="col">Quota / round</th>
+                      <th scope="col" className="allocation-column">
+                        Quota &amp; round
+                      </th>
                       <th scope="col">Opening rank</th>
                       <th scope="col">Closing rank</th>
                       <th scope="col">Deep cutoffs</th>
@@ -173,7 +178,10 @@ export default async function BranchPage({ params }) {
                               : '—'}
                           </td>
                           <td>
-                            {summary?.quota ?? '—'} / {summary?.round ?? '—'}
+                            {quotaLabel(summary?.quota)}
+                            <span className="cell-detail">
+                              Round {summary?.round ?? 'not supplied'}
+                            </span>
                           </td>
                           <td>{formatRank(summary?.openingRank)}</td>
                           <td>{formatRank(summary?.closingRank)}</td>
