@@ -36,6 +36,7 @@
   transform: rotate(180deg);
 }
 .years th {
+  text-align: center;
   height: calc(44px * var(--nirf-history-progress));
   line-height: 0;
   padding-block: 0;
@@ -43,6 +44,6 @@
   opacity: var(--nirf-history-progress);
   border-bottom-width: calc(1px * var(--nirf-history-progress));
 }
-.years th:nth-child(n + 3) {
+.years th:nth-child(n + 2) {
   padding-inline: calc(16px * var(--nirf-history-progress));
 }

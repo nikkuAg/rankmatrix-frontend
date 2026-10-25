@@ -16,6 +16,7 @@ export function CollegeHeader({
   const sortCell = (title, field) => (
     <th
       scope="col"
+      rowSpan={expandedNirf ? 2 : 1}
       aria-sort={sortField === field ? (sortOrder === 'asc' ? 'ascending' : 'descending') : 'none'}
     >
       <button type="button" className={styles.sort} onClick={() => handleSort(field)}>
@@ -27,11 +28,19 @@ export function CollegeHeader({
   return (
     <thead className={styles.header}>
       <tr>
-        <th scope="col">College Code</th>
+        <th scope="col" rowSpan={expandedNirf ? 2 : 1}>
+          College Code
+        </th>
         {sortCell('College Name', 'name')}
-        <th scope="col">College Type</th>
+        <th scope="col" rowSpan={expandedNirf ? 2 : 1}>
+          College Type
+        </th>
         {sortCell('State', 'state')}
-        <th scope="col" colSpan={expandedNirf ? nirfYears.length || 1 : 1} className={styles.nirf}>
+        <th
+          scope={expandedNirf ? 'colgroup' : 'col'}
+          colSpan={expandedNirf ? nirfYears.length || 1 : 1}
+          className={styles.nirf}
+        >
           <button
             type="button"
             className={styles.expand}
@@ -45,7 +54,6 @@ export function CollegeHeader({
       </tr>
       {expandedNirf && (
         <tr className={styles.years}>
-          <th colSpan={4} />
           {nirfYears.map((year) => (
             <th key={year} scope="col">
               {year}

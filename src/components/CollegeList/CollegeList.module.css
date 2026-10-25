@@ -25,35 +25,39 @@
 .table {
   --nirf-history-progress: 0;
   --nirf-base-width: max(920px, 100cqw);
-  --nirf-name-width: clamp(330px, 32cqw, 680px);
-  --nirf-rank-space: calc(var(--nirf-base-width) - 410px - var(--nirf-name-width));
   --nirf-history-width: calc(88px * var(--nirf-extra-columns));
-  --nirf-overflow: max(0px, 88px + var(--nirf-history-width) - var(--nirf-rank-space));
+  --nirf-rank-width: calc(
+    180px + (var(--nirf-history-width) - 92px) * var(--nirf-history-progress)
+  );
+  --nirf-table-width: max(var(--nirf-base-width), 740px + var(--nirf-rank-width));
+  --nirf-identity-width: calc(var(--nirf-table-width) - var(--nirf-rank-width));
+  --nirf-code-width: clamp(110px, var(--nirf-identity-width) * 0.08, 160px);
+  --nirf-type-width: clamp(120px, var(--nirf-identity-width) * 0.13, 240px);
+  --nirf-state-width: clamp(180px, var(--nirf-identity-width) * 0.22, 440px);
   table-layout: fixed;
-  width: calc(var(--nirf-base-width) + var(--nirf-overflow) * var(--nirf-history-progress));
+  width: var(--nirf-table-width);
   transition: --nirf-history-progress 400ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 .table[data-history-expanded='true'] {
   --nirf-history-progress: 1;
 }
 .codeColumn {
-  width: 110px;
+  width: var(--nirf-code-width);
 }
 .nameColumn {
-  width: var(--nirf-name-width);
+  width: calc(
+    var(--nirf-identity-width) - var(--nirf-code-width) - var(--nirf-type-width) -
+      var(--nirf-state-width)
+  );
 }
 .typeColumn {
-  width: 120px;
+  width: var(--nirf-type-width);
 }
 .stateColumn {
-  width: 180px;
+  width: var(--nirf-state-width);
 }
 .latestColumn {
-  width: calc(
-    var(--nirf-rank-space) +
-      (max(88px, var(--nirf-rank-space) - var(--nirf-history-width)) - var(--nirf-rank-space)) *
-      var(--nirf-history-progress)
-  );
+  width: calc(180px - 92px * var(--nirf-history-progress));
 }
 .historyColumn {
   width: calc(88px * var(--nirf-history-progress));

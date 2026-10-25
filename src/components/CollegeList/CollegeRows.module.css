@@ -5,7 +5,8 @@
 .row td:nth-child(2) {
   min-width: 280px;
 }
-.row td:last-child {
+.row td:nth-child(n + 5) {
+  text-align: center;
   font-variant-numeric: tabular-nums;
 }
 .row td:nth-child(n + 6) {
