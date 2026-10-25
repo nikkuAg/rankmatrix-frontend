@@ -25,8 +25,15 @@ export const CollegeList = ({ initialData }) => {
   const { data, isLoading } = catalogueState(collegeReqData, collegeQuery, initialData);
   const dispatch = useDispatch();
   const [expandedNirf, setExpandedNirf] = useState(false);
+  const [historyVisible, setHistoryVisible] = useState(false);
   const [sortField, setSortField] = useState(null);
   const [sortOrder, setSortOrder] = useState(null);
+
+  useEffect(() => {
+    if (expandedNirf || !historyVisible) return;
+    const timeout = setTimeout(() => setHistoryVisible(false), 420);
+    return () => clearTimeout(timeout);
+  }, [expandedNirf, historyVisible]);
 
   const nirfYears = useMemo(() => {
     if (!data?.data?.length) return [];
@@ -110,6 +117,9 @@ export const CollegeList = ({ initialData }) => {
   };
 
   const handleExpandNIRF = () => {
+    setHistoryVisible(
+      !expandedNirf || !window.matchMedia('(prefers-reduced-motion: reduce)').matches,
+    );
     setExpandedNirf(!expandedNirf);
     sendAnalyticsEvent({
       action: 'expand_nirf',
@@ -144,18 +154,35 @@ export const CollegeList = ({ initialData }) => {
           <div className={styles.results}>
             {!sortField && <span className={styles.note}>*Data sorted by latest NIRF year</span>}
             <div className={styles.tableContainer}>
-              <table aria-label="Participating colleges" className={styles.table}>
+              <table
+                aria-label="Participating colleges"
+                className={styles.table}
+                data-history-expanded={expandedNirf}
+                style={{ '--nirf-extra-columns': Math.max(nirfYears.length - 1, 0) }}
+              >
+                <colgroup>
+                  <col className={styles.codeColumn} />
+                  <col className={styles.nameColumn} />
+                  <col className={styles.typeColumn} />
+                  <col className={styles.stateColumn} />
+                  <col className={styles.latestColumn} />
+                  {historyVisible &&
+                    nirfYears
+                      .slice(1)
+                      .map((year) => <col key={year} className={styles.historyColumn} />)}
+                </colgroup>
                 <CollegeHeader
                   sortField={sortField}
                   sortOrder={sortOrder}
                   handleSort={handleSort}
-                  expandedNirf={expandedNirf}
+                  expandedNirf={historyVisible}
+                  historyExpanded={expandedNirf}
                   nirfYears={nirfYears}
                   onExpand={handleExpandNIRF}
                 />
                 <CollegeRows
                   colleges={data?.data}
-                  expandedNirf={expandedNirf}
+                  expandedNirf={historyVisible}
                   nirfYears={nirfYears}
                 />
               </table>

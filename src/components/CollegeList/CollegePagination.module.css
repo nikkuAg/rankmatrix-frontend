@@ -9,7 +9,7 @@
 }
 .count {
   color: var(--muted);
-  font-size: 12px;
+  font-size: 14px;
   margin: 0;
   font-variant-numeric: tabular-nums;
 }
@@ -37,7 +37,7 @@
   background: transparent;
   border-radius: var(--radius);
   color: var(--muted);
-  font-size: 12px;
+  font-size: 14px;
 }
 .page:hover,
 .arrow:hover {
@@ -60,7 +60,7 @@
 }
 .mobilePage {
   display: none;
-  font-size: 12px;
+  font-size: 14px;
   color: var(--muted);
 }
 @media (max-width: 600px) {

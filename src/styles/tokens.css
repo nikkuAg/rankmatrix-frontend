@@ -180,10 +180,15 @@ hr {
   border-top: 1px solid var(--line);
   margin: 32px 0;
 }
+@property --nirf-history-progress {
+  syntax: '<number>';
+  inherits: true;
+  initial-value: 0;
+}
 table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 13px;
+  font-size: 15px;
   font-variant-numeric: tabular-nums;
 }
 th,
@@ -197,7 +202,7 @@ td {
 th {
   background: var(--surface-raised);
   color: var(--muted);
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 500;
 }
 tbody tr:hover {

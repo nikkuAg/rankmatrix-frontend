@@ -9,6 +9,7 @@ export function CollegeHeader({
   sortOrder,
   handleSort,
   expandedNirf,
+  historyExpanded = expandedNirf,
   nirfYears,
   onExpand,
 }) {
@@ -35,15 +36,15 @@ export function CollegeHeader({
             type="button"
             className={styles.expand}
             onClick={onExpand}
-            aria-expanded={expandedNirf}
+            aria-expanded={historyExpanded}
           >
             NIRF Rank{expandedNirf ? 's' : nirfYears[0] ? ` (${nirfYears[0]})` : ''}
-            <Icon name={expandedNirf ? 'chevronLeft' : 'chevronRight'} />
+            <Icon name="chevronRight" />
           </button>
         </th>
       </tr>
       {expandedNirf && (
-        <tr>
+        <tr className={styles.years}>
           <th colSpan={4} />
           {nirfYears.map((year) => (
             <th key={year} scope="col">

@@ -1,15 +1,18 @@
-.row td {
-  font-size: 13px;
-}
 .row td:first-child {
   color: var(--muted);
-  font-size: 12px;
+  font-size: 14px;
 }
 .row td:nth-child(2) {
   min-width: 280px;
 }
 .row td:last-child {
   font-variant-numeric: tabular-nums;
+}
+.row td:nth-child(n + 6) {
+  padding-inline: calc(16px * var(--nirf-history-progress));
+  white-space: nowrap;
+  overflow: hidden;
+  opacity: var(--nirf-history-progress);
 }
 
 .body {

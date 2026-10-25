@@ -26,3 +26,23 @@
 .nirf {
   min-width: 150px;
 }
+.expand {
+  width: 148px;
+}
+.expand svg {
+  transition: transform 400ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.expand[aria-expanded='true'] svg {
+  transform: rotate(180deg);
+}
+.years th {
+  height: calc(44px * var(--nirf-history-progress));
+  line-height: 0;
+  padding-block: 0;
+  overflow: hidden;
+  opacity: var(--nirf-history-progress);
+  border-bottom-width: calc(1px * var(--nirf-history-progress));
+}
+.years th:nth-child(n + 3) {
+  padding-inline: calc(16px * var(--nirf-history-progress));
+}

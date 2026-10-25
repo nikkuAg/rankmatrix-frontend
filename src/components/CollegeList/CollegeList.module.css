@@ -13,14 +13,48 @@
 }
 .note {
   color: var(--muted);
-  font-size: 12px;
+  font-size: 14px;
 }
 .tableContainer {
+  container-type: inline-size;
   overflow-x: auto;
   border: 1px solid var(--line);
   border-radius: var(--radius-lg);
   background: var(--surface);
 }
 .table {
-  min-width: 680px;
+  --nirf-history-progress: 0;
+  --nirf-base-width: max(920px, 100cqw);
+  --nirf-name-width: clamp(330px, 32cqw, 680px);
+  --nirf-rank-space: calc(var(--nirf-base-width) - 410px - var(--nirf-name-width));
+  --nirf-history-width: calc(88px * var(--nirf-extra-columns));
+  --nirf-overflow: max(0px, 88px + var(--nirf-history-width) - var(--nirf-rank-space));
+  table-layout: fixed;
+  width: calc(var(--nirf-base-width) + var(--nirf-overflow) * var(--nirf-history-progress));
+  transition: --nirf-history-progress 400ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.table[data-history-expanded='true'] {
+  --nirf-history-progress: 1;
+}
+.codeColumn {
+  width: 110px;
+}
+.nameColumn {
+  width: var(--nirf-name-width);
+}
+.typeColumn {
+  width: 120px;
+}
+.stateColumn {
+  width: 180px;
+}
+.latestColumn {
+  width: calc(
+    var(--nirf-rank-space) +
+      (max(88px, var(--nirf-rank-space) - var(--nirf-history-width)) - var(--nirf-rank-space)) *
+      var(--nirf-history-progress)
+  );
+}
+.historyColumn {
+  width: calc(88px * var(--nirf-history-progress));
 }
