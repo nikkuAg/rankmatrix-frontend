@@ -1,66 +1,37 @@
 'use client';
 
-import React, { useEffect, useRef, useState } from 'react';
-import { Chip, Stack, useTheme } from '@mui/material';
+import { useEffect, useRef, useState } from 'react';
 import { useDebounce } from '@/utils/debounceHook';
 
-export const ChipFilter = ({
-  filterList,
-  labels = {},
-  flexDirection = 'row',
-  onChange,
-  defaultSelected = [],
-}) => {
-  const [filterValues, setFilterValues] = useState(defaultSelected);
-  const debouncedFilterValues = useDebounce(filterValues, 500);
-  const theme = useTheme();
-  const initialFilterValues = useRef(filterValues);
-
-  // Parent may recreate onChange every render. Route through a ref so the
-  // notify effect depends only on the debounced value and doesn't loop.
-  const onChangeRef = useRef(onChange);
+export function ChipFilter({ filterList, labels = {}, onChange, defaultSelected = [] }) {
+  const [selected, setSelected] = useState(defaultSelected);
+  const initial = useRef(selected);
+  const debounced = useDebounce(selected, 500);
+  const callback = useRef(onChange);
   useEffect(() => {
-    onChangeRef.current = onChange;
+    callback.current = onChange;
   }, [onChange]);
-
-  const handleClick = (filter) => {
-    setFilterValues((prev) => {
-      if (prev.includes(filter)) {
-        return prev.filter((f) => f !== filter);
-      }
-      return [...prev, filter];
-    });
-  };
-
   useEffect(() => {
-    // Defaults already describe the initial query. Do not refetch on hydration.
-    if (debouncedFilterValues === initialFilterValues.current) return;
-    onChangeRef.current(debouncedFilterValues);
-  }, [debouncedFilterValues]);
-
+    if (debounced !== initial.current) callback.current(debounced);
+  }, [debounced]);
   return (
-    <Stack direction={flexDirection} gap={0.8} sx={{ flexWrap: 'wrap', maxWidth: '100%' }}>
-      {filterList.map((filter) => (
-        <Chip
-          label={labels[filter] || filter}
-          key={filter}
-          onClick={() => handleClick(filter)}
-          sx={{
-            paddingX: '1rem',
-            paddingY: '0.25rem',
-            border: `2px solid ${theme.palette.primary.main}`,
-            backgroundColor: filterValues.includes(filter)
-              ? theme.palette.primary.light
-              : 'transparent',
-            color: theme.palette.text.main,
-            '&:hover': {
-              backgroundColor: filterValues.includes(filter)
-                ? 'transparent'
-                : theme.palette.primary.light,
-            },
-          }}
-        />
+    <div className="chips" role="group" aria-label="Institute types">
+      {filterList.map((value) => (
+        <button
+          key={value}
+          type="button"
+          aria-pressed={selected.includes(value)}
+          onClick={() =>
+            setSelected((previous) =>
+              previous.includes(value)
+                ? previous.filter((item) => item !== value)
+                : [...previous, value],
+            )
+          }
+        >
+          {labels[value] || value}
+        </button>
       ))}
-    </Stack>
+    </div>
   );
-};
+}

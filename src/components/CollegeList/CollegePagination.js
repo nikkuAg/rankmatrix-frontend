@@ -1,7 +1,7 @@
 'use client';
 
-import { useTheme } from '@mui/material/styles';
-import usePagination from '@mui/material/usePagination';
+import React from 'react';
+import { Icon } from '@/components/Icon';
 import styles from './CollegePagination.module.css';
 
 export function CollegePagination({
@@ -12,64 +12,70 @@ export function CollegePagination({
   end,
   totalItems,
 }) {
-  const theme = useTheme();
-  const { items } = usePagination({
-    page: currentPage,
-    count: totalPages,
-    onChange: (_, value) => onPageChange(value),
-  });
+  const pages = Array.from(
+    new Set(
+      [1, totalPages, currentPage - 1, currentPage, currentPage + 1].filter(
+        (page) => page >= 1 && page <= totalPages,
+      ),
+    ),
+  ).sort((a, b) => a - b);
   return (
-    <div
-      className={styles.wrapper}
-      style={{
-        '--rm-pagination-text': theme.palette.text.main,
-        '--rm-pagination-selected-text': theme.palette.text.light,
-        '--rm-pagination-primary': theme.palette.primary.main,
-        '--rm-pagination-light': theme.palette.gray.light,
-        '--rm-pagination-dark': theme.palette.gray.dark,
-      }}
-    >
+    <div className={styles.wrapper}>
+      <p className={styles.count}>
+        <strong>
+          {start || 0}–{end || 0}
+        </strong>{' '}
+        of {totalItems || 0} results
+      </p>
       <nav aria-label="pagination navigation">
         <ul className={styles.items}>
-          {items.map(({ page, type, selected, ...props }, index) => (
-            <li key={index}>
-              {type === 'start-ellipsis' || type === 'end-ellipsis' ? (
-                <span className={styles.ellipsis}>…</span>
-              ) : (
+          <li>
+            <button
+              type="button"
+              className={styles.arrow}
+              disabled={currentPage <= 1}
+              aria-label="Go to previous page"
+              onClick={() => onPageChange(currentPage - 1)}
+            >
+              <Icon name="arrowLeft" /> <span>Previous</span>
+            </button>
+          </li>
+          <li className={styles.mobilePage}>
+            Page {currentPage} of {Math.max(1, totalPages)}
+          </li>
+          {pages.map((page, index) => (
+            <React.Fragment key={page}>
+              {index > 0 && page - pages[index - 1] > 1 && (
+                <li className={styles.ellipsis} aria-hidden="true">
+                  …
+                </li>
+              )}
+              <li>
                 <button
                   type="button"
-                  {...props}
-                  className={`${styles.page} ${type !== 'page' ? styles.arrow : ''}`}
-                  aria-current={selected ? 'page' : undefined}
-                  aria-label={
-                    type === 'page'
-                      ? `${selected ? 'page' : 'Go to page'} ${page}`
-                      : `Go to ${type} page`
-                  }
+                  className={styles.page}
+                  aria-current={page === currentPage ? 'page' : undefined}
+                  aria-label={`${page === currentPage ? 'page' : 'Go to page'} ${page}`}
+                  onClick={() => onPageChange(page)}
                 >
-                  {type === 'page' ? (
-                    page
-                  ) : (
-                    <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
-                      <path
-                        fill="currentColor"
-                        d={
-                          type === 'previous'
-                            ? 'M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z'
-                            : 'M8.59 16.59 10 18l6-6-6-6-1.41 1.41L13.17 12z'
-                        }
-                      />
-                    </svg>
-                  )}
+                  {page}
                 </button>
-              )}
-            </li>
+              </li>
+            </React.Fragment>
           ))}
+          <li>
+            <button
+              type="button"
+              className={styles.arrow}
+              disabled={currentPage >= totalPages}
+              aria-label="Go to next page"
+              onClick={() => onPageChange(currentPage + 1)}
+            >
+              <span>Next</span> <Icon name="arrowRight" />
+            </button>
+          </li>
         </ul>
       </nav>
-      <p className={styles.count}>
-        Showing results: {start} - {end} of {totalItems}
-      </p>
     </div>
   );
 }

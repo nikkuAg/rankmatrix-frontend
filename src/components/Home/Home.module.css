@@ -1,0 +1,430 @@
+.hero {
+  width: 100%;
+  margin: auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(40px, 5vw, 120px);
+  align-items: center;
+  min-height: clamp(650px, 43vw, 880px);
+  padding: clamp(64px, 5vw, 88px) var(--gutter);
+  overflow: hidden;
+}
+.copy {
+  min-width: 0;
+}
+.copy .eyebrow {
+  margin-bottom: 28px;
+}
+.copy h1 {
+  font-size: clamp(44px, 5.3vw, 112px);
+  font-weight: 500;
+  letter-spacing: -0.065em;
+  line-height: 1.04;
+  margin: 28px 0 28px;
+}
+.copy h1 em {
+  font-family: var(--font-display), serif;
+  font-style: normal;
+  font-weight: 400;
+  color: var(--accent);
+  letter-spacing: -0.065em;
+}
+.description {
+  max-width: 44ch;
+  font-size: clamp(16px, 1.1vw, 21px);
+  color: var(--muted);
+  line-height: 1.8;
+}
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 24px;
+  margin-top: 32px;
+}
+.secondary {
+  align-items: center;
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  display: flex;
+  gap: 16px;
+  padding: 12px 0;
+}
+.note {
+  font-size: 11px;
+  color: var(--muted);
+  margin: 22px 0 0;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.note > span {
+  color: var(--text);
+}
+.note small {
+  font-size: inherit;
+}
+.visual {
+  position: relative;
+  min-width: 0;
+  padding: 0 16px 0 0;
+  perspective: 1200px;
+}
+.backdrop {
+  position: absolute;
+  inset: 60px 0 0 24px;
+  border: 1px solid #53623d;
+  border-radius: var(--radius-lg);
+  background: linear-gradient(140deg, #46513844, #1b2118);
+  transform: rotate(4deg);
+  box-shadow: 0 0 100px #b9dd5d09;
+}
+.rankCard {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  padding: clamp(22px, 2vw, 32px);
+  margin-bottom: 18px;
+  border: 1px solid #52604d;
+  border-radius: var(--radius);
+  background: #283127;
+  transform: rotate(-2deg);
+  box-shadow: 0 18px 50px #0005;
+  animation: float 8s ease-in-out infinite;
+}
+.rankCard > div + div {
+  border-left: 1px solid #52604d;
+  padding-left: 20px;
+}
+.rankCard span {
+  display: block;
+  font-size: clamp(11px, 0.8vw, 14px);
+  color: var(--muted);
+}
+.rankCard strong {
+  display: block;
+  margin-top: 5px;
+  font-size: clamp(25px, 2vw, 40px);
+  font-weight: 500;
+  letter-spacing: -0.8px;
+}
+.board {
+  position: relative;
+  padding: clamp(22px, 2vw, 32px);
+  background: linear-gradient(135deg, #222a21, #1b201c);
+  border: 1px solid #465141;
+  border-radius: var(--radius);
+  box-shadow: 0 20px 70px #0006;
+  transform: rotate(1deg);
+}
+.boardHeading {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: center;
+  padding-bottom: 24px;
+}
+.boardHeading span {
+  font-size: 11px;
+  color: var(--muted);
+}
+.boardHeading h2 {
+  font-family: var(--font-display), serif;
+  font-size: clamp(27px, 2vw, 40px);
+  margin: 8px 0 0;
+}
+.boardHeading .count {
+  color: var(--accent);
+  font:
+    400 clamp(36px, 3vw, 60px) / 1 var(--font-display),
+    serif;
+}
+.count small {
+  display: block;
+  font:
+    400 10px/1.5 var(--font-body),
+    sans-serif;
+  color: var(--muted);
+  margin-top: 7px;
+  text-align: right;
+}
+.columnHead {
+  display: grid;
+  grid-template-columns: 48px 1fr;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  padding: 12px 0;
+  font-size: 10px;
+  color: var(--muted);
+}
+.boardRow {
+  display: grid;
+  grid-template-columns: 32px minmax(0, 1fr) 20px;
+  gap: 16px;
+  align-items: center;
+  min-height: clamp(84px, 6vw, 100px);
+  padding: 16px 0;
+  border-bottom: 1px solid var(--line);
+}
+.boardRow > span {
+  color: var(--muted);
+  font-size: 13px;
+}
+.boardRow strong {
+  font-size: clamp(14px, 1vw, 18px);
+  font-weight: 600;
+  display: block;
+}
+.boardRow small {
+  display: block;
+  font-size: clamp(11px, 0.8vw, 14px);
+  color: var(--muted);
+  margin-top: 4px;
+}
+.boardRow:nth-of-type(4) {
+  background: #354129;
+  border: 1px solid #546641;
+  border-radius: var(--radius);
+  margin-inline: calc(-1 * clamp(22px, 2vw, 32px));
+  padding-inline: clamp(22px, 2vw, 32px);
+  transform: translateX(-10px);
+  box-shadow: 0 8px 24px #0004;
+}
+.boardNote {
+  position: relative;
+  font-size: 11px;
+  color: var(--muted);
+  margin: 16px 0 0;
+}
+.boardLink {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  padding-top: 16px;
+  font-size: 12px;
+  text-decoration: none;
+}
+.workflow {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin: 0 auto;
+  width: calc(100% - 2 * var(--gutter));
+  border-block: 1px solid var(--line);
+}
+.workflow > a {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  padding: 24px;
+  color: var(--text);
+  text-decoration: none;
+}
+.workflow > a + a {
+  border-left: 1px solid var(--line);
+}
+.workflow > a:hover {
+  background: var(--surface);
+}
+.workflow .step {
+  font:
+    400 28px/1 var(--font-display),
+    serif;
+  color: var(--accent);
+}
+.workflow h2 {
+  font-size: 16px;
+  margin: 0 0 6px;
+}
+.workflow p {
+  font-size: 12px;
+  margin: 0;
+  color: var(--muted);
+}
+.workflow > a > :last-child {
+  margin-left: auto;
+  color: var(--accent);
+}
+.tools {
+  width: 100%;
+  margin: auto;
+  padding: 64px var(--gutter);
+}
+.sectionHead {
+  display: flex;
+  gap: 32px;
+  justify-content: space-between;
+  align-items: end;
+  margin-bottom: 32px;
+}
+.sectionHead h2 {
+  font:
+    400 38px/1.2 var(--font-display),
+    serif;
+  margin: 12px 0 0;
+}
+.sectionHead > a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--muted);
+  padding-block: 12px;
+  text-decoration: none;
+}
+.readingStrip {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  padding: 28px 0 0;
+}
+.readingStrip p {
+  margin: 0 0 8px;
+}
+.readingStrip h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 500;
+}
+.readingStrip > a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  padding-block: 12px;
+  text-decoration: none;
+}
+.contextNote {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr auto;
+  align-items: center;
+  gap: 24px;
+  width: calc(100% - 2 * var(--gutter));
+  margin: 0 auto 24px;
+  padding: 24px 0;
+  border-block: 1px solid var(--line);
+}
+.contextNote strong {
+  font-size: 15px;
+  font-weight: 500;
+}
+.contextNote p {
+  margin: 0;
+  font-size: 12px;
+  color: var(--muted);
+}
+.contextNote > a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  text-decoration: none;
+}
+.resources {
+  width: 100%;
+  padding: 0 var(--gutter);
+  margin: auto;
+}
+.desk {
+  border-bottom: 1px solid var(--line);
+}
+.desk > summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 20px 0;
+  list-style: none;
+}
+.desk > summary::-webkit-details-marker {
+  display: none;
+}
+.desk h2 {
+  margin: 6px 0 0;
+  font-size: 17px;
+}
+.news {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 48px;
+  padding: 12px 0 28px;
+}
+.news > * {
+  min-width: 0;
+}
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-2deg);
+  }
+  50% {
+    transform: translateY(-6px) rotate(-1deg);
+  }
+}
+@media (max-width: 1000px) {
+  .hero {
+    gap: 36px;
+    min-height: auto;
+    padding-block: 64px;
+  }
+  .boardHeading h2 {
+    font-size: 23px;
+  }
+  .boardRow {
+    gap: 10px;
+  }
+}
+@media (max-width: 760px) {
+  .hero {
+    grid-template-columns: 1fr;
+    gap: 48px;
+    padding-block: 48px;
+  }
+  .visual {
+    max-width: 540px;
+    width: 100%;
+    margin: auto;
+  }
+  .copy h1 {
+    font-size: clamp(44px, 9vw, 68px);
+  }
+  .sectionHead {
+    display: block;
+  }
+  .sectionHead > a {
+    display: inline-block;
+    margin-top: 8px;
+  }
+  .workflow {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .workflow > a {
+    padding: 20px 8px;
+  }
+  .workflow > a + a {
+    border-left: 0;
+    border-top: 1px solid var(--line);
+  }
+  .contextNote {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+  }
+  .readingStrip {
+    display: block;
+  }
+  .readingStrip > a {
+    display: inline-block;
+    margin-top: 12px;
+  }
+  .news {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 32px;
+  }
+  .tools {
+    padding-block: 48px;
+  }
+}

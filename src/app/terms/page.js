@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link as MuiLink } from '@mui/material';
 import { AppLink } from '@/components/AppLink';
 import { GuideLayout } from '@/components/GuideLayout';
 import { breadcrumbJsonLd, serializeJsonLd } from '@/utils/jsonLd';
@@ -70,9 +69,9 @@ export default function Terms() {
         <p>
           <strong>
             You must verify the latest schedule, eligibility, rules, and cutoffs on the official{' '}
-            <MuiLink href="https://josaa.nic.in" target="_blank" rel="noopener noreferrer">
+            <a href="https://josaa.nic.in" target="_blank" rel="noopener noreferrer">
               JoSAA website
-            </MuiLink>{' '}
+            </a>{' '}
             before making any admission decision.
           </strong>{' '}
           Where data on RankMatrix differs from JoSAA&apos;s official source, the official source
@@ -165,8 +164,8 @@ export default function Terms() {
         <h2>11. Contact</h2>
         <p>
           Questions about these terms can be sent to{' '}
-          <MuiLink href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</MuiLink>, or via the channels
-          listed on the <AppLink href="/contact">contact page</AppLink>.
+          <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>, or via the channels listed on the{' '}
+          <AppLink href="/contact">contact page</AppLink>.
         </p>
       </GuideLayout>
     </>

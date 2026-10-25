@@ -12,15 +12,14 @@ import rankReducer from './slices/rank';
 import seatReducer from './slices/seats';
 import toastReducer from './slices/toast';
 
-const store = createAppStore({
-  api: baseApi,
-  reducers: {
-    toast: toastReducer,
-    college: collegeReducer,
-    branch: branchReducer,
-    seat: seatReducer,
-    rank: rankReducer,
-  },
-});
-
-export default store;
+export const makeStore = () =>
+  createAppStore({
+    api: baseApi,
+    reducers: {
+      toast: toastReducer,
+      college: collegeReducer,
+      branch: branchReducer,
+      seat: seatReducer,
+      rank: rankReducer,
+    },
+  });

@@ -1,143 +1,153 @@
-'use client';
-
-import React from 'react';
-import { Box, Grid2, Stack, useTheme } from '@mui/material';
-import { AppLink } from '@/components/AppLink';
+import Link from 'next/link';
 import { DeferredCalendar } from '@/components/DashboardSections/Calendar/DeferredCalendar';
-import { FeatureBox } from '@/components/DashboardSections/FeatureBox';
+import { FeatureBox, ToolLink } from '@/components/DashboardSections/FeatureBox';
 import { Updates } from '@/components/DashboardSections/Updates';
+import styles from '@/components/Home/Home.module.css';
+import { HomeIntro } from '@/components/Home/HomeIntro';
+import { Icon } from '@/components/Icon';
 
-const HomeIntro = () => {
-  const theme = useTheme();
+export default function Home() {
   return (
-    <Box
-      component="section"
-      aria-label="About RankMatrix"
-      sx={{
-        backgroundColor: theme.background.dark,
-        borderTop: `1px solid ${
-          theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.08)' : 'rgba(0,41,66,0.08)'
-        }`,
-        px: { xs: 3, md: 6 },
-        py: { xs: 5, md: 7 },
-      }}
-    >
-      <Box
-        sx={{
-          maxWidth: 820,
-          mx: 'auto',
-          color: theme.palette.text.main,
-          '& h1, & h2': {
-            fontSize: { xs: '1.4rem', md: '1.65rem' },
-            fontWeight: 700,
-            mt: 4,
-            mb: 1.5,
-            lineHeight: 1.25,
-          },
-          '& h2:first-of-type': { mt: 0 },
-          '& p': { fontSize: '1rem', lineHeight: 1.7, my: 1.5, opacity: 0.9 },
-          '& ul': { pl: 3, my: 1.5 },
-          '& li': { fontSize: '1rem', lineHeight: 1.7, mb: 0.75, opacity: 0.9 },
-          '& a': {
-            color: theme.palette.primary.main,
-            textDecorationColor: theme.palette.primary.light,
-          },
-        }}
-      >
-        <h2>Plan your JoSAA choices with published rank and seat data</h2>
-        <p>
-          RankMatrix compares your inputs with stored JoSAA cutoffs to build a limited
-          college-and-branch shortlist. It does not certify eligibility or calculate admission
-          probability. Contact details and signup are not required. The site is built and maintained
-          by an <AppLink href="/about">IIT Roorkee alumnus</AppLink> who went through the same
-          counselling process.
-        </p>
-
-        <h2>What you can do here</h2>
-        <ul>
-          <li>
-            Use the <AppLink href="/predict">JEE college &amp; branch predictor</AppLink> to find
-            historical institute-branch comparisons for your rank, category and quota.
-          </li>
-          <li>
-            Browse <AppLink href="/ranks">opening and closing ranks</AppLink> across rounds for
-            stored JoSAA branches and institutes.
-          </li>
-          <li>
-            Check the published <AppLink href="/seat-matrix">seat matrix</AppLink> to see how many
-            seats your category actually has at a given institute.
-          </li>
-          <li>
-            Browse <AppLink href="/colleges">participating colleges</AppLink> and{' '}
-            <AppLink href="/branches">participating branches</AppLink> with their cutoff trends.
-          </li>
-          <li>
-            Read the <AppLink href="/guides">JoSAA guides</AppLink> for plain-English explainers on
-            counselling rounds, choice filling, and how the allocation algorithm actually works.
-          </li>
-        </ul>
-
-        <h2>Where the data comes from</h2>
-        <p>
-          Cutoff and seat records are sourced from JoSAA publications; NIRF ranks are a separate
-          dataset. Historical opening and closing ranks per institute-branch-category-round, the
-          official seat matrix, and the stored participating-institute list are available for
-          reference. Use the rank explorer and detail pages to check the stored year and round; the
-          predictor table does not currently display that context. For how the predictor compares
-          this data with your inputs — and where its assumptions can break — see the{' '}
-          <AppLink href="/methodology">methodology page</AppLink>.
-        </p>
-
-        <h2>What RankMatrix is not</h2>
-        <p>
-          Not an official source, not a coaching service, and not a guarantee. Predictions are
-          projections from past cutoffs; real allocations depend on the current year&apos;s
-          applicant pool. Always verify the latest schedule, eligibility, and cutoffs on the
-          official{' '}
-          <Box
-            component="a"
-            href="https://josaa.nic.in"
-            target="_blank"
-            rel="noopener noreferrer"
-            sx={{ color: theme.palette.primary.main }}
-          >
-            JoSAA website
-          </Box>{' '}
-          before locking any choice. RankMatrix is not affiliated with JoSAA, JEE, NTA, the IITs,
-          NITs, IIITs, or GFTIs — it is an independent, free tool. Read the full{' '}
-          <AppLink href="/terms">terms of use</AppLink> and{' '}
-          <AppLink href="/privacy">privacy policy</AppLink> for the details.
-        </p>
-      </Box>
-    </Box>
-  );
-};
-
-const Home = () => (
-  <Stack width="100%">
-    <Box component="header" sx={{ px: { xs: 3, md: 6 }, py: { xs: 3, md: 4 } }}>
-      <Box component="h1" sx={{ m: 0, fontSize: { xs: '1.8rem', md: '2.4rem' }, lineHeight: 1.2 }}>
-        Free JEE Main &amp; Advanced College Predictor and JoSAA Cutoffs
-      </Box>
-      <p>
-        Use your JEE rank to explore college and branch options. Compare published JoSAA cutoffs and
-        seat data without signing up.
-      </p>
-      <AppLink href="/predict">Find colleges for my rank</AppLink>
-    </Box>
-    <Grid2 container columns={12} spacing={2} sx={{ p: 2, alignItems: 'start' }}>
-      <Grid2 size={{ xs: 12, md: 3 }} sx={{ order: { xs: 2, md: 1 } }}>
-        <Updates />
-      </Grid2>
-      <Grid2 size={{ xs: 12, md: 6 }} sx={{ order: { xs: 1, md: 2 } }}>
+    <>
+      <section className={styles.hero}>
+        <div className={styles.copy}>
+          <p className="eyebrow">From JEE to JoSAA</p>
+          <h1>
+            Your rank.
+            <br />
+            Your <em>next move.</em>
+          </h1>
+          <p className={styles.description}>
+            Explore colleges, compare the evidence, and put your JoSAA choices in the order that
+            feels right for you.
+          </p>
+          <div className={styles.actions}>
+            <ToolLink href="/predict" label="Predict Your College" className="button primary">
+              Build my choice list <Icon name="arrowUpRight" />
+            </ToolLink>
+            <Link href="/ranks" prefetch={false} className={styles.secondary}>
+              Explore cutoffs <Icon name="arrowRight" />
+            </Link>
+          </div>
+          <p className={styles.note}>
+            <span>JEE Main</span>
+            <Icon name="plus" />
+            <span>JEE Advanced</span>
+            <small>Each rank in its own context.</small>
+          </p>
+        </div>
+        <div className={styles.visual} aria-label="Illustration of a choice planning workspace">
+          <div className={styles.backdrop} />
+          <div className={styles.rankCard}>
+            <div>
+              <span>JEE Main · example CRL</span>
+              <strong>18,000</strong>
+            </div>
+            <div>
+              <span>JEE Advanced · example CRL</span>
+              <strong>7,200</strong>
+            </div>
+          </div>
+          <div className={styles.board}>
+            <div className={styles.boardHeading}>
+              <div>
+                <span>Your preference list</span>
+                <h2>Make the order yours.</h2>
+              </div>
+              <span className={styles.count}>
+                100<small>choices</small>
+              </span>
+            </div>
+            <div className={styles.columnHead}>
+              <span>Order</span>
+              <span>Programme / institute</span>
+            </div>
+            {[
+              ['Computer Science and Engineering', 'IIT Roorkee · JEE Advanced'],
+              ['Electrical Engineering', 'NIT Tiruchirappalli · JEE Main'],
+              ['Mechanical Engineering', 'IIT Guwahati · JEE Advanced'],
+            ].map(([title, description], index) => (
+              <div className={styles.boardRow} key={title}>
+                <span>0{index + 1}</span>
+                <div>
+                  <strong>{title}</strong>
+                  <small>{description}</small>
+                </div>
+                <Icon name="arrowUpRight" />
+              </div>
+            ))}
+            <Link href="/predict" prefetch={false} className={styles.boardLink}>
+              Make your own choice list <Icon name="arrowRight" />
+            </Link>
+          </div>
+          <p className={styles.boardNote}>
+            Illustrative preferences, not matches for the example ranks.
+          </p>
+        </div>
+      </section>
+      <section className={styles.workflow} aria-label="Prepare your choices">
+        {[
+          ['Discover', 'Find programmes with your rank.', '/predict'],
+          ['Compare', 'Keep the evidence side by side.', '/predict'],
+          ['Arrange', 'Drag choices into your order.', '/predict'],
+        ].map(([title, description, href], index) => (
+          <Link href={href} prefetch={false} key={title}>
+            <span className={styles.step}>0{index + 1}</span>
+            <div>
+              <h2>{title}</h2>
+              <p>{description}</p>
+            </div>
+            <Icon name="arrowUpRight" />
+          </Link>
+        ))}
+      </section>
+      <section className={styles.tools}>
+        <div className={styles.sectionHead}>
+          <div>
+            <p className="eyebrow">Look a little closer</p>
+            <h2>Good decisions have context.</h2>
+          </div>
+          <Link href="/methodology" prefetch={false}>
+            How we use data <Icon name="arrowUpRight" />
+          </Link>
+        </div>
         <FeatureBox />
-      </Grid2>
-      <Grid2 size={{ xs: 12, md: 3 }} sx={{ order: 3, minHeight: 450 }}>
-        <DeferredCalendar />
-      </Grid2>
-    </Grid2>
-    <HomeIntro />
-  </Stack>
-);
-
-export default Home;
+        <div className={styles.readingStrip}>
+          <div>
+            <p className="eyebrow">Before you choose</p>
+            <h3>A little understanding goes a long way.</h3>
+          </div>
+          <Link href="/guides" prefetch={false}>
+            Read the counselling guides <Icon name="arrowRight" />
+          </Link>
+        </div>
+      </section>
+      <aside className={styles.contextNote}>
+        <strong>Two exams. Two rank scales.</strong>
+        <p>
+          Main and Advanced cutoff values stay separate. Historical allocations offer context, not
+          an admission guarantee.
+        </p>
+        <Link href="/guides/reading-cutoff-trends" prefetch={false}>
+          Read the cutoff guide <Icon name="arrowUpRight" />
+        </Link>
+      </aside>
+      <div className={styles.resources}>
+        <details data-accordion className={styles.desk}>
+          <summary>
+            <div>
+              <span className="eyebrow">Counselling desk</span>
+              <h2>Updates, dates &amp; official links</h2>
+            </div>
+            <Icon name="plus" className="disclosure-icon" />
+          </summary>
+          <div className={styles.news}>
+            <Updates />
+            <DeferredCalendar />
+          </div>
+        </details>
+      </div>
+      <HomeIntro />
+    </>
+  );
+}

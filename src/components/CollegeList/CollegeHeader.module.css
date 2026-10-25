@@ -1,53 +1,49 @@
 .header {
-  display: table-header-group;
-}
-.header tr {
-  vertical-align: middle;
+  background: var(--surface-raised);
 }
 .header th {
-  font-family: var(--font-poppins);
-  font-weight: 500;
-  font-size: 0.875rem;
-  line-height: 1.5rem;
-  text-align: left;
-  padding: 16px;
-  vertical-align: inherit;
+  vertical-align: middle;
 }
-.header button {
-  font: inherit;
-  color: inherit;
-  cursor: pointer;
-  border: 0;
-  background: transparent;
-}
-.sort {
+.sort,
+.expand {
   display: flex;
   align-items: center;
-  gap: 8px;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 44px;
+  width: 100%;
+  border: 0;
+  background: transparent;
   padding: 0;
+  color: inherit;
+  font: inherit;
   text-align: left;
 }
-.sort span {
-  font-size: 20px;
-  line-height: 20px;
+.sort:hover,
+.expand:hover {
+  color: var(--accent);
+}
+.nirf {
+  min-width: 150px;
 }
 .expand {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 6px 8px;
-  min-width: 64px;
-  line-height: 1.75 !important;
-  border-radius: 4px;
+  width: 148px;
 }
-.expand:hover {
-  background: rgba(0, 0, 0, 0.04);
+.expand svg {
+  transition: transform 400ms cubic-bezier(0.22, 1, 0.36, 1);
 }
-.header .nirf,
-.header tr:last-child th:last-child {
-  border-right: 0 !important;
+.expand[aria-expanded='true'] svg {
+  transform: rotate(180deg);
 }
-.header button:focus-visible {
-  outline: 2px solid currentColor;
-  outline-offset: 3px;
+.years th {
+  text-align: center;
+  height: calc(44px * var(--nirf-history-progress));
+  line-height: 0;
+  padding-block: 0;
+  overflow: hidden;
+  opacity: var(--nirf-history-progress);
+  border-bottom-width: calc(1px * var(--nirf-history-progress));
+}
+.years th:nth-child(n + 2) {
+  padding-inline: calc(16px * var(--nirf-history-progress));
 }

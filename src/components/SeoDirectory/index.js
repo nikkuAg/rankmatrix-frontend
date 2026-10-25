@@ -1,5 +1,5 @@
 import { DirectoryNavigation } from '@/components/DirectoryNavigation';
-import { GuideLayout } from '@/components/GuideLayout';
+import { FaqList, ReferenceItem, ReferencePanel } from '@/components/ReferencePanel';
 import { instituteType } from '@/utils/instituteIdentity.mjs';
 import { fetchSeoSlugs } from '@/utils/seoApi';
 
@@ -24,27 +24,29 @@ export async function SeoDirectory({ kind, faqs }) {
     : [{ name: 'Programmes and cutoff comparisons', entries }];
 
   return (
-    <GuideLayout
+    <ReferencePanel
       title={
         colleges
           ? 'Browse JoSAA colleges and branch cutoffs'
           : 'Browse engineering programmes by branch'
       }
-      headingLevel="h2"
       description={
         colleges
           ? 'Open an institute to compare its programmes, published opening and closing ranks, and seat data.'
           : 'Open a programme to compare participating institutes, then follow a college link for round-wise cutoffs.'
       }
-      breadcrumbs={[]}
+      label="Directory & useful context"
     >
-      <DirectoryNavigation>
-        {groups
-          .filter((group) => group.entries.length)
-          .map((group) => (
-            <section key={group.name}>
-              <h3>{group.name}</h3>
-              <ul style={{ columns: '2 20rem' }}>
+      {groups
+        .filter((group) => group.entries.length)
+        .map((group) => (
+          <ReferenceItem
+            key={group.name}
+            title={`${group.name} · ${group.entries.length}`}
+            wide={!colleges}
+          >
+            <DirectoryNavigation>
+              <ul className="directory-links">
                 {[...group.entries]
                   .sort((a, b) => a.name.localeCompare(b.name))
                   .map((entry) => (
@@ -53,16 +55,10 @@ export async function SeoDirectory({ kind, faqs }) {
                     </li>
                   ))}
               </ul>
-            </section>
-          ))}
-      </DirectoryNavigation>
-      <h2>Common questions</h2>
-      {faqs.map(({ question, answer }) => (
-        <section key={question}>
-          <h3>{question}</h3>
-          <p>{answer}</p>
-        </section>
-      ))}
-    </GuideLayout>
+            </DirectoryNavigation>
+          </ReferenceItem>
+        ))}
+      <FaqList faqs={faqs} />
+    </ReferencePanel>
   );
 }

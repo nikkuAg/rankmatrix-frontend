@@ -1,4 +1,5 @@
 import { cutoffAnalysis, rankChangeText } from '@/utils/cutoffAnalysis.mjs';
+import { quotaLabel } from '@/utils/quotaLabel.mjs';
 
 const rank = (value) => value.toLocaleString('en-IN');
 
@@ -19,8 +20,13 @@ export function CutoffAnalysis({ rows, year }) {
       </p>
       {analysis.length ? (
         <>
-          <div className="table-scroll">
-            <table>
+          <div
+            className="table-scroll"
+            role="region"
+            aria-label="Closing rank changes by quota"
+            tabIndex={0}
+          >
+            <table className="analysis-table">
               <caption>JoSAA {year}: first to last recorded round, by quota</caption>
               <thead>
                 <tr>
@@ -35,7 +41,7 @@ export function CutoffAnalysis({ rows, year }) {
               <tbody>
                 {analysis.map((item) => (
                   <tr key={item.quota}>
-                    <th scope="row">{item.quota}</th>
+                    <th scope="row">{quotaLabel(item.quota)}</th>
                     <td>{item.roundCount} on file</td>
                     <td>
                       Round {item.first.round}: {rank(item.first.closingRank)}

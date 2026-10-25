@@ -50,7 +50,10 @@ const Ranks = () => {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: serializeJsonLd(faqJsonLd(FAQS)) }}
       />
-      <FeatureLayout title={'Opening & Closing Ranks'}>
+      <FeatureLayout
+        title="Opening & Closing Ranks"
+        description="Explore historical JoSAA cutoffs by institute, programme and allocation context. Compare the same exam and rank list."
+      >
         <RankList />
       </FeatureLayout>
       <ToolAnswers

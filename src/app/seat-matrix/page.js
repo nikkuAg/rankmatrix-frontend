@@ -50,7 +50,10 @@ const SeatMatrix = () => {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: serializeJsonLd(faqJsonLd(FAQS)) }}
       />
-      <FeatureLayout title={'Seat Matrix'}>
+      <FeatureLayout
+        title="Seat Matrix"
+        description="Explore stored seat counts by institute, programme and allocation context, or compare changes against the previous year."
+      >
         <SeatList />
       </FeatureLayout>
       <ToolAnswers

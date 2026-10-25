@@ -1,0 +1,15 @@
+.sort {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  text-align: left;
+  padding: 0;
+  color: inherit;
+  border: 0;
+  background: transparent;
+  font-size: inherit;
+}
+.sort:hover {
+  color: var(--accent);
+}

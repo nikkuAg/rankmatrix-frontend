@@ -1,14 +1,15 @@
 import React from 'react';
-import { Box } from '@mui/material';
 import { notFound } from 'next/navigation';
 import { AppLink } from '@/components/AppLink';
 import { DataPageLayout } from '@/components/DataPageLayout';
 import { DataSourceNotes } from '@/components/DataSourceNotes';
+import { FaqList } from '@/components/ReferencePanel';
 import { summaryRows } from '@/utils/cutoffSummaries.mjs';
 import { groupInstitutesByExam } from '@/utils/examGroups.mjs';
 import { instituteType } from '@/utils/instituteIdentity.mjs';
 import { breadcrumbJsonLd, faqJsonLd, serializeJsonLd } from '@/utils/jsonLd';
 import { buildMetadata, programmeTitleName } from '@/utils/metadata.mjs';
+import { quotaLabel } from '@/utils/quotaLabel.mjs';
 import { fetchBranchSeo } from '@/utils/seoApi';
 
 export const revalidate = 86400;
@@ -141,18 +142,22 @@ export default async function BranchPage({ params }) {
           instituteGroups.map((group) => (
             <section key={group.id} id={`exam-${group.id}`}>
               <h3>{group.title}</h3>
-              <Box className="table-scroll">
-                <table>
+              <div className="table-scroll" tabIndex={0} role="region" aria-label="Data table">
+                <table className="programme-table">
                   <caption>
                     {data.name}: {group.title}. Open category, Gender-Neutral seat pool.
                   </caption>
                   <thead>
                     <tr>
-                      <th scope="col">Institute</th>
+                      <th scope="col" className="name-column">
+                        Institute
+                      </th>
                       <th scope="col">Type</th>
                       <th scope="col">State</th>
                       <th scope="col">NIRF rank</th>
-                      <th scope="col">Quota / round</th>
+                      <th scope="col" className="allocation-column">
+                        Quota &amp; round
+                      </th>
                       <th scope="col">Opening rank</th>
                       <th scope="col">Closing rank</th>
                       <th scope="col">Deep cutoffs</th>
@@ -173,7 +178,10 @@ export default async function BranchPage({ params }) {
                               : '—'}
                           </td>
                           <td>
-                            {summary?.quota ?? '—'} / {summary?.round ?? '—'}
+                            {quotaLabel(summary?.quota)}
+                            <span className="cell-detail">
+                              Round {summary?.round ?? 'not supplied'}
+                            </span>
                           </td>
                           <td>{formatRank(summary?.openingRank)}</td>
                           <td>{formatRank(summary?.closingRank)}</td>
@@ -187,7 +195,7 @@ export default async function BranchPage({ params }) {
                     )}
                   </tbody>
                 </table>
-              </Box>
+              </div>
             </section>
           ))
         )}
@@ -223,12 +231,9 @@ export default async function BranchPage({ params }) {
         </ul>
 
         <h2>Frequently asked questions</h2>
-        {faqs.map((faq) => (
-          <React.Fragment key={faq.question}>
-            <h3>{faq.question}</h3>
-            <p>{faq.answer}</p>
-          </React.Fragment>
-        ))}
+        <div className="detail-questions">
+          <FaqList faqs={faqs} />
+        </div>
       </DataPageLayout>
     </>
   );

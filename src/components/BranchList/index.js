@@ -1,16 +1,6 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import {
-  Box,
-  Stack,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
-  useTheme,
-} from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppLink } from '@/components/AppLink';
 import { ChipFilter } from '@/components/ChipFilter';
@@ -35,8 +25,6 @@ import { sendAnalyticsEvent } from '../../utils/analyticEvent';
 import { TableLayout } from '../TableLayout';
 
 export const BranchList = ({ initialData }) => {
-  const theme = useTheme();
-
   const [getBranchData, branchQuery] = useLazyGetBranchDataQuery();
   const { data: filtersData } = useGetBranchFiltersQuery();
   const branchReqData = useSelector((state) => state.branch);
@@ -138,22 +126,21 @@ export const BranchList = ({ initialData }) => {
   };
 
   return (
-    <Box width={'100%'} height={'100%'} py={2}>
-      <Stack spacing={2} height={'100%'}>
-        <Stack
-          direction={{ xs: 'column', sm: 'row' }}
-          justifyContent={'space-between'}
-          gap={2}
-          alignItems={{ xs: 'flex-start', sm: 'center' }}
-        >
+    <div className="tool-content">
+      <div className="tool-stack">
+        <div className="toolbar">
           <ChipFilter
             filterList={Object.keys(COLLEGE_TYPES)}
             labels={COLLEGE_FILTER_LABELS}
             onChange={handleCollegeTypeChange}
-            defaultSelected={Object.keys(COLLEGE_TYPES)}
+            defaultSelected={branchReqData.filters?.institute__type || Object.keys(COLLEGE_TYPES)}
           />
-          <SearchBox onChange={handleSearchChange} width={{ xs: '100%', sm: '35%' }} />
-        </Stack>
+          <SearchBox
+            defaultValue={branchReqData.search || ''}
+            onChange={handleSearchChange}
+            width={{ xs: '100%', sm: '35%' }}
+          />
+        </div>
         {!isLoading && data?.totalPages > 1 && (
           <PaginationBox
             currentPage={data.page}
@@ -167,17 +154,17 @@ export const BranchList = ({ initialData }) => {
         {isLoading ? (
           <TableSkeleton rows={10} columns={5} />
         ) : (
-          <Stack flexGrow={1}>
+          <div className="tool-stack">
             <TableLayout>
-              <Table aria-label="Participating programmes" sx={{ minWidth: 680 }}>
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Branch Code</TableCell>
+              <table className="programme-directory" aria-label="Participating programmes">
+                <thead>
+                  <tr>
+                    <th scope="col">Branch code</th>
                     <TableSortCell
                       sortField={sortField}
                       sortOrder={sortOrder}
                       handleSort={handleSort}
-                      title="Branch Name"
+                      title="Branch name"
                       field="branch__name"
                       showFilter={false}
                     />
@@ -187,7 +174,7 @@ export const BranchList = ({ initialData }) => {
                       handleSort={handleSort}
                       title="Degree"
                       field="branch__degree"
-                      filterTitle={'Filter by Degree'}
+                      filterTitle={'Filter by degree'}
                       filterValues={filtersData?.degree}
                       onApplyFilter={(filterValues) => handleFilter(filterValues, 'branch__degree')}
                       defaultSelected={branchReqData.filters.branch__degree}
@@ -198,7 +185,7 @@ export const BranchList = ({ initialData }) => {
                       handleSort={handleSort}
                       title="Duration"
                       field="branch__course_duration"
-                      filterTitle={'Filter by Duration'}
+                      filterTitle={'Filter by duration'}
                       filterValues={filtersData?.duration}
                       onApplyFilter={(filterValues) =>
                         handleFilter(filterValues, 'branch__course_duration')
@@ -206,47 +193,33 @@ export const BranchList = ({ initialData }) => {
                       defaultSelected={branchReqData.filters.branch__course_duration}
                       hideBorderRight={true}
                     />
-                  </TableRow>
-                </TableHead>
-                <TableBody>
+                  </tr>
+                </thead>
+                <tbody>
                   {data?.data?.length > 0 ? (
-                    data?.data?.map((branch, i) => (
-                      <TableRow
-                        key={branch.code}
-                        sx={{
-                          '&:hover': {
-                            backgroundColor: theme.palette.primary.light,
-                          },
-                          ...(i === data.data.length - 1 && {
-                            '& td': {
-                              borderBottom: '0px !important',
-                            },
-                          }),
-                        }}
-                      >
-                        <TableCell>{branch.code}</TableCell>
-                        <TableCell>
+                    data?.data?.map((branch) => (
+                      <tr key={branch.code}>
+                        <td>{branch.code}</td>
+                        <td>
                           {branch.slug ? (
                             <AppLink href={`/branches/${branch.slug}`}>{branch.name}</AppLink>
                           ) : (
                             branch.name
                           )}
-                        </TableCell>
-                        <TableCell>{branch.degree}</TableCell>
-                        <TableCell sx={{ borderRight: '0px !important' }}>
-                          {branch.courseDuration} years
-                        </TableCell>
-                      </TableRow>
+                        </td>
+                        <td>{branch.degree}</td>
+                        <td>{branch.courseDuration} years</td>
+                      </tr>
                     ))
                   ) : (
-                    <TableRow>
+                    <tr>
                       <NoDataComponent colSpan={4} />
-                    </TableRow>
+                    </tr>
                   )}
-                </TableBody>
-              </Table>
+                </tbody>
+              </table>
             </TableLayout>
-          </Stack>
+          </div>
         )}
         {!isLoading && data?.totalPages > 1 && (
           <PaginationBox
@@ -258,7 +231,7 @@ export const BranchList = ({ initialData }) => {
             totalItems={data.totalItems}
           />
         )}
-      </Stack>
-    </Box>
+      </div>
+    </div>
   );
 };

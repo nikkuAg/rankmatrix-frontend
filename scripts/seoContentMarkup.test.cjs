@@ -7,6 +7,44 @@ const React = require('react');
 const { renderToStaticMarkup } = require('react-dom/server');
 const { transformSync } = require('next/dist/build/swc');
 
+test('programme evidence distinguishes OPEN/General CRL from reserved and PwD rank lists', () => {
+  const { ProgrammeEvidence } = load('components/CollegePredictor/ProgrammeEvidence.js');
+  const html = renderToStaticMarkup(
+    React.createElement(ProgrammeEvidence, {
+      programme: {
+        institute: { name: 'Indian Institute of Technology Goa', slug: 'iit-goa', type: 'IIT' },
+        branch: {
+          name: 'Computer Science and Engineering',
+          slug: 'cse',
+          degree: 'B.Tech.',
+          courseDuration: 4,
+        },
+        records: ['General', 'OPEN', 'General PwD', 'SC'].map((category) => ({
+          category,
+          quota: 'AI',
+          seatPool: 'Gender-Neutral',
+          round: 6,
+          openingRank: 100,
+          closingRank: 200,
+        })),
+      },
+    }),
+  );
+  for (const category of ['General', 'OPEN']) assert.ok(html.includes(`${category} · CRL`));
+  for (const category of ['General PwD', 'SC'])
+    assert.ok(html.includes(`${category} · category rank`));
+  assert.equal((html.match(/aria-label="Allocation record /g) || []).length, 4);
+  for (const text of [
+    'AI',
+    'Gender-Neutral',
+    '<dd>6</dd>',
+    'Dataset year is not supplied',
+    'JEE Advanced',
+  ])
+    assert.ok(html.includes(text), text);
+  assert.ok(html.includes('href="/colleges/iit-goa/cse"'));
+});
+
 function load(relative) {
   let filename = path.resolve(__dirname, '../src', relative);
   if (fs.existsSync(filename) && fs.statSync(filename).isDirectory())
@@ -121,7 +159,7 @@ test('cutoff analysis is visible server HTML with scoped comparisons and honest 
     'same round, quota, category and seat pool',
   ])
     assert.ok(html.includes(text), text);
-  assert.match(html, /<th scope="row">HS<\/th>/);
+  assert.match(html, /<th scope="row">Home State \(HS\)<\/th>/);
   assert.match(html, /<caption>/);
   assert.ok(html.includes('2025 and 2026 only'));
   const empty = renderToStaticMarkup(React.createElement(CutoffAnalysis, { year: 2026, rows: [] }));

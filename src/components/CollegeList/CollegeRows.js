@@ -1,25 +1,14 @@
 'use client';
 
 import React, { memo } from 'react';
-import { useTheme } from '@mui/material/styles';
 import Link from 'next/link';
 import { instituteType } from '@/utils/instituteIdentity.mjs';
 import { sameCatalogueRows } from '@/utils/sameCatalogueRows.mjs';
 import styles from './CollegeRows.module.css';
 
-// A refresh with identical public data should not rebuild every styled cell.
-// Theme context still updates these cells when the user changes theme.
 export const CollegeRows = memo(function CollegeRows({ colleges, expandedNirf, nirfYears }) {
-  const theme = useTheme();
   return (
-    <tbody
-      className={styles.body}
-      style={{
-        '--rm-cell-text': theme.palette.text.primary,
-        '--rm-row-hover': theme.palette.primary.light,
-        '--rm-empty-text': theme.palette.text.main,
-      }}
-    >
+    <tbody className={styles.body}>
       {colleges?.length > 0 ? (
         colleges?.map((college) => (
           <tr key={college.code} className={styles.row}>

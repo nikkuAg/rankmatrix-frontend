@@ -1,13 +1,14 @@
 import React from 'react';
-import { Box } from '@mui/material';
 import { notFound } from 'next/navigation';
 import { AppLink } from '@/components/AppLink';
 import { DataPageLayout } from '@/components/DataPageLayout';
 import { DataSourceNotes } from '@/components/DataSourceNotes';
+import { FaqList } from '@/components/ReferencePanel';
 import { summaryRows } from '@/utils/cutoffSummaries.mjs';
 import { admissionRankLabel, instituteType } from '@/utils/instituteIdentity.mjs';
 import { breadcrumbJsonLd, faqJsonLd, serializeJsonLd } from '@/utils/jsonLd';
 import { buildMetadata, instituteTitleName } from '@/utils/metadata.mjs';
+import { quotaLabel } from '@/utils/quotaLabel.mjs';
 import { fetchInstituteSeo } from '@/utils/seoApi';
 
 // Rebuild a given page at most once per day (86400 s); cheap for low-change data.
@@ -179,13 +180,13 @@ export default async function InstitutePage({ params }) {
 
         {sortedNirf.length > 0 && (
           <>
-            <h2>stored NIRF rank history</h2>
-            <Box className="table-scroll">
-              <table>
+            <h2>Stored NIRF rank history</h2>
+            <div className="table-scroll" tabIndex={0} role="region" aria-label="NIRF rank history">
+              <table className="compact-table">
                 <thead>
                   <tr>
-                    <th>Year</th>
-                    <th>stored NIRF rank</th>
+                    <th scope="col">Year</th>
+                    <th scope="col">Stored NIRF rank</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -197,7 +198,7 @@ export default async function InstitutePage({ params }) {
                   ))}
                 </tbody>
               </table>
-            </Box>
+            </div>
           </>
         )}
 
@@ -213,17 +214,25 @@ export default async function InstitutePage({ params }) {
         {sortedBranches.length === 0 ? (
           <p>No active branches listed for this institute in the latest cycle.</p>
         ) : (
-          <Box className="table-scroll">
-            <table>
+          <div className="table-scroll" tabIndex={0} role="region" aria-label="Programme cutoffs">
+            <table className="programme-table">
+              <caption className="table-scroll-hint">
+                Scroll horizontally to see all columns on smaller screens.
+              </caption>
               <thead>
                 <tr>
-                  <th>Branch</th>
-                  <th>Degree</th>
-                  <th>Duration</th>
-                  <th>Quota / round</th>
-                  <th>Opening rank</th>
-                  <th>Closing rank</th>
-                  <th>Programme seats (all quotas and pools)</th>
+                  <th scope="col" className="name-column">
+                    Branch
+                  </th>
+                  <th scope="col" className="degree-column">
+                    Degree &amp; duration
+                  </th>
+                  <th scope="col" className="allocation-column">
+                    Quota &amp; round
+                  </th>
+                  <th scope="col">Opening rank</th>
+                  <th scope="col">Closing rank</th>
+                  <th scope="col">Programme seats (all quotas and pools)</th>
                 </tr>
               </thead>
               <tbody>
@@ -233,10 +242,15 @@ export default async function InstitutePage({ params }) {
                       <td>
                         <AppLink href={`${canonicalPath}/${branch.slug}`}>{branch.name}</AppLink>
                       </td>
-                      <td>{branch.degree}</td>
-                      <td>{branch.courseDuration}y</td>
                       <td>
-                        {summary?.quota ?? '—'} / {summary?.round ?? '—'}
+                        {branch.degree}
+                        <span className="cell-detail">{branch.courseDuration} years</span>
+                      </td>
+                      <td>
+                        {quotaLabel(summary?.quota)}
+                        <span className="cell-detail">
+                          Round {summary?.round ?? 'not supplied'}
+                        </span>
                       </td>
                       <td>{formatRank(summary?.openingRank)}</td>
                       <td>{formatRank(summary?.closingRank)}</td>
@@ -246,7 +260,7 @@ export default async function InstitutePage({ params }) {
                 )}
               </tbody>
             </table>
-          </Box>
+          </div>
         )}
 
         <DataSourceNotes
@@ -282,12 +296,9 @@ export default async function InstitutePage({ params }) {
         </ul>
 
         <h2>Frequently asked questions</h2>
-        {faqs.map((faq) => (
-          <React.Fragment key={faq.question}>
-            <h3>{faq.question}</h3>
-            <p>{faq.answer}</p>
-          </React.Fragment>
-        ))}
+        <div className="detail-questions">
+          <FaqList faqs={faqs} />
+        </div>
       </DataPageLayout>
     </>
   );

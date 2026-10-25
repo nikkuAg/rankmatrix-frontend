@@ -24,6 +24,7 @@ function load(relative) {
   loaded.require = (name) => {
     if (name.endsWith('.module.css')) return {};
     if (name === '@/components/NoData') return load('components/NoData/index.js');
+    if (name === '@/components/Icon') return load('components/Icon/index.js');
     if (name.startsWith('@/')) return originalRequire(path.join(source, name.slice(2)));
     return originalRequire(name);
   };
@@ -34,17 +35,6 @@ const { CollegeRows } = load('components/CollegeList/CollegeRows.js');
 const { CollegeHeader } = load('components/CollegeList/CollegeHeader.js');
 const { CollegePagination } = load('components/CollegeList/CollegePagination.js');
 const { CollegeControls } = load('components/CollegeList/CollegeControls.js');
-const { ThemeProvider, createTheme } = require('@mui/material/styles');
-const { themes } = require('../src/constants/themes.js');
-const testTheme = createTheme({
-  palette: {
-    mode: 'light',
-    primary: themes.light.primary,
-    gray: themes.light.gray,
-    text: themes.light.text,
-    shadow: themes.light.shadow,
-  },
-});
 const college = {
   code: 1,
   name: '<script>private()</script>',
@@ -59,8 +49,8 @@ const college = {
 function table(Component, props) {
   return renderToStaticMarkup(
     React.createElement(
-      ThemeProvider,
-      { theme: testTheme },
+      React.Fragment,
+      null,
       React.createElement('table', null, React.createElement(Component, props)),
     ),
   );
@@ -97,7 +87,7 @@ test('table headers expose sort state and real keyboard-operable buttons', () =>
     nirfYears: [2025, 2024],
   });
   assert.match(html, /aria-sort="ascending"/);
-  assert.match(html, /<button[^>]+type="button"[^>]*>College Name/);
+  assert.match(html, /<button[^>]+type="button"[^>]*>College name/);
   assert.match(html, /aria-expanded="true"/);
   assert.match(html, /colSpan="2"/i);
   assert.match(html, />2025<\/th>/);
@@ -121,8 +111,8 @@ test('pagination preserves disabled boundaries, current page and long-range elli
   const markup = (currentPage, totalPages) =>
     renderToStaticMarkup(
       React.createElement(
-        ThemeProvider,
-        { theme: testTheme },
+        React.Fragment,
+        null,
         React.createElement(CollegePagination, {
           currentPage,
           totalPages,
@@ -143,8 +133,8 @@ test('pagination preserves disabled boundaries, current page and long-range elli
 test('initial college controls expose all four selected types and a labelled search input', () => {
   const html = renderToStaticMarkup(
     React.createElement(
-      ThemeProvider,
-      { theme: testTheme },
+      React.Fragment,
+      null,
       React.createElement(CollegeControls, { onTypeChange() {}, onSearchChange() {} }),
     ),
   );
@@ -157,9 +147,18 @@ test('initial college controls expose all four selected types and a labelled sea
 });
 
 test('returning catalogue controls reflect retained query filters and search', () => {
-  const html = renderToStaticMarkup(React.createElement(ThemeProvider, { theme: testTheme },
-    React.createElement(CollegeControls, { defaultSelected: ['NIT'], defaultSearch: 'Delhi',
-      onTypeChange() {}, onSearchChange() {} })));
+  const html = renderToStaticMarkup(
+    React.createElement(
+      React.Fragment,
+      null,
+      React.createElement(CollegeControls, {
+        defaultSelected: ['NIT'],
+        defaultSearch: 'Delhi',
+        onTypeChange() {},
+        onSearchChange() {},
+      }),
+    ),
+  );
   assert.equal((html.match(/aria-pressed="true"/g) || []).length, 1);
   assert.match(html, /aria-pressed="true"[^>]*>NIT<\/button>/);
   assert.match(html, /value="Delhi"/);

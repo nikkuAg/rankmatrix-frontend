@@ -43,7 +43,10 @@ const Branch = async () => {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: serializeJsonLd(faqJsonLd(FAQS)) }}
       />
-      <FeatureLayout title={'Participating Branches'}>
+      <FeatureLayout
+        title="Participating Branches"
+        description="Explore programmes by degree and course duration, then inspect the institutes and historical cutoffs for each option."
+      >
         <BranchList initialData={initialData} />
       </FeatureLayout>
       <SeoDirectory kind="branches" faqs={FAQS} />

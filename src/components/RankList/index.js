@@ -1,16 +1,6 @@
 'use client';
 
 import React, { useEffect, useMemo, useState } from 'react';
-import {
-  Box,
-  Stack,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
-  useTheme,
-} from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { SORT_ORDER } from '@/constants';
 import { CATEGORIES, COLLEGE_TYPES, QUOTAS, SEAT_POOLS } from '@/constants/josaa';
@@ -23,10 +13,11 @@ import {
   updateSearchValue,
   updateYear,
 } from '@/store/slices/rank';
+import { programmeExam } from '@/utils/choices.mjs';
 import { useDebounce } from '@/utils/debounceHook';
 import { COLLEGE_FILTER_LABELS } from '@/utils/instituteIdentity.mjs';
+import { quotaLabel } from '@/utils/quotaLabel.mjs';
 import { sendAnalyticsEvent } from '../../utils/analyticEvent';
-import { useIsMobile } from '../../utils/screenSizeHook';
 import { ChipFilter } from '../ChipFilter';
 import { Dropdown } from '../Dropdown';
 import { NoDataComponent } from '../NoData';
@@ -38,8 +29,6 @@ import { TableSortCell } from '../TableSortCell';
 
 export const RankList = () => {
   const dispatch = useDispatch();
-  const theme = useTheme();
-  const isMobile650 = useIsMobile(650);
 
   const rankReqData = useDebounce(
     useSelector((state) => state.rank),
@@ -152,7 +141,7 @@ export const RankList = () => {
       action: 'year_changed',
       category: 'rank_list',
       label: 'Rank List Search',
-      value: e.target.value,
+      value: Number(e.target.value),
     });
   };
 
@@ -162,7 +151,7 @@ export const RankList = () => {
       action: 'round_changed',
       category: 'rank_list',
       label: 'Rank List Search',
-      value: e.target.value,
+      value: Number(e.target.value),
     });
   };
 
@@ -238,69 +227,65 @@ export const RankList = () => {
   };
 
   return (
-    <Box width={'100%'} height={'100%'} py={2}>
-      <Stack spacing={2} height={'100%'}>
-        <Stack
-          direction={isMobile650 ? 'column' : 'row'}
-          justifyContent={'space-between'}
-          gap={2}
-          alignItems={isMobile650 ? 'flex-start' : 'center'}
-        >
+    <div className="tool-content">
+      <div className="tool-stack">
+        <div className="toolbar">
           <ChipFilter
             filterList={Object.keys(COLLEGE_TYPES)}
             labels={COLLEGE_FILTER_LABELS}
             onChange={handleCollegeTypeChange}
-            defaultSelected={Object.keys(COLLEGE_TYPES)}
+            defaultSelected={rankReqData.filters?.institute__type || Object.keys(COLLEGE_TYPES)}
           />
-          <SearchBox onChange={handleSearchChange} width={isMobile650 ? '100%' : '35%'} />
-        </Stack>
+          <SearchBox defaultValue={rankReqData.search || ''} onChange={handleSearchChange} />
+        </div>
         {isFiltersFetching || isFiltersLoading ? (
           <TableSkeleton rows={10} columns={6} />
         ) : (
           <>
-            <Stack direction={'row'} gap={2} alignItems={'center'}>
+            <div className="toolbar">
               <Dropdown
-                label={'Select Year'}
+                label={'Select year'}
                 id={'select-year'}
                 listData={yearList.sort((a, b) => b.value - a.value)}
                 selectedValue={rankReqData.year}
                 handleChange={handleYearChange}
-                width={isMobile650 ? '40%' : '20%'}
               />
               <Dropdown
-                label={'Select Round'}
+                label={'Select round'}
                 id={'select-round'}
                 listData={roundList}
                 selectedValue={rankReqData?.filters?.round || ''}
                 handleChange={handleRoundChange}
                 disabled={roundList.length === 0}
-                width={isMobile650 ? '40%' : '20%'}
               />
-            </Stack>
-            {!isRanksFetching && !isRanksLoading && rankData?.totalPages > 1 && (
-              <PaginationBox
-                currentPage={rankData.page}
-                totalPages={rankData.totalPages}
-                onPageChange={handlePageChange}
-                start={rankData.startIndex}
-                end={rankData.endIndex}
-                totalItems={rankData.totalItems}
-              />
-            )}
+            </div>
+            {rankReqData.filters?.round &&
+              !isRanksFetching &&
+              !isRanksLoading &&
+              rankData?.totalPages > 1 && (
+                <PaginationBox
+                  currentPage={rankData.page}
+                  totalPages={rankData.totalPages}
+                  onPageChange={handlePageChange}
+                  start={rankData.startIndex}
+                  end={rankData.endIndex}
+                  totalItems={rankData.totalItems}
+                />
+              )}
             {rankReqData.filters?.round ? (
               isRanksFetching || isRanksLoading ? (
                 <TableSkeleton rows={10} columns={6} />
               ) : (
-                <Stack flexGrow={1}>
+                <div className="tool-stack">
                   <TableLayout showTable={rankData?.data?.length > 0}>
-                    <Table aria-label="rank-table">
-                      <TableHead>
-                        <TableRow>
+                    <table className="result-table" aria-label="Opening and closing ranks">
+                      <thead>
+                        <tr>
                           <TableSortCell
                             sortField={sortField}
                             sortOrder={sortOrder}
                             handleSort={handleSort}
-                            title="Institute Name"
+                            title="Institute name"
                             field="institute__name"
                             showFilter={false}
                           />
@@ -308,7 +293,7 @@ export const RankList = () => {
                             sortField={sortField}
                             sortOrder={sortOrder}
                             handleSort={handleSort}
-                            title="Rank Name"
+                            title="Programme"
                             field="branch__name"
                             showFilter={false}
                           />
@@ -318,7 +303,7 @@ export const RankList = () => {
                             handleSort={handleSort}
                             title="Category"
                             field="category"
-                            filterTitle={'Filter by Category'}
+                            filterTitle={'Filter by category'}
                             filterValues={Object.values(CATEGORIES)}
                             onApplyFilter={(filterValues) => handleFilter(filterValues, 'category')}
                             defaultSelected={rankReqData.filters.category}
@@ -329,8 +314,11 @@ export const RankList = () => {
                             handleSort={handleSort}
                             title="Quota"
                             field="quota"
-                            filterTitle={'Filter by Quota'}
-                            filterValues={Object.values(QUOTAS)}
+                            filterTitle={'Filter by quota'}
+                            filterValues={Object.values(QUOTAS).map((value) => ({
+                              value,
+                              label: quotaLabel(value),
+                            }))}
                             onApplyFilter={(filterValues) => handleFilter(filterValues, 'quota')}
                             defaultSelected={rankReqData.filters.quota}
                           />
@@ -338,9 +326,9 @@ export const RankList = () => {
                             sortField={sortField}
                             sortOrder={sortOrder}
                             handleSort={handleSort}
-                            title="Seat Pool"
+                            title="Seat pool"
                             field="seat_pool"
-                            filterTitle={'Filter by Seat Pool'}
+                            filterTitle={'Filter by seat pool'}
                             filterValues={Object.values(SEAT_POOLS)}
                             onApplyFilter={(filterValues) =>
                               handleFilter(filterValues, 'seat_pool')
@@ -351,11 +339,11 @@ export const RankList = () => {
                             sortField={sortField}
                             sortOrder={sortOrder}
                             handleSort={handleSort}
-                            title="Opening Rank"
+                            title="Opening rank"
                             field="opening_rank"
                             showFilter={false}
                             showRangeFilter={true}
-                            filterTitle={'Filter by Opening Rank'}
+                            filterTitle={'Filter by opening rank'}
                             filterValues={rangeValues}
                             onApplyFilter={(v) => handleRangeFilter(v, 'opening_rank')}
                             defaultSelected={rangeDefaultValues.openingRank || rangeValues}
@@ -364,71 +352,72 @@ export const RankList = () => {
                             sortField={sortField}
                             sortOrder={sortOrder}
                             handleSort={handleSort}
-                            title="Closing Rank"
+                            title="Closing rank"
                             field="closing_rank"
                             showFilter={false}
                             hideBorderRight={true}
                             showRangeFilter={true}
-                            filterTitle={'Filter by Closing Rank'}
+                            filterTitle={'Filter by closing rank'}
                             filterValues={rangeValues}
                             onApplyFilter={(v) => handleRangeFilter(v, 'closing_rank')}
                             defaultSelected={rangeDefaultValues.closingRank || rangeValues}
                           />
-                        </TableRow>
-                      </TableHead>
-                      <TableBody>
+                        </tr>
+                      </thead>
+                      <tbody>
                         {rankData?.data?.length > 0 ? (
-                          rankData?.data?.map((rank, i) => (
-                            <TableRow
+                          rankData?.data?.map((rank) => (
+                            <tr
                               key={`${rank.institute.code}_${rank.branch.code}_${rank.category}_${rank.quota}_${rank.seatPool}`}
-                              sx={{
-                                '&:hover': {
-                                  backgroundColor: theme.palette.primary.light,
-                                },
-                                ...(i === rankData.data.length - 1 && {
-                                  '& td': {
-                                    borderBottom: '0px !important',
-                                  },
-                                }),
-                              }}
                             >
-                              <TableCell>{rank.institute.name}</TableCell>
-                              <TableCell>{rank.branch.name}</TableCell>
-                              <TableCell>{rank.category}</TableCell>
-                              <TableCell>{rank.quota}</TableCell>
-                              <TableCell>{rank.seatPool}</TableCell>
-                              <TableCell>{rank.openingRank}</TableCell>
-                              <TableCell sx={{ borderRight: '0px !important' }}>
-                                {rank.closingRank}
-                              </TableCell>
-                            </TableRow>
+                              <td>
+                                {rank.institute.name}
+                                <small className="cell-detail">
+                                  {programmeExam(rank.institute)}
+                                </small>
+                              </td>
+                              <td>
+                                {rank.branch.name}
+                                <small className="cell-detail">
+                                  {rank.branch.degree} · {rank.branch.courseDuration} years
+                                </small>
+                              </td>
+                              <td>{rank.category}</td>
+                              <td>{quotaLabel(rank.quota)}</td>
+                              <td>{rank.seatPool}</td>
+                              <td>{rank.openingRank}</td>
+                              <td>{rank.closingRank}</td>
+                            </tr>
                           ))
                         ) : (
-                          <TableRow>
+                          <tr>
                             <NoDataComponent colSpan={7} />
-                          </TableRow>
+                          </tr>
                         )}
-                      </TableBody>
-                    </Table>
+                      </tbody>
+                    </table>
                   </TableLayout>
-                </Stack>
+                </div>
               )
             ) : (
               <NoDataComponent text="Select a year and round to view the opening and closing ranks" />
             )}
-            {!isRanksFetching && !isRanksLoading && rankData?.totalPages > 1 && (
-              <PaginationBox
-                currentPage={rankData.page}
-                totalPages={rankData.totalPages}
-                onPageChange={handlePageChange}
-                start={rankData.startIndex}
-                end={rankData.endIndex}
-                totalItems={rankData.totalItems}
-              />
-            )}
+            {rankReqData.filters?.round &&
+              !isRanksFetching &&
+              !isRanksLoading &&
+              rankData?.totalPages > 1 && (
+                <PaginationBox
+                  currentPage={rankData.page}
+                  totalPages={rankData.totalPages}
+                  onPageChange={handlePageChange}
+                  start={rankData.startIndex}
+                  end={rankData.endIndex}
+                  totalItems={rankData.totalItems}
+                />
+              )}
           </>
         )}
-      </Stack>
-    </Box>
+      </div>
+    </div>
   );
 };

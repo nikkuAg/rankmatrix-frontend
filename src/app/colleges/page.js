@@ -48,7 +48,10 @@ const College = async () => {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: serializeJsonLd(faqJsonLd(FAQS)) }}
       />
-      <FeatureLayout title={'Participating Colleges'} maxWidth={'xl'}>
+      <FeatureLayout
+        title="Participating Colleges"
+        description="Find participating institutes, explore their programmes and check published NIRF ranks alongside admission records."
+      >
         <CollegeList initialData={initialData} />
       </FeatureLayout>
       <SeoDirectory kind="institutes" faqs={FAQS} />

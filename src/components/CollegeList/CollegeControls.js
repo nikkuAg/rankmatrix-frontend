@@ -1,15 +1,18 @@
 'use client';
 
 import React, { useEffect, useId, useRef, useState } from 'react';
-import { useTheme } from '@mui/material/styles';
 import { COLLEGE_TYPES } from '@/constants/josaa';
 import { useDebounce } from '@/utils/debounceHook';
 import { COLLEGE_FILTER_LABELS } from '@/utils/instituteIdentity.mjs';
 import styles from './CollegeControls.module.css';
 
 const types = Object.keys(COLLEGE_TYPES);
-export function CollegeControls({ onTypeChange, onSearchChange, defaultSelected = types, defaultSearch = '' }) {
-  const theme = useTheme();
+export function CollegeControls({
+  onTypeChange,
+  onSearchChange,
+  defaultSelected = types,
+  defaultSearch = '',
+}) {
   const id = useId();
   const [selected, setSelected] = useState(defaultSelected);
   const [search, setSearch] = useState(defaultSearch);
@@ -27,20 +30,7 @@ export function CollegeControls({ onTypeChange, onSearchChange, defaultSelected 
     callbacks.current.onSearchChange(debouncedSearch);
   }, [debouncedSearch]);
   return (
-    <div
-      className={styles.controls}
-      style={{
-        '--rm-control-text': theme.palette.text.main,
-        '--rm-control-primary': theme.palette.primary.main,
-        '--rm-control-selected': theme.palette.primary.light,
-        '--rm-control-border':
-          theme.palette.mode === 'dark' ? theme.palette.gray.dark : theme.palette.gray.main,
-        '--rm-control-label': theme.palette.gray.dark,
-        '--rm-control-focus':
-          theme.palette.mode === 'dark' ? theme.palette.primary.light : theme.palette.primary.main,
-        '--rm-control-shadow': theme.palette.shadow.main,
-      }}
-    >
+    <div className={styles.controls}>
       <div className={styles.chips}>
         {types.map((type) => (
           <button

@@ -1,14 +1,16 @@
 import React from 'react';
-import { Box } from '@mui/material';
 import { notFound } from 'next/navigation';
 import { AppLink } from '@/components/AppLink';
 import { CutoffAnalysis } from '@/components/CutoffAnalysis';
 import { DataPageLayout } from '@/components/DataPageLayout';
 import { DataSourceNotes } from '@/components/DataSourceNotes';
+import { Icon } from '@/components/Icon';
+import { FaqList } from '@/components/ReferencePanel';
 import { cutoffSummaries } from '@/utils/cutoffSummaries.mjs';
-import { instituteType } from '@/utils/instituteIdentity.mjs';
+import { admissionRankLabel, instituteType } from '@/utils/instituteIdentity.mjs';
 import { breadcrumbJsonLd, faqJsonLd, serializeJsonLd } from '@/utils/jsonLd';
 import { buildMetadata, instituteTitleName, programmeTitleName } from '@/utils/metadata.mjs';
+import { quotaLabel } from '@/utils/quotaLabel.mjs';
 import { fetchInstituteBranchSeo } from '@/utils/seoApi';
 
 export const revalidate = 86400;
@@ -158,28 +160,29 @@ export default async function InstituteBranchPage({ params }) {
           not establish your eligibility.
         </p>
         {summaries.length ? (
-          <Box className="table-scroll">
-            <table>
-              <thead>
-                <tr>
-                  <th>Quota</th>
-                  <th>Round</th>
-                  <th>Opening rank</th>
-                  <th>Closing rank</th>
-                </tr>
-              </thead>
-              <tbody>
-                {summaries.map((row) => (
-                  <tr key={row.quota}>
-                    <td>{row.quota}</td>
-                    <td>{row.round}</td>
-                    <td>{formatRank(row.openingRank)}</td>
-                    <td>{formatRank(row.closingRank)}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </Box>
+          <div className="quota-summary">
+            {summaries.map((row) => (
+              <section key={row.quota}>
+                <header>
+                  <h3>{quotaLabel(row.quota)} quota</h3>
+                  <span>
+                    JoSAA {latestYear} · Round {row.round}
+                  </span>
+                </header>
+                <p>{admissionRankLabel(data.institute)} · OPEN / CRL · Gender-Neutral</p>
+                <dl>
+                  <div>
+                    <dt>Opening rank</dt>
+                    <dd>{formatRank(row.openingRank)}</dd>
+                  </div>
+                  <div>
+                    <dt>Closing rank</dt>
+                    <dd>{formatRank(row.closingRank)}</dd>
+                  </div>
+                </dl>
+              </section>
+            ))}
+          </div>
         ) : (
           <p>
             RankMatrix has no matching Open category, Gender-Neutral summary on file. Other
@@ -194,10 +197,25 @@ export default async function InstituteBranchPage({ params }) {
           <p>No cutoff rows are currently on file in RankMatrix for this combination.</p>
         ) : (
           yearGroups.map(([year, rows]) => (
-            <React.Fragment key={year}>
-              <h3>JoSAA {year}</h3>
-              <Box className="table-scroll">
-                <table>
+            <details
+              data-accordion
+              className="history-year"
+              key={year}
+              open={Number(year) === Number(latestYear)}
+            >
+              <summary>
+                <h3>JoSAA {year}</h3>
+                <span>
+                  {rows.length} stored observations <Icon name="plus" className="disclosure-icon" />
+                </span>
+              </summary>
+              <div
+                className="table-scroll"
+                tabIndex={0}
+                role="region"
+                aria-label={`JoSAA ${year} historical cutoffs`}
+              >
+                <table className="history-table">
                   <thead>
                     <tr>
                       <th>Round</th>
@@ -212,7 +230,7 @@ export default async function InstituteBranchPage({ params }) {
                     {rows.map((row, i) => (
                       <tr key={`${year}-${i}`}>
                         <td>{row.round}</td>
-                        <td>{row.quota}</td>
+                        <td>{quotaLabel(row.quota)}</td>
                         <td>{row.category}</td>
                         <td>{row.seatPool}</td>
                         <td>{formatRank(row.openingRank)}</td>
@@ -221,14 +239,14 @@ export default async function InstituteBranchPage({ params }) {
                     ))}
                   </tbody>
                 </table>
-              </Box>
-            </React.Fragment>
+              </div>
+            </details>
           ))
         )}
 
         <h2>Latest seat matrix {latestYear ? `(${latestYear})` : ''}</h2>
         {data.seats && data.seats.length > 0 ? (
-          <Box className="table-scroll">
+          <div className="table-scroll" tabIndex={0} role="region" aria-label="Data table">
             <table>
               <thead>
                 <tr>
@@ -241,7 +259,7 @@ export default async function InstituteBranchPage({ params }) {
               <tbody>
                 {data.seats.map((row, i) => (
                   <tr key={i}>
-                    <td>{row.quota}</td>
+                    <td>{quotaLabel(row.quota)}</td>
                     <td>{row.category}</td>
                     <td>{row.seatPool}</td>
                     <td>{row.availableSeats}</td>
@@ -249,7 +267,7 @@ export default async function InstituteBranchPage({ params }) {
                 ))}
               </tbody>
             </table>
-          </Box>
+          </div>
         ) : (
           <p>
             RankMatrix has no seat rows on file for this combination in the cutoff year shown. Check
@@ -298,12 +316,9 @@ export default async function InstituteBranchPage({ params }) {
         </ul>
 
         <h2>Frequently asked questions</h2>
-        {faqs.map((faq) => (
-          <React.Fragment key={faq.question}>
-            <h3>{faq.question}</h3>
-            <p>{faq.answer}</p>
-          </React.Fragment>
-        ))}
+        <div className="detail-questions">
+          <FaqList faqs={faqs} />
+        </div>
       </DataPageLayout>
     </>
   );

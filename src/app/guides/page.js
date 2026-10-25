@@ -1,7 +1,8 @@
 import React from 'react';
-import { Box, Card, Stack, Typography } from '@mui/material';
 import Link from 'next/link';
 import { GuideLayout } from '@/components/GuideLayout';
+import styles from '@/components/GuideLayout/GuideLayout.module.css';
+import { Icon } from '@/components/Icon';
 import { breadcrumbJsonLd, serializeJsonLd } from '@/utils/jsonLd';
 import { buildMetadata } from '@/utils/metadata.mjs';
 
@@ -86,6 +87,35 @@ const breadcrumbs = breadcrumbJsonLd([
   { name: 'Guides', path: PAGE_URL },
 ]);
 
+const READING_PATHS = [
+  {
+    id: 'read-your-rank',
+    title: 'Read your rank',
+    description: 'Understand what a cutoff can—and cannot—tell you.',
+    slugs: [
+      'josaa-opening-and-closing-ranks',
+      'reading-cutoff-trends',
+      'jee-main-vs-advanced-vs-josaa',
+    ],
+  },
+  {
+    id: 'understand-allocation',
+    title: 'Understand allocation',
+    description: 'Keep categories, quotas and seat pools distinct.',
+    slugs: ['what-is-josaa-counselling', 'josaa-seat-matrix', 'josaa-reservation-categories'],
+  },
+  {
+    id: 'prepare-your-choices',
+    title: 'Prepare your choices',
+    description: 'Put the evidence into a preference order you would accept.',
+    slugs: [
+      'jee-main-college-predictor',
+      'josaa-choice-filling-strategy',
+      'josaa-counselling-rounds',
+    ],
+  },
+];
+
 export default function GuidesHub() {
   return (
     <>
@@ -96,53 +126,107 @@ export default function GuidesHub() {
       <GuideLayout
         title="JoSAA & JEE counselling guides"
         description="Straightforward, no-spam explainers built around the questions JEE aspirants actually ask — from someone who built the tool they're reading them in."
+        variant="library"
+        eyebrow="The counselling library"
+        headerNote={
+          <>
+            <span>Already have your rank?</span>
+            <a href="#read-your-rank">
+              Start with rank interpretation <Icon name="arrowDown" />
+            </a>
+            <span>Nine guides · no account needed</span>
+          </>
+        }
       >
-        <p>
-          JoSAA allocates seats at its published participating institutes. State counselling and
-          other admission authorities run separate processes outside JoSAA. The rules are well
-          documented on the official JoSAA site, but that documentation is written for operators,
-          not candidates. These guides translate the important bits into plain English, connect them
-          to what you will actually see in the RankMatrix tools, and point at official sources
-          wherever you should double-check.
-        </p>
-        <p>
-          Every guide below is free, and no account or contact details are required to read it. See
-          the <Link href="/privacy">privacy policy</Link> for browser storage, Analytics and
-          optional advertising information. If something is still unclear after reading one, the
-          relevant tool &mdash; Opening &amp; Closing Ranks, Seat Matrix, Participating Colleges, or
-          the Predictor &mdash; is one click away.
-        </p>
-
-        <Stack gap={2} sx={{ mt: 4 }}>
-          {GUIDES.map((guide) => (
-            <Link
-              key={guide.slug}
-              href={`${PAGE_URL}/${guide.slug}`}
-              style={{ textDecoration: 'none', color: 'inherit' }}
+        <nav className={styles.jumpLinks} aria-label="Reading paths">
+          <ol>
+            {READING_PATHS.map((path, index) => (
+              <li key={path.id}>
+                <a href={`#${path.id}`}>
+                  <span aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+                  {path.title}
+                </a>
+              </li>
+            ))}
+          </ol>
+        </nav>
+        <div className={styles.libraryGrid}>
+          {READING_PATHS.map((path, index) => (
+            <section
+              className={styles.libraryPath}
+              id={path.id}
+              aria-labelledby={`${path.id}-title`}
+              key={path.id}
             >
-              <Card
-                variant="outlined"
-                sx={{
-                  borderRadius: 2,
-                  backgroundColor: 'transparent',
-                  p: 2.5,
-                  transition: 'border-color 120ms, background-color 120ms',
-                  '&:hover': { borderColor: 'primary.main' },
-                }}
-              >
-                <Typography component="h2" sx={{ fontSize: '1.2rem', fontWeight: 600, mb: 1 }}>
-                  {guide.title}
-                </Typography>
-                <Typography component="p" sx={{ fontSize: '0.95rem', lineHeight: 1.6, mb: 1.5 }}>
-                  {guide.summary}
-                </Typography>
-                <Box sx={{ fontSize: '0.8rem', opacity: 0.6 }}>
-                  {guide.readingTimeMinutes} min read
-                </Box>
-              </Card>
-            </Link>
+              <header>
+                <span className={styles.chapter} aria-hidden="true">
+                  {String(index + 1).padStart(2, '0')}
+                </span>
+                <h2 id={`${path.id}-title`}>{path.title}</h2>
+                <p>{path.description}</p>
+              </header>
+              <div>
+                {path.slugs
+                  .map((slug) => GUIDES.find((guide) => guide.slug === slug))
+                  .map((guide) => (
+                    <Link
+                      className={styles.guideRow}
+                      href={`${PAGE_URL}/${guide.slug}`}
+                      prefetch={false}
+                      key={guide.slug}
+                    >
+                      <div>
+                        <h3>{guide.title}</h3>
+                        <p>{guide.summary}</p>
+                        <small>{guide.readingTimeMinutes} min read</small>
+                      </div>
+                      <span className={styles.guideArrow} aria-hidden="true">
+                        <Icon name="arrowUpRight" />
+                      </span>
+                    </Link>
+                  ))}
+              </div>
+            </section>
           ))}
-        </Stack>
+        </div>
+        <div className={styles.libraryIntro}>
+          <p>
+            JoSAA allocates seats at its published participating institutes. State counselling and
+            other admission authorities run separate processes outside JoSAA. The rules are well
+            documented on the official JoSAA site, but that documentation is written for operators,
+            not candidates. These guides translate the important bits into plain English, connect
+            them to what you will actually see in the RankMatrix tools, and point at official
+            sources wherever you should double-check.
+          </p>
+          <p>
+            Every guide here is free, and no account or contact details are required to read it. See
+            the{' '}
+            <Link href="/privacy" prefetch={false}>
+              privacy policy
+            </Link>{' '}
+            for browser storage, Analytics and optional advertising information. If something is
+            still unclear after reading one, the relevant tool &mdash; Opening &amp; Closing Ranks,
+            Seat Matrix, Participating Colleges, or the Predictor &mdash; is one click away.
+          </p>
+        </div>
+        <section className={styles.libraryNext}>
+          <div>
+            <p className={styles.eyebrow}>The source of the rules</p>
+            <h2>Verify the current official instructions.</h2>
+            <p>
+              Guides explain the context. The published schedule, eligibility rules and programme
+              restrictions govern your participation.
+            </p>
+          </div>
+          <a
+            className="button"
+            href="https://josaa.nic.in/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            JoSAA official portal <Icon name="arrowUpRight" />
+          </a>
+        </section>
       </GuideLayout>
     </>
   );
