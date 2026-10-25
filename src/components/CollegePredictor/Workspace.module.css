@@ -38,10 +38,6 @@
   margin: 0;
   line-height: 1.5;
 }
-.context div:nth-child(-n + 2) dd {
-  font-size: 25px;
-  font-variant-numeric: tabular-nums;
-}
 .formPanel {
   display: grid;
   grid-template-columns: minmax(0, 0.75fr) minmax(0, 1.5fr);
@@ -117,67 +113,32 @@
   font-size: var(--text-small);
   line-height: 1.6;
 }
-.allocationChoices {
+.rankProfile {
   min-width: 0;
-  margin: 0;
-  padding: 0;
   border: 0;
+  border-top: 1px solid var(--line);
+  margin: 24px 0 0;
+  padding: 16px 0 0;
 }
-.allocationChoices legend {
-  margin-bottom: 8px;
+.rankProfile legend {
+  padding-right: 12px;
+  margin: 0;
+  font-size: var(--text-control);
 }
-.selectionGrid {
+.profileSummary {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 8px;
+  gap: 4px;
+  font-variant-numeric: tabular-nums;
 }
-.selectionOption {
+.profileSummary span {
   display: flex;
-  align-items: center;
-  gap: 10px;
-  min-height: 48px;
-  padding: 10px 12px;
-  border: 1px solid var(--control-line);
-  border-radius: var(--radius);
-  cursor: pointer;
-  line-height: 1.5;
+  gap: 12px;
+  align-items: baseline;
 }
-.selectionOption:has(input:checked) {
-  background: #2b3422;
-  border-color: var(--accent);
-}
-.selectionOption input {
-  accent-color: var(--accent);
-  width: 16px;
-  height: 16px;
-  flex: 0 0 16px;
-  margin: 0;
-}
-.selectionOption:focus-within {
-  outline: 2px solid var(--accent);
-  outline-offset: 3px;
-}
-.selectionActions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px 20px;
-  margin-bottom: 8px;
-}
-.selectionActions button {
-  min-height: 44px;
-  padding: 0;
-  border: 0;
-  background: transparent;
-  color: var(--accent);
-  font-size: var(--text-small);
-  text-decoration: underline;
-  text-underline-offset: 4px;
-}
-.allocationChoices > p {
-  margin: 8px 0 0;
+.profileSummary small {
+  min-width: 66px;
   font-size: var(--text-small);
   color: var(--muted);
-  line-height: 1.6;
 }
 .searchSettings {
   border-top: 1px solid var(--line);
@@ -853,9 +814,6 @@
   }
 }
 @media (max-width: 360px) {
-  .selectionGrid {
-    grid-template-columns: 1fr;
-  }
   .rankPair {
     grid-template-columns: 1fr;
   }

@@ -16,7 +16,7 @@ import {
 import { downloadCSV } from '@/utils/downloadCSV';
 import { loadPredictorFormData, savePredictorFormData } from '@/utils/formStorage';
 import { instituteType } from '@/utils/instituteIdentity.mjs';
-import { quotaOptions } from '@/utils/predictorSelections.mjs';
+import { categoryLabel, quotaOptions } from '@/utils/predictorSelections.mjs';
 import { quotaLabel } from '@/utils/quotaLabel.mjs';
 import { PredictionForm } from './PredictionForm';
 import { ProgrammeEvidence } from './ProgrammeEvidence';
@@ -84,7 +84,7 @@ export function CollegePredictor() {
   function openForm() {
     setOpen(true);
     requestAnimationFrame(() => {
-      workspaceRoot.current?.querySelector('select[name="category"]')?.focus();
+      workspaceRoot.current?.querySelector('[data-selection="categories"]')?.focus();
     });
     sendAnalyticsEvent({
       action: `${formData ? 'update' : 'add'}_form_open_clicked`,
@@ -146,22 +146,22 @@ export function CollegePredictor() {
       {formData && (
         <div className={styles.context}>
           <dl>
-            <div>
-              <dt>JEE Main rank</dt>
-              <dd>{Number(formData.mainsRank).toLocaleString('en-IN')}</dd>
-            </div>
-            <div>
-              <dt>JEE Advanced rank</dt>
-              <dd>
-                {formData.advRank
-                  ? Number(formData.advRank).toLocaleString('en-IN')
-                  : 'Not entered'}
-              </dd>
-            </div>
-            <div>
-              <dt>Category / rank list</dt>
-              <dd>{formData.category}</dd>
-            </div>
+            {formData.rankProfiles.map((profile) => (
+              <div key={profile.category}>
+                <dt>{categoryLabel(profile.category)}</dt>
+                <dd className={styles.profileSummary}>
+                  <span>
+                    <small>Main</small> {Number(profile.mainsRank).toLocaleString('en-IN')}
+                  </span>
+                  <span>
+                    <small>Advanced</small>{' '}
+                    {profile.advRank
+                      ? Number(profile.advRank).toLocaleString('en-IN')
+                      : 'Not entered'}
+                  </span>
+                </dd>
+              </div>
+            ))}
             <div>
               <dt>Seat pools</dt>
               <dd>{formData.seatPools.join(' · ')}</dd>

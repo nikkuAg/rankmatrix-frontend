@@ -70,6 +70,22 @@ test('stored choices reject corruption and foreign records while deduplicating v
   };
   assert.deepEqual(parseChoices(JSON.stringify({ version: 1, choices: [corrupt] })), []);
 });
+
+test('category-specific cutoff records remain distinct in saved programmes and exports', () => {
+  const rows = [
+    { ...row(2), category: 'General', openingRank: 18000 },
+    { ...row(2), category: 'OBC-NCL', openingRank: 4500 },
+  ];
+  const choices = parseChoices(JSON.stringify({ version: 1, choices: groupProgrammes(rows) }));
+  assert.equal(choices.length, 1);
+  assert.deepEqual(
+    choiceRows(choices).map(({ category, openingRank }) => [category, openingRank]),
+    [
+      ['General', 18000],
+      ['OBC-NCL', 4500],
+    ],
+  );
+});
 test('choice export includes all allocation rows and never fabricates a dataset year', () => {
   const data = choiceRows(groupProgrammes([row(1), row(1, 'HS'), row(2)]));
   assert.equal(data.length, 3);
