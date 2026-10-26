@@ -46,9 +46,9 @@ export default function Terms() {
       >
         <h2>The short version</h2>
         <p>
-          RankMatrix is a free, independent tool. It is not an official source. Predictions and
-          cutoff data are projections from public JoSAA publications, not guarantees. By using the
-          site you agree to the terms below.
+          RankMatrix is a free, independent planning tool. It displays published historical cutoff
+          and seat information alongside its own comparisons and explanations. Predictor results are
+          not admission offers or guarantees. By using the site you agree to the terms below.
         </p>
 
         <h2>1. About RankMatrix</h2>
@@ -59,12 +59,20 @@ export default function Terms() {
           government body. References to those names are descriptive, not promotional.
         </p>
 
-        <h2>2. Unofficial data, no admission decisions</h2>
+        <h2>2. Published facts and independent tools</h2>
         <p>
-          Cutoff and seat records are compiled from public JoSAA publications. Predictor outputs are
-          RankMatrix calculations, not official allocations. NIRF figures come from NIRF, rather
-          than JoSAA. The stored catalogue may be incomplete. It is provided for informational
-          purposes only.
+          Our JoSAA dataset contains published opening and closing ranks, seat counts, and institute
+          and programme details. These factual records are extracted from public JoSAA publications;
+          they do not contain candidate names, roll numbers, application IDs, or individual
+          candidates&apos; personal rank records. NIRF figures come from NIRF as a separate source.
+          Stored coverage may be incomplete or out of date.
+        </p>
+        <p>
+          Search, comparisons, predictor results, and choice-list features are developed by
+          RankMatrix using its stored dataset. They do not run JoSAA&apos;s tools or seat-allocation
+          system. RankMatrix cannot register candidates, submit official choices, or allocate seats.
+          Ranks you enter into the predictor are processed separately as described in our{' '}
+          <AppLink href="/privacy">privacy policy</AppLink>.
         </p>
         <p>
           <strong>
@@ -78,13 +86,13 @@ export default function Terms() {
           governs.
         </p>
 
-        <h2>3. The predictor is a projection, not a guarantee</h2>
+        <h2>3. Historical comparisons, no admission guarantee</h2>
         <p>
-          The JEE college and branch predictor projects what allocations might look like based on
-          historical cutoffs and the inputs you provide. Real allocations depend on the current
-          year&apos;s applicant pool, branch popularity, seat-matrix changes, and JoSAA&apos;s
-          allocation algorithm — all of which the predictor cannot know in advance. Treat predictor
-          output as a starting point for thinking, not as a promise of admission. See the{' '}
+          The JEE college and branch predictor compares the inputs you provide with historical
+          opening and closing ranks. It does not forecast future cutoffs, calculate admission
+          probabilities, or reproduce JoSAA&apos;s allocation process. Actual allocations depend on
+          current seats, rules, and applicants&apos; ranks and choices. Treat predictor output as a
+          starting point for research, not as a promise of admission. See the{' '}
           <AppLink href="/methodology">methodology page</AppLink> for what the predictor does and
           does not do.
         </p>
@@ -124,11 +132,11 @@ export default function Terms() {
 
         <h2>6. Intellectual property</h2>
         <p>
-          Cutoff and seat observations originate with JoSAA; NIRF observations originate with NIRF.
-          The site design, written content (guides, explanations, FAQ entries), code, and visual
-          elements are the work of the maker and protected by applicable copyright. You may quote or
-          link short excerpts with attribution; please do not copy whole guides verbatim onto other
-          sites.
+          The published factual records are attributed to JoSAA and NIRF as appropriate. RankMatrix
+          does not claim ownership of those underlying facts. The site design, original written
+          content (guides, explanations, FAQ entries), code, and visual elements are the work of the
+          maker and protected by applicable copyright. You may quote or link short excerpts with
+          attribution; please do not copy whole guides verbatim onto other sites.
         </p>
 
         <h2>7. No warranties</h2>

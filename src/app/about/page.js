@@ -56,7 +56,7 @@ export default function About() {
         eyebrow="About RankMatrix"
         title={TITLE}
         description={DESCRIPTION}
-        lastUpdated="May 2026"
+        lastUpdated="26 October 2026"
         readingTimeMinutes={4}
         breadcrumbs={[
           { name: 'Home', path: '/' },
@@ -65,9 +65,9 @@ export default function About() {
       >
         <h2>What RankMatrix is</h2>
         <p>
-          RankMatrix is a free JEE college and branch predictor for JoSAA counselling. It works with
-          both JEE Main and JEE Advanced ranks, uses the participating institutes and programmes in
-          our stored catalogue.
+          RankMatrix is a free, independent JEE college and branch planning tool. It compares JEE
+          Main and JEE Advanced ranks with published historical cutoffs for the institutes and
+          programmes in our stored catalogue.
         </p>
         <p>
           The aim is narrow on purpose: help an aspirant turn a JEE rank into a clear, ordered list
@@ -112,21 +112,31 @@ export default function About() {
         </p>
 
         <h2>Where the data comes from</h2>
-        <p>The data on RankMatrix is sourced from public JoSAA publications:</p>
+        <p>Our JoSAA dataset contains factual information extracted from public publications:</p>
         <ul>
           <li>
-            <strong>Opening and closing ranks</strong> per institute, branch, category, gender pool,
-            and round — from JoSAA&apos;s historical cutoff reports.
+            <strong>Opening and closing ranks</strong> per institute, branch, quota, category, seat
+            pool, year, and round — from JoSAA&apos;s published cutoff records.
           </li>
           <li>
             <strong>Seat matrix</strong> — institute-by-institute, branch-by-branch seat counts per
             category — from the official JoSAA seat matrix release.
           </li>
           <li>
-            <strong>Participating institutes</strong> — the canonical list JoSAA publishes each
-            counselling cycle.
+            <strong>Institutes and programmes</strong> — published college and branch names, codes,
+            degrees, and course durations.
           </li>
         </ul>
+        <p>
+          These are cutoff ranges and seat counts, not a list of individual candidates. We do not
+          obtain candidate names, roll numbers, application IDs, or personal rank records from
+          JoSAA. NIRF rankings shown on college pages come from NIRF as a separate source.
+        </p>
+        <p>
+          RankMatrix develops its own search, comparisons, predictor, choice-list workspace, and
+          explanations around this stored information. These features do not run JoSAA&apos;s tools
+          or seat-allocation system, and they cannot register you or submit choices to JoSAA.
+        </p>
         <p>
           For details on how the predictor uses this data — and where its predictions can be wrong —
           see the <AppLink href="/methodology">methodology page</AppLink>.
@@ -147,9 +157,9 @@ export default function About() {
             sell counselling sessions, mentorship, or paid plans. There is nothing to upsell.
           </li>
           <li>
-            <strong>Not a guarantee.</strong> Predictions are projections from historical data; real
-            allocations depend on the current year&apos;s applicant pool, which nobody can know in
-            advance.
+            <strong>Not a guarantee.</strong> Predictor results are comparisons with historical
+            cutoffs, not forecasts of future ranks or admission offers. Actual allocations depend on
+            current seats, rules, and applicants&apos; ranks and choices.
           </li>
         </ul>
 
