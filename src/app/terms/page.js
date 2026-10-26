@@ -8,7 +8,7 @@ const PAGE_URL = '/terms';
 const TITLE = 'Terms of Use';
 const DESCRIPTION =
   'Read the terms for using RankMatrix, including data sources, prediction limitations, the independent-service disclaimer and liability notices.';
-const EFFECTIVE_DATE = 'May 10, 2026';
+const EFFECTIVE_DATE = '26 October 2026';
 const CONTACT_EMAIL = 'a.divyansh.25@gmail.com';
 
 export const metadata = buildMetadata({
@@ -110,9 +110,11 @@ export default function Terms() {
 
         <h2>5. Third-party services and links</h2>
         <p>
-          RankMatrix uses Google Analytics, hosting from Vercel, and Google AdSense for advertising.
-          See the <AppLink href="/privacy">privacy policy</AppLink> for what each does and how to
-          opt out where applicable.
+          Microsoft Azure hosts the RankMatrix website, backend and database. Retained Vercel
+          deployments may also be accessible. Google Analytics is used for usage measurement; Google
+          AdSense is the intended advertising provider, with ad serving dependent on approval and
+          deployment settings. See the <AppLink href="/privacy">privacy policy</AppLink> for
+          provider data practices and available privacy choices.
         </p>
         <p>
           The site links to external resources, including the official JoSAA, JEE, and NTA websites.
