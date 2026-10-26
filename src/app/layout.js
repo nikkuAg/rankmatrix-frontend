@@ -23,7 +23,8 @@ const fraunces = Fraunces({
   variable: '--font-display',
   subsets: ['latin'],
   display: 'swap',
-  preload: false,
+  // Used above the fold in the hero and workspace; fetch with the body font.
+  preload: true,
 });
 
 const SITE_DESCRIPTION = HOME_DESCRIPTION;
