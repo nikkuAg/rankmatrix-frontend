@@ -8,7 +8,7 @@ const PAGE_URL = '/privacy';
 const TITLE = 'Privacy Policy';
 const DESCRIPTION =
   'Read how RankMatrix handles browser storage, analytics, advertising and technical request data, and how to contact us about privacy.';
-const EFFECTIVE_DATE = '24 October 2026';
+const EFFECTIVE_DATE = '26 October 2026';
 const CONTACT_EMAIL = 'a.divyansh.25@gmail.com';
 
 export const metadata = buildMetadata({
@@ -38,7 +38,7 @@ export default function Privacy() {
         title={TITLE}
         description={DESCRIPTION}
         lastUpdated={EFFECTIVE_DATE}
-        readingTimeMinutes={3}
+        readingTimeMinutes={4}
         breadcrumbs={[
           { name: 'Home', path: '/' },
           { name: 'Privacy', path: PAGE_URL },
@@ -102,6 +102,47 @@ export default function Privacy() {
             Microsoft privacy statement
           </a>{' '}
           for provider practices.
+        </p>
+        <h2>Advertising cookies and your choices</h2>
+        <p>
+          When advertising is enabled, third-party vendors, including Google, may place and read
+          cookies to serve ads based on your previous visits to RankMatrix or other websites.
+          Google&apos;s advertising cookies allow Google and its partners to personalise ads using
+          those visits. Ad serving may also involve web beacons, IP addresses and device
+          identifiers. Read{' '}
+          <a
+            href="https://policies.google.com/technologies/partner-sites"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            how Google uses information from sites and apps that use its services
+          </a>
+          .
+        </p>
+        <p>
+          You can opt out of Google&apos;s personalised advertising in{' '}
+          <a href="https://www.google.com/settings/ads" target="_blank" rel="noopener noreferrer">
+            Google Ads Settings
+          </a>
+          . For participating third-party vendors, visit{' '}
+          <a href="https://www.aboutads.info/choices/" target="_blank" rel="noopener noreferrer">
+            YourAdChoices
+          </a>
+          . These controls affect ad personalisation; they do not replace a site&apos;s consent
+          choices or necessarily stop all advertising or cookies.
+        </p>
+        <p>
+          Your browser can block cookies and clear site storage. Clearing storage also removes saved
+          predictor settings and choices. The research tools do not require advertising cookies.
+          Google also provides a{' '}
+          <a
+            href="https://tools.google.com/dlpage/gaoptout"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Google Analytics opt-out browser add-on
+          </a>{' '}
+          for supported browsers.
         </p>
         <h2>Retention and requests</h2>
         <p>
