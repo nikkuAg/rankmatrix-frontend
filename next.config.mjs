@@ -53,7 +53,9 @@ const nextConfig = {
         headers: [{ key: 'X-Robots-Tag', value: 'noindex' }],
       },
       {
-        source: '/:path*.(svg|ico|png|jpg|jpeg|webp|avif|woff|woff2|ttf)',
+        // Next's fingerprinted assets must retain their year-long immutable cache.
+        // Only mutable public files should receive this shorter lifetime.
+        source: '/:path((?!_next/).*)\\.:extension(svg|ico|png|jpg|jpeg|webp|avif|woff|woff2|ttf)',
         headers: [
           {
             key: 'Cache-Control',
