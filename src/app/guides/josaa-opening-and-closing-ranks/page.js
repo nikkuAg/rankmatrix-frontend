@@ -88,11 +88,12 @@ export default function JoSAAOpeningAndClosingRanksGuide() {
         <OfficialRuleNotes />
         <h2>The short definition</h2>
         <p>
-          At the end of every JoSAA round, each institute-branch-category-quota-seat pool
-          combination has a range of ranks of candidates who actually got admitted. The best-ranked
-          candidate in that range is the <strong>opening rank</strong>. The worst-ranked candidate
-          is the <strong>closing rank</strong>. JoSAA publishes both, for every combination, for
-          every round. That is the canonical dataset every JEE aspirant plans against.
+          A published JoSAA cutoff row describes the ranks allocated seats for the stated institute,
+          programme, year, round, category, quota and seat pool. The best rank in that allocation
+          range is the <strong>opening rank</strong>; the last rank is the <strong>closing rank</strong>.
+          Allocation does not establish completed admission: candidates must still meet the
+          applicable eligibility, verification, payment and reporting requirements. Compare only
+          published rows with matching rank lists and allocation conditions.
         </p>
         <p>
           On RankMatrix, the full year-wise and round-wise table is at{' '}
@@ -122,10 +123,10 @@ export default function JoSAAOpeningAndClosingRanksGuide() {
             cutoffs.
           </li>
           <li>
-            <strong>Opening rank</strong> — first candidate admitted in that round.
+            <strong>Opening rank</strong> — best allocated rank in the stated cutoff row.
           </li>
           <li>
-            <strong>Closing rank</strong> — last candidate admitted in that round.
+            <strong>Closing rank</strong> — last allocated rank in the stated cutoff row.
           </li>
         </ul>
         <p>

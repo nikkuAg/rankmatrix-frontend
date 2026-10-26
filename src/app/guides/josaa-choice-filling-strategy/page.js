@@ -44,7 +44,7 @@ export const metadata = buildMetadata({
   description: DESCRIPTION,
   type: 'article',
   publishedTime: PUBLISHED,
-  modifiedTime: '2026-10-23',
+  modifiedTime: '2026-10-26',
 });
 
 const jsonLd = [
@@ -53,7 +53,7 @@ const jsonLd = [
     title: TITLE,
     description: DESCRIPTION,
     datePublished: PUBLISHED,
-    dateModified: '2026-10-23',
+    dateModified: '2026-10-26',
   }),
   faqJsonLd(FAQS),
   breadcrumbJsonLd([
@@ -76,7 +76,7 @@ export default function JoSAAChoiceFillingStrategy() {
       <GuideLayout
         title={TITLE}
         description={DESCRIPTION}
-        lastUpdated="23 October 2026"
+        lastUpdated="26 October 2026"
         readingTimeMinutes={9}
         breadcrumbs={[
           { name: 'Home', path: '/' },
@@ -177,13 +177,22 @@ export default function JoSAAChoiceFillingStrategy() {
           </li>
         </ul>
 
-        <h2>What to do after locking</h2>
-        <p>Once you have locked your choices, JoSAA takes over. You will see:</p>
+        <h2>From mock allocation to reporting</h2>
+        <p>
+          Mock allocations happen during choice filling, before the final deadline. Follow the{' '}
+          <a href="https://josaa.nic.in/schedule/">official schedule</a> for each stage:
+        </p>
         <ol>
           <li>
-            <strong>Mock allocation(s)</strong> — one or two non-binding previews of what your list
-            would currently allocate, based on everyone&apos;s preferences as they stand. Use them
-            to re-order before locking if needed.
+            <strong>Mock allocations</strong> — previews based on choices saved by the specified
+            cutoffs. Review your preferences while choice filling is open; a mock result is not
+            a seat offer.
+          </li>
+          <li>
+            <strong>Finalise and lock</strong> — save and lock your choices by the deadline. The
+            2026 rules allow an unlock request before that deadline if you need to edit a locked
+            list. Choices cannot be edited after the deadline. See{' '}
+            <a href="https://josaa.nic.in/information-bulletin/">business rules 39–40</a>.
           </li>
           <li>
             <strong>Round 1 allocation</strong> — the first real allocation. From here on, each
