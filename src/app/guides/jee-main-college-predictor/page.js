@@ -15,27 +15,27 @@ const FAQS = [
   {
     question: 'Is this an admission probability?',
     answer:
-      'No. Delta defines a search window, not a probability or safe/risky threshold. The endpoint compares historical rows; it does not reproduce official allocation, average earlier years or predict other candidates.',
+      'No. Delta controls the percentage range around your rank used to search historical cutoffs. It is not an admission probability or a safe/risky label. The predictor does not reproduce official allocation, average earlier years or predict other candidates.',
   },
   {
-    question: 'What does the endpoint actually query?',
+    question: 'Which historical cutoffs does the predictor use?',
     answer:
-      'The configured latest-year model and its global latest round are used, with preparatory rows excluded. Category and pool are exact filters. The backend IIT bucket includes IISc and uses Advanced bounds; other rows use Main bounds. Selected rows are displayed by opening rank after selection tiers and the result cap.',
+      'It searches the latest year configured in RankMatrix and the highest round stored for that year, excluding preparatory-course rows. It matches your selected categories, seat pools and quota filters. IIT and IISc comparisons use the Advanced rank you supply for each category; other institute comparisons use that category’s Main rank. Results retain their category and opening rank; their order is not a ranking of college quality or admission chance.',
   },
   {
     question: 'What inputs should I provide?',
     answer:
-      'The form sends Main rank, optional Advanced rank, category, seat pool, state, delta and result limit. Use the rank list matching the selected category. It does not accept separate CRL/category ranks or separate architecture/planning paper ranks.',
+      'Select one or more categories and enter a Main rank and optional Advanced rank for each. Use CRL for General / OPEN and the corresponding category or PwD rank for each other selection. Choose your seat pools, quotas, state, delta and result limit. Separate architecture/planning paper-rank inputs are not available.',
   },
   {
     question: 'Will Advanced display all matching IIT and IISc programmes?',
     answer:
-      'No. The limit and selection tiers can omit alternatives, including an exam group. Adding a rank enables that historical comparison; it is not a completeness or eligibility guarantee. Main and Advanced numerical ranks are not a cross-exam quality ranking.',
+      'No. The shortlist prioritises matching groups and stops at the selected result limit, so it can omit programmes or even an entire exam group. Adding an Advanced rank enables that historical comparison; it does not guarantee a complete list or establish eligibility. Main and Advanced ranks cannot be used to rank colleges against each other.',
   },
   {
     question: 'What are the quota and pool limitations?',
     answer:
-      'A selected female-only pool does not automatically include Gender-Neutral rows. Exact state matching does not encode every Union Territory mapping or special quota. Missing rows can reflect stored data or filtering, not official nonpublication.',
+      'You can select multiple seat pools and quotas. Selecting Female-only alone does not include Gender-Neutral rows; select both if you want to compare both. State matching recognises some spelling aliases, but does not establish every Union Territory mapping or special-quota eligibility. Missing rows may reflect stored data, filters or the result limit, rather than an absence of official cutoffs.',
   },
   {
     question: 'How should I use the results?',
@@ -50,7 +50,7 @@ export const metadata = buildMetadata({
   description: DESCRIPTION,
   type: 'article',
   publishedTime: PUBLISHED,
-  modifiedTime: '2026-10-24',
+  modifiedTime: '2026-10-26',
 });
 
 const jsonLd = [
@@ -59,7 +59,7 @@ const jsonLd = [
     title: TITLE,
     description: DESCRIPTION,
     datePublished: PUBLISHED,
-    dateModified: '2026-10-24',
+    dateModified: '2026-10-26',
   }),
   faqJsonLd(FAQS),
   breadcrumbJsonLd([
@@ -82,7 +82,7 @@ export default function JeeMainCollegePredictorGuide() {
       <GuideLayout
         title={TITLE}
         description={DESCRIPTION}
-        lastUpdated="24 October 2026"
+        lastUpdated="26 October 2026"
         readingTimeMinutes={4}
         breadcrumbs={[
           { name: 'Home', path: '/' },
@@ -92,36 +92,15 @@ export default function JeeMainCollegePredictorGuide() {
       >
         <OfficialRuleNotes />
         <h2>Is this an admission probability?</h2>
-        <p>
-          No. Delta defines a search window, not a probability or safe/risky threshold. The endpoint
-          compares historical rows; it does not reproduce official allocation, average earlier years
-          or predict other candidates.
-        </p>
-        <h2>What does the endpoint actually query?</h2>
-        <p>
-          The configured latest-year model and its global latest round are used, with preparatory
-          rows excluded. Category and pool are exact filters. The backend IIT bucket includes IISc
-          and uses Advanced bounds; other rows use Main bounds. Selected rows are displayed by
-          opening rank after selection tiers and the result cap.
-        </p>
+        <p>{FAQS[0].answer}</p>
+        <h2>{FAQS[1].question}</h2>
+        <p>{FAQS[1].answer}</p>
         <h2>What inputs should I provide?</h2>
-        <p>
-          The form sends Main rank, optional Advanced rank, category, seat pool, state, delta and
-          result limit. Use the rank list matching the selected category. It does not accept
-          separate CRL/category ranks or separate architecture/planning paper ranks.
-        </p>
+        <p>{FAQS[2].answer}</p>
         <h2>Will Advanced display all matching IIT and IISc programmes?</h2>
-        <p>
-          No. The limit and selection tiers can omit alternatives, including an exam group. Adding a
-          rank enables that historical comparison; it is not a completeness or eligibility
-          guarantee. Main and Advanced numerical ranks are not a cross-exam quality ranking.
-        </p>
+        <p>{FAQS[3].answer}</p>
         <h2>What are the quota and pool limitations?</h2>
-        <p>
-          A selected female-only pool does not automatically include Gender-Neutral rows. Exact
-          state matching does not encode every Union Territory mapping or special quota. Missing
-          rows can reflect stored data or filtering, not official nonpublication.
-        </p>
+        <p>{FAQS[4].answer}</p>
         <h2>How should I use the results?</h2>
         <p>
           Use the shortlist for research. Inspect matching year, round, quota, category and pool in
