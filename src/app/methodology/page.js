@@ -17,7 +17,7 @@ export const metadata = buildMetadata({
   description: DESCRIPTION,
   type: 'article',
   publishedTime: PUBLISHED,
-  modifiedTime: '2026-10-23',
+  modifiedTime: '2026-10-26',
 });
 
 const jsonLd = [
@@ -26,7 +26,7 @@ const jsonLd = [
     title: TITLE,
     description: DESCRIPTION,
     datePublished: PUBLISHED,
-    dateModified: '2026-10-23',
+    dateModified: '2026-10-26',
   }),
   breadcrumbJsonLd([
     { name: 'Home', path: '/' },
@@ -49,7 +49,7 @@ export default function Methodology() {
         eyebrow="How the evidence works"
         title={TITLE}
         description={DESCRIPTION}
-        lastUpdated="23 October 2026"
+        lastUpdated="26 October 2026"
         readingTimeMinutes={5}
         breadcrumbs={[
           { name: 'Home', path: '/' },
@@ -60,8 +60,8 @@ export default function Methodology() {
         <p>
           RankMatrix builds a shortlist by comparing your inputs with recorded JoSAA opening and
           closing ranks. It does not calculate a probability of admission, simulate the full JoSAA
-          allocation process or forecast a future closing rank. The explanation below follows the
-          current backend implementation.
+          allocation process or forecast a future closing rank. The comparisons are developed and
+          run by RankMatrix using its stored dataset, not by a JoSAA tool or prediction service.
         </p>
         <h2>Inputs and comparison window</h2>
         <p>
@@ -143,6 +143,14 @@ export default function Methodology() {
           </li>
         </ul>
         <h2>Sources, refreshes and corrections</h2>
+        <p>
+          Our JoSAA dataset consists of published opening and closing ranks, seat counts, and
+          institute and programme details. A cutoff row describes an institute, programme, quota,
+          category, seat pool, year, and round. It does not identify an individual candidate: we do
+          not obtain candidate names, roll numbers, application IDs, or personal rank records from
+          JoSAA. The ranks visitors enter for comparisons are separate inputs; their handling is
+          described in the <AppLink href="/privacy">privacy policy</AppLink>.
+        </p>
         <p>
           Rank and seat data originate from{' '}
           <a href="https://josaa.nic.in/or-cr/">JoSAA publications</a>. Importing an official

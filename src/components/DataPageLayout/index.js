@@ -87,10 +87,12 @@ export function DataPageLayout({
               Sources &amp; independence <Icon name="chevronDown" className="disclosure-chevron" />
             </summary>
             <p>
-              Cutoff and seat observations are compiled from JoSAA publications; NIRF figures come
-              from NIRF. Stored coverage can be incomplete. RankMatrix is an independent project and
-              is not affiliated with JoSAA, JEE, NTA, the IITs, NITs, IIITs, or GFTIs. Verify all
-              schedules, rules, and cutoffs on the official{' '}
+              Opening and closing ranks, seat counts, and institute and programme details are
+              extracted from public JoSAA publications. NIRF figures come from NIRF. RankMatrix
+              provides its own comparisons and explanations; it does not run JoSAA&apos;s tools or
+              allocation system. Stored coverage can be incomplete. RankMatrix is an independent
+              project and is not affiliated with JoSAA, JEE, NTA, the IITs, NITs, IIITs, or GFTIs.
+              Verify all schedules, rules, and cutoffs on the official{' '}
               <a href="https://josaa.nic.in" target="_blank" rel="noopener noreferrer">
                 JoSAA website
               </a>{' '}

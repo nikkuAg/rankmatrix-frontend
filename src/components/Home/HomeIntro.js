@@ -43,21 +43,20 @@ export function HomeIntro() {
       </ReferenceItem>
       <ReferenceItem title="Where the data comes from">
         <p>
-          Cutoff and seat records are sourced from JoSAA publications; NIRF ranks are a separate
-          dataset. Historical opening and closing ranks per institute-branch-category-round, the
-          official seat matrix, and the stored participating-institute list are available for
-          reference. Use the rank explorer and detail pages to check the stored year and round; the
-          predictor does not supply its dataset year. For how the predictor compares this data with
-          your inputs — and where its assumptions can break — see the{' '}
-          <AppLink href="/methodology">methodology page</AppLink>.
+          We extract published opening and closing ranks, seat counts, and college and branch
+          details from public JoSAA publications. This dataset contains cutoff records, not
+          individual candidates&apos; personal records. NIRF ranks are a separate dataset.
+          RankMatrix builds its own tools and explanations around these facts. Use the rank explorer
+          and detail pages to check the stored year and round; the predictor does not supply its
+          dataset year. For how the predictor compares this data with your inputs — and where its
+          assumptions can break — see the <AppLink href="/methodology">methodology page</AppLink>.
         </p>
       </ReferenceItem>
       <ReferenceItem title="What RankMatrix is not">
         <p>
-          Not an official source, not a coaching service, and not a guarantee. Predictions are
-          projections from past cutoffs; real allocations depend on the current year&apos;s
-          applicant pool. Always verify the latest schedule, eligibility, and cutoffs on the
-          official{' '}
+          RankMatrix is an independent planning tool. Its predictor compares past cutoffs; it does
+          not run JoSAA&apos;s tools, allocate seats, or guarantee admission. Always verify the
+          latest schedule, eligibility, and cutoffs on the official{' '}
           <a href="https://josaa.nic.in" target="_blank" rel="noopener noreferrer">
             JoSAA website
           </a>{' '}
