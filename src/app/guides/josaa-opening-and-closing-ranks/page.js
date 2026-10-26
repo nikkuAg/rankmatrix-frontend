@@ -20,7 +20,7 @@ const FAQS = [
   {
     question: 'Is my JEE Main rank the same as the JoSAA rank used in these tables?',
     answer:
-      'For NIT / IIIT / GFTI allocations, JoSAA uses your JEE Main CRL (Common Rank List) or your category rank — whichever gives you a better shot under each seat pool. For IIT allocations, JoSAA uses your JEE Advanced rank. The opening and closing ranks published for each institute group use whichever rank list that institute admits from, so you compare JEE Main ranks against NIT/IIIT/GFTI cutoffs and JEE Advanced ranks against IIT cutoffs.',
+      'Match both the exam and the seat category of the cutoff row. OPEN-seat cutoffs use the Common Rank List (CRL); EWS, OBC-NCL, SC and ST cutoffs use the respective category rank; PwD cutoffs use the PwD rank within the respective category. Compare JEE Main ranks for NIT, IIIT and other GFTI programmes, and JEE Advanced ranks for IIT and participating IISc programmes. A rank from one list cannot be substituted for a rank from another list when comparing a published cutoff.',
   },
   {
     question: 'Why do closing ranks change from round to round?',
@@ -45,7 +45,7 @@ export const metadata = buildMetadata({
   description: DESCRIPTION,
   type: 'article',
   publishedTime: PUBLISHED,
-  modifiedTime: '2026-10-23',
+  modifiedTime: '2026-10-26',
 });
 
 const jsonLd = [
@@ -54,7 +54,7 @@ const jsonLd = [
     title: TITLE,
     description: DESCRIPTION,
     datePublished: PUBLISHED,
-    dateModified: '2026-10-23',
+    dateModified: '2026-10-26',
   }),
   faqJsonLd(FAQS),
   breadcrumbJsonLd([
@@ -77,7 +77,7 @@ export default function JoSAAOpeningAndClosingRanksGuide() {
       <GuideLayout
         title={TITLE}
         description={DESCRIPTION}
-        lastUpdated="23 October 2026"
+        lastUpdated="26 October 2026"
         readingTimeMinutes={7}
         breadcrumbs={[
           { name: 'Home', path: '/' },
