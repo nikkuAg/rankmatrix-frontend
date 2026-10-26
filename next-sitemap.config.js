@@ -32,6 +32,7 @@ module.exports = {
     '/health',
     '/opengraph-image*',
     '/twitter-image*',
+    '/favicon.ico',
     '/icon*',
     '/apple-icon*',
     '/manifest*',
