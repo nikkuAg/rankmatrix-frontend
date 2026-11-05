@@ -13,7 +13,7 @@ const FAQS = [
   {
     question: 'What is the difference between an opening rank and a closing rank?',
     answer:
-      'The opening rank is the rank of the first (best-ranked) candidate admitted to a given institute-branch-category-quota-seat-pool in a JoSAA round. The closing rank is the last (worst-ranked) candidate admitted. Together they bound the range of ranks that got admitted that round.',
+      'The opening rank is the best-ranked candidate in the published allocation row for a given institute, programme, year, round, category, quota and seat pool. The closing rank is the last-ranked candidate in that row. These are allocation cutoffs; they do not show whether candidates completed reporting or joined the institute.',
   },
   {
     question: 'What is the difference between HS, OS, and AI quota?',
@@ -58,7 +58,7 @@ const Ranks = () => {
       </FeatureLayout>
       <ToolAnswers
         title="How to compare JoSAA opening and closing ranks"
-        description="Opening rank is the first admitted rank and closing rank the last admitted rank within the exact allocation slice shown. Compare like-for-like rank lists, quotas and categories."
+        description="Opening and closing ranks are the first and last ranks in a published allocation row. They do not establish completed admission. Compare the same exam, rank list, year, round, category, quota and seat pool."
         faqs={FAQS}
       />
     </>

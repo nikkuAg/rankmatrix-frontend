@@ -54,7 +54,7 @@ export default function ReadingCutoffTrends() {
       >
         <h2>What a change in closing rank actually tells you</h2>
         <p>
-          A closing rank describes the last admitted rank in a particular allocation slice. A larger
+          A closing rank describes the last allocated rank in a particular allocation slice. A larger
           number means the recorded closing rank increased; it does not by itself explain demand,
           make a programme better or worse, or tell you the probability of admission next year.
         </p>

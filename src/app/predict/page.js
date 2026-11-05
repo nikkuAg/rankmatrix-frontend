@@ -43,7 +43,7 @@ const FAQS = [
   {
     question: 'How accurate is the prediction?',
     answer:
-      'It compares your inputs with stored historical cutoffs; it does not simulate JoSAA or estimate an admission probability. Year-over-year cutoffs can shift by several hundred ranks due to exam difficulty, seat matrix changes, and candidate preferences. Treat the output as a ranked shortlist to plan around, not a guarantee of admission.',
+      'It compares your inputs with stored historical cutoffs; it does not simulate JoSAA or estimate an admission probability. Cutoff movement by itself does not identify why ranks changed. Compare the same programme and allocation slice across years, then check the corresponding rules and seat matrices before attributing a cause. Treat the output as a historical shortlist, not a guarantee of admission.',
   },
   {
     question: 'Does it work for JEE Advanced ranks and IIT admission?',
