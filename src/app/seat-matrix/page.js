@@ -18,7 +18,7 @@ const FAQS = [
   {
     question: 'How is a branch split between HS and OS quota at an NIT?',
     answer:
-      'Roughly half of each NIT branch is reserved for Home State (HS) candidates and the other half for Other State (OS) candidates. The exact split is published in the JoSAA seat matrix and can vary by institute and by branch.',
+      'NIT programme seats are divided into Home State (HS) and Other States (OS) quota sections under JoSAA rules, with some institute-specific exceptions. Read the exact programme counts in the published seat matrix rather than estimating from the branch total. State-code eligibility also follows the current rules, not simply a candidate\'s residence.',
   },
   {
     question: 'What are supernumerary seats?',

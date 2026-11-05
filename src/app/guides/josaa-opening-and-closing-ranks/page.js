@@ -93,7 +93,8 @@ export default function JoSAAOpeningAndClosingRanksGuide() {
           range is the <strong>opening rank</strong>; the last rank is the <strong>closing rank</strong>.
           Allocation does not establish completed admission: candidates must still meet the
           applicable eligibility, verification, payment and reporting requirements. Compare only
-          published rows with matching rank lists and allocation conditions.
+          published rows with matching rank lists and allocation conditions. A missing row is
+          unavailable data, not a rank of zero.
         </p>
         <p>
           On RankMatrix, the full year-wise and round-wise table is at{' '}
@@ -196,9 +197,9 @@ export default function JoSAAOpeningAndClosingRanksGuide() {
             it as a safety guarantee or assume every year has six rounds.
           </li>
           <li>
-            <strong>Use Round 1 closing ranks for early allocations</strong> — if you want to freeze
-            early and move on with life, aim for institutes where your rank is inside the Round 1
-            closing rank.
+            <strong>Use Round 1 as a historical reference.</strong> It shows the published cutoff
+            in that round; it does not promise an early allocation. Put choices in the order you
+            would actually accept them, and check the current schedule and rules.
           </li>
           <li>
             <strong>Do not mix rank lists.</strong> JEE Main CRL against NIT/IIIT/GFTI cutoffs; JEE
