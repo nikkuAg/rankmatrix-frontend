@@ -21,8 +21,8 @@ const GUIDES = [
     slug: 'reading-cutoff-trends',
     title: 'How to compare cutoff changes',
     summary:
-      'A worked example of round-wise and year-wise closing-rank movement without mixing quotas, categories, pools or rank lists.',
-    readingTimeMinutes: 4,
+      'A real JoSAA 2025 round-by-round example, with steps to compare matching quotas, categories, seat pools and rank lists.',
+    readingTimeMinutes: 5,
   },
   {
     slug: 'what-is-josaa-counselling',

@@ -6,8 +6,8 @@ import { buildMetadata } from '@/utils/metadata.mjs';
 const PATH = '/guides/reading-cutoff-trends';
 const TITLE = 'How to compare JoSAA cutoff changes without mixing rank lists';
 const DESCRIPTION =
-  'A worked example of round-wise and year-wise closing-rank changes, with checks for quota, category, seat pool, missing data and source coverage.';
-const DATE = '2026-10-24';
+  'A worked JoSAA 2025 example of round-wise cutoff movement, plus a repeatable checklist for comparing rank lists, quota, category, seat pool and source coverage.';
+const DATE = '2026-11-06';
 export const metadata = buildMetadata({
   path: PATH,
   title: TITLE,
@@ -19,7 +19,13 @@ export const metadata = buildMetadata({
 
 export default function ReadingCutoffTrends() {
   const structuredData = [
-    articleJsonLd({ path: PATH, title: TITLE, description: DESCRIPTION, datePublished: DATE }),
+    articleJsonLd({
+      path: PATH,
+      title: TITLE,
+      description: DESCRIPTION,
+      datePublished: '2026-10-24',
+      dateModified: DATE,
+    }),
     breadcrumbJsonLd([
       { name: 'Home', path: '/' },
       { name: 'Guides', path: '/guides' },
@@ -38,8 +44,8 @@ export default function ReadingCutoffTrends() {
       <GuideLayout
         title={TITLE}
         description={DESCRIPTION}
-        lastUpdated="24 October 2026"
-        readingTimeMinutes={4}
+        lastUpdated="6 November 2026"
+        readingTimeMinutes={5}
         breadcrumbs={[
           { name: 'Home', path: '/' },
           { name: 'Guides', path: '/guides' },
@@ -81,62 +87,107 @@ export default function ReadingCutoffTrends() {
             For a year-to-year comparison, use the same round. Each quota can have a different
             latest stored round; do not silently compare one year&apos;s round 5 with another
             year&apos;s round 6.
+            If either matching row is absent, report the comparison as unavailable rather than
+            substituting zero.
           </li>
         </ol>
-        <h2>A worked example with hypothetical numbers</h2>
+        <h2>Worked example: IIT Bhubaneswar Civil Engineering, JoSAA 2025</h2>
         <p>
-          The figures below are invented arithmetic examples for one programme, Open category,
-          Gender-Neutral pool and HS quota. They are not published cutoffs for any institute.
+          This is one published slice: IIT Bhubaneswar, Civil Engineering (4-year B.Tech), AI
+          quota, OPEN category and Gender-Neutral pool. The table shows the opening rank, closing
+          rank and change in closing-rank number from the previous round. The official archive calls
+          the category OPEN; RankMatrix displays it as General. For an IIT programme, use the
+          applicable JEE Advanced rank list.
         </p>
         <div
           className="table-scroll"
           role="region"
-          aria-label="Hypothetical cutoff observations"
+          aria-label="JoSAA 2025 IIT Bhubaneswar Civil Engineering ranks by round"
           tabIndex={0}
         >
           <table className="compact-table">
-            <caption>Hypothetical matched observations</caption>
+            <caption>
+              JoSAA 2025, IIT Bhubaneswar Civil Engineering, AI / OPEN / Gender-Neutral
+            </caption>
             <thead>
               <tr>
-                <th scope="col">Year</th>
                 <th scope="col">Round</th>
+                <th scope="col">Opening rank</th>
                 <th scope="col">Closing rank</th>
+                <th scope="col">Closing-rank change</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td>2025</td>
                 <td>1</td>
-                <td>10,000</td>
+                <td>10,063</td>
+                <td>13,957</td>
+                <td>—</td>
               </tr>
               <tr>
-                <td>2025</td>
-                <td>5</td>
-                <td>12,000</td>
+                <td>2</td>
+                <td>10,486</td>
+                <td>14,422</td>
+                <td>+465</td>
               </tr>
               <tr>
-                <td>2024</td>
+                <td>3</td>
+                <td>10,486</td>
+                <td>14,467</td>
+                <td>+45</td>
+              </tr>
+              <tr>
+                <td>4</td>
+                <td>10,486</td>
+                <td>14,467</td>
+                <td>0</td>
+              </tr>
+              <tr>
                 <td>5</td>
-                <td>11,500</td>
+                <td>10,486</td>
+                <td>14,467</td>
+                <td>0</td>
+              </tr>
+              <tr>
+                <td>6</td>
+                <td>10,922</td>
+                <td>16,156</td>
+                <td>+1,689</td>
               </tr>
             </tbody>
           </table>
         </div>
+        <p>
+          From Round 1 to Round 6, the closing-rank number increased by 2,199
+          (16,156 − 13,957). The path was not smooth: it changed by 465 in Round 2 and 45 in Round
+          3, stayed the same in Rounds 4 and 5, then changed by 1,689 in Round 6. These are
+          differences between published endpoints; they do not explain why allocations changed.
+        </p>
         <ul>
           <li>
-            Within 2025, the closing-rank number increased by 2,000 between the first and last
-            recorded rounds: 12,000 − 10,000.
+            A rank of 14,200 is numerically outside the Round 1 endpoints and inside the Round 2
+            endpoints for this slice. That comparison alone does not show whether a particular
+            candidate received or accepted an allocation.
           </li>
-          <li>At the same round 5 across years, it increased by 500: 12,000 − 11,500.</li>
           <li>
-            If round 5 were absent from 2024, the matched comparison would be unavailable. Using a
-            different round or substituting zero would create a misleading change.
+            A closing-rank number changing does not by itself establish that seats were added,
+            removed or left vacant. Check the matching year&apos;s seat matrix and allocation rules
+            before drawing those conclusions.
           </li>
         </ul>
         <p>
-          Neither difference is an admission probability. The endpoints do not show what happened at
-          missing intermediate rounds. Changes to programmes, eligibility rules or rank-list
-          definitions can also limit historical comparisons.
+          Reproduce the example using JoSAA&apos;s{' '}
+          <a
+            href="https://josaa.admissions.nic.in/applicant/seatmatrix/openingclosingrankarchieve.aspx"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            previous-years opening and closing rank archive
+          </a>
+          : select 2025, each round, Indian Institute of Technology, Indian Institute of Technology
+          Bhubaneswar, Civil Engineering, and OPEN. Compare the same quota and seat pool in every
+          round. The official page states that Open-seat ranks represent CRL; ranks from different
+          lists must not be mixed.
         </p>
         <h2>Read the recorded-movement section on a programme page</h2>
         <p>
