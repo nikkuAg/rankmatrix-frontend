@@ -7,7 +7,12 @@ import { FaqList } from '@/components/ReferencePanel';
 import { summaryRows } from '@/utils/cutoffSummaries.mjs';
 import { admissionRankLabel, instituteType } from '@/utils/instituteIdentity.mjs';
 import { breadcrumbJsonLd, faqJsonLd, serializeJsonLd } from '@/utils/jsonLd';
-import { buildMetadata, instituteTitleName } from '@/utils/metadata.mjs';
+import {
+  buildMetadata,
+  instituteSearchTitle,
+  instituteShortName,
+  instituteTitleName,
+} from '@/utils/metadata.mjs';
 import { quotaLabel } from '@/utils/quotaLabel.mjs';
 import { fetchInstituteSeo } from '@/utils/seoApi';
 
@@ -40,11 +45,12 @@ export async function generateMetadata({ params }) {
   const data = await loadInstitute(slug);
   if (!data) notFound();
   const name = instituteTitleName(data);
+  const short = instituteShortName(data);
   const year = data.latestYear ? ` ${data.latestYear}` : '';
   return buildMetadata({
     path: `/colleges/${slug}`,
-    title: `${name} JoSAA Cutoffs${year}, Branches & Seats`,
-    description: `Compare ${name} JoSAA cutoffs${year}, branches, seats and NIRF rank history. Explore opening and closing ranks before filling your counselling choices.`,
+    title: instituteSearchTitle(data, data.latestYear),
+    description: `${short ? `${short} (${name})` : name} JoSAA cutoff${year}: opening and closing ranks by branch, seats and NIRF rank history.`,
   });
 }
 
@@ -105,6 +111,7 @@ export default async function InstitutePage({ params }) {
   const canonicalPath = `/colleges/${slug}`;
   const canonicalUrl = `${SITE_URL}${canonicalPath}`;
 
+  const shortName = instituteShortName(data);
   const sortedNirf = [...(data.nirfRanks || [])].sort((a, b) => b.year - a.year);
   const sortedBranches = [...(data.branches || [])].sort((a, b) => a.name.localeCompare(b.name));
 
@@ -113,7 +120,7 @@ export default async function InstitutePage({ params }) {
       '@context': 'https://schema.org',
       '@type': 'CollegeOrUniversity',
       name: data.name,
-      alternateName: data.displayCode,
+      alternateName: shortName ? [shortName, data.displayCode] : data.displayCode,
       url: canonicalUrl,
       sameAs: data.url || undefined,
       address: {
@@ -150,7 +157,7 @@ export default async function InstitutePage({ params }) {
           { name: data.name, path: canonicalPath },
         ]}
         title={data.name}
-        subtitle={`${typeLabel} · ${data.city}, ${data.state}`}
+        subtitle={`${shortName ? `${shortName} · ` : ""}${typeLabel} · ${data.city}, ${data.state}`}
         badges={[
           { label: typeLabel },
           { label: data.state },
@@ -167,7 +174,7 @@ export default async function InstitutePage({ params }) {
       >
         <h2>About {data.name}</h2>
         <p>
-          {data.name} ({data.displayCode}) is located in {data.city}, {data.state}. Its institution
+          {data.name} ({shortName || data.displayCode}) is located in {data.city}, {data.state}. Its institution
           family is {typeLabel}. For participating JoSAA programmes, compare{' '}
           {`${admissionRankLabel(data)} ranks`}, subject to the programme&apos;s requirements.
         </p>

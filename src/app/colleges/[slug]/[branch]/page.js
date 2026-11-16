@@ -9,7 +9,13 @@ import { FaqList } from '@/components/ReferencePanel';
 import { cutoffSummaries } from '@/utils/cutoffSummaries.mjs';
 import { admissionRankLabel, instituteType } from '@/utils/instituteIdentity.mjs';
 import { breadcrumbJsonLd, faqJsonLd, serializeJsonLd } from '@/utils/jsonLd';
-import { buildMetadata, instituteTitleName, programmeTitleName } from '@/utils/metadata.mjs';
+import {
+  buildMetadata,
+  instituteShortName,
+  instituteTitleName,
+  programmeSearchTitle,
+  programmeTitleName,
+} from '@/utils/metadata.mjs';
 import { quotaLabel } from '@/utils/quotaLabel.mjs';
 import { fetchInstituteBranchSeo } from '@/utils/seoApi';
 
@@ -33,11 +39,11 @@ export async function generateMetadata({ params }) {
   const data = await loadData(slug, branch);
   if (!data) notFound();
   const name = instituteTitleName(data.institute);
-  const year = data.yearsAvailable?.[0] ? ` ${data.yearsAvailable[0]}` : '';
+  const short = instituteShortName(data.institute);
   return buildMetadata({
     path: `/colleges/${slug}/${branch}`,
-    title: `${name} ${programmeTitleName(data.branch)} Cutoffs${year}`,
-    description: `${name} ${programmeTitleName(data.branch)}: compare JoSAA opening and closing ranks by year, round, category and quota, plus published seat data.`,
+    title: programmeSearchTitle(data.institute, data.branch, data.yearsAvailable?.[0]),
+    description: `${short ? `${short} (${name})` : name} ${programmeTitleName(data.branch)}: compare JoSAA opening and closing ranks by year, round, category and quota, plus published seat data.`,
     index: Boolean(data.cutoffs?.length),
   });
 }
@@ -98,6 +104,7 @@ export default async function InstituteBranchPage({ params }) {
   const summaries = cutoffSummaries(latestYearRows, latestYear);
   const faqs = buildFaqs(data, summaries);
 
+  const shortName = instituteShortName(data.institute);
   const yearGroups = groupCutoffsByYear(data.cutoffs);
 
   const jsonLd = [
@@ -107,7 +114,10 @@ export default async function InstituteBranchPage({ params }) {
       name: `${data.branch.name} opening and closing ranks at ${data.institute.name}`,
       description: `JoSAA opening and closing ranks and seat matrix for ${data.branch.name} at ${data.institute.name}, spanning the ${data.yearsAvailable?.length || 0} most recent counselling years.`,
       url: canonicalUrl,
-      keywords: [data.institute.name, data.branch.name, 'JoSAA', 'opening rank', 'closing rank'],
+      keywords: [
+        data.institute.name,
+        ...(shortName ? [shortName] : []),
+        data.branch.name, 'JoSAA', 'opening rank', 'closing rank'],
       creator: {
         '@type': 'Organization',
         name: 'Joint Seat Allocation Authority (JoSAA)',
@@ -144,7 +154,7 @@ export default async function InstituteBranchPage({ params }) {
           { name: data.branch.name, path: canonicalPath },
         ]}
         title={`${data.branch.name} at ${data.institute.name}`}
-        subtitle={`${data.branch.degree} · ${data.branch.courseDuration}-year programme · JoSAA counselling`}
+        subtitle={`${shortName ? `${shortName} · ` : ""}${data.branch.degree} · ${data.branch.courseDuration}-year programme · JoSAA counselling`}
         badges={[
           { label: instituteType(data.institute) },
           { label: `Programme code ${data.branch.code}` },
