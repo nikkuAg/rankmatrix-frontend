@@ -68,7 +68,7 @@ function load(relative) {
   return target.exports;
 }
 
-test('comparison guide has consistent canonical/article metadata and visible hypothetical example', () => {
+test('comparison guide has consistent canonical/article metadata and visible sourced JoSAA 2025 example', () => {
   const { default: Page, metadata } = load('app/guides/reading-cutoff-trends/page.js');
   const html = renderToStaticMarkup(React.createElement(Page));
   assert.equal(
@@ -76,7 +76,8 @@ test('comparison guide has consistent canonical/article metadata and visible hyp
     'https://www.rankmatrix.in/guides/reading-cutoff-trends',
   );
   assert.equal((html.match(/<h1\b/g) || []).length, 1);
-  assert.ok(html.includes('not published cutoffs for any institute'));
+  assert.ok(html.includes('Worked example: IIT Bhubaneswar Civil Engineering, JoSAA 2025'));
+  assert.ok(html.includes('openingclosingrankarchieve.aspx'));
   assert.ok(html.includes('same round'));
   const documents = [...html.matchAll(/<script type="application\/ld\+json">(.*?)<\/script>/g)].map(
     (match) => JSON.parse(match[1]),
