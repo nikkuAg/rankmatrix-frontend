@@ -1,6 +1,13 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
-import { buildMetadata, instituteTitleName, programmeTitleName } from '../src/utils/metadata.mjs';
+import {
+  buildMetadata,
+  instituteSearchTitle,
+  instituteShortName,
+  instituteTitleName,
+  programmeSearchTitle,
+  programmeTitleName,
+} from '../src/utils/metadata.mjs';
 
 test('institute titles preserve supplied identity without guessing from city or type', () => {
   assert.equal(
@@ -91,4 +98,51 @@ test('programme metadata disambiguates equal names and duration without merging 
   assert.match(programmeTitleName(a), /5 years, code A/);
   assert.equal(programmeTitleName({ ...a, courseDuration: 0 }), 'Chemical Engineering (code A)');
   assert.throws(() => programmeTitleName({ name: 'Chemical Engineering' }), /name and code/);
+});
+
+test('short names come only from the official name and never from city, code or type', () => {
+  const short = (name, extra = {}) => instituteShortName({ name, ...extra });
+  assert.equal(short('Indian Institute of Technology Ropar'), 'IIT Ropar');
+  assert.equal(short('Indian Institute of Technology (BHU) Varanasi'), 'IIT (BHU) Varanasi');
+  assert.equal(short('National Institute of Technology, Warangal'), 'NIT Warangal');
+  assert.equal(
+    short('National Institute of Technology Karnataka, Surathkal'),
+    'NIT Karnataka, Surathkal',
+  );
+  assert.equal(
+    short('Indian Institute of Information Technology(IIIT) Una, Himachal Pradesh'),
+    'IIIT Una',
+  );
+  assert.equal(short('Indian Institute of Information Technology (IIIT)Kota, Rajasthan'), 'IIIT Kota');
+  assert.equal(short('Malaviya National Institute of Technology Jaipur'), 'MNIT Jaipur');
+  assert.equal(short('Indian Institute of Science, Bangalore'), 'IISc Bangalore');
+  for (const name of [
+    'National Institute of Technical Teachers Training and Research Bhopal',
+    'National Institute of Electronics and Information Technology, Ajmer (Rajasthan)',
+    'Indian Institute of Information Technology, Design & Manufacturing, Kancheepuram',
+    'INDIAN INSTITUTE OF INFORMATION TECHNOLOGY SENAPATI MANIPUR',
+    'International Institute of Information Technology, Bhubaneswar',
+    'Punjab Engineering College, Chandigarh',
+  ])
+    assert.equal(short(name), null, name);
+  assert.equal(short('Official name', { displayCode: 'Goa', type: 'NIT' }), null);
+  assert.equal(instituteShortName({}), null);
+});
+
+test('search titles lead with the short name, stay short and keep programmes distinct', () => {
+  const iit = { name: 'Indian Institute of Technology Bombay' };
+  assert.equal(
+    instituteSearchTitle(iit, 2026),
+    'IIT Bombay Cutoff 2026: JoSAA Ranks, Branches & NIRF',
+  );
+  assert.equal(
+    instituteSearchTitle({ name: 'Punjab Engineering College, Chandigarh' }),
+    'Punjab Engineering College, Chandigarh JoSAA Cutoff',
+  );
+  const programme = { name: 'Aerospace Engineering', code: 4101, courseDuration: 4 };
+  const title = programmeSearchTitle(iit, programme, 2026);
+  assert.equal(title, 'IIT Bombay Aerospace Engineering Cutoff 2026 (4101)');
+  assert.ok(`${title} | RankMatrix`.length <= 65);
+  assert.notEqual(title, programmeSearchTitle(iit, { ...programme, code: 4102 }, 2026));
+  assert.throws(() => programmeSearchTitle(iit, { name: 'Aerospace Engineering' }), /name and code/);
 });
