@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import {
   buildMetadata,
+  toolPageCopy,
   instituteSearchTitle,
   instituteShortName,
   instituteTitleName,
@@ -145,4 +146,24 @@ test('search titles lead with the short name, stay short and keep programmes dis
   assert.ok(`${title} | RankMatrix`.length <= 65);
   assert.notEqual(title, programmeSearchTitle(iit, { ...programme, code: 4102 }, 2026));
   assert.throws(() => programmeSearchTitle(iit, { name: 'Aerospace Engineering' }), /name and code/);
+});
+
+test('tool pages name the data year only when a plausible one is supplied', () => {
+  assert.deepEqual(
+    toolPageCopy('ranks', 2026).title,
+    'JoSAA Opening & Closing Ranks 2026, All Rounds',
+  );
+  assert.equal(toolPageCopy('seatMatrix', 2026).title, 'JoSAA Seat Matrix 2026 by College & Category');
+  assert.equal(toolPageCopy('predict', 2026).title, 'Free JEE Main & Advanced College Predictor');
+  assert.match(toolPageCopy('predict', 2026).description, /JoSAA 2026 cutoffs/);
+  for (const page of ['ranks', 'seatMatrix', 'predict']) {
+    const dated = toolPageCopy(page, 2026);
+    assert.ok(`${dated.title} | RankMatrix`.length <= 60, dated.title);
+    assert.ok(dated.description.length <= 170, dated.description);
+    for (const bad of [null, undefined, '2026', 2026.5, 0, 1999, 3000]) {
+      const copy = toolPageCopy(page, bad);
+      assert.doesNotMatch(`${copy.title} ${copy.description}`, /\b(19|20|30)\d\d\b/);
+    }
+  }
+  assert.throws(() => toolPageCopy('unknown', 2026), /Unknown tool page/);
 });

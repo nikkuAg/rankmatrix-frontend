@@ -34,7 +34,7 @@ export async function generateMetadata({ params }) {
     path: `/branches/${slug}`,
     title: `${programmeTitleName(data)}: Colleges & JoSAA Cutoffs`,
     description: `Compare ${data.institutes?.length ?? 0} JoSAA colleges offering ${data.name} (${data.degree}, ${data.courseDuration} years). Explore published cutoffs and institute details.`,
-    index: Boolean(data.institutes?.length),
+    index: data.institutes.length > 0,
   });
 }
 
