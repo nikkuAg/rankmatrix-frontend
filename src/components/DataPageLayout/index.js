@@ -80,7 +80,7 @@ export function DataPageLayout({
             </ol>
           </nav>
           <Link href="/predict" prefetch={false} className={styles.action}>
-            Build your choice list <Icon name="arrowUpRight" />
+            Build your choice list
           </Link>
           <details data-accordion className={styles.source}>
             <summary>

@@ -57,7 +57,6 @@ export default function Home() {
               <ToolLink href={href} label={label}>
                 <strong>{title}</strong>
                 <span>{description}</span>
-                <Icon name="arrowRight" />
               </ToolLink>
             </li>
           ))}
@@ -88,14 +87,14 @@ export default function Home() {
         <div className={styles.sectionHead}>
           <h2>Look things up yourself</h2>
           <Link href="/methodology" prefetch={false}>
-            How the predictor works <Icon name="arrowUpRight" />
+            How the predictor works
           </Link>
         </div>
         <FeatureBox />
         <div className={styles.readingStrip}>
           <h3>New to JoSAA? The guides explain it step by step.</h3>
           <Link href="/guides" prefetch={false}>
-            Read the counselling guides <Icon name="arrowRight" />
+            Read the counselling guides
           </Link>
         </div>
       </section>
@@ -106,7 +105,7 @@ export default function Home() {
           cutoffs are a guide, not a guarantee of admission.
         </p>
         <Link href="/guides/reading-cutoff-trends" prefetch={false}>
-          Read the cutoff guide <Icon name="arrowUpRight" />
+          Read the cutoff guide
         </Link>
       </aside>
       <div className={styles.resources}>

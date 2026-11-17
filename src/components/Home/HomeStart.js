@@ -3,7 +3,6 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { Icon } from '@/components/Icon';
 import { sendAnalyticsEvent } from '@/utils/analyticEvent';
 import { CHOICES_KEY, parseChoices } from '@/utils/choices.mjs';
 import { loadPredictorFormData, savePredictorFormData } from '@/utils/formStorage';
@@ -77,7 +76,7 @@ export function HomeStart() {
           </label>
         </div>
         <button type="submit" className="button primary">
-          Show my colleges <Icon name="arrowUpRight" />
+          Show my colleges
         </button>
         <p className={styles.startNote}>
           Free. No signup, no phone number. You choose your category and home state next.
@@ -89,7 +88,7 @@ export function HomeStart() {
             You have {savedChoices} saved {savedChoices === 1 ? 'choice' : 'choices'}
           </span>
           <span>
-            Continue with your list <Icon name="arrowRight" />
+            Continue with your list
           </span>
         </Link>
       )}

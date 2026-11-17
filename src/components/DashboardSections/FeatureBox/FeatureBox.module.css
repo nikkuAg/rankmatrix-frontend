@@ -15,16 +15,6 @@
 .card:hover {
   background: var(--surface-raised);
 }
-.number {
-  align-items: center;
-  display: flex;
-  justify-content: flex-end;
-  margin-bottom: 36px;
-}
-.number :global(.ui-icon) {
-  color: var(--accent);
-  font-size: 18px;
-}
 .card h3 {
   font-size: 16px;
   line-height: 1.4;
@@ -47,8 +37,5 @@
   }
   .card {
     padding: 20px;
-  }
-  .number {
-    margin-bottom: 16px;
   }
 }

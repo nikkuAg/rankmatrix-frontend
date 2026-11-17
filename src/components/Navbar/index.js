@@ -30,7 +30,7 @@ export const Navbar = () => (
           <div className={styles.dropdown}>
             {researchLinks.map(([href, label]) => (
               <NavLink href={href} key={href}>
-                {label} <Icon name="arrowUpRight" />
+                {label}
               </NavLink>
             ))}
           </div>
@@ -38,7 +38,7 @@ export const Navbar = () => (
         <NavLink href="/guides">Guides</NavLink>
       </nav>
       <Link prefetch={false} href="/predict" className={`${styles.cta} button primary`}>
-        Open workspace <Icon name="arrowUpRight" />
+        Open workspace
       </Link>
       <details className={styles.mobileMenu} data-site-menu>
         <summary aria-label="Navigation menu">

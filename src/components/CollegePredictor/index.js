@@ -422,7 +422,7 @@ export function CollegePredictor() {
                       : 'Enter your ranks, explore historical comparisons, then save programmes in your own preference order.'}
                   </p>
                   <Link href="/ranks" prefetch={false}>
-                    Explore all historical cutoffs <Icon name="arrowUpRight" />
+                    Explore all historical cutoffs
                   </Link>
                 </div>
               )
