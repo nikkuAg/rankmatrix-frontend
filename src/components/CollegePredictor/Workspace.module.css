@@ -116,13 +116,19 @@
 .rankProfile {
   min-width: 0;
   border: 0;
+  margin: 0 0 20px;
+  padding: 0;
+}
+.rankProfile .formGrid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.rankProfile + .rankProfile {
   border-top: 1px solid var(--line);
-  margin: 24px 0 0;
-  padding: 16px 0 0;
+  padding-top: 16px;
 }
 .rankProfile legend {
   padding-right: 12px;
-  margin: 0;
+  margin: 0 0 10px;
   font-size: var(--text-control);
 }
 .profileSummary {
@@ -226,6 +232,21 @@
   color: var(--text);
   font-weight: 500;
 }
+.restored {
+  margin: 0 0 16px;
+  font-size: var(--text-control);
+  color: var(--muted);
+}
+.restored button {
+  min-height: 24px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--accent);
+  font: inherit;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
 .resultsList {
   display: grid;
   border: 1px solid var(--line);
@@ -242,8 +263,31 @@
   background: var(--surface);
   border-bottom: 1px solid var(--line);
 }
-.result:last-child {
+.resultsList > section:last-child > .result:last-child {
   border-bottom: 0;
+}
+.groupHeading {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  margin: 0;
+  padding: 12px 16px;
+  background: var(--surface-raised);
+  border-bottom: 1px solid var(--line);
+  font-size: var(--text-body);
+  font-weight: 600;
+  line-height: 1.4;
+}
+.groupHeading span {
+  margin-left: 6px;
+  color: var(--muted);
+  font-weight: 400;
+}
+.groupHeading small {
+  display: block;
+  font-size: var(--text-small);
+  font-weight: 400;
+  color: var(--muted);
 }
 .result > .pick {
   flex: 1;
@@ -267,6 +311,35 @@
 .pick > span:not([class]) {
   display: block;
   font-size: var(--text-control);
+  color: var(--muted);
+}
+.rankRows {
+  display: grid;
+  gap: 6px;
+  margin-top: 10px;
+  font-variant-numeric: tabular-nums;
+}
+.rankRow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  gap: 2px 16px;
+  align-items: baseline;
+  font-size: var(--text-small);
+  color: var(--muted);
+}
+.rankRow b,
+.rankRow strong {
+  display: inline;
+  margin: 0 0 0 4px;
+  font-size: var(--text-body);
+  line-height: 1.4;
+  color: var(--text);
+}
+.rankRow b {
+  font-weight: 400;
+}
+.rankMore {
+  font-size: var(--text-small);
   color: var(--muted);
 }
 .pick small {
@@ -731,6 +804,13 @@
   }
   .result > .pick {
     flex-basis: 100%;
+  }
+  .rankRow {
+    grid-template-columns: auto auto;
+    justify-content: start;
+  }
+  .rankRow > span:first-child {
+    grid-column: 1 / -1;
   }
   .result > :global(.button) {
     width: 100%;

@@ -2,7 +2,19 @@ import { CATEGORIES, QUOTAS, SEAT_POOLS } from '../constants/josaa.js';
 
 export const quotaOptions = Object.values(QUOTAS);
 export const seatPoolOptions = Object.values(SEAT_POOLS);
-export const categoryOptions = Object.values(CATEGORIES);
+// Most candidates hold a General (CRL) rank, so it leads; PwD lists follow the main categories.
+export const categoryOptions = [
+  CATEGORIES.GENERAL,
+  CATEGORIES.OBC_NCL,
+  CATEGORIES.GENERAL_EWS,
+  CATEGORIES.SC,
+  CATEGORIES.ST,
+  CATEGORIES.GENERAL_PWD,
+  CATEGORIES.OBC_NCL_PWD,
+  CATEGORIES.GENERAL_EWS_PWD,
+  CATEGORIES.SC_PWD,
+  CATEGORIES.ST_PWD,
+];
 export const categoryLabel = (category) =>
   category === CATEGORIES.GENERAL ? 'General / OPEN · CRL' : category;
 
@@ -33,9 +45,12 @@ export function predictorFormValues(saved) {
     : [];
   return {
     ...predictorSelections(saved),
-    categories: categoryOptions.filter((category) =>
-      validProfiles.some((profile) => profile.category === category),
-    ),
+    // General is preselected so a first-time visitor sees the rank fields straight away.
+    categories: validProfiles.length
+      ? categoryOptions.filter((category) =>
+          validProfiles.some((profile) => profile.category === category),
+        )
+      : [CATEGORIES.GENERAL],
     ranks: Object.fromEntries(
       validProfiles.map((profile) => [
         profile.category,
@@ -96,4 +111,47 @@ export function withGeneralRanks(saved, mainsRank, advRank) {
       ...data.rankProfiles.filter((profile) => profile.category !== CATEGORIES.GENERAL),
     ],
   };
+}
+
+// The API fills its row limit with IIT rows first whenever a JEE Advanced rank is present, which
+// leaves no room for NITs, IIITs and GFTIs. Asking a second time without the Advanced rank
+// returns only JEE Main institutes, so each exam gets its own row limit.
+export function predictionRequests(data) {
+  const request = predictionRequest(data);
+  if (!data.rankProfiles?.some((profile) => 'advRank' in profile)) return [request];
+  return [
+    request,
+    {
+      ...request,
+      rankProfiles: data.rankProfiles.map((profile) => {
+        const mainOnly = { ...profile };
+        delete mainOnly.advRank;
+        return mainOnly;
+      }),
+    },
+  ];
+}
+
+export function mergePredictionRows(responses, isAdvancedRow) {
+  const [first = [], mainOnly] = responses;
+  if (!mainOnly) return first;
+  return [...first.filter(isAdvancedRow), ...mainOnly.filter((row) => !isAdvancedRow(row))];
+}
+
+// A saved form can be searched again without asking only when every required answer is present.
+export function restorablePredictorData(saved) {
+  if (!saved || typeof saved !== 'object') return null;
+  const data = predictionFormData(predictorFormValues(saved));
+  const positive = (value) => /^[1-9][0-9]*$/.test(String(value ?? '').trim());
+  const complete =
+    typeof data.state === 'string' &&
+    data.state.trim() &&
+    data.seatPools.length &&
+    data.quotas.length &&
+    data.rankProfiles.length &&
+    data.rankProfiles.every(
+      (profile) =>
+        positive(profile.mainsRank) && (!('advRank' in profile) || positive(profile.advRank)),
+    );
+  return complete ? data : null;
 }

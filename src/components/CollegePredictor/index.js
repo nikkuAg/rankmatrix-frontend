@@ -9,14 +9,21 @@ import { sendAnalyticsEvent } from '@/utils/analyticEvent';
 import {
   choiceRows,
   CHOICES_KEY,
+  examRankSummary,
+  formatRank,
   groupProgrammes,
   parseChoices,
   programmeExam,
+  programmesByExam,
 } from '@/utils/choices.mjs';
 import { downloadCSV } from '@/utils/downloadCSV';
 import { loadPredictorFormData, savePredictorFormData } from '@/utils/formStorage';
 import { instituteType } from '@/utils/instituteIdentity.mjs';
-import { categoryLabel, quotaOptions } from '@/utils/predictorSelections.mjs';
+import {
+  categoryLabel,
+  quotaOptions,
+  restorablePredictorData,
+} from '@/utils/predictorSelections.mjs';
 import { quotaLabel } from '@/utils/quotaLabel.mjs';
 import { PredictionForm } from './PredictionForm';
 import { ProgrammeEvidence } from './ProgrammeEvidence';
@@ -36,6 +43,8 @@ export function CollegePredictor() {
   const [selected, setSelected] = useState(null);
   const [mobilePane, setMobilePane] = useState('list');
   const [storageNotice, setStorageNotice] = useState('');
+  const [restored, setRestored] = useState(false);
+  const [pendingRestore, setPendingRestore] = useState(null);
   const loaded = useRef(false);
   const workspaceRoot = useRef(null);
   const formOpener = useRef(null);
@@ -43,18 +52,62 @@ export function CollegePredictor() {
   const evidenceButton = useRef(null);
   const [getPredictionData, { data: rankData, isFetching }] = useLazyGetpredictionDataQuery();
   useEffect(() => {
+    if (loaded.current) return;
     /* eslint-disable react-hooks/set-state-in-effect -- reconcile browser storage after hydration */
-    setDefaults(loadPredictorFormData());
+    const savedForm = loadPredictorFormData();
+    setDefaults(savedForm);
+    let savedChoices = [];
     try {
-      setChoices(parseChoices(window.localStorage.getItem(CHOICES_KEY)));
+      savedChoices = parseChoices(window.localStorage.getItem(CHOICES_KEY));
+      setChoices(savedChoices);
     } catch {
       setStorageNotice(
         'Browser storage is unavailable. Keep this tab open and export your list before leaving.',
       );
     }
     loaded.current = true;
+    // A returning visitor gets their last results back, or their saved list, without retyping.
+    const lastSearch = restorablePredictorData(savedForm);
+    if (lastSearch) {
+      setFormData(lastSearch);
+      setOpen(false);
+      setRestored(true);
+      setPendingRestore(lastSearch);
+    } else if (savedChoices.length) {
+      setOpen(false);
+      setView('choices');
+    }
     /* eslint-enable react-hooks/set-state-in-effect */
   }, []);
+  // The search runs in its own effect, after mounting, so the results reach this component's
+  // query subscription. A run that React cancels (development remounts) is ignored.
+  useEffect(() => {
+    if (!pendingRestore) return undefined;
+    let cancelled = false;
+    getPredictionData(pendingRestore, true)
+      .unwrap()
+      .then((results) => {
+        if (cancelled) return;
+        setPendingRestore(null);
+        sendAnalyticsEvent({
+          action: 'prediction_restored',
+          category: 'college_predictor',
+          label: 'Last prediction restored',
+          value: 1,
+          parameters: { result_count: results?.length ?? 0 },
+        });
+      })
+      .catch(() => {
+        if (cancelled) return;
+        setPendingRestore(null);
+        setFormData(null);
+        setRestored(false);
+        setOpen(true);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [pendingRestore, getPredictionData]);
   function changeChoices(next) {
     setChoices(next);
     if (!loaded.current) return;
@@ -84,7 +137,9 @@ export function CollegePredictor() {
   function openForm() {
     setOpen(true);
     requestAnimationFrame(() => {
-      workspaceRoot.current?.querySelector('[data-selection="categories"]')?.focus();
+      workspaceRoot.current
+        ?.querySelector('input[name^="mainsRank"], [data-selection="categories"]')
+        ?.focus();
     });
     sendAnalyticsEvent({
       action: `${formData ? 'update' : 'add'}_form_open_clicked`,
@@ -121,7 +176,9 @@ export function CollegePredictor() {
     });
   }
   const programmes = groupProgrammes(rankData || []);
-  const evidence = programmes.find((programme) => programme.id === selected) || programmes[0];
+  const examGroups = programmesByExam(programmes);
+  const evidence =
+    programmes.find((programme) => programme.id === selected) || examGroups[0]?.programmes[0];
   const initialForm = open && !formData && !choices.length;
   return (
     <div ref={workspaceRoot} className={styles.root}>
@@ -188,6 +245,8 @@ export function CollegePredictor() {
           onClose={closeForm}
           onSuccess={(data) => {
             setFormData(data);
+            setRestored(false);
+            setPendingRestore(null);
             savePredictorFormData(data);
             setView('results');
             setSelected(null);
@@ -224,12 +283,22 @@ export function CollegePredictor() {
           <ChoiceWorkspace choices={choices} onChange={changeChoices} />
         ) : (
           <>
-            {formData && (
+            {formData && !isFetching && (
               <p className={styles.countline}>
                 <strong>
-                  {rankData?.length || 0} allocation rows · {programmes.length} programmes
+                  {programmes.length} {programmes.length === 1 ? 'programme' : 'programmes'}
+                  {examGroups.length > 1 &&
+                    `: ${examGroups.map((group) => `${group.programmes.length} at ${group.title}`).join(', ')}`}
                 </strong>{' '}
-                · Historical comparison order, not a recommended preference order.
+                · Listed by last year’s opening rank, not in a recommended preference order.
+              </p>
+            )}
+            {restored && !open && (
+              <p role="status" className={styles.restored}>
+                Results for the ranks and settings saved in this browser.{' '}
+                <button type="button" onClick={openForm}>
+                  Edit ranks
+                </button>
               </p>
             )}
             {isFetching ? (
@@ -260,44 +329,83 @@ export function CollegePredictor() {
                 <div className={styles.columns} data-mobile-pane={mobilePane}>
                   <div className={styles.listColumn}>
                     <div className={styles.resultsList}>
-                      {programmes.map((programme) => {
-                        const saved = choices.some((choice) => choice.id === programme.id);
-                        return (
-                          <article
-                            className={`${styles.result} ${evidence?.id === programme.id ? styles.selected : ''}`}
-                            key={programme.id}
-                          >
-                            <button
-                              type="button"
-                              className={styles.pick}
-                              aria-pressed={evidence?.id === programme.id}
-                              onClick={() => {
-                                setSelected(programme.id);
-                                setMobilePane('evidence');
-                                if (window.matchMedia('(max-width: 950px)').matches)
-                                  requestAnimationFrame(() => evidenceButton.current?.focus());
-                              }}
-                            >
-                              <span className="badge">{programmeExam(programme.institute)}</span>
-                              <strong>{programme.branch.name}</strong>
-                              <span>{programme.institute.name}</span>
-                              <small>
-                                {instituteType(programme.institute)} · {programme.branch.degree} ·{' '}
-                                {programme.branch.courseDuration} years · {programme.records.length}{' '}
-                                allocation {programme.records.length === 1 ? 'record' : 'records'}
-                              </small>
-                            </button>
-                            <button
-                              type="button"
-                              className="button small"
-                              disabled={saved}
-                              onClick={() => changeChoices([...choices, programme])}
-                            >
-                              {saved ? 'Saved ✓' : '+ Save choice'}
-                            </button>
-                          </article>
-                        );
-                      })}
+                      {examGroups.map((group) => (
+                        <section key={group.exam} aria-labelledby={`results-${group.id}`}>
+                          <h3 id={`results-${group.id}`} className={styles.groupHeading}>
+                            {group.title} <span>{group.programmes.length}</span>
+                            <small>
+                              {group.basis}
+                              {examRankSummary(group.exam, formData?.rankProfiles) &&
+                                `: ${examRankSummary(group.exam, formData?.rankProfiles)}`}
+                            </small>
+                          </h3>
+                          {group.programmes.map((programme) => {
+                            const saved = choices.some((choice) => choice.id === programme.id);
+                            return (
+                              <article
+                                className={`${styles.result} ${evidence?.id === programme.id ? styles.selected : ''}`}
+                                key={programme.id}
+                              >
+                                <button
+                                  type="button"
+                                  className={styles.pick}
+                                  aria-pressed={evidence?.id === programme.id}
+                                  onClick={() => {
+                                    setSelected(programme.id);
+                                    setMobilePane('evidence');
+                                    if (window.matchMedia('(max-width: 950px)').matches)
+                                      requestAnimationFrame(() => evidenceButton.current?.focus());
+                                  }}
+                                >
+                                  <span className="badge">
+                                    {programmeExam(programme.institute)}
+                                  </span>
+                                  <strong>{programme.branch.name}</strong>
+                                  <span>{programme.institute.name}</span>
+                                  <small>
+                                    {instituteType(programme.institute)} · {programme.branch.degree}{' '}
+                                    · {programme.branch.courseDuration} years
+                                  </small>
+                                  <span className={styles.rankRows}>
+                                    {programme.records.slice(0, 3).map((record, index) => (
+                                      <span className={styles.rankRow} key={index}>
+                                        <span>
+                                          {[
+                                            quotaLabel(record.quota),
+                                            formData?.rankProfiles.length > 1 && record.category,
+                                            formData?.seatPools.length > 1 && record.seatPool,
+                                          ]
+                                            .filter(Boolean)
+                                            .join(', ')}
+                                        </span>
+                                        <span>
+                                          Opening <b>{formatRank(record.openingRank)}</b>
+                                        </span>
+                                        <span>
+                                          Closing <strong>{formatRank(record.closingRank)}</strong>
+                                        </span>
+                                      </span>
+                                    ))}
+                                    {programme.records.length > 3 && (
+                                      <span className={styles.rankMore}>
+                                        {programme.records.length - 3} more in Evidence
+                                      </span>
+                                    )}
+                                  </span>
+                                </button>
+                                <button
+                                  type="button"
+                                  className="button small"
+                                  disabled={saved}
+                                  onClick={() => changeChoices([...choices, programme])}
+                                >
+                                  {saved ? 'Saved ✓' : '+ Save choice'}
+                                </button>
+                              </article>
+                            );
+                          })}
+                        </section>
+                      ))}
                     </div>
                   </div>
                   <ProgrammeEvidence programme={evidence} />
