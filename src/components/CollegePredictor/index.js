@@ -293,7 +293,7 @@ export function CollegePredictor() {
             )}
             {restored && !open && (
               <p role="status" className={styles.restored}>
-                These are the results for the ranks you entered last time.{' '}
+                Results for the ranks and settings saved in this browser.{' '}
                 <button type="button" onClick={openForm}>
                   Edit ranks
                 </button>
