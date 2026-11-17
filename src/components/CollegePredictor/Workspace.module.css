@@ -226,6 +226,21 @@
   color: var(--text);
   font-weight: 500;
 }
+.restored {
+  margin: 0 0 16px;
+  font-size: var(--text-control);
+  color: var(--muted);
+}
+.restored button {
+  min-height: 24px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--accent);
+  font: inherit;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
 .resultsList {
   display: grid;
   border: 1px solid var(--line);

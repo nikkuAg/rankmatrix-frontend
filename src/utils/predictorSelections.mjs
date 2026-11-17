@@ -99,3 +99,21 @@ export function mergePredictionRows(responses, isAdvancedRow) {
   if (!mainOnly) return first;
   return [...first.filter(isAdvancedRow), ...mainOnly.filter((row) => !isAdvancedRow(row))];
 }
+
+// A saved form can be searched again without asking only when every required answer is present.
+export function restorablePredictorData(saved) {
+  if (!saved || typeof saved !== 'object') return null;
+  const data = predictionFormData(predictorFormValues(saved));
+  const positive = (value) => /^[1-9][0-9]*$/.test(String(value ?? '').trim());
+  const complete =
+    typeof data.state === 'string' &&
+    data.state.trim() &&
+    data.seatPools.length &&
+    data.quotas.length &&
+    data.rankProfiles.length &&
+    data.rankProfiles.every(
+      (profile) =>
+        positive(profile.mainsRank) && (!('advRank' in profile) || positive(profile.advRank)),
+    );
+  return complete ? data : null;
+}

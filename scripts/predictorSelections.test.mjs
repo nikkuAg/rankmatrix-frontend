@@ -8,6 +8,7 @@ import {
   predictorFormValues,
   predictorSelections,
   quotaOptions,
+  restorablePredictorData,
 } from '../src/utils/predictorSelections.mjs';
 
 test('saved single-pool inputs migrate without changing the selected pool', () => {
@@ -112,4 +113,36 @@ test('merged rows keep IITs from the first response and other institutes from th
   const nit = { id: 3, type: 'NIT' };
   assert.deepEqual(mergePredictionRows([[iit, strayNit], [nit]], isIit), [iit, nit]);
   assert.deepEqual(mergePredictionRows([[strayNit]], isIit), [strayNit]);
+});
+
+test('only a complete saved form is searched again for a returning visitor', () => {
+  const saved = {
+    state: 'Uttar Pradesh',
+    delta: 10,
+    count: 10,
+    seatPools: ['Gender-Neutral'],
+    quotas: ['AI', 'HS'],
+    rankProfiles: [{ category: 'General', mainsRank: '18000', advRank: '7200' }],
+  };
+  assert.deepEqual(restorablePredictorData(saved), saved);
+  assert.deepEqual(
+    restorablePredictorData({ category: 'General', mainsRank: '18000', state: 'Goa' }).rankProfiles,
+    [{ category: 'General', mainsRank: '18000' }],
+  );
+  assert.equal(restorablePredictorData(null), null);
+  assert.equal(restorablePredictorData('corrupt'), null);
+  assert.equal(restorablePredictorData({ ...saved, state: '' }), null);
+  assert.equal(restorablePredictorData({ ...saved, seatPools: [] }), null);
+  assert.equal(restorablePredictorData({ ...saved, rankProfiles: [] }), null);
+  assert.equal(
+    restorablePredictorData({ ...saved, rankProfiles: [{ category: 'General', mainsRank: '' }] }),
+    null,
+  );
+  assert.equal(
+    restorablePredictorData({
+      ...saved,
+      rankProfiles: [{ category: 'General', mainsRank: '18000', advRank: '-4' }],
+    }),
+    null,
+  );
 });
