@@ -5,6 +5,8 @@ import { articleJsonLd, breadcrumbJsonLd, faqJsonLd, serializeJsonLd } from '@/u
 import { buildMetadata } from '@/utils/metadata.mjs';
 
 const PAGE_URL = '/guides/josaa-choice-filling-strategy';
+const SHORT_ANSWER =
+  'Order your choices by genuine preference, not by how likely each one seems: in every round JoSAA allocates the highest choice on your list that your rank qualifies for. Placing an ambitious option above a realistic one costs nothing, but a programme you leave off the list can never be allocated to you.';
 const TITLE = 'JoSAA choice filling strategy — how to order your preference list';
 const DESCRIPTION =
   'Build a JoSAA preference list using your interests and historical cutoffs. Learn how to order choices and avoid common counselling mistakes.';
@@ -44,7 +46,7 @@ export const metadata = buildMetadata({
   description: DESCRIPTION,
   type: 'article',
   publishedTime: PUBLISHED,
-  modifiedTime: '2026-10-26',
+  modifiedTime: '2026-11-17',
 });
 
 const jsonLd = [
@@ -53,7 +55,7 @@ const jsonLd = [
     title: TITLE,
     description: DESCRIPTION,
     datePublished: PUBLISHED,
-    dateModified: '2026-10-26',
+    dateModified: '2026-11-17',
   }),
   faqJsonLd(FAQS),
   breadcrumbJsonLd([
@@ -74,9 +76,10 @@ export default function JoSAAChoiceFillingStrategy() {
         />
       ))}
       <GuideLayout
+        shortAnswer={SHORT_ANSWER}
         title={TITLE}
         description={DESCRIPTION}
-        lastUpdated="26 October 2026"
+        lastUpdated="17 November 2026"
         readingTimeMinutes={9}
         breadcrumbs={[
           { name: 'Home', path: '/' },
@@ -185,8 +188,8 @@ export default function JoSAAChoiceFillingStrategy() {
         <ol>
           <li>
             <strong>Mock allocations</strong> — previews based on choices saved by the specified
-            cutoffs. Review your preferences while choice filling is open; a mock result is not
-            a seat offer.
+            cutoffs. Review your preferences while choice filling is open; a mock result is not a
+            seat offer.
           </li>
           <li>
             <strong>Finalise and lock</strong> — save and lock your choices by the deadline. The

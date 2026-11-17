@@ -5,6 +5,8 @@ import { articleJsonLd, breadcrumbJsonLd, faqJsonLd, serializeJsonLd } from '@/u
 import { buildMetadata } from '@/utils/metadata.mjs';
 
 const PAGE_URL = '/guides/josaa-counselling-rounds';
+const SHORT_ANSWER =
+  'JoSAA allocates seats in a series of rounds on the published schedule, and after an allocation you must complete the required acceptance steps by each deadline. You then choose freeze (keep the seat, no upgrades), float (allow an upgrade to a higher choice at any institute) or slide (allow an upgrade only within the same institute).';
 const TITLE = 'JoSAA counselling rounds: how they work';
 const DESCRIPTION =
   'Understand mock allocations, counselling rounds, freeze, float, slide and reporting. Learn how each step affects your JoSAA choices.';
@@ -44,7 +46,7 @@ export const metadata = buildMetadata({
   description: DESCRIPTION,
   type: 'article',
   publishedTime: PUBLISHED,
-  modifiedTime: '2026-10-24',
+  modifiedTime: '2026-11-17',
 });
 
 const jsonLd = [
@@ -53,7 +55,7 @@ const jsonLd = [
     title: TITLE,
     description: DESCRIPTION,
     datePublished: PUBLISHED,
-    dateModified: '2026-10-24',
+    dateModified: '2026-11-17',
   }),
   faqJsonLd(FAQS),
   breadcrumbJsonLd([
@@ -74,9 +76,10 @@ export default function JoSAACounsellingRoundsGuide() {
         />
       ))}
       <GuideLayout
+        shortAnswer={SHORT_ANSWER}
         title={TITLE}
         description={DESCRIPTION}
-        lastUpdated="24 October 2026"
+        lastUpdated="17 November 2026"
         readingTimeMinutes={4}
         breadcrumbs={[
           { name: 'Home', path: '/' },

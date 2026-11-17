@@ -6,6 +6,8 @@ import { articleJsonLd, breadcrumbJsonLd, faqJsonLd, serializeJsonLd } from '@/u
 import { buildMetadata } from '@/utils/metadata.mjs';
 
 const PAGE_URL = '/guides/josaa-reservation-categories';
+const SHORT_ANSWER =
+  'JoSAA divides each programme’s seats into OPEN, GEN-EWS, OBC-NCL, SC and ST sections, each with a PwD subdivision; at centrally funded institutes the usual shares are 10% EWS, 27% OBC-NCL, 15% SC and 7.5% ST, with 5% PwD within each, and the seat matrix gives every programme’s exact count. OPEN is a seat category, not a candidate category: candidates of every category are considered for OPEN seats on the common rank list.';
 const TITLE = 'JoSAA reservation categories explained — GE, OBC-NCL, SC, ST, EWS, PwD';
 const DESCRIPTION =
   'Understand JoSAA category labels, PwD status and seat pools. Learn how to match your rank list with the correct category and quota cutoff.';
@@ -50,7 +52,7 @@ export const metadata = buildMetadata({
   description: DESCRIPTION,
   type: 'article',
   publishedTime: PUBLISHED,
-  modifiedTime: '2026-10-24',
+  modifiedTime: '2026-11-17',
 });
 
 const jsonLd = [
@@ -59,7 +61,7 @@ const jsonLd = [
     title: TITLE,
     description: DESCRIPTION,
     datePublished: PUBLISHED,
-    dateModified: '2026-10-24',
+    dateModified: '2026-11-17',
   }),
   faqJsonLd(FAQS),
   breadcrumbJsonLd([
@@ -80,9 +82,10 @@ export default function JoSAAReservationCategories() {
         />
       ))}
       <GuideLayout
+        shortAnswer={SHORT_ANSWER}
         title={TITLE}
         description={DESCRIPTION}
-        lastUpdated="24 October 2026"
+        lastUpdated="17 November 2026"
         readingTimeMinutes={4}
         breadcrumbs={[
           { name: 'Home', path: '/' },

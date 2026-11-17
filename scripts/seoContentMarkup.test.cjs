@@ -79,6 +79,8 @@ test('comparison guide has consistent canonical/article metadata and visible sou
   assert.ok(html.includes('Worked example: IIT Bhubaneswar Civil Engineering, JoSAA 2025'));
   assert.ok(html.includes('openingclosingrankarchieve.aspx'));
   assert.ok(html.includes('same round'));
+  assert.ok(html.includes('Short answer'));
+  assert.ok(html.includes('Compare cutoffs only within one slice'));
   const documents = [...html.matchAll(/<script type="application\/ld\+json">(.*?)<\/script>/g)].map(
     (match) => JSON.parse(match[1]),
   );

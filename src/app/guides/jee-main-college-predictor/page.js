@@ -6,6 +6,8 @@ import { articleJsonLd, breadcrumbJsonLd, faqJsonLd, serializeJsonLd } from '@/u
 import { buildMetadata } from '@/utils/metadata.mjs';
 
 const PAGE_URL = '/guides/jee-main-college-predictor';
+const SHORT_ANSWER =
+  'Enter your JEE Main rank (and JEE Advanced rank if you have one), category and home state, and the predictor lists programmes whose stored past closing ranks fall around your rank for the matching category, quota and seat pool. The result is a shortlist built from historical cutoffs for research, not an admission probability or a guarantee.';
 const TITLE = 'JEE college & branch predictor: how it works';
 const DESCRIPTION =
   'Learn which ranks and filters a JEE college predictor uses, how to interpret historical cutoffs and how to turn results into a college shortlist.';
@@ -50,7 +52,7 @@ export const metadata = buildMetadata({
   description: DESCRIPTION,
   type: 'article',
   publishedTime: PUBLISHED,
-  modifiedTime: '2026-10-26',
+  modifiedTime: '2026-11-17',
 });
 
 const jsonLd = [
@@ -59,7 +61,7 @@ const jsonLd = [
     title: TITLE,
     description: DESCRIPTION,
     datePublished: PUBLISHED,
-    dateModified: '2026-10-26',
+    dateModified: '2026-11-17',
   }),
   faqJsonLd(FAQS),
   breadcrumbJsonLd([
@@ -80,9 +82,10 @@ export default function JeeMainCollegePredictorGuide() {
         />
       ))}
       <GuideLayout
+        shortAnswer={SHORT_ANSWER}
         title={TITLE}
         description={DESCRIPTION}
-        lastUpdated="26 October 2026"
+        lastUpdated="17 November 2026"
         readingTimeMinutes={4}
         breadcrumbs={[
           { name: 'Home', path: '/' },
