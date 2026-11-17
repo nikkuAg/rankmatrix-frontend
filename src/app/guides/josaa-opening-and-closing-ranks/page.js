@@ -6,6 +6,8 @@ import { articleJsonLd, breadcrumbJsonLd, faqJsonLd, serializeJsonLd } from '@/u
 import { buildMetadata } from '@/utils/metadata.mjs';
 
 const PAGE_URL = '/guides/josaa-opening-and-closing-ranks';
+const SHORT_ANSWER =
+  'The opening rank is the best rank allocated a seat in a given institute, programme, year, round, category, quota and seat pool; the closing rank is the last rank allocated there. For OPEN seats these are Common Rank List (CRL) ranks and for reserved seats they are the respective category ranks, so compare only rows with the same rank list and conditions.';
 const TITLE = 'JoSAA opening and closing ranks, explained';
 const DESCRIPTION =
   'Learn what opening and closing ranks mean, which rank list to compare and how category, quota, seat pool and round affect JoSAA cutoffs.';
@@ -45,7 +47,7 @@ export const metadata = buildMetadata({
   description: DESCRIPTION,
   type: 'article',
   publishedTime: PUBLISHED,
-  modifiedTime: '2026-10-26',
+  modifiedTime: '2026-11-17',
 });
 
 const jsonLd = [
@@ -54,7 +56,7 @@ const jsonLd = [
     title: TITLE,
     description: DESCRIPTION,
     datePublished: PUBLISHED,
-    dateModified: '2026-10-26',
+    dateModified: '2026-11-17',
   }),
   faqJsonLd(FAQS),
   breadcrumbJsonLd([
@@ -75,9 +77,10 @@ export default function JoSAAOpeningAndClosingRanksGuide() {
         />
       ))}
       <GuideLayout
+        shortAnswer={SHORT_ANSWER}
         title={TITLE}
         description={DESCRIPTION}
-        lastUpdated="26 October 2026"
+        lastUpdated="17 November 2026"
         readingTimeMinutes={7}
         breadcrumbs={[
           { name: 'Home', path: '/' },
@@ -90,11 +93,11 @@ export default function JoSAAOpeningAndClosingRanksGuide() {
         <p>
           A published JoSAA cutoff row describes the ranks allocated seats for the stated institute,
           programme, year, round, category, quota and seat pool. The best rank in that allocation
-          range is the <strong>opening rank</strong>; the last rank is the <strong>closing rank</strong>.
-          Allocation does not establish completed admission: candidates must still meet the
-          applicable eligibility, verification, payment and reporting requirements. Compare only
-          published rows with matching rank lists and allocation conditions. A missing row is
-          unavailable data, not a rank of zero.
+          range is the <strong>opening rank</strong>; the last rank is the{' '}
+          <strong>closing rank</strong>. Allocation does not establish completed admission:
+          candidates must still meet the applicable eligibility, verification, payment and reporting
+          requirements. Compare only published rows with matching rank lists and allocation
+          conditions. A missing row is unavailable data, not a rank of zero.
         </p>
         <p>
           On RankMatrix, the full year-wise and round-wise table is at{' '}
@@ -197,9 +200,9 @@ export default function JoSAAOpeningAndClosingRanksGuide() {
             it as a safety guarantee or assume every year has six rounds.
           </li>
           <li>
-            <strong>Use Round 1 as a historical reference.</strong> It shows the published cutoff
-            in that round; it does not promise an early allocation. Put choices in the order you
-            would actually accept them, and check the current schedule and rules.
+            <strong>Use Round 1 as a historical reference.</strong> It shows the published cutoff in
+            that round; it does not promise an early allocation. Put choices in the order you would
+            actually accept them, and check the current schedule and rules.
           </li>
           <li>
             <strong>Do not mix rank lists.</strong> JEE Main CRL against NIT/IIIT/GFTI cutoffs; JEE

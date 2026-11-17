@@ -16,6 +16,7 @@ export const GuideLayout = ({
   variant = 'article',
   eyebrow,
   headerNote,
+  shortAnswer,
   breadcrumbs = [
     { name: 'Home', path: '/' },
     { name: 'Guides', path: '/guides' },
@@ -66,6 +67,14 @@ export const GuideLayout = ({
           {readingTimeMinutes && <span>{readingTimeMinutes} min read</span>}
         </div>
       </header>
+      {shortAnswer && (
+        <section className={styles.shortAnswer} aria-labelledby="short-answer-label">
+          <p className={styles.shortAnswerLabel} id="short-answer-label">
+            Short answer
+          </p>
+          <p className={styles.shortAnswerText}>{shortAnswer}</p>
+        </section>
+      )}
       <div
         className={`${styles.readingLayout} ${!hasContents || isFeature ? styles.fullLayout : ''}`}
       >

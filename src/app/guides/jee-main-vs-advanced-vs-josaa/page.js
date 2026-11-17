@@ -5,6 +5,8 @@ import { articleJsonLd, breadcrumbJsonLd, faqJsonLd, serializeJsonLd } from '@/u
 import { buildMetadata } from '@/utils/metadata.mjs';
 
 const PAGE_URL = '/guides/jee-main-vs-advanced-vs-josaa';
+const SHORT_ANSWER =
+  'JEE Main ranks are used for NITs, IIITs and other government-funded institutes, and JEE Main is also how most candidates qualify for JEE Advanced, whose ranks are used for IITs and IISc. JoSAA is not a third exam: it is the joint counselling that allocates seats at all of these institutes using the rank that applies to each programme.';
 const TITLE = 'JEE Main vs JEE Advanced vs JoSAA';
 const DESCRIPTION =
   'Understand how JEE Main, JEE Advanced and JoSAA fit together, which rank lists apply and how candidates reach IIT, NIT, IIIT and GFTI admission.';
@@ -44,7 +46,7 @@ export const metadata = buildMetadata({
   description: DESCRIPTION,
   type: 'article',
   publishedTime: PUBLISHED,
-  modifiedTime: '2026-10-24',
+  modifiedTime: '2026-11-17',
 });
 
 const jsonLd = [
@@ -53,7 +55,7 @@ const jsonLd = [
     title: TITLE,
     description: DESCRIPTION,
     datePublished: PUBLISHED,
-    dateModified: '2026-10-24',
+    dateModified: '2026-11-17',
   }),
   faqJsonLd(FAQS),
   breadcrumbJsonLd([
@@ -74,9 +76,10 @@ export default function JeeMainVsAdvancedVsJoSAAGuide() {
         />
       ))}
       <GuideLayout
+        shortAnswer={SHORT_ANSWER}
         title={TITLE}
         description={DESCRIPTION}
-        lastUpdated="24 October 2026"
+        lastUpdated="17 November 2026"
         readingTimeMinutes={4}
         breadcrumbs={[
           { name: 'Home', path: '/' },

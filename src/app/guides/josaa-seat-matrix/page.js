@@ -6,6 +6,8 @@ import { articleJsonLd, breadcrumbJsonLd, faqJsonLd, serializeJsonLd } from '@/u
 import { buildMetadata } from '@/utils/metadata.mjs';
 
 const PAGE_URL = '/guides/josaa-seat-matrix';
+const SHORT_ANSWER =
+  'The JoSAA seat matrix is the official count of seats each participating institute offers in each programme, split by category, quota (such as AI, HS and OS) and seat pool (Gender-Neutral or Female-only). Every seat JoSAA allocates comes from one cell of this matrix, so it tells you how many seats exist for your exact category, quota and pool.';
 const TITLE = 'JoSAA seat matrix: categories, quotas, seat pools';
 const DESCRIPTION =
   'Read the JoSAA seat matrix with confidence. Understand category, HS, OS and AI quotas, gender seat pools and how to compare programme seats.';
@@ -45,7 +47,7 @@ export const metadata = buildMetadata({
   description: DESCRIPTION,
   type: 'article',
   publishedTime: PUBLISHED,
-  modifiedTime: '2026-10-23',
+  modifiedTime: '2026-11-17',
 });
 
 const jsonLd = [
@@ -54,7 +56,7 @@ const jsonLd = [
     title: TITLE,
     description: DESCRIPTION,
     datePublished: PUBLISHED,
-    dateModified: '2026-10-23',
+    dateModified: '2026-11-17',
   }),
   faqJsonLd(FAQS),
   breadcrumbJsonLd([
@@ -75,9 +77,10 @@ export default function JoSAASeatMatrixGuide() {
         />
       ))}
       <GuideLayout
+        shortAnswer={SHORT_ANSWER}
         title={TITLE}
         description={DESCRIPTION}
-        lastUpdated="23 October 2026"
+        lastUpdated="17 November 2026"
         readingTimeMinutes={8}
         breadcrumbs={[
           { name: 'Home', path: '/' },

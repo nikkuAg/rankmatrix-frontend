@@ -6,6 +6,8 @@ import { articleJsonLd, breadcrumbJsonLd, faqJsonLd, serializeJsonLd } from '@/u
 import { buildMetadata } from '@/utils/metadata.mjs';
 
 const PAGE_URL = '/guides/what-is-josaa-counselling';
+const SHORT_ANSWER =
+  'JoSAA (Joint Seat Allocation Authority) runs the common counselling for undergraduate seats at participating IITs, IISc, NITs, IIEST, IIITs and other government-funded technical institutes. It is not an exam: you register, fill and lock a preference list, and seats are allocated round by round using your JEE Advanced rank for IIT and IISc programmes and your JEE Main rank for the rest.';
 const TITLE = 'What is JoSAA counselling?';
 const DESCRIPTION =
   'Learn what JoSAA does, which institutes participate and how registration, choice filling and seat allocation connect to JEE Main and Advanced ranks.';
@@ -40,7 +42,7 @@ export const metadata = buildMetadata({
   description: DESCRIPTION,
   type: 'article',
   publishedTime: PUBLISHED,
-  modifiedTime: '2026-10-24',
+  modifiedTime: '2026-11-17',
 });
 
 const jsonLd = [
@@ -49,7 +51,7 @@ const jsonLd = [
     title: TITLE,
     description: DESCRIPTION,
     datePublished: PUBLISHED,
-    dateModified: '2026-10-24',
+    dateModified: '2026-11-17',
   }),
   faqJsonLd(FAQS),
   breadcrumbJsonLd([
@@ -70,9 +72,10 @@ export default function WhatIsJoSAACounselling() {
         />
       ))}
       <GuideLayout
+        shortAnswer={SHORT_ANSWER}
         title={TITLE}
         description={DESCRIPTION}
-        lastUpdated="24 October 2026"
+        lastUpdated="17 November 2026"
         readingTimeMinutes={4}
         breadcrumbs={[
           { name: 'Home', path: '/' },
