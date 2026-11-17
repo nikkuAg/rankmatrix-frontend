@@ -110,7 +110,7 @@ export default function Terms() {
             attribution.
           </li>
           <li>
-            Use the site or its outputs to mislead candidates — for example, to falsely guarantee
+            Use the site or its outputs to mislead candidates, for example to falsely guarantee
             admission as part of a paid service.
           </li>
           <li>Attempt to break, probe, or interfere with the site&apos;s security or hosting.</li>
@@ -150,8 +150,8 @@ export default function Terms() {
         <h2>8. Limitation of liability</h2>
         <p>
           To the maximum extent permitted by law, RankMatrix and its maker are not liable for any
-          loss or damage — including loss of admission opportunity, financial loss, or any indirect
-          or consequential loss — arising from your use of the site, reliance on its data or
+          loss or damage (including loss of admission opportunity, financial loss, or any indirect
+          or consequential loss) arising from your use of the site, reliance on its data or
           predictions, or inability to access it. If you make an admission decision, you do so on
           the basis of your own judgement and the official JoSAA portal, not RankMatrix.
         </p>

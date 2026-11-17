@@ -5,7 +5,7 @@ export function PredictPageContent({ faqs }) {
   return (
     <ReferencePanel
       title="Read the evidence. Make your choice."
-      description="Rank lists, examples and limitations — alongside the tool, whenever you need them."
+      description="Rank lists, examples and limitations, next to the tool whenever you need them."
       label="How to read your predictor output"
     >
       <ReferenceItem title="How to read the predictor output">
@@ -78,17 +78,17 @@ export function PredictPageContent({ faqs }) {
           <li>
             <AppLink href="/guides/jee-main-college-predictor">
               JEE college &amp; branch predictor: how it works
-            </AppLink>{' '}
-            — the long version of what this page does.
+            </AppLink>
+            : the long version of what this page does.
           </li>
           <li>
             <AppLink href="/guides/josaa-opening-and-closing-ranks">
               Opening and closing ranks explained
-            </AppLink>{' '}
-            — the numbers behind every row of the predictor output.
+            </AppLink>
+            : the numbers behind every row of the predictor output.
           </li>
           <li>
-            <AppLink href="/guides/josaa-seat-matrix">JoSAA seat matrix explained</AppLink> — what
+            <AppLink href="/guides/josaa-seat-matrix">JoSAA seat matrix explained</AppLink>: what
             the category and quota columns mean.
           </li>
         </ul>

@@ -78,9 +78,9 @@ export default function About() {
 
         <h2>Why this exists</h2>
         <p>
-          I went through JoSAA myself. The data you actually need to make a sensible choice list —
-          last year&apos;s closing ranks, seat counts for your category, branch-level cutoff trends
-          across rounds — is technically published by JoSAA, but it is scattered across PDFs,
+          I went through JoSAA myself. The data you actually need to make a sensible choice list
+          (last year&apos;s closing ranks, seat counts for your category, branch-level cutoff trends
+          across rounds) is technically published by JoSAA, but it is scattered across PDFs,
           downloadable spreadsheets, and pages that are not built for the question you are trying to
           answer at midnight before choice locking:{' '}
           <em>given my rank, what is realistic, and in what order should I list it?</em>
@@ -116,14 +116,14 @@ export default function About() {
         <ul>
           <li>
             <strong>Opening and closing ranks</strong> per institute, branch, quota, category, seat
-            pool, year, and round — from JoSAA&apos;s published cutoff records.
+            pool, year, and round, from JoSAA&apos;s published cutoff records.
           </li>
           <li>
-            <strong>Seat matrix</strong> — institute-by-institute, branch-by-branch seat counts per
-            category — from the official JoSAA seat matrix release.
+            <strong>Seat matrix</strong>: institute-by-institute, branch-by-branch seat counts per
+            category, from the official JoSAA seat matrix release.
           </li>
           <li>
-            <strong>Institutes and programmes</strong> — published college and branch names, codes,
+            <strong>Institutes and programmes</strong>: published college and branch names, codes,
             degrees, and course durations.
           </li>
         </ul>
@@ -138,7 +138,7 @@ export default function About() {
           or seat-allocation system, and they cannot register you or submit choices to JoSAA.
         </p>
         <p>
-          For details on how the predictor uses this data — and where its predictions can be wrong —
+          For details on how the predictor uses this data, and where its predictions can be wrong,
           see the <AppLink href="/methodology">methodology page</AppLink>.
         </p>
 
@@ -174,7 +174,7 @@ export default function About() {
 
         <h2>Get in touch</h2>
         <p>
-          Bug reports, missing data, broken links, feature ideas, or just feedback — please send
+          Bug reports, missing data, broken links, feature ideas, or just feedback: please send
           them. The fastest channels are listed on the{' '}
           <AppLink href="/contact">contact page</AppLink>. Direct corrections to the data are
           especially welcome: if a rank, seat count, or participating-institute entry looks wrong,

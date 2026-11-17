@@ -65,20 +65,20 @@ export default function Contact() {
         </p>
         <p>
           For data correction requests, please include the page URL and a link or screenshot of the
-          official source you are comparing against — that makes the fix loop almost instant.
+          official source you are comparing against. That makes the fix loop almost instant.
         </p>
         <ol>
           <li>
-            <strong>The page URL</strong> — identify the institute, programme or tool.
+            <strong>The page URL</strong>: identify the institute, programme or tool.
           </li>
           <li>
-            <strong>The allocation context</strong> — year, round, category, quota and seat pool.
+            <strong>The allocation context</strong>: year, round, category, quota and seat pool.
           </li>
           <li>
-            <strong>The observation</strong> — explain what appears incorrect.
+            <strong>The observation</strong>: explain what appears incorrect.
           </li>
           <li>
-            <strong>The official source</strong> — include the publication you checked.
+            <strong>The official source</strong>: include the publication you checked.
           </li>
         </ol>
         <p>Do not send passwords, identity documents or unnecessary personal information.</p>
@@ -109,8 +109,8 @@ export default function Contact() {
         <p>
           RankMatrix is not an admission consultancy. The site cannot tell you which college to
           pick, run a personalised counselling session, or intervene in your JoSAA registration. For
-          anything specific to your candidature — eligibility, documentation, reporting, payment —
-          please refer to the official{' '}
+          anything specific to your candidature, such as eligibility, documentation, reporting or
+          payment, please refer to the official{' '}
           <a href="https://josaa.nic.in" target="_blank" rel="noopener noreferrer">
             JoSAA portal
           </a>

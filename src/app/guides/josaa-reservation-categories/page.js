@@ -6,7 +6,7 @@ import { articleJsonLd, breadcrumbJsonLd, faqJsonLd, serializeJsonLd } from '@/u
 import { buildMetadata } from '@/utils/metadata.mjs';
 
 const PAGE_URL = '/guides/josaa-reservation-categories';
-const TITLE = 'JoSAA reservation categories explained — GE, OBC-NCL, SC, ST, EWS, PwD';
+const TITLE = 'JoSAA reservation categories explained: GE, OBC-NCL, SC, ST, EWS, PwD';
 const DESCRIPTION =
   'Understand JoSAA category labels, PwD status and seat pools. Learn how to match your rank list with the correct category and quota cutoff.';
 const PUBLISHED = '2026-05-19';

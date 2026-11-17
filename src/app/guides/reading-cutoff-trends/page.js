@@ -54,9 +54,10 @@ export default function ReadingCutoffTrends() {
       >
         <h2>What a change in closing rank actually tells you</h2>
         <p>
-          A closing rank describes the last allocated rank in a particular allocation slice. A larger
-          number means the recorded closing rank increased; it does not by itself explain demand,
-          make a programme better or worse, or tell you the probability of admission next year.
+          A closing rank describes the last allocated rank in a particular allocation slice. A
+          larger number means the recorded closing rank increased; it does not by itself explain
+          demand, make a programme better or worse, or tell you the probability of admission next
+          year.
         </p>
         <h2>Start with one comparable slice</h2>
         <ol>
@@ -86,18 +87,17 @@ export default function ReadingCutoffTrends() {
           <li>
             For a year-to-year comparison, use the same round. Each quota can have a different
             latest stored round; do not silently compare one year&apos;s round 5 with another
-            year&apos;s round 6.
-            If either matching row is absent, report the comparison as unavailable rather than
-            substituting zero.
+            year&apos;s round 6. If either matching row is absent, report the comparison as
+            unavailable rather than substituting zero.
           </li>
         </ol>
         <h2>Worked example: IIT Bhubaneswar Civil Engineering, JoSAA 2025</h2>
         <p>
-          This is one published slice: IIT Bhubaneswar, Civil Engineering (4-year B.Tech), AI
-          quota, OPEN category and Gender-Neutral pool. The table shows the opening rank, closing
-          rank and change in closing-rank number from the previous round. The official archive calls
-          the category OPEN; RankMatrix displays it as General. For an IIT programme, use the
-          applicable JEE Advanced rank list.
+          This is one published slice: IIT Bhubaneswar, Civil Engineering (4-year B.Tech), AI quota,
+          OPEN category and Gender-Neutral pool. The table shows the opening rank, closing rank and
+          change in closing-rank number from the previous round. The official archive calls the
+          category OPEN; RankMatrix displays it as General. For an IIT programme, use the applicable
+          JEE Advanced rank list.
         </p>
         <div
           className="table-scroll"
@@ -122,7 +122,7 @@ export default function ReadingCutoffTrends() {
                 <td>1</td>
                 <td>10,063</td>
                 <td>13,957</td>
-                <td>—</td>
+                <td>Not applicable</td>
               </tr>
               <tr>
                 <td>2</td>
@@ -158,10 +158,10 @@ export default function ReadingCutoffTrends() {
           </table>
         </div>
         <p>
-          From Round 1 to Round 6, the closing-rank number increased by 2,199
-          (16,156 − 13,957). The path was not smooth: it changed by 465 in Round 2 and 45 in Round
-          3, stayed the same in Rounds 4 and 5, then changed by 1,689 in Round 6. These are
-          differences between published endpoints; they do not explain why allocations changed.
+          From Round 1 to Round 6, the closing-rank number increased by 2,199 (16,156 − 13,957). The
+          path was not smooth: it changed by 465 in Round 2 and 45 in Round 3, stayed the same in
+          Rounds 4 and 5, then changed by 1,689 in Round 6. These are differences between published
+          endpoints; they do not explain why allocations changed.
         </p>
         <ul>
           <li>

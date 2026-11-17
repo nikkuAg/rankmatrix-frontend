@@ -5,7 +5,7 @@ import { articleJsonLd, breadcrumbJsonLd, faqJsonLd, serializeJsonLd } from '@/u
 import { buildMetadata } from '@/utils/metadata.mjs';
 
 const PAGE_URL = '/guides/josaa-choice-filling-strategy';
-const TITLE = 'JoSAA choice filling strategy — how to order your preference list';
+const TITLE = 'JoSAA choice filling strategy: how to order your preference list';
 const DESCRIPTION =
   'Build a JoSAA preference list using your interests and historical cutoffs. Learn how to order choices and avoid common counselling mistakes.';
 const PUBLISHED = '2026-05-19';
@@ -29,7 +29,7 @@ const FAQS = [
   {
     question: 'Should I fill choices outside my comfort zone?',
     answer:
-      'Yes — but only if you would actually accept those seats. Putting a long-shot at the top costs nothing if you would happily take it; putting a college-branch you would refuse anywhere on the list is a real risk, because JoSAA cannot tell whether you mean it.',
+      'Yes, but only if you would actually accept those seats. Putting a long-shot at the top costs nothing if you would happily take it; putting a college-branch you would refuse anywhere on the list is a real risk, because JoSAA cannot tell whether you mean it.',
   },
   {
     question: 'Can I edit my choices after locking?',
@@ -113,7 +113,7 @@ export default function JoSAAChoiceFillingStrategy() {
           </li>
         </ol>
 
-        <h2>Freeze, float, slide — the round-by-round decision</h2>
+        <h2>Freeze, float, slide: the round-by-round decision</h2>
         <p>
           When accepting a seat, choose an option available under the current rules. Float and slide
           are not available in every situation or round. The options mean:
@@ -156,7 +156,7 @@ export default function JoSAAChoiceFillingStrategy() {
           </li>
           <li>
             <strong>Filling too many marginal choices.</strong> Padding the list with seats you
-            would refuse anyway is worse than useless — it dilutes ordering thinking and risks
+            would refuse anyway is worse than useless. It dilutes ordering thinking and risks
             locking you into something unsuitable.
           </li>
           <li>
@@ -184,23 +184,23 @@ export default function JoSAAChoiceFillingStrategy() {
         </p>
         <ol>
           <li>
-            <strong>Mock allocations</strong> — previews based on choices saved by the specified
-            cutoffs. Review your preferences while choice filling is open; a mock result is not
-            a seat offer.
+            <strong>Mock allocations</strong>: previews based on choices saved by the specified
+            cutoffs. Review your preferences while choice filling is open; a mock result is not a
+            seat offer.
           </li>
           <li>
-            <strong>Finalise and lock</strong> — save and lock your choices by the deadline. The
-            2026 rules allow an unlock request before that deadline if you need to edit a locked
-            list. Choices cannot be edited after the deadline. See{' '}
+            <strong>Finalise and lock</strong>: save and lock your choices by the deadline. The 2026
+            rules allow an unlock request before that deadline if you need to edit a locked list.
+            Choices cannot be edited after the deadline. See{' '}
             <a href="https://josaa.nic.in/information-bulletin/">business rules 39–40</a>.
           </li>
           <li>
-            <strong>Round 1 allocation</strong> — the first real allocation. From here on, each
-            round you decide freeze / float / slide on the offer, and complete the required
-            acceptance steps. Do not treat inaction as float.
+            <strong>Round 1 allocation</strong>: the first real allocation. From here on, each round
+            you decide freeze / float / slide on the offer, and complete the required acceptance
+            steps. Do not treat inaction as float.
           </li>
           <li>
-            <strong>Reporting and payment</strong> — within the window JoSAA specifies, you complete
+            <strong>Reporting and payment</strong>: within the window JoSAA specifies, you complete
             document verification and pay the seat-acceptance fee. Missing the window forfeits the
             seat.
           </li>
@@ -215,24 +215,24 @@ export default function JoSAAChoiceFillingStrategy() {
         <h2>Related guides and tools</h2>
         <ul>
           <li>
-            <AppLink href="/predict">JEE college &amp; branch predictor</AppLink> — generates a
+            <AppLink href="/predict">JEE college &amp; branch predictor</AppLink>: generates a
             historical cutoff shortlist for your inputs.
           </li>
           <li>
-            <AppLink href="/guides/josaa-counselling-rounds">JoSAA counselling rounds</AppLink> —
+            <AppLink href="/guides/josaa-counselling-rounds">JoSAA counselling rounds</AppLink>:
             mechanics of every round including freeze/float/slide timing.
           </li>
           <li>
             <AppLink href="/guides/josaa-opening-and-closing-ranks">
               Opening and closing ranks explained
-            </AppLink>{' '}
-            — how to compare the stored rank rows.
+            </AppLink>
+            : how to compare the stored rank rows.
           </li>
           <li>
             <AppLink href="/guides/josaa-reservation-categories">
               JoSAA reservation categories explained
-            </AppLink>{' '}
-            — your category determines which pools your rank competes in.
+            </AppLink>
+            : your category determines which pools your rank competes in.
           </li>
         </ul>
 

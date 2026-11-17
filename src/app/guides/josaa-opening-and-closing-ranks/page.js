@@ -90,11 +90,11 @@ export default function JoSAAOpeningAndClosingRanksGuide() {
         <p>
           A published JoSAA cutoff row describes the ranks allocated seats for the stated institute,
           programme, year, round, category, quota and seat pool. The best rank in that allocation
-          range is the <strong>opening rank</strong>; the last rank is the <strong>closing rank</strong>.
-          Allocation does not establish completed admission: candidates must still meet the
-          applicable eligibility, verification, payment and reporting requirements. Compare only
-          published rows with matching rank lists and allocation conditions. A missing row is
-          unavailable data, not a rank of zero.
+          range is the <strong>opening rank</strong>; the last rank is the{' '}
+          <strong>closing rank</strong>. Allocation does not establish completed admission:
+          candidates must still meet the applicable eligibility, verification, payment and reporting
+          requirements. Compare only published rows with matching rank lists and allocation
+          conditions. A missing row is unavailable data, not a rank of zero.
         </p>
         <p>
           On RankMatrix, the full year-wise and round-wise table is at{' '}
@@ -105,29 +105,27 @@ export default function JoSAAOpeningAndClosingRanksGuide() {
         <p>A single row in the JoSAA ranks dataset carries seven pieces of information:</p>
         <ul>
           <li>
-            <strong>Institute</strong> — e.g. IIT Bombay, NIT Trichy, IIIT Allahabad.
+            <strong>Institute</strong>: e.g. IIT Bombay, NIT Trichy, IIIT Allahabad.
           </li>
           <li>
-            <strong>Branch</strong> — Computer Science and Engineering, Electronics, Mechanical,
-            etc.
+            <strong>Branch</strong>: Computer Science and Engineering, Electronics, Mechanical, etc.
           </li>
           <li>
-            <strong>Category</strong> — Open, OBC-NCL, SC, ST, EWS, plus PwD variants.
+            <strong>Category</strong>: Open, OBC-NCL, SC, ST, EWS, plus PwD variants.
           </li>
           <li>
-            <strong>Quota</strong> — HS (Home State), OS (Other State), AI (All India). NITs split
+            <strong>Quota</strong>: HS (Home State), OS (Other State), AI (All India). NITs split
             seats along this axis; IITs and IIITs generally do not.
           </li>
           <li>
-            <strong>Seat pool</strong> — Gender-Neutral or Female-only. The supernumerary
-            Female-only pool was introduced at IITs to raise female representation and has its own
-            cutoffs.
+            <strong>Seat pool</strong>: Gender-Neutral or Female-only. The supernumerary Female-only
+            pool was introduced at IITs to raise female representation and has its own cutoffs.
           </li>
           <li>
-            <strong>Opening rank</strong> — best allocated rank in the stated cutoff row.
+            <strong>Opening rank</strong>: best allocated rank in the stated cutoff row.
           </li>
           <li>
-            <strong>Closing rank</strong> — last allocated rank in the stated cutoff row.
+            <strong>Closing rank</strong>: last allocated rank in the stated cutoff row.
           </li>
         </ul>
         <p>
@@ -197,9 +195,9 @@ export default function JoSAAOpeningAndClosingRanksGuide() {
             it as a safety guarantee or assume every year has six rounds.
           </li>
           <li>
-            <strong>Use Round 1 as a historical reference.</strong> It shows the published cutoff
-            in that round; it does not promise an early allocation. Put choices in the order you
-            would actually accept them, and check the current schedule and rules.
+            <strong>Use Round 1 as a historical reference.</strong> It shows the published cutoff in
+            that round; it does not promise an early allocation. Put choices in the order you would
+            actually accept them, and check the current schedule and rules.
           </li>
           <li>
             <strong>Do not mix rank lists.</strong> JEE Main CRL against NIT/IIIT/GFTI cutoffs; JEE
@@ -226,22 +224,22 @@ export default function JoSAAOpeningAndClosingRanksGuide() {
         <h2>Related tools and guides</h2>
         <ul>
           <li>
-            <AppLink href="/guides/reading-cutoff-trends">Worked cutoff-change example</AppLink> —
+            <AppLink href="/guides/reading-cutoff-trends">Worked cutoff-change example</AppLink>:
             compare matching rounds and understand missing observations before interpreting a trend.
           </li>
           <li>
-            <AppLink href="/ranks">Opening &amp; Closing Ranks table</AppLink> — the full
+            <AppLink href="/ranks">Opening &amp; Closing Ranks table</AppLink>: the full
             year/round/category/quota/pool filterable view.
           </li>
           <li>
-            <AppLink href="/predict">College &amp; Branch Predictor</AppLink> — match your rank with
+            <AppLink href="/predict">College &amp; Branch Predictor</AppLink>: match your rank with
             a limited set of historical institute-programme rows.
           </li>
           <li>
             <AppLink href="/guides/josaa-seat-matrix">
               Seat matrix, categories, quotas, seat pools
-            </AppLink>{' '}
-            — what every column in the cutoff table actually means.
+            </AppLink>
+            : what every column in the cutoff table actually means.
           </li>
         </ul>
 

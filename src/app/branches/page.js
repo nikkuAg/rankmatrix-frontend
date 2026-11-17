@@ -15,12 +15,12 @@ const FAQS = [
   {
     question: 'What engineering branches are offered through JoSAA?',
     answer:
-      'JoSAA lists every undergraduate engineering programme offered by its participating institutes — from core disciplines like Computer Science, Electrical, Mechanical, Civil, Chemical, and Electronics, to specialisations like Materials, Metallurgy, Aerospace, Biotechnology, Engineering Physics, and Architecture.',
+      'JoSAA lists every undergraduate engineering programme offered by its participating institutes, from core disciplines like Computer Science, Electrical, Mechanical, Civil, Chemical, and Electronics, to specialisations like Materials, Metallurgy, Aerospace, Biotechnology, Engineering Physics, and Architecture.',
   },
   {
     question: 'What is the difference between a branch and a degree?',
     answer:
-      'A branch is the specific programme of study (for example, Computer Science and Engineering). A degree is the qualification awarded at the end — typically B.Tech, B.E., B.Arch, or a dual-degree B.Tech + M.Tech. A single branch can be offered in multiple degree formats at different institutes.',
+      'A branch is the specific programme of study (for example, Computer Science and Engineering). A degree is the qualification awarded at the end, typically B.Tech, B.E., B.Arch, or a dual-degree B.Tech + M.Tech. A single branch can be offered in multiple degree formats at different institutes.',
   },
   {
     question: 'Can I filter branches by course duration?',

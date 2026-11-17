@@ -91,9 +91,9 @@ export default function JoSAASeatMatrixGuide() {
           The JoSAA seat matrix is the authoritative ledger of how many engineering seats exist and
           who they are reserved for. Before each counselling year begins, JoSAA publishes the full
           matrix: every institute, every branch, every category, every quota, every seat pool.
-          During the counselling rounds, JoSAA allocates seats out of this matrix — one cell of it
-          at a time — subject to eligibility, submitted choices and the schedule; some candidates
-          can remain unallocated and vacancies can remain.
+          During the counselling rounds, JoSAA allocates seats out of this matrix, one cell of it at
+          a time, subject to eligibility, submitted choices and the schedule; some candidates can
+          remain unallocated and vacancies can remain.
         </p>
         <p>
           On RankMatrix, the full matrix is browsable at{' '}
@@ -107,21 +107,21 @@ export default function JoSAASeatMatrixGuide() {
         </p>
         <ul>
           <li>
-            <strong>Institute</strong> — which IIT, NIT, IIIT, or GFTI.
+            <strong>Institute</strong>: which IIT, NIT, IIIT, or GFTI.
           </li>
           <li>
-            <strong>Branch</strong> — CSE, ECE, ME, CE, and so on. Each institute offers a specific
+            <strong>Branch</strong>: CSE, ECE, ME, CE, and so on. Each institute offers a specific
             menu of branches.
           </li>
           <li>
-            <strong>Category</strong> — Open, OBC-NCL, SC, ST, EWS, plus PwD sub-categories.
+            <strong>Category</strong>: Open, OBC-NCL, SC, ST, EWS, plus PwD sub-categories.
           </li>
           <li>
-            <strong>Quota</strong> — the exact published code. Stored rows include AI, HS, OS, GO,
+            <strong>Quota</strong>: the exact published code. Stored rows include AI, HS, OS, GO,
             LA, JK and AP; check eligibility in the official rules.
           </li>
           <li>
-            <strong>Seat pool</strong> — Gender-Neutral or Female-only.
+            <strong>Seat pool</strong>: Gender-Neutral or Female-only.
           </li>
         </ul>
         <p>
@@ -132,28 +132,28 @@ export default function JoSAASeatMatrixGuide() {
         <h2>Categories, in detail</h2>
         <ul>
           <li>
-            <strong>Open</strong> — the general merit category. Any candidate can be considered
+            <strong>Open</strong>: the general merit category. Any candidate can be considered
             against Open cutoffs; reserved-category candidates can also be considered here and will
             be allocated an Open seat if their rank is good enough.
           </li>
           <li>
-            <strong>OBC-NCL</strong> — Other Backward Classes, Non-Creamy Layer. Central government
+            <strong>OBC-NCL</strong>: Other Backward Classes, Non-Creamy Layer. Central government
             OBC list; a valid non-creamy-layer certificate is required at reporting.
           </li>
           <li>
-            <strong>SC</strong> — Scheduled Castes.
+            <strong>SC</strong>: Scheduled Castes.
           </li>
           <li>
-            <strong>ST</strong> — Scheduled Tribes.
+            <strong>ST</strong>: Scheduled Tribes.
           </li>
           <li>
             Check the programme-specific category and seat-pool counts in the official matrix; the
             note above links to the governing rules.
           </li>
           <li>
-            <strong>PwD</strong> — Persons with Disabilities. This is a <em>sub</em>-reservation
-            within each of the above categories — there is no separate PwD-only seat pool outside
-            the main categories.
+            <strong>PwD</strong>: Persons with Disabilities. This is a <em>sub</em>-reservation
+            within each of the above categories; there is no separate PwD-only seat pool outside the
+            main categories.
           </li>
         </ul>
         <p>
@@ -163,17 +163,17 @@ export default function JoSAASeatMatrixGuide() {
         </p>
 
         <h2>Quota, in detail</h2>
-        <h3>HS — Home State</h3>
+        <h3>Home State (HS)</h3>
         <p>
           Use the state-code eligibility rule in the official-source note above, including its
           exceptions.
         </p>
-        <h3>OS — Other State</h3>
+        <h3>Other State (OS)</h3>
         <p>
           Other State eligibility follows the institute-specific rules. Do not infer a universal
           split or cutoff relationship from this label.
         </p>
-        <h3>AI — All India (IITs, IIITs, GFTIs)</h3>
+        <h3>All India (AI): IITs, IIITs and GFTIs</h3>
         <p>
           No state split. Every candidate competes in the same pool regardless of domicile. IITs,
           IIITs, and most GFTIs use AI quota.

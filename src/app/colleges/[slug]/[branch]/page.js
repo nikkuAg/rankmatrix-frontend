@@ -48,7 +48,7 @@ export async function generateMetadata({ params }) {
   });
 }
 
-const formatRank = (value) => (value == null ? '—' : value.toLocaleString('en-IN'));
+const formatRank = (value) => (value == null ? 'Not available' : value.toLocaleString('en-IN'));
 
 const buildFaqs = (data, summaries) => {
   const years = data.yearsAvailable || [];
@@ -117,7 +117,11 @@ export default async function InstituteBranchPage({ params }) {
       keywords: [
         data.institute.name,
         ...(shortName ? [shortName] : []),
-        data.branch.name, 'JoSAA', 'opening rank', 'closing rank'],
+        data.branch.name,
+        'JoSAA',
+        'opening rank',
+        'closing rank',
+      ],
       creator: {
         '@type': 'Organization',
         name: 'Joint Seat Allocation Authority (JoSAA)',
@@ -154,7 +158,7 @@ export default async function InstituteBranchPage({ params }) {
           { name: data.branch.name, path: canonicalPath },
         ]}
         title={`${data.branch.name} at ${data.institute.name}`}
-        subtitle={`${shortName ? `${shortName} · ` : ""}${data.branch.degree} · ${data.branch.courseDuration}-year programme · JoSAA counselling`}
+        subtitle={`${shortName ? `${shortName} · ` : ''}${data.branch.degree} · ${data.branch.courseDuration}-year programme · JoSAA counselling`}
         badges={[
           { label: instituteType(data.institute) },
           { label: `Programme code ${data.branch.code}` },
