@@ -15,6 +15,7 @@ import {
 } from '@/utils/metadata.mjs';
 import { quotaLabel } from '@/utils/quotaLabel.mjs';
 import { fetchInstituteSeo } from '@/utils/seoApi';
+import { stateName } from '@/utils/stateName.mjs';
 
 // Rebuild a given page at most once per day (86400 s); cheap for low-change data.
 export const revalidate = 86400;
@@ -64,7 +65,7 @@ const buildFaqs = (data) => {
   return [
     {
       question: `Where is ${data.name} located?`,
-      answer: `${data.name} is located in ${data.city}, ${data.state}. Its institution family is ${typeLabel}; it participates in JoSAA counselling for admission to its undergraduate engineering programmes.`,
+      answer: `${data.name} is located in ${data.city}, ${stateName(data.state)}. Its institution family is ${typeLabel}; it participates in JoSAA counselling for admission to its undergraduate engineering programmes.`,
     },
     {
       question: `How many branches does ${data.name} offer through JoSAA?`,
@@ -126,10 +127,10 @@ export default async function InstitutePage({ params }) {
       address: {
         '@type': 'PostalAddress',
         addressLocality: data.city,
-        addressRegion: data.state,
+        addressRegion: stateName(data.state),
         addressCountry: 'IN',
       },
-      description: `${data.name} (${typeLabel}) is in ${data.city}, ${data.state}, with participating JoSAA programmes.`,
+      description: `${data.name} (${typeLabel}) is in ${data.city}, ${stateName(data.state)}, with participating JoSAA programmes.`,
     },
     breadcrumbJsonLd([
       { name: 'Home', path: '/' },
@@ -157,10 +158,10 @@ export default async function InstitutePage({ params }) {
           { name: data.name, path: canonicalPath },
         ]}
         title={data.name}
-        subtitle={`${typeLabel} in ${data.city}, ${data.state}.${shortName ? ` Also known as ${shortName}.` : ''}`}
+        subtitle={`${typeLabel} in ${data.city}, ${stateName(data.state)}.${shortName ? ` Also known as ${shortName}.` : ''}`}
         badges={[
           { label: typeLabel },
-          { label: data.state },
+          { label: stateName(data.state) },
           ...(latestNirf ? [{ label: `NIRF ${latestNirf.rank} (${latestNirf.year})` }] : []),
           ...(data.totalSeats
             ? [
@@ -174,9 +175,10 @@ export default async function InstitutePage({ params }) {
       >
         <h2>About {data.name}</h2>
         <p>
-          {data.name} ({shortName || data.displayCode}) is located in {data.city}, {data.state}. Its
-          institution family is {typeLabel}. For participating JoSAA programmes, compare{' '}
-          {`${admissionRankLabel(data)} ranks`}, subject to the programme&apos;s requirements.
+          {data.name} ({shortName || data.displayCode}) is located in {data.city},{' '}
+          {stateName(data.state)}. Its institution family is {typeLabel}. For participating JoSAA
+          programmes, compare {`${admissionRankLabel(data)} ranks`}, subject to the programme&apos;s
+          requirements.
         </p>
         {relatedCopy && <p>{relatedCopy}</p>}
         <p>
