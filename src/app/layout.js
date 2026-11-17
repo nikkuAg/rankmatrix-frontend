@@ -47,7 +47,10 @@ export const metadata = {
 export const viewport = {
   width: 'device-width',
   initialScale: 1,
-  themeColor: '#141816',
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: '#f5f7fb' },
+    { media: '(prefers-color-scheme: dark)', color: '#0f1626' },
+  ],
 };
 
 const FOUNDER = {

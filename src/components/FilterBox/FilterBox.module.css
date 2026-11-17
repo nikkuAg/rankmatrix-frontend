@@ -37,10 +37,10 @@
   border-radius: var(--radius-lg);
   background: var(--surface);
   padding: 0;
-  box-shadow: 0 24px 100px #0008;
+  box-shadow: 0 24px 100px var(--shadow);
 }
 .dialog::backdrop {
-  background: #0a100bba;
+  background: var(--scrim);
   backdrop-filter: blur(4px);
 }
 .dialog header,

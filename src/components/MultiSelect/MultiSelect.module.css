@@ -61,7 +61,7 @@
   border: 1px solid var(--control-line);
   border-radius: var(--radius);
   background: var(--surface);
-  box-shadow: 0 16px 36px #0006;
+  box-shadow: 0 16px 36px var(--shadow);
 }
 .panel[data-above='true'] {
   top: auto;

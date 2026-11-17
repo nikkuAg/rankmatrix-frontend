@@ -349,7 +349,7 @@
   margin-top: 5px;
 }
 .selected {
-  background: #293324;
+  background: var(--accent-soft);
   box-shadow: inset 3px 0 var(--accent);
 }
 .evidence {
@@ -569,7 +569,7 @@
   background: var(--surface);
 }
 .choiceRow.selected {
-  background: #293324;
+  background: var(--accent-soft);
 }
 .choiceRow:last-child {
   border-bottom: 0;
@@ -642,7 +642,7 @@
   background: var(--surface-raised);
   border: 1px solid var(--accent);
   border-radius: var(--radius);
-  box-shadow: 0 12px 48px #0007;
+  box-shadow: 0 12px 48px var(--shadow);
   font-size: 14px;
 }
 .compareDialog {
@@ -655,7 +655,7 @@
   color: var(--text);
 }
 .compareDialog::backdrop {
-  background: #090d0bd9;
+  background: var(--scrim);
   backdrop-filter: blur(4px);
 }
 .compareDialog > header {

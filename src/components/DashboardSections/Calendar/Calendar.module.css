@@ -44,11 +44,11 @@
 }
 .days .event {
   color: var(--accent);
-  background: #303b25;
+  background: var(--accent-soft);
 }
 .days button[aria-pressed='true'] {
   background: var(--accent);
-  color: var(--page);
+  color: var(--on-accent);
 }
 .events {
   margin: 20px 0;
