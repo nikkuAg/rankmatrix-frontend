@@ -74,3 +74,26 @@ export function predictionRequest(data) {
   if (quotaOptions.every((quota) => data.quotas.includes(quota))) delete request.quotas;
   return request;
 }
+
+const text = (value) => String(value ?? '').trim();
+
+// The home page asks only for the overall (General) ranks; everything else saved is kept.
+export function generalRanks(saved) {
+  const ranks = predictorFormValues(saved).ranks[CATEGORIES.GENERAL] ?? {};
+  return { mainsRank: text(ranks.mainsRank), advRank: text(ranks.advRank) };
+}
+
+export function withGeneralRanks(saved, mainsRank, advRank) {
+  const data = predictionFormData(predictorFormValues(saved));
+  return {
+    ...data,
+    rankProfiles: [
+      {
+        category: CATEGORIES.GENERAL,
+        mainsRank: text(mainsRank),
+        ...(text(advRank) ? { advRank: text(advRank) } : {}),
+      },
+      ...data.rankProfiles.filter((profile) => profile.category !== CATEGORIES.GENERAL),
+    ],
+  };
+}

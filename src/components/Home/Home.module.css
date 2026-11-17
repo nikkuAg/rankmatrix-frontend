@@ -12,222 +12,162 @@
 .copy {
   min-width: 0;
 }
-.copy .eyebrow {
-  margin-bottom: 28px;
-}
 .copy h1 {
-  font-size: clamp(44px, 5.3vw, 112px);
+  max-width: 14ch;
+  font-size: clamp(40px, 4.4vw, 92px);
   font-weight: 500;
-  letter-spacing: -0.065em;
-  line-height: 1.04;
-  margin: 28px 0 28px;
-}
-.copy h1 em {
-  font-family: var(--font-display), serif;
-  font-style: normal;
-  font-weight: 400;
-  color: var(--accent);
-  letter-spacing: -0.065em;
+  letter-spacing: -0.055em;
+  line-height: 1.06;
+  margin: 0 0 28px;
+  text-wrap: balance;
 }
 .description {
-  max-width: 44ch;
+  max-width: 46ch;
+  margin: 0;
   font-size: clamp(16px, 1.1vw, 21px);
   color: var(--muted);
   line-height: 1.8;
-}
-.actions {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 24px;
-  margin-top: 32px;
-}
-.secondary {
-  align-items: center;
-  color: var(--text);
-  font-size: 13px;
-  font-weight: 600;
-  text-decoration: none;
-  display: flex;
-  gap: 16px;
-  padding: 12px 0;
-}
-.note {
-  font-size: 11px;
-  color: var(--muted);
-  margin: 22px 0 0;
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 12px;
-}
-.note > span {
-  color: var(--text);
-}
-.note small {
-  font-size: inherit;
 }
 .visual {
   position: relative;
   min-width: 0;
   padding: 0 16px 0 0;
-  perspective: 1200px;
 }
 .backdrop {
   position: absolute;
-  inset: 60px 0 0 24px;
+  inset: 28px 0 -20px 24px;
   border: 1px solid #53623d;
   border-radius: var(--radius-lg);
   background: linear-gradient(140deg, #46513844, #1b2118);
   transform: rotate(4deg);
   box-shadow: 0 0 100px #b9dd5d09;
 }
-.rankCard {
+.start {
   position: relative;
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
+  gap: 12px;
+}
+.start form {
+  display: grid;
+  gap: 20px;
   padding: clamp(22px, 2vw, 32px);
-  margin-bottom: 18px;
   border: 1px solid #52604d;
-  border-radius: var(--radius);
-  background: #283127;
-  transform: rotate(-2deg);
-  box-shadow: 0 18px 50px #0005;
-  animation: float 8s ease-in-out infinite;
+  border-radius: var(--radius-lg);
+  background: var(--surface-raised);
+  box-shadow: 0 20px 60px #0005;
 }
-.rankCard > div + div {
-  border-left: 1px solid #52604d;
-  padding-left: 20px;
-}
-.rankCard span {
-  display: block;
-  font-size: clamp(11px, 0.8vw, 14px);
-  color: var(--muted);
-}
-.rankCard strong {
-  display: block;
-  margin-top: 5px;
-  font-size: clamp(25px, 2vw, 40px);
-  font-weight: 500;
-  letter-spacing: -0.8px;
-}
-.board {
-  position: relative;
-  padding: clamp(22px, 2vw, 32px);
-  background: linear-gradient(135deg, #222a21, #1b201c);
-  border: 1px solid #465141;
-  border-radius: var(--radius);
-  box-shadow: 0 20px 70px #0006;
-  transform: rotate(1deg);
-}
-.boardHeading {
-  display: flex;
-  justify-content: space-between;
-  gap: 16px;
-  align-items: center;
-  padding-bottom: 24px;
-}
-.boardHeading span {
-  font-size: 11px;
-  color: var(--muted);
-}
-.boardHeading h2 {
-  font-family: var(--font-display), serif;
-  font-size: clamp(27px, 2vw, 40px);
-  margin: 8px 0 0;
-}
-.boardHeading .count {
-  color: var(--accent);
+.start h2 {
+  margin: 0;
   font:
-    400 clamp(36px, 3vw, 60px) / 1 var(--font-display),
+    400 clamp(26px, 2vw, 36px) / 1.2 var(--font-display),
     serif;
 }
-.count small {
-  display: block;
-  font:
-    400 10px/1.5 var(--font-body),
-    sans-serif;
-  color: var(--muted);
-  margin-top: 7px;
-  text-align: right;
-}
-.columnHead {
+.startFields {
   display: grid;
-  grid-template-columns: 48px 1fr;
-  border-top: 1px solid var(--line);
-  border-bottom: 1px solid var(--line);
-  padding: 12px 0;
-  font-size: 10px;
-  color: var(--muted);
-}
-.boardRow {
-  display: grid;
-  grid-template-columns: 32px minmax(0, 1fr) 20px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 16px;
-  align-items: center;
-  min-height: clamp(84px, 6vw, 100px);
-  padding: 16px 0;
-  border-bottom: 1px solid var(--line);
+  align-items: start;
 }
-.boardRow > span {
+.startFields input {
+  font-size: 18px;
+  font-variant-numeric: tabular-nums;
+}
+.start form > :global(.button) {
+  min-height: 52px;
+  font-size: var(--text-body);
+}
+.startNote {
+  margin: 0;
+  font-size: var(--text-control);
+  line-height: 1.6;
   color: var(--muted);
-  font-size: 13px;
 }
-.boardRow strong {
-  font-size: clamp(14px, 1vw, 18px);
-  font-weight: 600;
-  display: block;
-}
-.boardRow small {
-  display: block;
-  font-size: clamp(11px, 0.8vw, 14px);
-  color: var(--muted);
-  margin-top: 4px;
-}
-.boardRow:nth-of-type(4) {
-  background: #354129;
-  border: 1px solid #546641;
-  border-radius: var(--radius);
-  margin-inline: calc(-1 * clamp(22px, 2vw, 32px));
-  padding-inline: clamp(22px, 2vw, 32px);
-  transform: translateX(-10px);
-  box-shadow: 0 8px 24px #0004;
-}
-.boardNote {
-  position: relative;
-  font-size: 11px;
-  color: var(--muted);
-  margin: 16px 0 0;
-}
-.boardLink {
-  align-items: center;
+.resume {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
-  padding-top: 16px;
-  font-size: 12px;
+  gap: 4px 16px;
+  padding: 14px clamp(22px, 2vw, 32px);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  color: var(--text);
+  font-size: var(--text-control);
   text-decoration: none;
 }
-.workflow {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  margin: 0 auto;
-  width: calc(100% - 2 * var(--gutter));
-  border-block: 1px solid var(--line);
-}
-.workflow > a {
-  display: flex;
-  gap: 20px;
+.resume > span:last-child {
+  display: inline-flex;
   align-items: center;
-  padding: 24px;
+  gap: 8px;
+  color: var(--accent);
+}
+.paths,
+.workflow {
+  width: calc(100% - 2 * var(--gutter));
+  margin: 0 auto;
+  padding: 40px 0;
+  border-top: 1px solid var(--line);
+}
+.paths > h2,
+.workflow > h2 {
+  margin: 0 0 20px;
+  font-size: 18px;
+  font-weight: 500;
+}
+.paths ul,
+.workflow ol {
+  display: grid;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.paths ul {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+.paths a {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 6px 12px;
+  align-content: start;
+  height: 100%;
+  min-height: 112px;
+  padding: 20px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
   color: var(--text);
   text-decoration: none;
 }
-.workflow > a + a {
-  border-left: 1px solid var(--line);
+.paths a:hover {
+  border-color: var(--control-line);
+  background: var(--surface-raised);
 }
-.workflow > a:hover {
-  background: var(--surface);
+.paths strong {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+.paths a > span {
+  grid-column: 1;
+  font-size: var(--text-control);
+  line-height: 1.6;
+  color: var(--muted);
+}
+.paths a > svg {
+  grid-column: 2;
+  grid-row: 1;
+  margin-top: 3px;
+  color: var(--accent);
+}
+.workflow ol {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+}
+.workflow li {
+  display: flex;
+  gap: 16px;
+  align-items: baseline;
 }
 .workflow .step {
   font:
@@ -235,18 +175,15 @@
     serif;
   color: var(--accent);
 }
-.workflow h2 {
-  font-size: 16px;
+.workflow h3 {
   margin: 0 0 6px;
+  font-size: 16px;
 }
 .workflow p {
-  font-size: 12px;
   margin: 0;
+  font-size: var(--text-control);
+  line-height: 1.6;
   color: var(--muted);
-}
-.workflow > a > :last-child {
-  margin-left: auto;
-  color: var(--accent);
 }
 .tools {
   width: 100%;
@@ -264,7 +201,7 @@
   font:
     400 38px/1.2 var(--font-display),
     serif;
-  margin: 12px 0 0;
+  margin: 0;
 }
 .sectionHead > a {
   display: inline-flex;
@@ -281,9 +218,6 @@
   align-items: center;
   gap: 24px;
   padding: 28px 0 0;
-}
-.readingStrip p {
-  margin: 0 0 8px;
 }
 .readingStrip h3 {
   margin: 0;
@@ -344,7 +278,7 @@
   display: none;
 }
 .desk h2 {
-  margin: 6px 0 0;
+  margin: 0;
   font-size: 17px;
 }
 .news {
@@ -356,13 +290,9 @@
 .news > * {
   min-width: 0;
 }
-@keyframes float {
-  0%,
-  100% {
-    transform: translateY(0) rotate(-2deg);
-  }
-  50% {
-    transform: translateY(-6px) rotate(-1deg);
+@media (max-width: 1100px) {
+  .paths ul {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 @media (max-width: 1000px) {
@@ -370,12 +300,6 @@
     gap: 36px;
     min-height: auto;
     padding-block: 64px;
-  }
-  .boardHeading h2 {
-    font-size: 23px;
-  }
-  .boardRow {
-    gap: 10px;
   }
 }
 @media (max-width: 760px) {
@@ -389,8 +313,34 @@
     width: 100%;
     margin: auto;
   }
+  .hero {
+    gap: 28px;
+    padding-block: 36px 48px;
+  }
+  .visual {
+    padding: 0;
+  }
+  .backdrop {
+    display: none;
+  }
   .copy h1 {
-    font-size: clamp(44px, 9vw, 68px);
+    max-width: none;
+    font-size: clamp(32px, 8.6vw, 60px);
+    margin-bottom: 16px;
+  }
+  .description {
+    line-height: 1.65;
+  }
+  .paths ul,
+  .workflow ol {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .paths a {
+    min-height: 0;
+  }
+  .paths,
+  .workflow {
+    padding: 32px 0;
   }
   .sectionHead {
     display: block;
@@ -398,16 +348,6 @@
   .sectionHead > a {
     display: inline-block;
     margin-top: 8px;
-  }
-  .workflow {
-    grid-template-columns: minmax(0, 1fr);
-  }
-  .workflow > a {
-    padding: 20px 8px;
-  }
-  .workflow > a + a {
-    border-left: 0;
-    border-top: 1px solid var(--line);
   }
   .contextNote {
     grid-template-columns: minmax(0, 1fr);

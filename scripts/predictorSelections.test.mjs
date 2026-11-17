@@ -1,11 +1,13 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import {
+  generalRanks,
   predictionFormData,
   predictionRequest,
   predictorFormValues,
   predictorSelections,
   quotaOptions,
+  withGeneralRanks,
 } from '../src/utils/predictorSelections.mjs';
 
 test('saved single-pool inputs migrate without changing the selected pool', () => {
@@ -79,4 +81,31 @@ test('selected categories keep their own ranks through removal, restoration and 
   assert.equal('advRank' in predictionFormData(values).rankProfiles[1], false);
   assert.equal('category' in predictionRequest(predictionFormData(values)), false);
   assert.deepEqual(predictorFormValues({ rankProfiles: 'corrupt' }).categories, []);
+});
+
+test('ranks entered on the home page reach the predictor form and keep other saved answers', () => {
+  const fresh = withGeneralRanks(null, ' 18000 ', '');
+  assert.deepEqual(fresh.rankProfiles, [{ category: 'General', mainsRank: '18000' }]);
+  assert.deepEqual(predictorFormValues(fresh).ranks.General, { mainsRank: '18000', advRank: '' });
+  const saved = {
+    state: 'Goa',
+    delta: 10,
+    count: 20,
+    seatPools: ['Female-only'],
+    quotas: ['AI'],
+    rankProfiles: [
+      { category: 'OBC-NCL', mainsRank: '4500' },
+      { category: 'General', mainsRank: '9', advRank: '3' },
+    ],
+  };
+  const next = withGeneralRanks(saved, '18000', '7200');
+  assert.deepEqual(next.rankProfiles, [
+    { category: 'General', mainsRank: '18000', advRank: '7200' },
+    { category: 'OBC-NCL', mainsRank: '4500' },
+  ]);
+  assert.equal(next.state, 'Goa');
+  assert.deepEqual(next.seatPools, ['Female-only']);
+  assert.deepEqual(generalRanks(next), { mainsRank: '18000', advRank: '7200' });
+  assert.deepEqual(generalRanks(null), { mainsRank: '', advRank: '' });
+  assert.deepEqual(generalRanks('corrupt'), { mainsRank: '', advRank: '' });
 });
