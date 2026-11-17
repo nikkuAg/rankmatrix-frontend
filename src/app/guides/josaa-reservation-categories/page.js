@@ -7,7 +7,7 @@ import { buildMetadata } from '@/utils/metadata.mjs';
 
 const PAGE_URL = '/guides/josaa-reservation-categories';
 const SHORT_ANSWER =
-  'JoSAA seats are divided into OPEN, GEN-EWS, OBC-NCL, SC and ST categories, each with a PwD sub-category, under central reservation rules: 10% EWS, 27% OBC-NCL, 15% SC and 7.5% ST, with 5% for PwD candidates within each category. OPEN is a seat category, not a candidate category: eligible reserved-category candidates are also considered for OPEN seats on the common rank list.';
+  'JoSAA divides each programme’s seats into OPEN, GEN-EWS, OBC-NCL, SC and ST sections, each with a PwD subdivision; at centrally funded institutes the usual shares are 10% EWS, 27% OBC-NCL, 15% SC and 7.5% ST, with 5% PwD within each, and the seat matrix gives every programme’s exact count. OPEN is a seat category, not a candidate category: candidates of every category are considered for OPEN seats on the common rank list.';
 const TITLE = 'JoSAA reservation categories explained — GE, OBC-NCL, SC, ST, EWS, PwD';
 const DESCRIPTION =
   'Understand JoSAA category labels, PwD status and seat pools. Learn how to match your rank list with the correct category and quota cutoff.';

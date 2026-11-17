@@ -80,6 +80,20 @@ const GUIDES = [
       'A practical, opinionated guide to ordering your preference list — matching historical data, checking eligibility, freeze/float/slide and reporting.',
     readingTimeMinutes: 9,
   },
+  {
+    slug: 'josaa-home-state-quota',
+    title: 'Home State, Other State and All India quota',
+    summary:
+      'How your state code of eligibility is set, which institutes split seats into HS and OS, and the special rules for NIT Goa, NIT Srinagar and states without an NIT.',
+    readingTimeMinutes: 5,
+  },
+  {
+    slug: 'josaa-without-jee-advanced',
+    title: 'JoSAA without JEE Advanced',
+    summary:
+      'Who can take part with a JEE Main rank only, the Class XII marks requirement, which rank list decides each seat, and why you still get only one seat.',
+    readingTimeMinutes: 5,
+  },
 ];
 
 const breadcrumbs = breadcrumbJsonLd([
@@ -102,7 +116,13 @@ const READING_PATHS = [
     id: 'understand-allocation',
     title: 'Understand allocation',
     description: 'Keep categories, quotas and seat pools distinct.',
-    slugs: ['what-is-josaa-counselling', 'josaa-seat-matrix', 'josaa-reservation-categories'],
+    slugs: [
+      'what-is-josaa-counselling',
+      'josaa-without-jee-advanced',
+      'josaa-seat-matrix',
+      'josaa-home-state-quota',
+      'josaa-reservation-categories',
+    ],
   },
   {
     id: 'prepare-your-choices',
@@ -134,7 +154,7 @@ export default function GuidesHub() {
             <a href="#read-your-rank">
               Start with rank interpretation <Icon name="arrowDown" />
             </a>
-            <span>Nine guides · no account needed</span>
+            <span>Eleven guides · no account needed</span>
           </>
         }
       >
