@@ -408,9 +408,7 @@ td a:hover {
   min-width: 0;
 }
 .eyebrow {
-  text-transform: uppercase;
-  letter-spacing: 0.13em;
-  font-size: var(--text-small);
+  font-size: var(--text-control);
   color: var(--muted);
   font-weight: 600;
 }

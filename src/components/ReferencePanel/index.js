@@ -1,12 +1,11 @@
 import { Icon } from '@/components/Icon';
 import styles from './ReferencePanel.module.css';
 
-export function ReferencePanel({ title, description, children, label = 'Useful context' }) {
+export function ReferencePanel({ title, description, children }) {
   return (
     <section className={styles.panel} aria-label={title}>
       <header className={styles.heading}>
         <div>
-          <p className="eyebrow">{label}</p>
           <h2>{title}</h2>
         </div>
         {description && <p>{description}</p>}

@@ -6,7 +6,6 @@ export function PredictPageContent({ faqs }) {
     <ReferencePanel
       title="Read the evidence. Make your choice."
       description="Rank lists, examples and limitations, next to the tool whenever you need them."
-      label="How to read your predictor output"
     >
       <ReferenceItem title="How to read the predictor output">
         <p>

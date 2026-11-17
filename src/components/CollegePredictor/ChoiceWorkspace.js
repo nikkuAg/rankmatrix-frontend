@@ -359,7 +359,6 @@ export function ChoiceWorkspace({ choices, onChange }) {
       >
         <header>
           <div>
-            <p className="eyebrow">Side by side</p>
             <h2 id="compare-title">Compare your programmes</h2>
           </div>
           <button

@@ -184,7 +184,6 @@ export function CollegePredictor() {
     <div ref={workspaceRoot} className={styles.root}>
       {!initialForm && (
         <div className={styles.topline}>
-          <p className="eyebrow">JoSAA / Your planning desk</p>
           <div className={styles.topActions}>
             <button ref={formOpener} className="button" type="button" onClick={openForm}>
               {formData ? 'Edit ranks' : 'Enter ranks'}
@@ -414,7 +413,6 @@ export function CollegePredictor() {
             ) : (
               !open && (
                 <div className={styles.start}>
-                  <p className="eyebrow">Your next chapter starts with context</p>
                   <h2>
                     {formData ? 'No comparisons returned.' : 'A considered choice starts here.'}
                   </h2>

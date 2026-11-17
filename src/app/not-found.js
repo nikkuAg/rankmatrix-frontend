@@ -24,7 +24,6 @@ export default function NotFound() {
           </span>
         </div>
         <div>
-          <p className={styles.eyebrow}>Find your next step</p>
           <h1>Page not found</h1>
           <p>
             The address may be incorrect, or this institute or programme is not in our current
