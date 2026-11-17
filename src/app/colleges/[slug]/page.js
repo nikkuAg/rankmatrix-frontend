@@ -157,7 +157,7 @@ export default async function InstitutePage({ params }) {
           { name: data.name, path: canonicalPath },
         ]}
         title={data.name}
-        subtitle={`${shortName ? `${shortName}: ` : ''}${typeLabel} in ${data.city}, ${data.state}`}
+        subtitle={`${typeLabel} in ${data.city}, ${data.state}.${shortName ? ` Also known as ${shortName}.` : ''}`}
         badges={[
           { label: typeLabel },
           { label: data.state },

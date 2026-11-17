@@ -1,29 +1,28 @@
 .grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 16px;
+  gap: 0 32px;
 }
 .card {
-  padding: 24px 20px;
+  padding: 16px 0;
   color: var(--text);
   text-decoration: none;
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  transition: background 180ms;
-}
-.card:hover {
-  background: var(--surface-raised);
+  border-top: 1px solid var(--line);
 }
 .card h3 {
+  color: var(--accent);
   font-size: 16px;
   line-height: 1.4;
-  margin-bottom: 12px;
+  margin: 0 0 6px;
+}
+.card:hover h3 {
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 .card p {
-  font-size: 12px;
+  font-size: var(--text-control);
   color: var(--muted);
-  line-height: 1.8;
+  line-height: 1.6;
   margin: 0;
 }
 @media (max-width: 1000px) {
@@ -31,11 +30,8 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
-@media (max-width: 380px) {
+@media (max-width: 560px) {
   .grid {
     grid-template-columns: 1fr;
-  }
-  .card {
-    padding: 20px;
   }
 }

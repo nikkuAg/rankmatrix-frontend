@@ -249,14 +249,12 @@
 .libraryGrid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 18px;
+  gap: 40px 32px;
   align-items: stretch;
 }
 .libraryPath {
-  padding: 22px 18px;
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  background: var(--surface);
+  padding-top: 20px;
+  border-top: 2px solid var(--text);
 }
 .libraryPath > header {
   margin-bottom: 25px;
@@ -267,7 +265,6 @@
   line-height: 1.25;
   margin: 0 0 12px;
   max-width: 12ch;
-  min-height: 2.5em;
 }
 .libraryPath header p {
   color: var(--muted);
@@ -333,12 +330,6 @@
     grid-template-columns: 185px minmax(0, 1fr);
     gap: 30px;
   }
-  .libraryGrid {
-    gap: 12px;
-  }
-  .libraryPath {
-    padding-inline: 15px;
-  }
 }
 @media (max-width: 800px) {
   .article {
@@ -383,9 +374,6 @@
     padding-bottom: 23px;
     margin-bottom: 27px;
   }
-  .libraryPath {
-    padding: 21px;
-  }
   .libraryPath h2 {
     max-width: none;
     min-height: 0;
@@ -419,9 +407,6 @@
   .content .section p,
   .content .section li {
     font-size: 14px;
-  }
-  .libraryPath {
-    padding: 18px 15px;
   }
   .libraryPath h2 {
     font-size: 24px;
