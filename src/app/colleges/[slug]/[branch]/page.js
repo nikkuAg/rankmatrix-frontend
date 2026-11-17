@@ -18,6 +18,7 @@ import {
 } from '@/utils/metadata.mjs';
 import { quotaLabel } from '@/utils/quotaLabel.mjs';
 import { fetchInstituteBranchSeo } from '@/utils/seoApi';
+import { stateName } from '@/utils/stateName.mjs';
 
 export const revalidate = 86400;
 // Intentionally empty — combinations are many; generate on first request
@@ -162,7 +163,7 @@ export default async function InstituteBranchPage({ params }) {
         badges={[
           { label: instituteType(data.institute) },
           { label: `Programme code ${data.branch.code}` },
-          { label: data.institute.state },
+          { label: stateName(data.institute.state) },
           { label: `${data.yearsAvailable?.length || 0} years of data` },
         ]}
         lastUpdated={latestYear ? `JoSAA ${latestYear}` : 'Year not available'}

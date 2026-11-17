@@ -11,6 +11,7 @@ import { breadcrumbJsonLd, faqJsonLd, serializeJsonLd } from '@/utils/jsonLd';
 import { buildMetadata, programmeTitleName } from '@/utils/metadata.mjs';
 import { quotaLabel } from '@/utils/quotaLabel.mjs';
 import { fetchBranchSeo } from '@/utils/seoApi';
+import { stateName } from '@/utils/stateName.mjs';
 
 export const revalidate = 86400;
 export const dynamicParams = true;
@@ -171,7 +172,7 @@ export default async function BranchPage({ params }) {
                             <AppLink href={`/colleges/${institute.slug}`}>{institute.name}</AppLink>
                           </td>
                           <td>{instituteType(institute)}</td>
-                          <td>{institute.state}</td>
+                          <td>{stateName(institute.state)}</td>
                           <td>
                             {institute.latestNirfRank
                               ? `${institute.latestNirfRank} (${institute.latestNirfYear})`

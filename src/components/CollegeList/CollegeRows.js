@@ -4,6 +4,7 @@ import React, { memo } from 'react';
 import Link from 'next/link';
 import { instituteType } from '@/utils/instituteIdentity.mjs';
 import { sameCatalogueRows } from '@/utils/sameCatalogueRows.mjs';
+import { stateName } from '@/utils/stateName.mjs';
 import styles from './CollegeRows.module.css';
 
 export const CollegeRows = memo(function CollegeRows({ colleges, expandedNirf, nirfYears }) {
@@ -23,7 +24,7 @@ export const CollegeRows = memo(function CollegeRows({ colleges, expandedNirf, n
               )}
             </td>
             <td>{instituteType(college)}</td>
-            <td>{college.state}</td>
+            <td>{stateName(college.state)}</td>
             {!expandedNirf && (
               <td className={styles.collapsedRank}>
                 {college.nirfRanks.find((rank) => rank.year === nirfYears[0])?.rank || '-'}
