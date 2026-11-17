@@ -19,7 +19,11 @@ import {
 import { downloadCSV } from '@/utils/downloadCSV';
 import { loadPredictorFormData, savePredictorFormData } from '@/utils/formStorage';
 import { instituteType } from '@/utils/instituteIdentity.mjs';
-import { categoryLabel, quotaOptions } from '@/utils/predictorSelections.mjs';
+import {
+  categoryLabel,
+  quotaOptions,
+  restorablePredictorData,
+} from '@/utils/predictorSelections.mjs';
 import { quotaLabel } from '@/utils/quotaLabel.mjs';
 import { PredictionForm } from './PredictionForm';
 import { ProgrammeEvidence } from './ProgrammeEvidence';
@@ -39,6 +43,8 @@ export function CollegePredictor() {
   const [selected, setSelected] = useState(null);
   const [mobilePane, setMobilePane] = useState('list');
   const [storageNotice, setStorageNotice] = useState('');
+  const [restored, setRestored] = useState(false);
+  const [pendingRestore, setPendingRestore] = useState(null);
   const loaded = useRef(false);
   const workspaceRoot = useRef(null);
   const formOpener = useRef(null);
@@ -46,18 +52,62 @@ export function CollegePredictor() {
   const evidenceButton = useRef(null);
   const [getPredictionData, { data: rankData, isFetching }] = useLazyGetpredictionDataQuery();
   useEffect(() => {
+    if (loaded.current) return;
     /* eslint-disable react-hooks/set-state-in-effect -- reconcile browser storage after hydration */
-    setDefaults(loadPredictorFormData());
+    const savedForm = loadPredictorFormData();
+    setDefaults(savedForm);
+    let savedChoices = [];
     try {
-      setChoices(parseChoices(window.localStorage.getItem(CHOICES_KEY)));
+      savedChoices = parseChoices(window.localStorage.getItem(CHOICES_KEY));
+      setChoices(savedChoices);
     } catch {
       setStorageNotice(
         'Browser storage is unavailable. Keep this tab open and export your list before leaving.',
       );
     }
     loaded.current = true;
+    // A returning visitor gets their last results back, or their saved list, without retyping.
+    const lastSearch = restorablePredictorData(savedForm);
+    if (lastSearch) {
+      setFormData(lastSearch);
+      setOpen(false);
+      setRestored(true);
+      setPendingRestore(lastSearch);
+    } else if (savedChoices.length) {
+      setOpen(false);
+      setView('choices');
+    }
     /* eslint-enable react-hooks/set-state-in-effect */
   }, []);
+  // The search runs in its own effect, after mounting, so the results reach this component's
+  // query subscription. A run that React cancels (development remounts) is ignored.
+  useEffect(() => {
+    if (!pendingRestore) return undefined;
+    let cancelled = false;
+    getPredictionData(pendingRestore, true)
+      .unwrap()
+      .then((results) => {
+        if (cancelled) return;
+        setPendingRestore(null);
+        sendAnalyticsEvent({
+          action: 'prediction_restored',
+          category: 'college_predictor',
+          label: 'Last prediction restored',
+          value: 1,
+          parameters: { result_count: results?.length ?? 0 },
+        });
+      })
+      .catch(() => {
+        if (cancelled) return;
+        setPendingRestore(null);
+        setFormData(null);
+        setRestored(false);
+        setOpen(true);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [pendingRestore, getPredictionData]);
   function changeChoices(next) {
     setChoices(next);
     if (!loaded.current) return;
@@ -193,6 +243,8 @@ export function CollegePredictor() {
           onClose={closeForm}
           onSuccess={(data) => {
             setFormData(data);
+            setRestored(false);
+            setPendingRestore(null);
             savePredictorFormData(data);
             setView('results');
             setSelected(null);
@@ -229,7 +281,7 @@ export function CollegePredictor() {
           <ChoiceWorkspace choices={choices} onChange={changeChoices} />
         ) : (
           <>
-            {formData && (
+            {formData && !isFetching && (
               <p className={styles.countline}>
                 <strong>
                   {programmes.length} {programmes.length === 1 ? 'programme' : 'programmes'}
@@ -237,6 +289,14 @@ export function CollegePredictor() {
                     `: ${examGroups.map((group) => `${group.programmes.length} at ${group.title}`).join(', ')}`}
                 </strong>{' '}
                 · Listed by last year’s opening rank, not in a recommended preference order.
+              </p>
+            )}
+            {restored && !open && (
+              <p role="status" className={styles.restored}>
+                Results for the ranks and settings saved in this browser.{' '}
+                <button type="button" onClick={openForm}>
+                  Edit ranks
+                </button>
               </p>
             )}
             {isFetching ? (
