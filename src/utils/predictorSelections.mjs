@@ -89,3 +89,46 @@ export function predictionRequest(data) {
   if (quotaOptions.every((quota) => data.quotas.includes(quota))) delete request.quotas;
   return request;
 }
+
+// The API fills its row limit with IIT rows first whenever a JEE Advanced rank is present, which
+// leaves no room for NITs, IIITs and GFTIs. Asking a second time without the Advanced rank
+// returns only JEE Main institutes, so each exam gets its own row limit.
+export function predictionRequests(data) {
+  const request = predictionRequest(data);
+  if (!data.rankProfiles?.some((profile) => 'advRank' in profile)) return [request];
+  return [
+    request,
+    {
+      ...request,
+      rankProfiles: data.rankProfiles.map((profile) => {
+        const mainOnly = { ...profile };
+        delete mainOnly.advRank;
+        return mainOnly;
+      }),
+    },
+  ];
+}
+
+export function mergePredictionRows(responses, isAdvancedRow) {
+  const [first = [], mainOnly] = responses;
+  if (!mainOnly) return first;
+  return [...first.filter(isAdvancedRow), ...mainOnly.filter((row) => !isAdvancedRow(row))];
+}
+
+// A saved form can be searched again without asking only when every required answer is present.
+export function restorablePredictorData(saved) {
+  if (!saved || typeof saved !== 'object') return null;
+  const data = predictionFormData(predictorFormValues(saved));
+  const positive = (value) => /^[1-9][0-9]*$/.test(String(value ?? '').trim());
+  const complete =
+    typeof data.state === 'string' &&
+    data.state.trim() &&
+    data.seatPools.length &&
+    data.quotas.length &&
+    data.rankProfiles.length &&
+    data.rankProfiles.every(
+      (profile) =>
+        positive(profile.mainsRank) && (!('advRank' in profile) || positive(profile.advRank)),
+    );
+  return complete ? data : null;
+}

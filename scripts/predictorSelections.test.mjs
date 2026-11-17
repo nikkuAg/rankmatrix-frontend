@@ -2,11 +2,14 @@ import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import {
   categoryOptions,
+  mergePredictionRows,
   predictionFormData,
   predictionRequest,
+  predictionRequests,
   predictorFormValues,
   predictorSelections,
   quotaOptions,
+  restorablePredictorData,
 } from '../src/utils/predictorSelections.mjs';
 
 test('saved single-pool inputs migrate without changing the selected pool', () => {
@@ -91,4 +94,67 @@ test('General leads the category list and is preselected for a first visit', () 
   assert.equal(categoryOptions.length, 10);
   assert.deepEqual(predictorFormValues().categories, ['General']);
   assert.deepEqual(predictorFormValues(null).categories, ['General']);
+});
+
+test('a JEE Advanced rank adds a JEE Main-only request so IIT rows cannot use the whole limit', () => {
+  const data = {
+    state: 'Uttar Pradesh',
+    count: 10,
+    seatPools: ['Gender-Neutral'],
+    quotas: ['AI'],
+    rankProfiles: [
+      { category: 'General', mainsRank: '18000', advRank: '7200' },
+      { category: 'OBC-NCL', mainsRank: '4500' },
+    ],
+  };
+  const [both, mainOnly] = predictionRequests(data);
+  assert.deepEqual(both, data);
+  assert.deepEqual(mainOnly.rankProfiles, [
+    { category: 'General', mainsRank: '18000' },
+    { category: 'OBC-NCL', mainsRank: '4500' },
+  ]);
+  assert.equal(data.rankProfiles[0].advRank, '7200');
+  const withoutAdvanced = { ...data, rankProfiles: [{ category: 'General', mainsRank: '18000' }] };
+  assert.deepEqual(predictionRequests(withoutAdvanced), [withoutAdvanced]);
+});
+
+test('merged rows keep IITs from the first response and other institutes from the second', () => {
+  const isIit = (row) => row.type === 'IIT';
+  const iit = { id: 1, type: 'IIT' };
+  const strayNit = { id: 2, type: 'NIT' };
+  const nit = { id: 3, type: 'NIT' };
+  assert.deepEqual(mergePredictionRows([[iit, strayNit], [nit]], isIit), [iit, nit]);
+  assert.deepEqual(mergePredictionRows([[strayNit]], isIit), [strayNit]);
+});
+
+test('only a complete saved form is searched again for a returning visitor', () => {
+  const saved = {
+    state: 'Uttar Pradesh',
+    delta: 10,
+    count: 10,
+    seatPools: ['Gender-Neutral'],
+    quotas: ['AI', 'HS'],
+    rankProfiles: [{ category: 'General', mainsRank: '18000', advRank: '7200' }],
+  };
+  assert.deepEqual(restorablePredictorData(saved), saved);
+  assert.deepEqual(
+    restorablePredictorData({ category: 'General', mainsRank: '18000', state: 'Goa' }).rankProfiles,
+    [{ category: 'General', mainsRank: '18000' }],
+  );
+  assert.equal(restorablePredictorData(null), null);
+  assert.equal(restorablePredictorData('corrupt'), null);
+  assert.equal(restorablePredictorData({ ...saved, state: '' }), null);
+  assert.equal(restorablePredictorData({ ...saved, seatPools: [] }), null);
+  assert.equal(restorablePredictorData({ ...saved, rankProfiles: [] }), null);
+  assert.equal(
+    restorablePredictorData({ ...saved, rankProfiles: [{ category: 'General', mainsRank: '' }] }),
+    null,
+  );
+  assert.equal(
+    restorablePredictorData({
+      ...saved,
+      rankProfiles: [{ category: 'General', mainsRank: '18000', advRank: '-4' }],
+    }),
+    null,
+  );
 });

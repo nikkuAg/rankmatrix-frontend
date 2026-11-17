@@ -86,3 +86,47 @@ export function choiceRows(choices) {
     })),
   );
 }
+const EXAM_GROUPS = [
+  {
+    id: 'advanced',
+    exam: 'JEE Advanced',
+    title: 'IITs',
+    basis: 'Compared with your JEE Advanced rank',
+  },
+  {
+    id: 'main',
+    exam: 'JEE Main',
+    title: 'NITs, IIITs and GFTIs',
+    basis: 'Compared with your JEE Main rank',
+  },
+  {
+    id: 'other',
+    exam: 'Verify exam',
+    title: 'Other institutes',
+    basis: 'Check which exam rank applies',
+  },
+];
+export const formatRank = (value) => {
+  const rank = Number(value);
+  return value != null && value !== '' && Number.isFinite(rank)
+    ? rank.toLocaleString('en-IN')
+    : 'Not published';
+};
+// The rank a group of results is compared with, e.g. "7,200" or "General 7,200, OBC-NCL 1,200".
+export function examRankSummary(exam, rankProfiles = []) {
+  const field = { 'JEE Advanced': 'advRank', 'JEE Main': 'mainsRank' }[exam];
+  const entered = rankProfiles.filter((profile) => field && String(profile[field] ?? '').trim());
+  return entered
+    .map((profile) =>
+      rankProfiles.length > 1
+        ? `${profile.category} ${formatRank(profile[field])}`
+        : formatRank(profile[field]),
+    )
+    .join(', ');
+}
+export function programmesByExam(programmes = []) {
+  return EXAM_GROUPS.map((group) => ({
+    ...group,
+    programmes: programmes.filter((programme) => programmeExam(programme.institute) === group.exam),
+  })).filter((group) => group.programmes.length);
+}

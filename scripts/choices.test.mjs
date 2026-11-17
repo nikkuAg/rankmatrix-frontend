@@ -97,3 +97,35 @@ test('choice export includes all allocation rows and never fabricates a dataset 
   assert.equal(data[0].round, 5);
   assert.equal(data[2].exam, 'JEE Main');
 });
+
+test('programmes are grouped by the exam whose rank applies, IITs first, empty groups omitted', async () => {
+  const { programmesByExam } = await import('../src/utils/choices.mjs');
+  const nit = { id: 'n', institute: { type: 'NIT', name: 'NIT Trichy' } };
+  const iit = { id: 'i', institute: { type: 'IIT', name: 'IIT Roorkee' } };
+  const groups = programmesByExam([nit, iit]);
+  assert.deepEqual(
+    groups.map((group) => [group.exam, group.programmes.map((programme) => programme.id)]),
+    [
+      ['JEE Advanced', ['i']],
+      ['JEE Main', ['n']],
+    ],
+  );
+  assert.deepEqual(
+    programmesByExam([nit]).map((group) => group.title),
+    ['NITs, IIITs and GFTIs'],
+  );
+});
+
+test('rank summaries name the category only when several rank lists are in play', async () => {
+  const { examRankSummary, formatRank } = await import('../src/utils/choices.mjs');
+  const one = [{ category: 'General', mainsRank: '18000', advRank: '7200' }];
+  assert.equal(examRankSummary('JEE Advanced', one), '7,200');
+  assert.equal(examRankSummary('JEE Main', one), '18,000');
+  assert.equal(examRankSummary('Verify exam', one), '');
+  const two = [...one, { category: 'OBC-NCL', mainsRank: '4500' }];
+  assert.equal(examRankSummary('JEE Main', two), 'General 18,000, OBC-NCL 4,500');
+  assert.equal(examRankSummary('JEE Advanced', two), 'General 7,200');
+  assert.equal(examRankSummary('JEE Main'), '');
+  assert.equal(formatRank(123456), '1,23,456');
+  assert.equal(formatRank(null), 'Not published');
+});
