@@ -22,7 +22,7 @@
 .chips button[aria-pressed='true'] {
   color: var(--accent);
   border-color: var(--accent);
-  background: #2b3422;
+  background: var(--accent-soft);
 }
 .search {
   display: grid;

@@ -72,7 +72,7 @@
   border: 1px solid var(--line);
   background: var(--surface);
   border-radius: var(--radius);
-  box-shadow: 0 16px 48px #0005;
+  box-shadow: 0 16px 48px var(--shadow);
 }
 .dropdown > a {
   display: flex;
@@ -162,7 +162,7 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 0 20px;
     border-bottom: 1px solid var(--line);
-    box-shadow: 0 16px 32px #0006;
+    box-shadow: 0 16px 32px var(--shadow);
   }
   .mobileMenu a {
     display: flex;

@@ -36,11 +36,11 @@
 .backdrop {
   position: absolute;
   inset: 28px 0 -20px 24px;
-  border: 1px solid #53623d;
+  border: 1px solid var(--line);
   border-radius: var(--radius-lg);
-  background: linear-gradient(140deg, #46513844, #1b2118);
+  background: var(--surface-raised);
   transform: rotate(4deg);
-  box-shadow: 0 0 100px #b9dd5d09;
+  box-shadow: none;
 }
 .start {
   position: relative;
@@ -51,10 +51,10 @@
   display: grid;
   gap: 20px;
   padding: clamp(22px, 2vw, 32px);
-  border: 1px solid #52604d;
+  border: 1px solid var(--control-line);
   border-radius: var(--radius-lg);
   background: var(--surface-raised);
-  box-shadow: 0 20px 60px #0005;
+  box-shadow: 0 20px 60px var(--shadow);
 }
 .start h2 {
   margin: 0;
