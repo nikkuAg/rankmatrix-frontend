@@ -18,9 +18,7 @@
 .number {
   align-items: center;
   display: flex;
-  justify-content: space-between;
-  font-size: 11px;
-  color: var(--muted);
+  justify-content: flex-end;
   margin-bottom: 36px;
 }
 .number :global(.ui-icon) {

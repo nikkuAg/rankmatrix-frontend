@@ -142,11 +142,6 @@
   color: var(--muted);
   text-decoration: none;
 }
-.contents a span,
-.jumpLinks a span {
-  font-variant-numeric: tabular-nums;
-  flex: 0 0 auto;
-}
 .contents a:hover,
 .jumpLinks a:hover {
   color: var(--accent);
@@ -266,14 +261,6 @@
 }
 .libraryPath > header {
   margin-bottom: 25px;
-}
-.chapter {
-  display: block;
-  font-family: var(--font-display), serif;
-  font-size: 29px;
-  line-height: 1;
-  color: var(--accent);
-  margin-bottom: 22px;
 }
 .libraryPath h2 {
   font-family: var(--font-display), serif;
@@ -408,16 +395,6 @@
   .libraryPath {
     padding: 21px;
   }
-  .libraryPath > header {
-    display: grid;
-    grid-template-columns: 32px minmax(0, 1fr);
-    gap: 10px 15px;
-  }
-  .chapter {
-    margin: 0;
-    font-size: 27px;
-    line-height: 1.3;
-  }
   .libraryPath h2 {
     max-width: none;
     min-height: 0;
@@ -454,10 +431,6 @@
   }
   .libraryPath {
     padding: 18px 15px;
-  }
-  .libraryPath > header {
-    grid-template-columns: 26px minmax(0, 1fr);
-    gap: 10px 11px;
   }
   .libraryPath h2 {
     font-size: 24px;
@@ -640,7 +613,7 @@
   font-size: 14px;
 }
 .methodology .section:nth-child(4) li::before {
-  content: counter(process, decimal-leading-zero);
+  content: counter(process);
   color: var(--accent);
   font-size: 22px;
 }
