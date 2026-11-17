@@ -90,6 +90,29 @@ export function predictionRequest(data) {
   return request;
 }
 
+const text = (value) => String(value ?? '').trim();
+
+// The home page asks only for the overall (General) ranks; everything else saved is kept.
+export function generalRanks(saved) {
+  const ranks = predictorFormValues(saved).ranks[CATEGORIES.GENERAL] ?? {};
+  return { mainsRank: text(ranks.mainsRank), advRank: text(ranks.advRank) };
+}
+
+export function withGeneralRanks(saved, mainsRank, advRank) {
+  const data = predictionFormData(predictorFormValues(saved));
+  return {
+    ...data,
+    rankProfiles: [
+      {
+        category: CATEGORIES.GENERAL,
+        mainsRank: text(mainsRank),
+        ...(text(advRank) ? { advRank: text(advRank) } : {}),
+      },
+      ...data.rankProfiles.filter((profile) => profile.category !== CATEGORIES.GENERAL),
+    ],
+  };
+}
+
 // The API fills its row limit with IIT rows first whenever a JEE Advanced rank is present, which
 // leaves no room for NITs, IIITs and GFTIs. Asking a second time without the Advanced rank
 // returns only JEE Main institutes, so each exam gets its own row limit.

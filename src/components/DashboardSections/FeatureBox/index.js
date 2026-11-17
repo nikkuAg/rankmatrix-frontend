@@ -6,22 +6,26 @@ import { sendAnalyticsEvent } from '@/utils/analyticEvent';
 import styles from './FeatureBox.module.css';
 
 const features = [
+  // [heading, href, description, analytics label (kept stable so reports stay comparable)]
   [
-    'Opening & Closing Ranks',
+    'Cutoffs',
     '/ranks',
-    'Read historical cutoffs with the right exam and allocation context.',
+    'Opening and closing ranks for every college and branch, round by round.',
+    'Opening & Closing Ranks',
   ],
   [
-    'Participating Colleges',
+    'Colleges',
     '/colleges',
-    'Explore institutes, programmes and observed NIRF history.',
+    'Every IIT, NIT, IIIT and GFTI, with its branches and cutoffs.',
+    'Participating Colleges',
   ],
   [
-    'Participating Branches',
+    'Branches',
     '/branches',
-    'Compare programmes without mixing degrees or rank scales.',
+    'Pick a branch and see every college that offers it.',
+    'Participating Branches',
   ],
-  ['Seat Matrix', '/seat-matrix', 'Check category, quota and seat pool before comparing intake.'],
+  ['Seats', '/seat-matrix', 'How many seats each college has in each category.', 'Seat Matrix'],
 ];
 export function ToolLink({ href, label, className, children }) {
   return (
@@ -41,8 +45,8 @@ export function ToolLink({ href, label, className, children }) {
 export function FeatureBox() {
   return (
     <div className={styles.grid}>
-      {features.map(([title, href, description], index) => (
-        <ToolLink key={href} href={href} className={styles.card} label={title}>
+      {features.map(([title, href, description, label], index) => (
+        <ToolLink key={href} href={href} className={styles.card} label={label}>
           <span className={styles.number}>
             0{index + 1}
             <Icon name="arrowUpRight" />

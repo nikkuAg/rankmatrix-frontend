@@ -4,7 +4,7 @@ import { ReferenceItem, ReferencePanel } from '@/components/ReferencePanel';
 export function HomeIntro() {
   return (
     <ReferencePanel
-      title="Know what you’re comparing."
+      title="What RankMatrix is, and what it is not"
       label="About RankMatrix"
       description="Free JEE Main & Advanced College Predictor and JoSAA Cutoffs. No signup. Clear sources and limits."
     >
