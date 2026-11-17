@@ -29,18 +29,7 @@
   line-height: 1.8;
 }
 .visual {
-  position: relative;
   min-width: 0;
-  padding: 0 16px 0 0;
-}
-.backdrop {
-  position: absolute;
-  inset: 28px 0 -20px 24px;
-  border: 1px solid var(--line);
-  border-radius: var(--radius-lg);
-  background: var(--surface-raised);
-  transform: rotate(4deg);
-  box-shadow: none;
 }
 .start {
   position: relative;
@@ -53,8 +42,7 @@
   padding: clamp(22px, 2vw, 32px);
   border: 1px solid var(--control-line);
   border-radius: var(--radius-lg);
-  background: var(--surface-raised);
-  box-shadow: 0 20px 60px var(--shadow);
+  background: var(--surface);
 }
 .start h2 {
   margin: 0;
@@ -308,12 +296,6 @@
   .hero {
     gap: 28px;
     padding-block: 36px 48px;
-  }
-  .visual {
-    padding: 0;
-  }
-  .backdrop {
-    display: none;
   }
   .copy h1 {
     max-width: none;

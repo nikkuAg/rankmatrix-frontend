@@ -4,7 +4,7 @@ import { FaqList, ReferenceItem, ReferencePanel } from '@/components/ReferencePa
 export function PredictPageContent({ faqs }) {
   return (
     <ReferencePanel
-      title="Read the evidence. Make your choice."
+      title="Reading the predictor results"
       description="Rank lists, examples and limitations, next to the tool whenever you need them."
     >
       <ReferenceItem title="How to read the predictor output">

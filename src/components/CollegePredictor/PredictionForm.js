@@ -123,9 +123,7 @@ export function PredictionForm({ defaultValues, getPredictionData, onSuccess, on
       </div>
       <form ref={form} onSubmit={submit}>
         <fieldset className={styles.formSection}>
-          <legend>
-            Your ranks
-          </legend>
+          <legend>Your ranks</legend>
           {values.categories.map((category) => (
             <fieldset key={category} className={styles.rankProfile}>
               <legend>{categoryLabel(category)}</legend>
@@ -180,9 +178,7 @@ export function PredictionForm({ defaultValues, getPredictionData, onSuccess, on
           />
         </fieldset>
         <fieldset className={styles.formSection}>
-          <legend>
-            Home state and seats
-          </legend>
+          <legend>Home state and seats</legend>
           <div className={styles.formGrid}>
             <label className={`field ${styles.fullField}`}>
               State for quota lookup
