@@ -68,12 +68,9 @@ export const GuideLayout = ({
           <nav className={isFeature ? styles.jumpLinks : styles.contents} aria-label="On this page">
             <p className={styles.contentsLabel}>On this page</p>
             <ol>
-              {headings.map((heading, index) => (
+              {headings.map((heading) => (
                 <li key={heading.id}>
-                  <a href={`#${heading.id}`}>
-                    <span aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
-                    {heading.title}
-                  </a>
+                  <a href={`#${heading.id}`}>{heading.title}</a>
                 </li>
               ))}
             </ol>

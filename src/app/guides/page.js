@@ -139,18 +139,15 @@ export default function GuidesHub() {
       >
         <nav className={styles.jumpLinks} aria-label="Reading paths">
           <ol>
-            {READING_PATHS.map((path, index) => (
+            {READING_PATHS.map((path) => (
               <li key={path.id}>
-                <a href={`#${path.id}`}>
-                  <span aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
-                  {path.title}
-                </a>
+                <a href={`#${path.id}`}>{path.title}</a>
               </li>
             ))}
           </ol>
         </nav>
         <div className={styles.libraryGrid}>
-          {READING_PATHS.map((path, index) => (
+          {READING_PATHS.map((path) => (
             <section
               className={styles.libraryPath}
               id={path.id}
@@ -158,9 +155,6 @@ export default function GuidesHub() {
               key={path.id}
             >
               <header>
-                <span className={styles.chapter} aria-hidden="true">
-                  {String(index + 1).padStart(2, '0')}
-                </span>
                 <h2 id={`${path.id}-title`}>{path.title}</h2>
                 <p>{path.description}</p>
               </header>

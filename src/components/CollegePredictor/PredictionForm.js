@@ -124,7 +124,7 @@ export function PredictionForm({ defaultValues, getPredictionData, onSuccess, on
       <form ref={form} onSubmit={submit}>
         <fieldset className={styles.formSection}>
           <legend>
-            <span>01</span> Your ranks
+            Your ranks
           </legend>
           {values.categories.map((category) => (
             <fieldset key={category} className={styles.rankProfile}>
@@ -181,7 +181,7 @@ export function PredictionForm({ defaultValues, getPredictionData, onSuccess, on
         </fieldset>
         <fieldset className={styles.formSection}>
           <legend>
-            <span>02</span> Home state and seats
+            Home state and seats
           </legend>
           <div className={styles.formGrid}>
             <label className={`field ${styles.fullField}`}>

@@ -45,10 +45,9 @@ export function ToolLink({ href, label, className, children }) {
 export function FeatureBox() {
   return (
     <div className={styles.grid}>
-      {features.map(([title, href, description, label], index) => (
+      {features.map(([title, href, description, label]) => (
         <ToolLink key={href} href={href} className={styles.card} label={label}>
           <span className={styles.number}>
-            0{index + 1}
             <Icon name="arrowUpRight" />
           </span>
           <h3>{title}</h3>

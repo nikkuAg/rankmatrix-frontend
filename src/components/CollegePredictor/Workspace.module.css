@@ -86,11 +86,6 @@
   padding: 0;
   margin-bottom: 16px;
 }
-.formSection legend span {
-  font-size: var(--text-small);
-  color: var(--accent);
-  margin-right: 9px;
-}
 .formGrid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));

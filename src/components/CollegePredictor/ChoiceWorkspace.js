@@ -63,7 +63,7 @@ function ChoiceRow({
       >
         <Icon name="grip" />
       </button>
-      <span className={styles.position}>{String(position).padStart(2, '0')}</span>
+      <span className={styles.position}>{position}</span>
       <button
         type="button"
         className={styles.pick}
@@ -219,7 +219,7 @@ export function ChoiceWorkspace({ choices, onChange }) {
               aria-label={`Remove ${choice.branch.name}, ${choice.institute.name} from comparison`}
             >
               <span>
-                {String(choices.indexOf(choice) + 1).padStart(2, '0')} · {choice.branch.name}
+                {choices.indexOf(choice) + 1} · {choice.branch.name}
                 <small>{choice.institute.name}</small>
               </span>
               <Icon name="close" />
