@@ -86,3 +86,29 @@ export function choiceRows(choices) {
     })),
   );
 }
+const EXAM_GROUPS = [
+  {
+    id: 'advanced',
+    exam: 'JEE Advanced',
+    title: 'IITs',
+    basis: 'Compared with your JEE Advanced rank',
+  },
+  {
+    id: 'main',
+    exam: 'JEE Main',
+    title: 'NITs, IIITs and GFTIs',
+    basis: 'Compared with your JEE Main rank',
+  },
+  {
+    id: 'other',
+    exam: 'Verify exam',
+    title: 'Other institutes',
+    basis: 'Check which exam rank applies',
+  },
+];
+export function programmesByExam(programmes = []) {
+  return EXAM_GROUPS.map((group) => ({
+    ...group,
+    programmes: programmes.filter((programme) => programmeExam(programme.institute) === group.exam),
+  })).filter((group) => group.programmes.length);
+}

@@ -1,8 +1,10 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import {
+  mergePredictionRows,
   predictionFormData,
   predictionRequest,
+  predictionRequests,
   predictorFormValues,
   predictorSelections,
   quotaOptions,
@@ -79,4 +81,35 @@ test('selected categories keep their own ranks through removal, restoration and 
   assert.equal('advRank' in predictionFormData(values).rankProfiles[1], false);
   assert.equal('category' in predictionRequest(predictionFormData(values)), false);
   assert.deepEqual(predictorFormValues({ rankProfiles: 'corrupt' }).categories, []);
+});
+
+test('a JEE Advanced rank adds a JEE Main-only request so IIT rows cannot use the whole limit', () => {
+  const data = {
+    state: 'Uttar Pradesh',
+    count: 10,
+    seatPools: ['Gender-Neutral'],
+    quotas: ['AI'],
+    rankProfiles: [
+      { category: 'General', mainsRank: '18000', advRank: '7200' },
+      { category: 'OBC-NCL', mainsRank: '4500' },
+    ],
+  };
+  const [both, mainOnly] = predictionRequests(data);
+  assert.deepEqual(both, data);
+  assert.deepEqual(mainOnly.rankProfiles, [
+    { category: 'General', mainsRank: '18000' },
+    { category: 'OBC-NCL', mainsRank: '4500' },
+  ]);
+  assert.equal(data.rankProfiles[0].advRank, '7200');
+  const withoutAdvanced = { ...data, rankProfiles: [{ category: 'General', mainsRank: '18000' }] };
+  assert.deepEqual(predictionRequests(withoutAdvanced), [withoutAdvanced]);
+});
+
+test('merged rows keep IITs from the first response and other institutes from the second', () => {
+  const isIit = (row) => row.type === 'IIT';
+  const iit = { id: 1, type: 'IIT' };
+  const strayNit = { id: 2, type: 'NIT' };
+  const nit = { id: 3, type: 'NIT' };
+  assert.deepEqual(mergePredictionRows([[iit, strayNit], [nit]], isIit), [iit, nit]);
+  assert.deepEqual(mergePredictionRows([[strayNit]], isIit), [strayNit]);
 });

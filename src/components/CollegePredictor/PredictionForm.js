@@ -10,7 +10,6 @@ import {
   categoryLabel,
   categoryOptions,
   predictionFormData,
-  predictionRequest,
   predictorFormValues,
   quotaOptions,
   seatPoolOptions,
@@ -88,7 +87,7 @@ export function PredictionForm({ defaultValues, getPredictionData, onSuccess, on
       value: 1,
     });
     try {
-      const results = await getPredictionData(predictionRequest(data)).unwrap();
+      const results = await getPredictionData(data).unwrap();
       sendAnalyticsEvent({
         action: 'prediction_completed',
         category: 'college_predictor',
@@ -272,7 +271,8 @@ export function PredictionForm({ defaultValues, getPredictionData, onSuccess, on
                 ))}
               </select>
               <small>
-                Shared across selected rank lists; several rows may belong to one programme.
+                Applied separately to IITs and to NITs, IIITs and GFTIs when you enter both ranks.
+                Several rows may belong to one programme.
               </small>
             </label>
           </div>
