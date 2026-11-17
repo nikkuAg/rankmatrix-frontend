@@ -19,7 +19,6 @@ export function instituteTitleName(institute) {
   return name;
 }
 
-
 // Established abbreviations for institutes whose official name does not begin
 // with the family name. Keyed by the official name so nothing is inferred from
 // a campus city, display code or stored type.
@@ -32,8 +31,55 @@ const KNOWN_SHORT_NAMES = {
   'Dr. B R Ambedkar National Institute of Technology, Jalandhar': 'NIT Jalandhar',
   'Indian Institute of Science, Bangalore': 'IISc Bangalore',
   'Indian Institute of Science, Bengaluru': 'IISc Bengaluru',
-  "Indian Institute of Information Technology(IIIT) Kilohrad, Sonepat, Haryana": "IIIT Sonepat",
+  'Indian Institute of Information Technology(IIIT) Kilohrad, Sonepat, Haryana': 'IIIT Sonepat',
+  'INDIAN INSTITUTE OF INFORMATION TECHNOLOGY SENAPATI MANIPUR': 'IIIT Manipur',
+  'Indian Institute of Information Technology, Vadodara International Campus Diu (IIITVICD)':
+    'IIITV-ICD Diu',
+  'Indian Institute of Information Technology, Design & Manufacturing, Kancheepuram':
+    'IIITDM Kancheepuram',
+  'Indian Institute of Information Technology Design & Manufacturing Kurnool, Andhra Pradesh':
+    'IIITDM Kurnool',
+  'Pt. Dwarka Prasad Mishra Indian Institute of Information Technology, Design & Manufacture Jabalpur':
+    'IIITDM Jabalpur',
+  'Atal Bihari Vajpayee Indian Institute of Information Technology & Management Gwalior':
+    'ABV-IIITM Gwalior',
+  'International Institute of Information Technology, Bhubaneswar': 'IIIT Bhubaneswar',
+  'International Institute of Information Technology, Naya Raipur': 'IIIT Naya Raipur',
+  'Indian Institute of Engineering Science and Technology, Shibpur': 'IIEST Shibpur',
+  'Birla Institute of Technology, Mesra, Ranchi': 'BIT Mesra',
+  'Birla Institute of Technology, Deoghar Off-Campus': 'BIT Deoghar',
+  'Birla Institute of Technology, Patna Off-Campus': 'BIT Patna',
+  'Punjab Engineering College, Chandigarh': 'PEC Chandigarh',
+  'Shri G. S. Institute of Technology and Science Indore': 'SGSITS Indore',
+  'Sant Longowal Institute of Engineering and Technology': 'SLIET Longowal',
+  'Chhattisgarh Swami Vivekanada Technical University, Bhilai (CSVTU Bhilai)': 'CSVTU Bhilai',
+  'Institute of Infrastructure, Technology, Research and Management-Ahmedabad': 'IITRAM Ahmedabad',
+  'North Eastern Regional Institute of Science and Technology, Nirjuli-791109 (Itanagar),Arunachal Pradesh':
+    'NERIST Itanagar',
+  'National Institute of Advanced Manufacturing Technology, Ranchi': 'NIAMT Ranchi',
+  'National Institute of Technical Teachers Training and Research Bhopal': 'NITTTR Bhopal',
+  'Central institute of Technology Kokrajar, Assam': 'CIT Kokrajar',
+  'Ghani Khan Choudhary Institute of Engineering and Technology, Malda, West Bengal':
+    'GKCIET Malda',
+  'Indian Institute of Carpet Technology, Bhadohi': 'IICT Bhadohi',
+  'Indian Institute of Handloom Technology(IIHT), Varanasi': 'IIHT Varanasi',
+  'Indian Institute of Handloom Technology, Salem': 'IIHT Salem',
+  'Rajiv Gandhi National Aviation University, Fursatganj, Amethi (UP)': 'RGNAU Amethi',
+  'Shri Mata Vaishno Devi University, Katra, Jammu & Kashmir': 'SMVDU Katra',
+  'Islamic University of Science and Technology Kashmir': 'IUST Kashmir',
+  'Jawaharlal Nehru University, Delhi': 'JNU Delhi',
+  'North-Eastern Hill University, Shillong': 'NEHU Shillong',
+  'Puducherry Technological University, Puducherry': 'PTU Puducherry',
+  'School of Studies of Engineering and Technology, Guru Ghasidas Vishwavidyalaya, Bilaspur':
+    'GGV Bilaspur',
 };
+
+// Families of centres whose applicants search "<acronym> <city>".
+const CENTRE_PREFIXES = [
+  [/^National Institute of Electronics and Information Technology,\s*/i, 'NIELIT'],
+  [/^National Institute of Food Technology Entrepreneurship and Management,\s*/i, 'NIFTEM'],
+  [/^School of Planning\s*&\s*Architecture\s*[,:]\s*/i, 'SPA'],
+];
 
 const FAMILY_PREFIXES = [
   [/^Indian Institute of Information Technology\s*(?:\(IIIT\))?\s*,?\s*/i, 'IIIT'],
@@ -50,6 +96,15 @@ export function instituteShortName(institute) {
   const name = institute?.name?.replace(/\s+/g, ' ').trim();
   if (!name) return null;
   if (KNOWN_SHORT_NAMES[name]) return KNOWN_SHORT_NAMES[name];
+  for (const [pattern, family] of CENTRE_PREFIXES) {
+    if (!pattern.test(name)) continue;
+    // Keep the city only: "Ajmer (Rajasthan)" becomes "Ajmer".
+    const city = name
+      .replace(pattern, '')
+      .replace(/\s*\([^)]*\)\s*$/, '')
+      .trim();
+    return city ? `${family} ${city}` : null;
+  }
   // Design & Manufacturing institutes use a different acronym (IIITDM).
   if (/Design\s*(&|and)\s*Manufactur/i.test(name)) return null;
   for (const [pattern, family] of FAMILY_PREFIXES) {
@@ -58,7 +113,7 @@ export function instituteShortName(institute) {
     // Skip names stored in capitals or with nothing after the family name.
     if (!place || !/[a-z]/.test(place)) return null;
     // IIIT names often carry a trailing state; applicants use the campus alone.
-    return `${family} ${family === "IIIT" ? place.split(",")[0].trim() : place}`;
+    return `${family} ${family === 'IIIT' ? place.split(',')[0].trim() : place}`;
   }
   return null;
 }
