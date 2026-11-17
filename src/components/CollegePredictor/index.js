@@ -137,7 +137,9 @@ export function CollegePredictor() {
   function openForm() {
     setOpen(true);
     requestAnimationFrame(() => {
-      workspaceRoot.current?.querySelector('[data-selection="categories"]')?.focus();
+      workspaceRoot.current
+        ?.querySelector('input[name^="mainsRank"], [data-selection="categories"]')
+        ?.focus();
     });
     sendAnalyticsEvent({
       action: `${formData ? 'update' : 'add'}_form_open_clicked`,

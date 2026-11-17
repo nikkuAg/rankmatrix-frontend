@@ -116,13 +116,19 @@
 .rankProfile {
   min-width: 0;
   border: 0;
+  margin: 0 0 20px;
+  padding: 0;
+}
+.rankProfile .formGrid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.rankProfile + .rankProfile {
   border-top: 1px solid var(--line);
-  margin: 24px 0 0;
-  padding: 16px 0 0;
+  padding-top: 16px;
 }
 .rankProfile legend {
   padding-right: 12px;
-  margin: 0;
+  margin: 0 0 10px;
   font-size: var(--text-control);
 }
 .profileSummary {
