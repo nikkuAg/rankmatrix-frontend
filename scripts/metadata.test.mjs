@@ -2,12 +2,12 @@ import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import {
   buildMetadata,
-  toolPageCopy,
   instituteSearchTitle,
   instituteShortName,
   instituteTitleName,
   programmeSearchTitle,
   programmeTitleName,
+  toolPageCopy,
 } from '../src/utils/metadata.mjs';
 
 test('institute titles preserve supplied identity without guessing from city or type', () => {
@@ -114,16 +114,40 @@ test('short names come only from the official name and never from city, code or 
     short('Indian Institute of Information Technology(IIIT) Una, Himachal Pradesh'),
     'IIIT Una',
   );
-  assert.equal(short('Indian Institute of Information Technology (IIIT)Kota, Rajasthan'), 'IIIT Kota');
+  assert.equal(
+    short('Indian Institute of Information Technology (IIIT)Kota, Rajasthan'),
+    'IIIT Kota',
+  );
   assert.equal(short('Malaviya National Institute of Technology Jaipur'), 'MNIT Jaipur');
   assert.equal(short('Indian Institute of Science, Bangalore'), 'IISc Bangalore');
+  for (const [name, expected] of [
+    ['National Institute of Technical Teachers Training and Research Bhopal', 'NITTTR Bhopal'],
+    [
+      'National Institute of Electronics and Information Technology, Ajmer (Rajasthan)',
+      'NIELIT Ajmer',
+    ],
+    ['National Institute of Electronics and Information Technology, Calicut', 'NIELIT Calicut'],
+    ['School of Planning & Architecture: Vijayawada', 'SPA Vijayawada'],
+    [
+      'National Institute of Food Technology Entrepreneurship and Management, Kundli',
+      'NIFTEM Kundli',
+    ],
+    [
+      'Indian Institute of Information Technology, Design & Manufacturing, Kancheepuram',
+      'IIITDM Kancheepuram',
+    ],
+    ['INDIAN INSTITUTE OF INFORMATION TECHNOLOGY SENAPATI MANIPUR', 'IIIT Manipur'],
+    ['International Institute of Information Technology, Bhubaneswar', 'IIIT Bhubaneswar'],
+    ['Punjab Engineering College, Chandigarh', 'PEC Chandigarh'],
+    ['Birla Institute of Technology, Mesra, Ranchi', 'BIT Mesra'],
+  ])
+    assert.equal(short(name), expected, name);
+  // Unmapped names keep their official name rather than a guessed acronym.
   for (const name of [
-    'National Institute of Technical Teachers Training and Research Bhopal',
-    'National Institute of Electronics and Information Technology, Ajmer (Rajasthan)',
-    'Indian Institute of Information Technology, Design & Manufacturing, Kancheepuram',
-    'INDIAN INSTITUTE OF INFORMATION TECHNOLOGY SENAPATI MANIPUR',
-    'International Institute of Information Technology, Bhubaneswar',
-    'Punjab Engineering College, Chandigarh',
+    'Indian Institute of Information Technology Design & Manufacturing Somewhere New',
+    'INDIAN INSTITUTE OF TECHNOLOGY NEWTOWN',
+    'University of Hyderabad',
+    'Assam University, Silchar',
   ])
     assert.equal(short(name), null, name);
   assert.equal(short('Official name', { displayCode: 'Goa', type: 'NIT' }), null);
@@ -137,15 +161,18 @@ test('search titles lead with the short name, stay short and keep programmes dis
     'IIT Bombay Cutoff 2026: JoSAA Ranks, Branches & NIRF',
   );
   assert.equal(
-    instituteSearchTitle({ name: 'Punjab Engineering College, Chandigarh' }),
-    'Punjab Engineering College, Chandigarh JoSAA Cutoff',
+    instituteSearchTitle({ name: 'Assam University, Silchar' }),
+    'Assam University, Silchar JoSAA Cutoff',
   );
   const programme = { name: 'Aerospace Engineering', code: 4101, courseDuration: 4 };
   const title = programmeSearchTitle(iit, programme, 2026);
   assert.equal(title, 'IIT Bombay Aerospace Engineering Cutoff 2026 (4101)');
   assert.ok(`${title} | RankMatrix`.length <= 65);
   assert.notEqual(title, programmeSearchTitle(iit, { ...programme, code: 4102 }, 2026));
-  assert.throws(() => programmeSearchTitle(iit, { name: 'Aerospace Engineering' }), /name and code/);
+  assert.throws(
+    () => programmeSearchTitle(iit, { name: 'Aerospace Engineering' }),
+    /name and code/,
+  );
 });
 
 test('tool pages name the data year only when a plausible one is supplied', () => {
@@ -153,7 +180,10 @@ test('tool pages name the data year only when a plausible one is supplied', () =
     toolPageCopy('ranks', 2026).title,
     'JoSAA Opening & Closing Ranks 2026, All Rounds',
   );
-  assert.equal(toolPageCopy('seatMatrix', 2026).title, 'JoSAA Seat Matrix 2026 by College & Category');
+  assert.equal(
+    toolPageCopy('seatMatrix', 2026).title,
+    'JoSAA Seat Matrix 2026 by College & Category',
+  );
   assert.equal(toolPageCopy('predict', 2026).title, 'Free JEE Main & Advanced College Predictor');
   assert.match(toolPageCopy('predict', 2026).description, /JoSAA 2026 cutoffs/);
   for (const page of ['ranks', 'seatMatrix', 'predict']) {
