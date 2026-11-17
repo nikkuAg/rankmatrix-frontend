@@ -40,14 +40,25 @@ export function HomeStart() {
     });
     router.push('/predict');
   }
-  const field = (name) => ({
+  const field = (name, exam) => ({
     name,
     type: 'text',
     inputMode: 'numeric',
     pattern: '[1-9][0-9]*',
     autoComplete: 'off',
+    'aria-describedby': `home-${name}-hint`,
     value: ranks[name],
-    onChange: (event) => setRanks((previous) => ({ ...previous, [name]: event.target.value })),
+    onChange: (event) => {
+      event.target.setCustomValidity('');
+      setRanks((previous) => ({ ...previous, [name]: event.target.value }));
+    },
+    // Say what to type instead of the browser's generic "match the requested format".
+    onInvalid: (event) =>
+      event.target.setCustomValidity(
+        event.target.validity.valueMissing
+          ? `Enter your ${exam} rank.`
+          : `Enter your ${exam} rank as a whole number, such as 18000. A percentile will not work.`,
+      ),
   });
   return (
     <div className={styles.start}>
@@ -56,13 +67,13 @@ export function HomeStart() {
         <div className={styles.startFields}>
           <label className="field">
             JEE Main rank
-            <input {...field('mainsRank')} required title="Enter your rank as a whole number" />
-            <small>Your overall rank (CRL), not percentile</small>
+            <input {...field('mainsRank', 'JEE Main')} required />
+            <small id="home-mainsRank-hint">Your overall rank (CRL), not percentile</small>
           </label>
           <label className="field">
             JEE Advanced rank
-            <input {...field('advRank')} title="Enter your rank as a whole number" />
-            <small>Optional. Needed for IITs</small>
+            <input {...field('advRank', 'JEE Advanced')} />
+            <small id="home-advRank-hint">Optional. Needed for IITs</small>
           </label>
         </div>
         <button type="submit" className="button primary">
