@@ -12,6 +12,7 @@ import {
   groupProgrammes,
   parseChoices,
   programmeExam,
+  programmesByExam,
 } from '@/utils/choices.mjs';
 import { downloadCSV } from '@/utils/downloadCSV';
 import { loadPredictorFormData, savePredictorFormData } from '@/utils/formStorage';
@@ -121,7 +122,9 @@ export function CollegePredictor() {
     });
   }
   const programmes = groupProgrammes(rankData || []);
-  const evidence = programmes.find((programme) => programme.id === selected) || programmes[0];
+  const examGroups = programmesByExam(programmes);
+  const evidence =
+    programmes.find((programme) => programme.id === selected) || examGroups[0]?.programmes[0];
   const initialForm = open && !formData && !choices.length;
   return (
     <div ref={workspaceRoot} className={styles.root}>
@@ -227,9 +230,11 @@ export function CollegePredictor() {
             {formData && (
               <p className={styles.countline}>
                 <strong>
-                  {rankData?.length || 0} allocation rows · {programmes.length} programmes
+                  {programmes.length} {programmes.length === 1 ? 'programme' : 'programmes'}
+                  {examGroups.length > 1 &&
+                    `: ${examGroups.map((group) => `${group.programmes.length} at ${group.title}`).join(', ')}`}
                 </strong>{' '}
-                · Historical comparison order, not a recommended preference order.
+                · Listed by last year’s opening rank, not in a recommended preference order.
               </p>
             )}
             {isFetching ? (
@@ -260,44 +265,55 @@ export function CollegePredictor() {
                 <div className={styles.columns} data-mobile-pane={mobilePane}>
                   <div className={styles.listColumn}>
                     <div className={styles.resultsList}>
-                      {programmes.map((programme) => {
-                        const saved = choices.some((choice) => choice.id === programme.id);
-                        return (
-                          <article
-                            className={`${styles.result} ${evidence?.id === programme.id ? styles.selected : ''}`}
-                            key={programme.id}
-                          >
-                            <button
-                              type="button"
-                              className={styles.pick}
-                              aria-pressed={evidence?.id === programme.id}
-                              onClick={() => {
-                                setSelected(programme.id);
-                                setMobilePane('evidence');
-                                if (window.matchMedia('(max-width: 950px)').matches)
-                                  requestAnimationFrame(() => evidenceButton.current?.focus());
-                              }}
-                            >
-                              <span className="badge">{programmeExam(programme.institute)}</span>
-                              <strong>{programme.branch.name}</strong>
-                              <span>{programme.institute.name}</span>
-                              <small>
-                                {instituteType(programme.institute)} · {programme.branch.degree} ·{' '}
-                                {programme.branch.courseDuration} years · {programme.records.length}{' '}
-                                allocation {programme.records.length === 1 ? 'record' : 'records'}
-                              </small>
-                            </button>
-                            <button
-                              type="button"
-                              className="button small"
-                              disabled={saved}
-                              onClick={() => changeChoices([...choices, programme])}
-                            >
-                              {saved ? 'Saved ✓' : '+ Save choice'}
-                            </button>
-                          </article>
-                        );
-                      })}
+                      {examGroups.map((group) => (
+                        <section key={group.exam} aria-labelledby={`results-${group.id}`}>
+                          <h3 id={`results-${group.id}`} className={styles.groupHeading}>
+                            {group.title} <span>{group.programmes.length}</span>
+                            <small>{group.basis}</small>
+                          </h3>
+                          {group.programmes.map((programme) => {
+                            const saved = choices.some((choice) => choice.id === programme.id);
+                            return (
+                              <article
+                                className={`${styles.result} ${evidence?.id === programme.id ? styles.selected : ''}`}
+                                key={programme.id}
+                              >
+                                <button
+                                  type="button"
+                                  className={styles.pick}
+                                  aria-pressed={evidence?.id === programme.id}
+                                  onClick={() => {
+                                    setSelected(programme.id);
+                                    setMobilePane('evidence');
+                                    if (window.matchMedia('(max-width: 950px)').matches)
+                                      requestAnimationFrame(() => evidenceButton.current?.focus());
+                                  }}
+                                >
+                                  <span className="badge">
+                                    {programmeExam(programme.institute)}
+                                  </span>
+                                  <strong>{programme.branch.name}</strong>
+                                  <span>{programme.institute.name}</span>
+                                  <small>
+                                    {instituteType(programme.institute)} · {programme.branch.degree}{' '}
+                                    · {programme.branch.courseDuration} years ·{' '}
+                                    {programme.records.length} allocation{' '}
+                                    {programme.records.length === 1 ? 'record' : 'records'}
+                                  </small>
+                                </button>
+                                <button
+                                  type="button"
+                                  className="button small"
+                                  disabled={saved}
+                                  onClick={() => changeChoices([...choices, programme])}
+                                >
+                                  {saved ? 'Saved ✓' : '+ Save choice'}
+                                </button>
+                              </article>
+                            );
+                          })}
+                        </section>
+                      ))}
                     </div>
                   </div>
                   <ProgrammeEvidence programme={evidence} />

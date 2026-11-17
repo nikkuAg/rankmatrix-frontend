@@ -242,8 +242,31 @@
   background: var(--surface);
   border-bottom: 1px solid var(--line);
 }
-.result:last-child {
+.resultsList > section:last-child > .result:last-child {
   border-bottom: 0;
+}
+.groupHeading {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  margin: 0;
+  padding: 12px 16px;
+  background: var(--surface-raised);
+  border-bottom: 1px solid var(--line);
+  font-size: var(--text-body);
+  font-weight: 600;
+  line-height: 1.4;
+}
+.groupHeading span {
+  margin-left: 6px;
+  color: var(--muted);
+  font-weight: 400;
+}
+.groupHeading small {
+  display: block;
+  font-size: var(--text-small);
+  font-weight: 400;
+  color: var(--muted);
 }
 .result > .pick {
   flex: 1;

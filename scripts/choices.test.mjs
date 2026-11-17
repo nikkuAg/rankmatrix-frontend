@@ -97,3 +97,21 @@ test('choice export includes all allocation rows and never fabricates a dataset 
   assert.equal(data[0].round, 5);
   assert.equal(data[2].exam, 'JEE Main');
 });
+
+test('programmes are grouped by the exam whose rank applies, IITs first, empty groups omitted', async () => {
+  const { programmesByExam } = await import('../src/utils/choices.mjs');
+  const nit = { id: 'n', institute: { type: 'NIT', name: 'NIT Trichy' } };
+  const iit = { id: 'i', institute: { type: 'IIT', name: 'IIT Roorkee' } };
+  const groups = programmesByExam([nit, iit]);
+  assert.deepEqual(
+    groups.map((group) => [group.exam, group.programmes.map((programme) => programme.id)]),
+    [
+      ['JEE Advanced', ['i']],
+      ['JEE Main', ['n']],
+    ],
+  );
+  assert.deepEqual(
+    programmesByExam([nit]).map((group) => group.title),
+    ['NITs, IIITs and GFTIs'],
+  );
+});
