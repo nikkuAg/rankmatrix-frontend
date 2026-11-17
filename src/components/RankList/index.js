@@ -379,7 +379,7 @@ export const RankList = () => {
                               <td>
                                 {rank.branch.name}
                                 <small className="cell-detail">
-                                  {rank.branch.degree} · {rank.branch.courseDuration} years
+                                  {rank.branch.degree}, {rank.branch.courseDuration} years
                                 </small>
                               </td>
                               <td>{rank.category}</td>

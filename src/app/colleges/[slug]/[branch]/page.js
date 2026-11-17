@@ -158,7 +158,7 @@ export default async function InstituteBranchPage({ params }) {
           { name: data.branch.name, path: canonicalPath },
         ]}
         title={`${data.branch.name} at ${data.institute.name}`}
-        subtitle={`${shortName ? `${shortName} · ` : ''}${data.branch.degree} · ${data.branch.courseDuration}-year programme · JoSAA counselling`}
+        subtitle={`${shortName ? `${shortName}: ` : ''}${data.branch.degree}, ${data.branch.courseDuration}-year programme in JoSAA counselling`}
         badges={[
           { label: instituteType(data.institute) },
           { label: `Programme code ${data.branch.code}` },
@@ -180,10 +180,12 @@ export default async function InstituteBranchPage({ params }) {
                 <header>
                   <h3>{quotaLabel(row.quota)} quota</h3>
                   <span>
-                    JoSAA {latestYear} · Round {row.round}
+                    JoSAA {latestYear}, round {row.round}
                   </span>
                 </header>
-                <p>{admissionRankLabel(data.institute)} · OPEN / CRL · Gender-Neutral</p>
+                <p>
+                  {admissionRankLabel(data.institute)}, OPEN category (CRL), Gender-Neutral seats
+                </p>
                 <dl>
                   <div>
                     <dt>Opening rank</dt>

@@ -37,7 +37,7 @@ test('footer navigation and attribution render without browser state or a theme 
   for (const anchor of anchors.filter((a) => a.includes('target="_blank"'))) {
     assert.match(anchor, /rel="[^"]*noopener noreferrer/);
   }
-  assert.ok(html.includes(`© ${new Date().getFullYear()} RankMatrix · Built by`));
+  assert.ok(html.includes(`© ${new Date().getFullYear()} RankMatrix. Built by`));
   assert.ok(html.includes('No signup or contact details required'));
   assert.ok(html.includes('Predictor outputs are our calculations'));
   assert.ok(!html.includes('\uFFFD'));

@@ -75,7 +75,7 @@ export default function Methodology() {
           from the same exam and category list as the cutoff row being compared.
         </p>
         <figure className={styles.window}>
-          <figcaption>Hypothetical input · rank 10,000 · delta 10%</figcaption>
+          <figcaption>Hypothetical input: rank 10,000 with a 10% delta</figcaption>
           <dl className={styles.windowScale}>
             <div>
               <dt>Lower search bound</dt>

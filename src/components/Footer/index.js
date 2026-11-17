@@ -103,7 +103,7 @@ export const Footer = () => (
       </div>
       <div className={styles.bottom}>
         <p className={styles.byline}>
-          &copy; {new Date().getFullYear()} RankMatrix &middot; Built by{' '}
+          &copy; {new Date().getFullYear()} RankMatrix. Built by{' '}
           <a
             href="https://www.linkedin.com/in/ag-divyansh/"
             target="_blank"

@@ -108,7 +108,7 @@ export default async function BranchPage({ params }) {
           { name: data.name, path: canonicalPath },
         ]}
         title={data.name}
-        subtitle={`${data.degree} · ${data.courseDuration}-year programme`}
+        subtitle={`${data.degree}, ${data.courseDuration}-year programme`}
         badges={[
           { label: data.degree },
           { label: `Programme code ${data.code}` },

@@ -1,4 +1,4 @@
-import { Fraunces, Manrope } from 'next/font/google';
+import { Manrope } from 'next/font/google';
 import '@/styles/tokens.css';
 import Script from 'next/script';
 import { AnalyticsInteractions } from '@/components/AnalyticsInteractions';
@@ -19,13 +19,6 @@ import {
 } from '@/utils/metadata.mjs';
 
 const manrope = Manrope({ variable: '--font-body', subsets: ['latin'], display: 'swap' });
-const fraunces = Fraunces({
-  variable: '--font-display',
-  subsets: ['latin'],
-  display: 'swap',
-  // Used above the fold in the hero and workspace; fetch with the body font.
-  preload: true,
-});
 
 const SITE_DESCRIPTION = HOME_DESCRIPTION;
 
@@ -97,7 +90,7 @@ const websiteJsonLd = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={`${manrope.variable} ${fraunces.variable}`}>
+      <body className={manrope.variable}>
         {analyticsBootstrap(process.env.NEXT_PUBLIC_GA_ID) && (
           <script
             id="rankmatrix-analytics-init"

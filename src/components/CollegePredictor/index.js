@@ -220,14 +220,14 @@ export function CollegePredictor() {
             ))}
             <div>
               <dt>Seat pools</dt>
-              <dd>{formData.seatPools.join(' · ')}</dd>
+              <dd>{formData.seatPools.join(', ')}</dd>
             </div>
             <div>
               <dt>Quotas</dt>
               <dd>
                 {formData.quotas.length === quotaOptions.length
                   ? 'All applicable quotas'
-                  : formData.quotas.map(quotaLabel).join(' · ')}
+                  : formData.quotas.map(quotaLabel).join(', ')}
               </dd>
             </div>
             <div>
@@ -288,8 +288,8 @@ export function CollegePredictor() {
                   {programmes.length} {programmes.length === 1 ? 'programme' : 'programmes'}
                   {examGroups.length > 1 &&
                     `: ${examGroups.map((group) => `${group.programmes.length} at ${group.title}`).join(', ')}`}
-                </strong>{' '}
-                · Listed by last year’s opening rank, not in a recommended preference order.
+                </strong>
+                . Listed by last year’s opening rank, not in a recommended preference order.
               </p>
             )}
             {restored && !open && (
@@ -362,8 +362,8 @@ export function CollegePredictor() {
                                   <strong>{programme.branch.name}</strong>
                                   <span>{programme.institute.name}</span>
                                   <small>
-                                    {instituteType(programme.institute)} · {programme.branch.degree}{' '}
-                                    · {programme.branch.courseDuration} years
+                                    {instituteType(programme.institute)}, {programme.branch.degree},{' '}
+                                    {programme.branch.courseDuration} years
                                   </small>
                                   <span className={styles.rankRows}>
                                     {programme.records.slice(0, 3).map((record, index) => (
@@ -471,11 +471,11 @@ export function CollegePredictor() {
                         <tr key={index}>
                           <td>{record.institute.name}</td>
                           <td>
-                            {instituteType(record.institute)} · {programmeExam(record.institute)}
+                            {instituteType(record.institute)}, {programmeExam(record.institute)}
                           </td>
                           <td>{record.branch.name}</td>
                           <td>
-                            {record.branch.degree} · {record.branch.courseDuration} years
+                            {record.branch.degree}, {record.branch.courseDuration} years
                           </td>
                           <td>{record.category}</td>
                           <td>{quotaLabel(record.quota)}</td>

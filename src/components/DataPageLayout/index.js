@@ -48,7 +48,7 @@ export function DataPageLayout({
         )}
         {lastUpdated && (
           <p className={styles.meta}>
-            Data coverage: {lastUpdated} · By{' '}
+            Data coverage: {lastUpdated}. By{' '}
             <a
               href="https://www.linkedin.com/in/ag-divyansh/"
               target="_blank"

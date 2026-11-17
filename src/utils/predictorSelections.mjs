@@ -16,7 +16,7 @@ export const categoryOptions = [
   CATEGORIES.ST_PWD,
 ];
 export const categoryLabel = (category) =>
-  category === CATEGORIES.GENERAL ? 'General / OPEN · CRL' : category;
+  category === CATEGORIES.GENERAL ? 'General (OPEN, CRL)' : category;
 
 export function predictorSelections(values) {
   const pools =

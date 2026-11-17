@@ -131,7 +131,7 @@ export default function GuidesHub() {
           <>
             <span>Already have your rank?</span>
             <a href="#read-your-rank">Start with rank interpretation</a>
-            <span>Nine guides · no account needed</span>
+            <span>Nine guides. No account needed.</span>
           </>
         }
       >

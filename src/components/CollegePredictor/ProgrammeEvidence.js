@@ -28,7 +28,7 @@ export function ProgrammeEvidence({ programme, preference }) {
       <h2>{branch.name}</h2>
       <p>{institute.name}</p>
       <p className={styles.degree}>
-        {instituteType(institute)} · {branch.degree} · {branch.courseDuration} years
+        {instituteType(institute)}, {branch.degree}, {branch.courseDuration} years
       </p>
       <p className={styles.rankContext}>
         Compare with {admissionRankLabel(institute)}. OPEN uses CRL; reserved categories use their
@@ -52,7 +52,7 @@ export function ProgrammeEvidence({ programme, preference }) {
               <div>
                 <dt>Category / rank list</dt>
                 <dd>
-                  {record.category} ·{' '}
+                  {record.category},{' '}
                   {['General', 'OPEN'].includes(record.category) ? 'CRL' : 'category rank'}
                 </dd>
               </div>

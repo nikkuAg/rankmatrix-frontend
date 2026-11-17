@@ -74,7 +74,7 @@ function ChoiceRow({
         <strong>{choice.branch.name}</strong>
         <span>{choice.institute.name}</span>
         <small>
-          {choice.branch.degree} · {choice.branch.courseDuration} years
+          {choice.branch.degree}, {choice.branch.courseDuration} years
         </small>
       </button>
       <span className={styles.exam}>
@@ -205,8 +205,8 @@ export function ChoiceWorkspace({ choices, onChange }) {
         </button>
       </div>
       <p className={styles.countline}>
-        <strong>{choices.length} choices</strong> · your preference order{' '}
-        {filtered && `· ${visible.length} shown`}
+        <strong>{choices.length} choices</strong> in your preference order
+        {filtered && `, ${visible.length} shown`}
       </p>
       {comparison.length > 0 && (
         <div className={styles.comparisonTray} aria-label="Programmes selected for comparison">
@@ -219,7 +219,7 @@ export function ChoiceWorkspace({ choices, onChange }) {
               aria-label={`Remove ${choice.branch.name}, ${choice.institute.name} from comparison`}
             >
               <span>
-                {choices.indexOf(choice) + 1} · {choice.branch.name}
+                {choices.indexOf(choice) + 1}. {choice.branch.name}
                 <small>{choice.institute.name}</small>
               </span>
               <Icon name="close" />
@@ -243,7 +243,7 @@ export function ChoiceWorkspace({ choices, onChange }) {
           aria-pressed={mobilePane === 'evidence'}
           onClick={() => setMobilePane('evidence')}
         >
-          Evidence{evidence ? ` · ${choices.indexOf(evidence) + 1}` : ''}
+          Evidence{evidence ? ` (choice ${choices.indexOf(evidence) + 1})` : ''}
         </button>
       </div>
       <div className={styles.columns} data-mobile-pane={mobilePane}>

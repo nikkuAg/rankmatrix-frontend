@@ -335,7 +335,7 @@ export const SeatList = () => {
                             <td>
                               {seat.branch.name}
                               <small className="cell-detail">
-                                {seat.branch.degree} · {seat.branch.courseDuration} years
+                                {seat.branch.degree}, {seat.branch.courseDuration} years
                               </small>
                             </td>
                             <td>{seat.category}</td>
