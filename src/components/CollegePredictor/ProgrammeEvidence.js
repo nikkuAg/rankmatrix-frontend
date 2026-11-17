@@ -9,7 +9,6 @@ export function ProgrammeEvidence({ programme, preference }) {
   if (!programme)
     return (
       <aside className={styles.evidence}>
-        <p className="eyebrow">The evidence desk</p>
         <h2>A closer look.</h2>
         <p className="muted">
           Select a programme to inspect all its returned allocation records, then check the full

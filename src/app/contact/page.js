@@ -43,7 +43,6 @@ export default function Contact() {
       ))}
       <GuideLayout
         variant="contact"
-        eyebrow="Contact / corrections"
         title={TITLE}
         description={DESCRIPTION}
         lastUpdated="May 2026"

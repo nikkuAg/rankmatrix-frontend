@@ -127,7 +127,6 @@ export default function GuidesHub() {
         title="JoSAA & JEE counselling guides"
         description="Straightforward, no-spam explainers built around the questions JEE aspirants actually ask, written by someone who built the tool they're reading them in."
         variant="library"
-        eyebrow="The counselling library"
         headerNote={
           <>
             <span>Already have your rank?</span>
@@ -211,7 +210,6 @@ export default function GuidesHub() {
         </div>
         <section className={styles.libraryNext}>
           <div>
-            <p className={styles.eyebrow}>The source of the rules</p>
             <h2>Verify the current official instructions.</h2>
             <p>
               Guides explain the context. The published schedule, eligibility rules and programme

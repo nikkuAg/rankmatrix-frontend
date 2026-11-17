@@ -47,10 +47,8 @@
 }
 .heading {
   font:
-    600 12px/1.5 var(--font-body),
+    600 14px/1.5 var(--font-body),
     sans-serif;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
   color: var(--muted);
   margin: 6px 0 20px;
 }

@@ -53,7 +53,6 @@ export default function About() {
       ))}
       <GuideLayout
         variant="about"
-        eyebrow="About RankMatrix"
         title={TITLE}
         description={DESCRIPTION}
         lastUpdated="26 October 2026"

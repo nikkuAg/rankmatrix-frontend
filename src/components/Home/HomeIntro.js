@@ -5,7 +5,6 @@ export function HomeIntro() {
   return (
     <ReferencePanel
       title="What RankMatrix is, and what it is not"
-      label="About RankMatrix"
       description="Free JEE Main & Advanced College Predictor and JoSAA Cutoffs. No signup. Clear sources and limits."
     >
       <ReferenceItem title="Plan your JoSAA choices with published rank and seat data">

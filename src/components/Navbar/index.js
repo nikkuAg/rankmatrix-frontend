@@ -28,7 +28,6 @@ export const Navbar = () => (
             Explore <Icon name="chevronDown" className="disclosure-chevron" />
           </summary>
           <div className={styles.dropdown}>
-            <p className="eyebrow">Know your options</p>
             {researchLinks.map(([href, label]) => (
               <NavLink href={href} key={href}>
                 {label} <Icon name="arrowUpRight" />

@@ -3,7 +3,7 @@ import { FaqList, ReferenceItem, ReferencePanel } from '@/components/ReferencePa
 
 export function ToolAnswers({ title, description, faqs }) {
   return (
-    <ReferencePanel title={title} description={description} label="Reading the evidence">
+    <ReferencePanel title={title} description={description}>
       <ReferenceItem title="Match your context before comparing">
         <p>
           Start with your exam and rank list, then match the year, round, category, quota and seat

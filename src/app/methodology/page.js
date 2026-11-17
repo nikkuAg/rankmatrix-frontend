@@ -46,7 +46,6 @@ export default function Methodology() {
       ))}
       <GuideLayout
         variant="methodology"
-        eyebrow="How the evidence works"
         title={TITLE}
         description={DESCRIPTION}
         lastUpdated="26 October 2026"

@@ -53,14 +53,6 @@
 .headingRow:has(.headerNote) {
   grid-template-columns: minmax(0, 1fr) 225px;
 }
-.eyebrow {
-  margin: 0 0 14px;
-  color: var(--accent);
-  font-size: var(--text-small);
-  font-weight: 500;
-  letter-spacing: 0.09em;
-  text-transform: uppercase;
-}
 .title {
   max-width: 23ch;
   margin: 0;

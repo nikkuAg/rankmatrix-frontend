@@ -14,7 +14,6 @@ export const GuideLayout = ({
   readingTimeMinutes,
   headingLevel = 'h1',
   variant = 'article',
-  eyebrow,
   headerNote,
   breadcrumbs = [
     { name: 'Home', path: '/' },
@@ -28,9 +27,6 @@ export const GuideLayout = ({
   const { content, headings } = withHeadingAnchors(children);
   const sections = articleSections(content);
   const hasContents = !isLibrary && headings.length > 1;
-  const currentPage = breadcrumbs[breadcrumbs.length - 1]?.name;
-  const isGuide = breadcrumbs.some((crumb) => crumb.path === '/guides');
-  const label = eyebrow || (isGuide ? 'A RankMatrix guide' : currentPage);
   return (
     <article className={`${styles.article} ${variant === 'article' ? '' : styles[variant] || ''}`}>
       <header className={styles.header}>
@@ -49,7 +45,6 @@ export const GuideLayout = ({
         </nav>
         <div className={styles.headingRow}>
           <div>
-            {label && <p className={styles.eyebrow}>{label}</p>}
             <Heading className={styles.title}>{title}</Heading>
             {description && <p className={styles.description}>{description}</p>}
           </div>
