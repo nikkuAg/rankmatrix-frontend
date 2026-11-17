@@ -88,7 +88,7 @@ export function ProgrammeEvidence({ programme, preference }) {
           prefetch={false}
           className="button"
         >
-          Explore full programme history <Icon name="arrowUpRight" />
+          Explore full programme history
         </Link>
       )}
       <p className={styles.recordNote}>

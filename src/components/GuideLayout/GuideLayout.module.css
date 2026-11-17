@@ -279,9 +279,7 @@
   max-width: 30ch;
 }
 .guideRow {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) 16px;
-  gap: 14px;
+  display: block;
   padding: 19px 0;
   border-top: 1px solid var(--line);
   color: var(--text);
@@ -310,10 +308,6 @@
   color: var(--muted);
   font-size: var(--text-small);
   line-height: 1.75;
-}
-.guideArrow {
-  font-size: 19px;
-  color: var(--muted);
 }
 .libraryNext {
   display: flex;
@@ -437,9 +431,6 @@
   }
   .libraryPath header p {
     grid-column: 1/-1;
-  }
-  .guideRow {
-    gap: 9px;
   }
   .guideRow h3 {
     font-size: 15px;

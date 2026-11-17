@@ -284,7 +284,7 @@ export function PredictionForm({ defaultValues, getPredictionData, onSuccess, on
             Cancel
           </button>
           <button type="submit" className="button primary" disabled={pending}>
-            {pending ? 'Finding comparisons…' : 'Find my options'} <Icon name="arrowUpRight" />
+            {pending ? 'Finding comparisons…' : 'Find my options'}
           </button>
         </div>
       </form>

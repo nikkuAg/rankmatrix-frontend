@@ -131,7 +131,7 @@ export default function GuidesHub() {
           <>
             <span>Already have your rank?</span>
             <a href="#read-your-rank">
-              Start with rank interpretation <Icon name="arrowDown" />
+              Start with rank interpretation
             </a>
             <span>Nine guides · no account needed</span>
           </>
@@ -173,9 +173,6 @@ export default function GuidesHub() {
                         <p>{guide.summary}</p>
                         <small>{guide.readingTimeMinutes} min read</small>
                       </div>
-                      <span className={styles.guideArrow} aria-hidden="true">
-                        <Icon name="arrowUpRight" />
-                      </span>
                     </Link>
                   ))}
               </div>

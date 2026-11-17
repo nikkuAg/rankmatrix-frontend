@@ -1,6 +1,5 @@
 import Link from 'next/link';
 import styles from '@/components/GuideLayout/GuideLayout.module.css';
-import { Icon } from '@/components/Icon';
 
 export const metadata = {
   title: { absolute: 'Page Not Found | RankMatrix' },
@@ -61,7 +60,7 @@ export default function NotFound() {
           reporting it.
         </p>
         <Link href="/contact" prefetch={false}>
-          Report a discrepancy <Icon name="arrowRight" />
+          Report a discrepancy
         </Link>
       </aside>
     </section>
