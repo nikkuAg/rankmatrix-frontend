@@ -28,7 +28,7 @@
 .brandName {
   font-size: 21px;
   font-weight: 600;
-  letter-spacing: -0.6px;
+  letter-spacing: -0.2px;
 }
 .description {
   font-size: var(--text-control);
@@ -41,7 +41,7 @@
   font:
     500 27px/1.25 var(--font-body),
     sans-serif;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.01em;
   max-width: 280px;
   margin: 24px 0 16px;
 }
@@ -119,7 +119,7 @@
   color: var(--accent);
   font-size: inherit;
   font-weight: 600;
-  letter-spacing: -0.075em;
+  letter-spacing: -0.02em;
   line-height: 1;
 }
 @media (max-width: 1050px) {

@@ -60,7 +60,7 @@
   font-size: clamp(36px, 4.25vw, 52px);
   font-weight: 600;
   line-height: 1.16;
-  letter-spacing: -0.045em;
+  letter-spacing: -0.02em;
   text-wrap: balance;
 }
 .description {
@@ -183,7 +183,7 @@
   font-size: 28px;
   font-weight: 500;
   line-height: 1.3;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.01em;
   scroll-margin-top: 28px;
 }
 .content .section p,
@@ -354,7 +354,7 @@
   .title {
     font-size: 36px;
     line-height: 1.19;
-    letter-spacing: -0.036em;
+    letter-spacing: -0.02em;
   }
   .headerNote {
     padding: 15px 0 0;
@@ -407,7 +407,7 @@
   .title {
     font-size: 31px;
     line-height: 1.22;
-    letter-spacing: -0.032em;
+    letter-spacing: -0.02em;
   }
   .description {
     font-size: var(--text-control);
@@ -571,7 +571,7 @@
   font-size: 32px;
   line-height: 1.3;
   font-variant-numeric: tabular-nums;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.01em;
 }
 .windowScale > div:nth-child(2) dd {
   color: var(--accent);

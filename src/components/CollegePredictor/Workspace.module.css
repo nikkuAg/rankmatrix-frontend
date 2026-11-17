@@ -55,7 +55,7 @@
 .formHeading h2 {
   margin: 8px 0 0;
   font-size: 28px;
-  letter-spacing: -1px;
+  letter-spacing: -0.01em;
   max-width: 13ch;
 }
 .formHeading > p {
@@ -360,7 +360,7 @@
 }
 .evidence h2 {
   font-size: 26px;
-  letter-spacing: -0.7px;
+  letter-spacing: -0.01em;
   margin-bottom: 12px;
 }
 .evidence > p {
