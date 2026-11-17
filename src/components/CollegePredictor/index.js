@@ -44,6 +44,7 @@ export function CollegePredictor() {
   const [mobilePane, setMobilePane] = useState('list');
   const [storageNotice, setStorageNotice] = useState('');
   const [restored, setRestored] = useState(false);
+  const [pendingRestore, setPendingRestore] = useState(null);
   const loaded = useRef(false);
   const workspaceRoot = useRef(null);
   const formOpener = useRef(null);
@@ -71,28 +72,42 @@ export function CollegePredictor() {
       setFormData(lastSearch);
       setOpen(false);
       setRestored(true);
-      getPredictionData(lastSearch, true)
-        .unwrap()
-        .then((results) =>
-          sendAnalyticsEvent({
-            action: 'prediction_restored',
-            category: 'college_predictor',
-            label: 'Last prediction restored',
-            value: 1,
-            parameters: { result_count: results?.length ?? 0 },
-          }),
-        )
-        .catch(() => {
-          setFormData(null);
-          setRestored(false);
-          setOpen(true);
-        });
+      setPendingRestore(lastSearch);
     } else if (savedChoices.length) {
       setOpen(false);
       setView('choices');
     }
     /* eslint-enable react-hooks/set-state-in-effect */
-  }, [getPredictionData]);
+  }, []);
+  // The search runs in its own effect, after mounting, so the results reach this component's
+  // query subscription. A run that React cancels (development remounts) is ignored.
+  useEffect(() => {
+    if (!pendingRestore) return undefined;
+    let cancelled = false;
+    getPredictionData(pendingRestore, true)
+      .unwrap()
+      .then((results) => {
+        if (cancelled) return;
+        setPendingRestore(null);
+        sendAnalyticsEvent({
+          action: 'prediction_restored',
+          category: 'college_predictor',
+          label: 'Last prediction restored',
+          value: 1,
+          parameters: { result_count: results?.length ?? 0 },
+        });
+      })
+      .catch(() => {
+        if (cancelled) return;
+        setPendingRestore(null);
+        setFormData(null);
+        setRestored(false);
+        setOpen(true);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [pendingRestore, getPredictionData]);
   function changeChoices(next) {
     setChoices(next);
     if (!loaded.current) return;
@@ -229,6 +244,7 @@ export function CollegePredictor() {
           onSuccess={(data) => {
             setFormData(data);
             setRestored(false);
+            setPendingRestore(null);
             savePredictorFormData(data);
             setView('results');
             setSelected(null);
@@ -265,7 +281,7 @@ export function CollegePredictor() {
           <ChoiceWorkspace choices={choices} onChange={changeChoices} />
         ) : (
           <>
-            {formData && (
+            {formData && !isFetching && (
               <p className={styles.countline}>
                 <strong>
                   {programmes.length} {programmes.length === 1 ? 'programme' : 'programmes'}
