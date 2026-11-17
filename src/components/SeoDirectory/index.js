@@ -42,7 +42,7 @@ export async function SeoDirectory({ kind, faqs }) {
         .map((group) => (
           <ReferenceItem
             key={group.name}
-            title={`${group.name} · ${group.entries.length}`}
+            title={`${group.name} (${group.entries.length})`}
             wide={!colleges}
           >
             <DirectoryNavigation>

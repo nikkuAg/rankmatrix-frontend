@@ -142,8 +142,8 @@ export function PredictionForm({ defaultValues, getPredictionData, onSuccess, on
                     placeholder={category === 'General' ? 'Enter CRL' : 'Enter category rank'}
                   />
                   <small>
-                    Required · {category === 'General' ? 'CRL' : `${category} rank list`}, not
-                    percentile
+                    Required. Use your {category === 'General' ? 'CRL' : `${category} category`}{' '}
+                    rank, not percentile
                   </small>
                 </label>
                 <label className="field">
@@ -159,7 +159,8 @@ export function PredictionForm({ defaultValues, getPredictionData, onSuccess, on
                     placeholder="Optional"
                   />
                   <small>
-                    Optional · {category === 'General' ? 'CRL' : `${category} rank list`}
+                    Optional. Use your {category === 'General' ? 'CRL' : `${category} category`}{' '}
+                    rank
                   </small>
                 </label>
               </div>

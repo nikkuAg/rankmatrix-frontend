@@ -30,9 +30,9 @@ test('programme evidence distinguishes OPEN/General CRL from reserved and PwD ra
       },
     }),
   );
-  for (const category of ['General', 'OPEN']) assert.ok(html.includes(`${category} · CRL`));
+  for (const category of ['General', 'OPEN']) assert.ok(html.includes(`${category}, CRL`));
   for (const category of ['General PwD', 'SC'])
-    assert.ok(html.includes(`${category} · category rank`));
+    assert.ok(html.includes(`${category}, category rank`));
   assert.equal((html.match(/aria-label="Allocation record /g) || []).length, 4);
   for (const text of [
     'AI',

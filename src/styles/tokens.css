@@ -431,7 +431,6 @@ td a:hover {
   margin: 36px 0 16px;
   padding-top: 24px;
   border-top: 1px solid var(--line);
-  font-family: var(--font-display), serif;
   font-size: 27px;
 }
 .prose h3 {

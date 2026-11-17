@@ -58,12 +58,6 @@
   letter-spacing: -1px;
   max-width: 13ch;
 }
-.formHeading em {
-  color: var(--accent);
-  font-family: var(--font-display), serif;
-  font-weight: 400;
-  font-style: normal;
-}
 .formHeading > p {
   max-width: 36ch;
   font-size: var(--text-control);
@@ -365,7 +359,6 @@
   flex-wrap: wrap;
 }
 .evidence h2 {
-  font-family: var(--font-display), serif;
   font-size: 26px;
   letter-spacing: -0.7px;
   margin-bottom: 12px;
@@ -678,7 +671,6 @@
   border-radius: var(--radius);
 }
 .start h2 {
-  font-family: var(--font-display), serif;
   margin: 16px 0;
   font-size: 32px;
 }

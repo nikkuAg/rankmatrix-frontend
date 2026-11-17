@@ -13,8 +13,8 @@
 .heading h2 {
   margin: 0;
   font:
-    400 30px/1.2 var(--font-display),
-    serif;
+    500 30px/1.2 var(--font-body),
+    sans-serif;
 }
 .heading > p {
   max-width: 390px;

@@ -47,8 +47,8 @@
 .start h2 {
   margin: 0;
   font:
-    400 clamp(26px, 2vw, 36px) / 1.2 var(--font-display),
-    serif;
+    500 clamp(26px, 2vw, 36px) / 1.2 var(--font-body),
+    sans-serif;
 }
 .startFields {
   display: grid;
@@ -151,8 +151,8 @@
 }
 .workflow .step {
   font:
-    400 28px/1 var(--font-display),
-    serif;
+    600 28px/1 var(--font-body),
+    sans-serif;
   color: var(--accent);
 }
 .workflow h3 {
@@ -179,8 +179,8 @@
 }
 .sectionHead h2 {
   font:
-    400 38px/1.2 var(--font-display),
-    serif;
+    500 38px/1.2 var(--font-body),
+    sans-serif;
   margin: 0;
 }
 .sectionHead > a {
