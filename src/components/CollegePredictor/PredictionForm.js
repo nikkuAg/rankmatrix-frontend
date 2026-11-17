@@ -118,32 +118,15 @@ export function PredictionForm({ defaultValues, getPredictionData, onSuccess, on
     <section className={styles.formPanel} aria-labelledby="rank-form-title">
       <div className={styles.formHeading}>
         <div>
-          <p className="eyebrow">Your rank context</p>
-          <h2 id="rank-form-title">
-            Both exams. <em>Each in context.</em>
-          </h2>
+          <h2 id="rank-form-title">Enter your rank</h2>
         </div>
-        <p>
-          Select the categories you want to explore. Enter each category’s own rank: CRL for OPEN,
-          the corresponding category rank for reserved seats.
-        </p>
+        <p>Your JEE Main rank is enough to start. Add your JEE Advanced rank if you have one.</p>
       </div>
       <form ref={form} onSubmit={submit}>
         <fieldset className={styles.formSection}>
           <legend>
-            <span>01</span> Rank context
+            <span>01</span> Your ranks
           </legend>
-          <MultiSelect
-            name="categories"
-            label="Categories / rank lists"
-            options={categories}
-            value={values.categories}
-            onChange={(value) => update('categories', value)}
-            placeholder="Select categories"
-            invalid={invalid === 'categories'}
-            errorId="predictor-form-error"
-            help="Choose only categories relevant to your rank lists. A selection does not establish eligibility."
-          />
           {values.categories.map((category) => (
             <fieldset key={category} className={styles.rankProfile}>
               <legend>{categoryLabel(category)}</legend>
@@ -185,10 +168,21 @@ export function PredictionForm({ defaultValues, getPredictionData, onSuccess, on
               </div>
             </fieldset>
           ))}
+          <MultiSelect
+            name="categories"
+            label="Categories"
+            options={categories}
+            value={values.categories}
+            onChange={(value) => update('categories', value)}
+            placeholder="Select categories"
+            invalid={invalid === 'categories'}
+            errorId="predictor-form-error"
+            help="General is selected to start. Add a reserved category to enter its rank too. A selection does not establish eligibility."
+          />
         </fieldset>
         <fieldset className={styles.formSection}>
           <legend>
-            <span>02</span> Allocation context
+            <span>02</span> Home state and seats
           </legend>
           <div className={styles.formGrid}>
             <label className={`field ${styles.fullField}`}>

@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import {
+  categoryOptions,
   predictionFormData,
   predictionRequest,
   predictorFormValues,
@@ -53,6 +54,10 @@ test('all quotas retain the backend default and empty groups remain detectable',
   const values = predictorFormValues();
   values.seatPools = [];
   values.quotas = [];
+  assert.deepEqual(predictionFormData(values).rankProfiles, [
+    { category: 'General', mainsRank: '' },
+  ]);
+  values.categories = [];
   assert.deepEqual(predictionFormData(values).rankProfiles, []);
   assert.deepEqual(predictionFormData(values).seatPools, []);
   assert.deepEqual(predictionFormData(values).quotas, []);
@@ -78,5 +83,12 @@ test('selected categories keep their own ranks through removal, restoration and 
   values.ranks['OBC-NCL'].advRank = '';
   assert.equal('advRank' in predictionFormData(values).rankProfiles[1], false);
   assert.equal('category' in predictionRequest(predictionFormData(values)), false);
-  assert.deepEqual(predictorFormValues({ rankProfiles: 'corrupt' }).categories, []);
+  assert.deepEqual(predictorFormValues({ rankProfiles: 'corrupt' }).categories, ['General']);
+});
+
+test('General leads the category list and is preselected for a first visit', () => {
+  assert.deepEqual(categoryOptions.slice(0, 5), ['General', 'OBC-NCL', 'GEN-EWS', 'SC', 'ST']);
+  assert.equal(categoryOptions.length, 10);
+  assert.deepEqual(predictorFormValues().categories, ['General']);
+  assert.deepEqual(predictorFormValues(null).categories, ['General']);
 });

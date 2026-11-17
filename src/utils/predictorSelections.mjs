@@ -2,7 +2,19 @@ import { CATEGORIES, QUOTAS, SEAT_POOLS } from '../constants/josaa.js';
 
 export const quotaOptions = Object.values(QUOTAS);
 export const seatPoolOptions = Object.values(SEAT_POOLS);
-export const categoryOptions = Object.values(CATEGORIES);
+// Most candidates hold a General (CRL) rank, so it leads; PwD lists follow the main categories.
+export const categoryOptions = [
+  CATEGORIES.GENERAL,
+  CATEGORIES.OBC_NCL,
+  CATEGORIES.GENERAL_EWS,
+  CATEGORIES.SC,
+  CATEGORIES.ST,
+  CATEGORIES.GENERAL_PWD,
+  CATEGORIES.OBC_NCL_PWD,
+  CATEGORIES.GENERAL_EWS_PWD,
+  CATEGORIES.SC_PWD,
+  CATEGORIES.ST_PWD,
+];
 export const categoryLabel = (category) =>
   category === CATEGORIES.GENERAL ? 'General / OPEN · CRL' : category;
 
@@ -33,9 +45,12 @@ export function predictorFormValues(saved) {
     : [];
   return {
     ...predictorSelections(saved),
-    categories: categoryOptions.filter((category) =>
-      validProfiles.some((profile) => profile.category === category),
-    ),
+    // General is preselected so a first-time visitor sees the rank fields straight away.
+    categories: validProfiles.length
+      ? categoryOptions.filter((category) =>
+          validProfiles.some((profile) => profile.category === category),
+        )
+      : [CATEGORIES.GENERAL],
     ranks: Object.fromEntries(
       validProfiles.map((profile) => [
         profile.category,
