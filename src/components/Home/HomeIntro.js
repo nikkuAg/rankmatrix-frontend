@@ -48,8 +48,8 @@ export function HomeIntro() {
           individual candidates&apos; personal records. NIRF ranks are a separate dataset.
           RankMatrix builds its own tools and explanations around these facts. Use the rank explorer
           and detail pages to check the stored year and round; the predictor does not supply its
-          dataset year. For how the predictor compares this data with your inputs — and where its
-          assumptions can break — see the <AppLink href="/methodology">methodology page</AppLink>.
+          dataset year. For how the predictor compares this data with your inputs, and where its
+          assumptions can break, see the <AppLink href="/methodology">methodology page</AppLink>.
         </p>
       </ReferenceItem>
       <ReferenceItem title="What RankMatrix is not">
@@ -61,7 +61,7 @@ export function HomeIntro() {
             JoSAA website
           </a>{' '}
           before locking any choice. RankMatrix is not affiliated with JoSAA, JEE, NTA, the IITs,
-          NITs, IIITs, or GFTIs — it is an independent, free tool. Read the full{' '}
+          NITs, IIITs, or GFTIs. It is an independent, free tool. Read the full{' '}
           <AppLink href="/terms">terms of use</AppLink> and{' '}
           <AppLink href="/privacy">privacy policy</AppLink> for the details.
         </p>

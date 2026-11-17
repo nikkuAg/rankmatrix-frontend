@@ -29,7 +29,7 @@ test('Main and Advanced numbers cannot interleave an institute comparison', () =
 test('unknown institute types keep their rows without assuming an exam', () => {
   const institute = { name: 'New institute', type: 'UNKNOWN' };
   assert.deepEqual(groupInstitutesByExam([institute]), [
-    { id: 'other', title: 'Other institutes — verify admission exam', institutes: [institute] },
+    { id: 'other', title: 'Other institutes: verify admission exam', institutes: [institute] },
   ]);
   assert.deepEqual(groupInstitutesByExam([]), []);
 });

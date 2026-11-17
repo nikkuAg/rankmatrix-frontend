@@ -134,7 +134,7 @@ export function PredictionForm({ defaultValues, getPredictionData, onSuccess, on
                   JEE Main rank
                   <input
                     name={`mainsRank:${category}`}
-                    aria-label={`JEE Main rank — ${category}`}
+                    aria-label={`JEE Main rank, ${category}`}
                     type="number"
                     min="1"
                     step="1"
@@ -152,7 +152,7 @@ export function PredictionForm({ defaultValues, getPredictionData, onSuccess, on
                   JEE Advanced rank
                   <input
                     name={`advRank:${category}`}
-                    aria-label={`JEE Advanced rank — ${category}`}
+                    aria-label={`JEE Advanced rank, ${category}`}
                     type="number"
                     min="1"
                     step="1"

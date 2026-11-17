@@ -54,7 +54,7 @@ export async function generateMetadata({ params }) {
   });
 }
 
-const formatRank = (value) => (value == null ? '—' : value.toLocaleString('en-IN'));
+const formatRank = (value) => (value == null ? 'Not available' : value.toLocaleString('en-IN'));
 
 const buildFaqs = (data) => {
   const typeLabel = INSTITUTE_TYPE_LABEL[instituteType(data)] || instituteType(data);
@@ -157,7 +157,7 @@ export default async function InstitutePage({ params }) {
           { name: data.name, path: canonicalPath },
         ]}
         title={data.name}
-        subtitle={`${shortName ? `${shortName} · ` : ""}${typeLabel} · ${data.city}, ${data.state}`}
+        subtitle={`${shortName ? `${shortName} · ` : ''}${typeLabel} · ${data.city}, ${data.state}`}
         badges={[
           { label: typeLabel },
           { label: data.state },
@@ -174,8 +174,8 @@ export default async function InstitutePage({ params }) {
       >
         <h2>About {data.name}</h2>
         <p>
-          {data.name} ({shortName || data.displayCode}) is located in {data.city}, {data.state}. Its institution
-          family is {typeLabel}. For participating JoSAA programmes, compare{' '}
+          {data.name} ({shortName || data.displayCode}) is located in {data.city}, {data.state}. Its
+          institution family is {typeLabel}. For participating JoSAA programmes, compare{' '}
           {`${admissionRankLabel(data)} ranks`}, subject to the programme&apos;s requirements.
         </p>
         {relatedCopy && <p>{relatedCopy}</p>}
@@ -261,7 +261,7 @@ export default async function InstitutePage({ params }) {
                       </td>
                       <td>{formatRank(summary?.openingRank)}</td>
                       <td>{formatRank(summary?.closingRank)}</td>
-                      <td>{branch.totalSeatsLatestYear ?? '—'}</td>
+                      <td>{branch.totalSeatsLatestYear ?? 'Not available'}</td>
                     </tr>
                   )),
                 )}

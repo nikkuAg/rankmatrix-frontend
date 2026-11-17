@@ -56,28 +56,28 @@ const GUIDES = [
     slug: 'josaa-seat-matrix',
     title: 'JoSAA seat matrix: categories, quotas, seat pools',
     summary:
-      'Open, OBC-NCL, SC, ST, EWS, PwD, Female-only, HS, OS, AI — what every column of the seat matrix means and why it matters for your choices.',
+      'Open, OBC-NCL, SC, ST, EWS, PwD, Female-only, HS, OS, AI: what every column of the seat matrix means and why it matters for your choices.',
     readingTimeMinutes: 8,
   },
   {
     slug: 'josaa-counselling-rounds',
     title: 'JoSAA counselling rounds: how they work',
     summary:
-      'Choice filling, mock allocations, regular rounds, freeze/float/slide, and the withdrawal and reporting cycle — laid out in order.',
+      'Choice filling, mock allocations, regular rounds, freeze/float/slide, and the withdrawal and reporting cycle, laid out in order.',
     readingTimeMinutes: 7,
   },
   {
     slug: 'josaa-reservation-categories',
     title: 'JoSAA reservation categories explained',
     summary:
-      'GE, OBC-NCL, SC, ST, EWS, PwD — what each pool means, how home-state and other-state quotas overlay on top, and how the algorithm uses your category in each round.',
+      'GE, OBC-NCL, SC, ST, EWS, PwD: what each pool means, how home-state and other-state quotas overlay on top, and how the algorithm uses your category in each round.',
     readingTimeMinutes: 8,
   },
   {
     slug: 'josaa-choice-filling-strategy',
     title: 'JoSAA choice filling strategy',
     summary:
-      'A practical, opinionated guide to ordering your preference list — matching historical data, checking eligibility, freeze/float/slide and reporting.',
+      'A practical, opinionated guide to ordering your preference list: matching historical data, checking eligibility, freeze/float/slide and reporting.',
     readingTimeMinutes: 9,
   },
 ];
@@ -91,7 +91,7 @@ const READING_PATHS = [
   {
     id: 'read-your-rank',
     title: 'Read your rank',
-    description: 'Understand what a cutoff can—and cannot—tell you.',
+    description: 'Understand what a cutoff can and cannot tell you.',
     slugs: [
       'josaa-opening-and-closing-ranks',
       'reading-cutoff-trends',
@@ -125,7 +125,7 @@ export default function GuidesHub() {
       />
       <GuideLayout
         title="JoSAA & JEE counselling guides"
-        description="Straightforward, no-spam explainers built around the questions JEE aspirants actually ask — from someone who built the tool they're reading them in."
+        description="Straightforward, no-spam explainers built around the questions JEE aspirants actually ask, written by someone who built the tool they're reading them in."
         variant="library"
         eyebrow="The counselling library"
         headerNote={
@@ -205,8 +205,8 @@ export default function GuidesHub() {
               privacy policy
             </Link>{' '}
             for browser storage, Analytics and optional advertising information. If something is
-            still unclear after reading one, the relevant tool &mdash; Opening &amp; Closing Ranks,
-            Seat Matrix, Participating Colleges, or the Predictor &mdash; is one click away.
+            still unclear after reading one, the relevant tool (Opening &amp; Closing Ranks, Seat
+            Matrix, Participating Colleges, or the Predictor) is one click away.
           </p>
         </div>
         <section className={styles.libraryNext}>
