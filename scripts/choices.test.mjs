@@ -115,3 +115,17 @@ test('programmes are grouped by the exam whose rank applies, IITs first, empty g
     ['NITs, IIITs and GFTIs'],
   );
 });
+
+test('rank summaries name the category only when several rank lists are in play', async () => {
+  const { examRankSummary, formatRank } = await import('../src/utils/choices.mjs');
+  const one = [{ category: 'General', mainsRank: '18000', advRank: '7200' }];
+  assert.equal(examRankSummary('JEE Advanced', one), '7,200');
+  assert.equal(examRankSummary('JEE Main', one), '18,000');
+  assert.equal(examRankSummary('Verify exam', one), '');
+  const two = [...one, { category: 'OBC-NCL', mainsRank: '4500' }];
+  assert.equal(examRankSummary('JEE Main', two), 'General 18,000, OBC-NCL 4,500');
+  assert.equal(examRankSummary('JEE Advanced', two), 'General 7,200');
+  assert.equal(examRankSummary('JEE Main'), '');
+  assert.equal(formatRank(123456), '1,23,456');
+  assert.equal(formatRank(null), 'Not published');
+});

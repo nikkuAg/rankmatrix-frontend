@@ -292,6 +292,35 @@
   font-size: var(--text-control);
   color: var(--muted);
 }
+.rankRows {
+  display: grid;
+  gap: 6px;
+  margin-top: 10px;
+  font-variant-numeric: tabular-nums;
+}
+.rankRow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  gap: 2px 16px;
+  align-items: baseline;
+  font-size: var(--text-small);
+  color: var(--muted);
+}
+.rankRow b,
+.rankRow strong {
+  display: inline;
+  margin: 0 0 0 4px;
+  font-size: var(--text-body);
+  line-height: 1.4;
+  color: var(--text);
+}
+.rankRow b {
+  font-weight: 400;
+}
+.rankMore {
+  font-size: var(--text-small);
+  color: var(--muted);
+}
 .pick small {
   display: block;
   font-size: var(--text-small);
@@ -754,6 +783,13 @@
   }
   .result > .pick {
     flex-basis: 100%;
+  }
+  .rankRow {
+    grid-template-columns: auto auto;
+    justify-content: start;
+  }
+  .rankRow > span:first-child {
+    grid-column: 1 / -1;
   }
   .result > :global(.button) {
     width: 100%;

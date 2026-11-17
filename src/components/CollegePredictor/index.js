@@ -9,6 +9,8 @@ import { sendAnalyticsEvent } from '@/utils/analyticEvent';
 import {
   choiceRows,
   CHOICES_KEY,
+  examRankSummary,
+  formatRank,
   groupProgrammes,
   parseChoices,
   programmeExam,
@@ -269,7 +271,11 @@ export function CollegePredictor() {
                         <section key={group.exam} aria-labelledby={`results-${group.id}`}>
                           <h3 id={`results-${group.id}`} className={styles.groupHeading}>
                             {group.title} <span>{group.programmes.length}</span>
-                            <small>{group.basis}</small>
+                            <small>
+                              {group.basis}
+                              {examRankSummary(group.exam, formData?.rankProfiles) &&
+                                `: ${examRankSummary(group.exam, formData?.rankProfiles)}`}
+                            </small>
                           </h3>
                           {group.programmes.map((programme) => {
                             const saved = choices.some((choice) => choice.id === programme.id);
@@ -296,10 +302,34 @@ export function CollegePredictor() {
                                   <span>{programme.institute.name}</span>
                                   <small>
                                     {instituteType(programme.institute)} · {programme.branch.degree}{' '}
-                                    · {programme.branch.courseDuration} years ·{' '}
-                                    {programme.records.length} allocation{' '}
-                                    {programme.records.length === 1 ? 'record' : 'records'}
+                                    · {programme.branch.courseDuration} years
                                   </small>
+                                  <span className={styles.rankRows}>
+                                    {programme.records.slice(0, 3).map((record, index) => (
+                                      <span className={styles.rankRow} key={index}>
+                                        <span>
+                                          {[
+                                            quotaLabel(record.quota),
+                                            formData?.rankProfiles.length > 1 && record.category,
+                                            formData?.seatPools.length > 1 && record.seatPool,
+                                          ]
+                                            .filter(Boolean)
+                                            .join(', ')}
+                                        </span>
+                                        <span>
+                                          Opening <b>{formatRank(record.openingRank)}</b>
+                                        </span>
+                                        <span>
+                                          Closing <strong>{formatRank(record.closingRank)}</strong>
+                                        </span>
+                                      </span>
+                                    ))}
+                                    {programme.records.length > 3 && (
+                                      <span className={styles.rankMore}>
+                                        {programme.records.length - 3} more in Evidence
+                                      </span>
+                                    )}
+                                  </span>
                                 </button>
                                 <button
                                   type="button"
