@@ -3,12 +3,10 @@ import { FeatureLayout } from '@/components/RankMatrixLayout/FeatureLayout';
 import { SeatList } from '@/components/SeatList';
 import { ToolAnswers } from '@/components/ToolAnswers';
 import { faqJsonLd, serializeJsonLd } from '@/utils/jsonLd';
-import { buildMetadata } from '@/utils/metadata.mjs';
+import { buildMetadata, toolPageCopy } from "@/utils/metadata.mjs";
+import { fetchLatestJosaaYear } from "@/utils/seoApi";
 
 const PAGE_URL = '/seat-matrix';
-const DESCRIPTION =
-  'Explore JoSAA seats by college, branch, year, category, quota and seat pool. Compare seat availability alongside historical admission cutoffs.';
-
 const FAQS = [
   {
     question: 'What is the JoSAA seat matrix?',
@@ -37,11 +35,12 @@ const FAQS = [
   },
 ];
 
-export const metadata = buildMetadata({
-  path: PAGE_URL,
-  title: 'JoSAA Seat Matrix: College & Category-wise Seats',
-  description: DESCRIPTION,
-});
+export async function generateMetadata() {
+  return buildMetadata({
+    path: PAGE_URL,
+    ...toolPageCopy("seatMatrix", await fetchLatestJosaaYear()),
+  });
+}
 
 const SeatMatrix = () => {
   return (

@@ -145,3 +145,46 @@ export function buildMetadata({
     },
   };
 }
+
+const TOOL_PAGE_COPY = {
+  ranks: {
+    title: 'JoSAA Opening & Closing Ranks by Year and Round',
+    description:
+      'Compare JoSAA opening and closing ranks by college, branch, year, round, category and quota. Explore historical IIT, NIT, IIIT and GFTI cutoffs.',
+    datedTitle: (year) => `JoSAA Opening & Closing Ranks ${year}, All Rounds`,
+    datedDescription: (year) =>
+      `JoSAA opening and closing ranks for ${year} and earlier years. Filter by college, branch, round, category and quota across IITs, NITs, IIITs and GFTIs. Free, no signup.`,
+  },
+  seatMatrix: {
+    title: 'JoSAA Seat Matrix: College & Category-wise Seats',
+    description:
+      'Explore JoSAA seats by college, branch, year, category, quota and seat pool. Compare seat availability alongside historical admission cutoffs.',
+    datedTitle: (year) => `JoSAA Seat Matrix ${year} by College & Category`,
+    datedDescription: (year) =>
+      `JoSAA seat matrix for ${year} and earlier years: seats by college, branch, category, quota and seat pool, with the change from the previous year.`,
+  },
+  predict: {
+    title: 'Free JEE Main & Advanced College Predictor',
+    description:
+      'Find college and branch options for your JEE Main or Advanced rank. Compare historical JoSAA cutoffs by category and quota. Free, no signup.',
+    // The predictor is used for the coming counselling year, so only the
+    // description names the cutoff year it compares against.
+    datedTitle: () => 'Free JEE Main & Advanced College Predictor',
+    datedDescription: (year) =>
+      `Find college and branch options for your JEE Main or Advanced rank, compared with JoSAA ${year} cutoffs by category and quota. Free, no signup.`,
+  },
+};
+
+/**
+ * Title and description for a tool page. The latest stored JoSAA year is
+ * named only when the API supplied a plausible one; otherwise the undated
+ * copy is used so a failed lookup can never publish a wrong year.
+ */
+export function toolPageCopy(page, latestYear) {
+  const copy = TOOL_PAGE_COPY[page];
+  if (!copy) throw new Error(`Unknown tool page: ${page}`);
+  const dated = Number.isInteger(latestYear) && latestYear >= 2015 && latestYear <= 2100;
+  return dated
+    ? { title: copy.datedTitle(latestYear), description: copy.datedDescription(latestYear) }
+    : { title: copy.title, description: copy.description };
+}

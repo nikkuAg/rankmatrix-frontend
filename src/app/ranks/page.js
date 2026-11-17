@@ -3,12 +3,10 @@ import { RankList } from '@/components/RankList';
 import { FeatureLayout } from '@/components/RankMatrixLayout/FeatureLayout';
 import { ToolAnswers } from '@/components/ToolAnswers';
 import { faqJsonLd, serializeJsonLd } from '@/utils/jsonLd';
-import { buildMetadata } from '@/utils/metadata.mjs';
+import { buildMetadata, toolPageCopy } from "@/utils/metadata.mjs";
+import { fetchLatestJosaaYear } from "@/utils/seoApi";
 
 const PAGE_URL = '/ranks';
-const DESCRIPTION =
-  'Compare JoSAA opening and closing ranks by college, branch, year, round, category and quota. Explore historical IIT, NIT, IIIT and GFTI cutoffs.';
-
 const FAQS = [
   {
     question: 'What is the difference between an opening rank and a closing rank?',
@@ -37,11 +35,12 @@ const FAQS = [
   },
 ];
 
-export const metadata = buildMetadata({
-  path: PAGE_URL,
-  title: 'JoSAA Opening & Closing Ranks by Year and Round',
-  description: DESCRIPTION,
-});
+export async function generateMetadata() {
+  return buildMetadata({
+    path: PAGE_URL,
+    ...toolPageCopy("ranks", await fetchLatestJosaaYear()),
+  });
+}
 
 const Ranks = () => {
   return (

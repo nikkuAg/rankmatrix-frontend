@@ -1,14 +1,12 @@
 import React from 'react';
 import { FeatureLayout } from '@/components/RankMatrixLayout/FeatureLayout';
 import { faqJsonLd, serializeJsonLd } from '@/utils/jsonLd';
-import { buildMetadata } from '@/utils/metadata.mjs';
+import { buildMetadata, toolPageCopy } from "@/utils/metadata.mjs";
+import { fetchLatestJosaaYear } from "@/utils/seoApi";
 import { CollegePredictor } from '../../components/CollegePredictor';
 import { PredictPageContent } from './content';
 
 const PAGE_URL = '/predict';
-const DESCRIPTION =
-  'Find college and branch options for your JEE Main or Advanced rank. Compare historical JoSAA cutoffs by category and quota. Free, no signup.';
-
 const FAQS = [
   {
     question: 'Can I use JEE Main percentile instead of rank?',
@@ -52,11 +50,12 @@ const FAQS = [
   },
 ];
 
-export const metadata = buildMetadata({
-  path: PAGE_URL,
-  title: 'Free JEE Main & Advanced College Predictor',
-  description: DESCRIPTION,
-});
+export async function generateMetadata() {
+  return buildMetadata({
+    path: PAGE_URL,
+    ...toolPageCopy("predict", await fetchLatestJosaaYear()),
+  });
+}
 
 const Predict = () => {
   return (

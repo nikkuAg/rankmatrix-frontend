@@ -44,7 +44,7 @@ export async function generateMetadata({ params }) {
     path: `/colleges/${slug}/${branch}`,
     title: programmeSearchTitle(data.institute, data.branch, data.yearsAvailable?.[0]),
     description: `${short ? `${short} (${name})` : name} ${programmeTitleName(data.branch)}: compare JoSAA opening and closing ranks by year, round, category and quota, plus published seat data.`,
-    index: Boolean(data.cutoffs?.length),
+    index: data.cutoffs.length > 0,
   });
 }
 
