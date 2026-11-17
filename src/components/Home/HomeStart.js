@@ -87,9 +87,7 @@ export function HomeStart() {
           <span>
             You have {savedChoices} saved {savedChoices === 1 ? 'choice' : 'choices'}
           </span>
-          <span>
-            Continue with your list
-          </span>
+          <span>Continue with your list</span>
         </Link>
       )}
     </div>

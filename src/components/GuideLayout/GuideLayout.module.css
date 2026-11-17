@@ -630,14 +630,6 @@
   border-right: 1px solid var(--line);
   line-height: 1;
 }
-.errorCode span {
-  display: block;
-  font-family: var(--font-display), serif;
-  font-size: 22px;
-  line-height: 1.5;
-  margin-top: 24px;
-  color: var(--muted);
-}
 .recovery h1 {
   font-size: 42px;
   line-height: 1.2;
@@ -723,10 +715,6 @@
     border-right: 0;
     border-bottom: 1px solid var(--line);
     padding: 0 0 23px;
-  }
-  .errorCode span {
-    margin: 0;
-    font-size: 21px;
   }
   .recovery h1 {
     font-size: 35px;

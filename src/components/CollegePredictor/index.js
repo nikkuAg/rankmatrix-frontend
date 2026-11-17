@@ -414,7 +414,9 @@ export function CollegePredictor() {
               !open && (
                 <div className={styles.start}>
                   <h2>
-                    {formData ? 'No comparisons returned.' : 'A considered choice starts here.'}
+                    {formData
+                      ? 'No programmes matched these ranks'
+                      : 'Enter your ranks to see programmes'}
                   </h2>
                   <p>
                     {formData

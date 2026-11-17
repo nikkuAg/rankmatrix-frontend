@@ -20,7 +20,6 @@ export default function Home() {
           </p>
         </div>
         <div className={styles.visual}>
-          <div className={styles.backdrop} />
           <HomeStart />
         </div>
       </section>

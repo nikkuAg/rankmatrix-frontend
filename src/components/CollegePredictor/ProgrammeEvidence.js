@@ -9,7 +9,7 @@ export function ProgrammeEvidence({ programme, preference }) {
   if (!programme)
     return (
       <aside className={styles.evidence}>
-        <h2>A closer look.</h2>
+        <h2>Programme details</h2>
         <p className="muted">
           Select a programme to inspect all its returned allocation records, then check the full
           historical data.

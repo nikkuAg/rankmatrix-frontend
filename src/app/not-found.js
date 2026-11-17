@@ -17,10 +17,6 @@ export default function NotFound() {
       <div className={styles.recoveryLayout}>
         <div className={styles.errorCode} aria-hidden="true">
           404
-          <span>
-            One link.
-            <br />A different direction.
-          </span>
         </div>
         <div>
           <h1>Page not found</h1>

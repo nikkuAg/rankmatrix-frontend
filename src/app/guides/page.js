@@ -130,9 +130,7 @@ export default function GuidesHub() {
         headerNote={
           <>
             <span>Already have your rank?</span>
-            <a href="#read-your-rank">
-              Start with rank interpretation
-            </a>
+            <a href="#read-your-rank">Start with rank interpretation</a>
             <span>Nine guides · no account needed</span>
           </>
         }
@@ -201,7 +199,7 @@ export default function GuidesHub() {
         </div>
         <section className={styles.libraryNext}>
           <div>
-            <h2>Verify the current official instructions.</h2>
+            <h2>Check the official JoSAA rules</h2>
             <p>
               Guides explain the context. The published schedule, eligibility rules and programme
               restrictions govern your participation.
