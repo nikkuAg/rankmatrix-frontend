@@ -5,7 +5,8 @@ export const HOME_DESCRIPTION =
   'Predict colleges with your JEE Main or Advanced rank. Compare JoSAA cutoffs, branches and seat matrices using official data. Free, with no signup.';
 
 const PREVIEW_IMAGE = {
-  url: `${SITE_URL}/opengraph-image`,
+  // The version makes WhatsApp, LinkedIn and X fetch the new image instead of a cached one.
+  url: `${SITE_URL}/opengraph-image?v=2`,
   width: 1200,
   height: 630,
   alt: 'RankMatrix: JEE college predictor, JoSAA cutoffs and seat matrix',
