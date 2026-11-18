@@ -27,7 +27,7 @@ export const articleJsonLd = ({ path, title, description, datePublished, dateMod
   inLanguage: 'en-IN',
   author: AUTHOR,
   publisher: PUBLISHER,
-  image: `${SITE_URL}/opengraph-image`,
+  image: `${SITE_URL}/opengraph-image?v=2`,
 });
 
 export const faqJsonLd = (faqs) => ({
